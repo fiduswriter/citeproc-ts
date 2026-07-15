@@ -1400,9 +1400,9 @@ var CSL = (() => {
     }
   });
 
-  // src/xmljson.ts
+  // src/xml/xmljson.ts
   var init_xmljson = __esm({
-    "src/xmljson.ts"() {
+    "src/xml/xmljson.ts"() {
       init_csl();
       CSL.XmlJSON = function(dataObj) {
         this.dataObj = dataObj;
@@ -1916,9 +1916,9 @@ var CSL = (() => {
     }
   });
 
-  // src/xmldom.ts
+  // src/xml/xmldom.ts
   var init_xmldom = __esm({
-    "src/xmldom.ts"() {
+    "src/xml/xmldom.ts"() {
       init_csl();
       CSL.XmlDOM = function(dataObj) {
         this.dataObj = dataObj;
@@ -2392,9 +2392,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_disambig.ts
-  var init_util_disambig = __esm({
-    "src/util_disambig.ts"() {
+  // src/util/disambig.ts
+  var init_disambig = __esm({
+    "src/util/disambig.ts"() {
       init_csl();
       CSL.ambigConfigDiff = function(a, b) {
         var pos, len, ppos, llen;
@@ -2466,9 +2466,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_nodes.ts
-  var init_util_nodes = __esm({
-    "src/util_nodes.ts"() {
+  // src/util/nodes.ts
+  var init_nodes = __esm({
+    "src/util/nodes.ts"() {
       init_csl();
       CSL.tokenExec = function(token, Item, item) {
         var next, maybenext, exec, debug;
@@ -2668,9 +2668,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_dateparser.ts
-  var init_util_dateparser = __esm({
-    "src/util_dateparser.ts"() {
+  // src/util/dateparser.ts
+  var init_dateparser = __esm({
+    "src/util/dateparser.ts"() {
       init_csl();
       CSL.DateParser = function() {
         var epochPairs = [
@@ -3085,9 +3085,9 @@ var CSL = (() => {
     }
   });
 
-  // src/build.ts
+  // src/engine/build.ts
   var init_build = __esm({
-    "src/build.ts"() {
+    "src/engine/build.ts"() {
       init_csl();
       CSL.Engine = function(sys, style, lang, forceLang) {
         var attrs, langspec;
@@ -3744,9 +3744,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_static_locator.ts
-  var init_util_static_locator = __esm({
-    "src/util_static_locator.ts"() {
+  // src/util/static_locator.ts
+  var init_static_locator = __esm({
+    "src/util/static_locator.ts"() {
       init_csl();
       CSL.Engine.prototype.remapSectionVariable = function(inputList) {
         for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
@@ -3832,9 +3832,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_processor.ts
-  var init_util_processor = __esm({
-    "src/util_processor.ts"() {
+  // src/util/processor.ts
+  var init_processor = __esm({
+    "src/util/processor.ts"() {
       init_csl();
       CSL.substituteOne = function(template) {
         return function(state, list) {
@@ -3975,9 +3975,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_citationlabel.ts
-  var init_util_citationlabel = __esm({
-    "src/util_citationlabel.ts"() {
+  // src/util/citationlabel.ts
+  var init_citationlabel = __esm({
+    "src/util/citationlabel.ts"() {
       init_csl();
       CSL.Engine.prototype.getCitationLabel = function(Item) {
         var label = "";
@@ -4089,9 +4089,9 @@ var CSL = (() => {
     }
   });
 
-  // src/api_control.ts
-  var init_api_control = __esm({
-    "src/api_control.ts"() {
+  // src/engine/control.ts
+  var init_control = __esm({
+    "src/engine/control.ts"() {
       init_csl();
       CSL.Engine.prototype.setOutputFormat = function(mode) {
         this.opt.mode = mode;
@@ -4233,9 +4233,9 @@ var CSL = (() => {
     }
   });
 
-  // src/queue.ts
+  // src/output/queue.ts
   var init_queue = __esm({
-    "src/queue.ts"() {
+    "src/output/queue.ts"() {
       init_csl();
       CSL.Output = {};
       CSL.Output.Queue = function(state) {
@@ -5221,9 +5221,9 @@ var CSL = (() => {
     }
   });
 
-  // src/state.ts
+  // src/engine/state.ts
   var init_state = __esm({
-    "src/state.ts"() {
+    "src/engine/state.ts"() {
       init_csl();
       CSL.Engine.Opt = function() {
         this.parallel = {
@@ -5564,9 +5564,9 @@ var CSL = (() => {
     }
   });
 
-  // src/api_cite.ts
-  var init_api_cite = __esm({
-    "src/api_cite.ts"() {
+  // src/engine/cite.ts
+  var init_cite = __esm({
+    "src/engine/cite.ts"() {
       init_csl();
       CSL.Engine.prototype.previewCitationCluster = function(citation, citationsPre, citationsPost, newMode) {
         var oldMode = this.opt.mode;
@@ -6772,9 +6772,9 @@ var CSL = (() => {
     }
   });
 
-  // src/api_bibliography.ts
-  var init_api_bibliography = __esm({
-    "src/api_bibliography.ts"() {
+  // src/engine/bibliography.ts
+  var init_bibliography = __esm({
+    "src/engine/bibliography.ts"() {
       init_csl();
       CSL.Engine.prototype.makeBibliography = function(bibsection) {
         var debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
@@ -7109,9 +7109,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_integration.ts
-  var init_util_integration = __esm({
-    "src/util_integration.ts"() {
+  // src/util/integration.ts
+  var init_integration = __esm({
+    "src/util/integration.ts"() {
       init_csl();
       CSL.Engine.prototype.setCitationId = function(citation, force) {
         let ret, id, direction;
@@ -7142,9 +7142,9 @@ var CSL = (() => {
     }
   });
 
-  // src/api_update.ts
-  var init_api_update = __esm({
-    "src/api_update.ts"() {
+  // src/engine/update.ts
+  var init_update = __esm({
+    "src/engine/update.ts"() {
       init_csl();
       CSL.Engine.prototype.rebuildProcessorState = function(citations, mode, uncitedItemIDs) {
         if (!citations) {
@@ -7332,9 +7332,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_locale.ts
-  var init_util_locale = __esm({
-    "src/util_locale.ts"() {
+  // src/util/locale.ts
+  var init_locale = __esm({
+    "src/util/locale.ts"() {
       init_csl();
       CSL.localeResolve = function(langstr, defaultLocale) {
         let ret, langlst;
@@ -7644,9 +7644,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_locale_sniff.ts
-  var init_util_locale_sniff = __esm({
-    "src/util_locale_sniff.ts"() {
+  // src/util/locale_sniff.ts
+  var init_locale_sniff = __esm({
+    "src/util/locale_sniff.ts"() {
       init_csl();
       CSL.getLocaleNames = function(myxml, preferredLocale) {
         var stylexml = CSL.setupXml(myxml);
@@ -7687,9 +7687,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_bibliography.ts
-  var init_node_bibliography = __esm({
-    "src/node_bibliography.ts"() {
+  // src/node/bibliography.ts
+  var init_bibliography2 = __esm({
+    "src/node/bibliography.ts"() {
       init_csl();
       CSL.Node = {};
       CSL.Node.bibliography = {
@@ -7711,9 +7711,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_choose.ts
-  var init_node_choose = __esm({
-    "src/node_choose.ts"() {
+  // src/node/choose.ts
+  var init_choose = __esm({
+    "src/node/choose.ts"() {
       init_csl();
       CSL.Node.choose = {
         build: function(state, target) {
@@ -7744,9 +7744,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_citation.ts
-  var init_node_citation = __esm({
-    "src/node_citation.ts"() {
+  // src/node/citation.ts
+  var init_citation = __esm({
+    "src/node/citation.ts"() {
       init_csl();
       CSL.Node.citation = {
         build: function(state, target) {
@@ -7775,9 +7775,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_comment.ts
-  var init_node_comment = __esm({
-    "src/node_comment.ts"() {
+  // src/node/comment.ts
+  var init_comment = __esm({
+    "src/node/comment.ts"() {
       init_csl();
       CSL.Node["#comment"] = {
         build: function() {
@@ -7786,9 +7786,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_date.ts
-  var init_node_date = __esm({
-    "src/node_date.ts"() {
+  // src/node/date.ts
+  var init_date = __esm({
+    "src/node/date.ts"() {
       init_csl();
       CSL.Node.date = {
         build: function(state, target) {
@@ -7900,9 +7900,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_datepart.ts
-  var init_node_datepart = __esm({
-    "src/node_datepart.ts"() {
+  // src/node/datepart.ts
+  var init_datepart = __esm({
+    "src/node/datepart.ts"() {
       init_csl();
       CSL.Node["date-part"] = {
         build: function(state, target) {
@@ -8153,9 +8153,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_elseif.ts
-  var init_node_elseif = __esm({
-    "src/node_elseif.ts"() {
+  // src/node/elseif.ts
+  var init_elseif = __esm({
+    "src/node/elseif.ts"() {
       init_csl();
       CSL.Node["else-if"] = {
         build: function(state, target) {
@@ -8169,9 +8169,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_else.ts
-  var init_node_else = __esm({
-    "src/node_else.ts"() {
+  // src/node/else.ts
+  var init_else = __esm({
+    "src/node/else.ts"() {
       init_csl();
       CSL.Node["else"] = {
         build: function(state, target) {
@@ -8186,9 +8186,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_etal.ts
-  var init_node_etal = __esm({
-    "src/node_etal.ts"() {
+  // src/node/etal.ts
+  var init_etal = __esm({
+    "src/node/etal.ts"() {
       init_csl();
       CSL.Node["et-al"] = {
         build: function(state, target) {
@@ -8207,9 +8207,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_group.ts
-  var init_node_group = __esm({
-    "src/node_group.ts"() {
+  // src/node/group.ts
+  var init_group = __esm({
+    "src/node/group.ts"() {
       init_csl();
       CSL.Node.group = {
         build: function(state, target, realGroup) {
@@ -8496,9 +8496,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_if.ts
-  var init_node_if = __esm({
-    "src/node_if.ts"() {
+  // src/node/if.ts
+  var init_if = __esm({
+    "src/node/if.ts"() {
       init_csl();
       CSL.Node["if"] = {
         build: function(state, target) {
@@ -8512,9 +8512,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_conditions.ts
-  var init_node_conditions = __esm({
-    "src/node_conditions.ts"() {
+  // src/node/conditions.ts
+  var init_conditions = __esm({
+    "src/node/conditions.ts"() {
       init_csl();
       CSL.Node["conditions"] = {
         build: function(state) {
@@ -8529,9 +8529,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_condition.ts
-  var init_node_condition = __esm({
-    "src/node_condition.ts"() {
+  // src/node/condition.ts
+  var init_condition = __esm({
+    "src/node/condition.ts"() {
       init_csl();
       CSL.Node["condition"] = {
         build: function(state) {
@@ -8544,9 +8544,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_conditions.ts
-  var init_util_conditions = __esm({
-    "src/util_conditions.ts"() {
+  // src/util/conditions.ts
+  var init_conditions2 = __esm({
+    "src/util/conditions.ts"() {
       init_csl();
       CSL.Conditions = {};
       CSL.Conditions.TopNode = function(state) {
@@ -8627,9 +8627,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_info.ts
-  var init_node_info = __esm({
-    "src/node_info.ts"() {
+  // src/node/info.ts
+  var init_info = __esm({
+    "src/node/info.ts"() {
       init_csl();
       CSL.Node.info = {
         build: function(state) {
@@ -8643,9 +8643,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_institution.ts
-  var init_node_institution = __esm({
-    "src/node_institution.ts"() {
+  // src/node/institution.ts
+  var init_institution = __esm({
+    "src/node/institution.ts"() {
       init_csl();
       CSL.Node.institution = {
         build: function(state, target) {
@@ -8722,9 +8722,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_institutionpart.ts
-  var init_node_institutionpart = __esm({
-    "src/node_institutionpart.ts"() {
+  // src/node/institutionpart.ts
+  var init_institutionpart = __esm({
+    "src/node/institutionpart.ts"() {
       init_csl();
       CSL.Node["institution-part"] = {
         build: function(state, target) {
@@ -8751,9 +8751,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_key.ts
-  var init_node_key = __esm({
-    "src/node_key.ts"() {
+  // src/node/key.ts
+  var init_key = __esm({
+    "src/node/key.ts"() {
       init_csl();
       CSL.Node.key = {
         build: function(state, target) {
@@ -8937,9 +8937,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_label.ts
-  var init_node_label = __esm({
-    "src/node_label.ts"() {
+  // src/node/label.ts
+  var init_label = __esm({
+    "src/node/label.ts"() {
       init_csl();
       CSL.Node.label = {
         build: function(state, target) {
@@ -8990,9 +8990,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_layout.ts
-  var init_node_layout = __esm({
-    "src/node_layout.ts"() {
+  // src/node/layout.ts
+  var init_layout = __esm({
+    "src/node/layout.ts"() {
       init_csl();
       CSL.Node.layout = {
         build: function(state, target) {
@@ -9196,9 +9196,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_macro.ts
-  var init_node_macro = __esm({
-    "src/node_macro.ts"() {
+  // src/node/macro.ts
+  var init_macro = __esm({
+    "src/node/macro.ts"() {
       init_csl();
       CSL.Node.macro = {
         build: function() {
@@ -9207,9 +9207,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_alternative.ts
-  var init_node_alternative = __esm({
-    "src/node_alternative.ts"() {
+  // src/node/alternative.ts
+  var init_alternative = __esm({
+    "src/node/alternative.ts"() {
       init_csl();
       CSL.Node.alternative = {
         build: function(state, target) {
@@ -9323,9 +9323,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_alternativetext.ts
-  var init_node_alternativetext = __esm({
-    "src/node_alternativetext.ts"() {
+  // src/node/alternativetext.ts
+  var init_alternativetext = __esm({
+    "src/node/alternativetext.ts"() {
       init_csl();
       CSL.Node["alternative-text"] = {
         build: function(state, target) {
@@ -9342,9 +9342,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_output.ts
-  var init_util_names_output = __esm({
-    "src/util_names_output.ts"() {
+  // src/util/names/output.ts
+  var init_output = __esm({
+    "src/util/names/output.ts"() {
       init_csl();
       CSL.NameOutput = function(state, Item, item) {
         this.debug = false;
@@ -9752,9 +9752,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_tests.ts
-  var init_util_names_tests = __esm({
-    "src/util_names_tests.ts"() {
+  // src/util/names/tests.ts
+  var init_tests = __esm({
+    "src/util/names/tests.ts"() {
       init_csl();
       CSL.NameOutput.prototype.isPerson = function(value) {
         if (value.literal || !value.given && value.family && value.isInstitution) {
@@ -9766,9 +9766,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_truncate.ts
-  var init_util_names_truncate = __esm({
-    "src/util_names_truncate.ts"() {
+  // src/util/names/truncate.ts
+  var init_truncate = __esm({
+    "src/util/names/truncate.ts"() {
       init_csl();
       CSL.NameOutput.prototype.truncatePersonalNameLists = function() {
         var v, i, ilen, j, jlen, chopvar, values;
@@ -9873,9 +9873,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_divide.ts
-  var init_util_names_divide = __esm({
-    "src/util_names_divide.ts"() {
+  // src/util/names/divide.ts
+  var init_divide = __esm({
+    "src/util/names/divide.ts"() {
       init_csl();
       CSL.NameOutput.prototype.divideAndTransliterateNames = function() {
         var i, ilen, j, jlen;
@@ -10022,9 +10022,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_join.ts
-  var init_util_names_join = __esm({
-    "src/util_names_join.ts"() {
+  // src/util/names/join.ts
+  var init_join = __esm({
+    "src/util/names/join.ts"() {
       init_csl();
       CSL.NameOutput.prototype._purgeEmptyBlobs = function(blobs) {
         for (let i = blobs.length - 1; i > -1; i -= 1) {
@@ -10195,9 +10195,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_common.ts
-  var init_util_names_common = __esm({
-    "src/util_names_common.ts"() {
+  // src/util/names/common.ts
+  var init_common = __esm({
+    "src/util/names/common.ts"() {
       init_csl();
       CSL.NameOutput.prototype.checkCommonAuthor = function(requireMatch) {
         if (!requireMatch) {
@@ -10291,9 +10291,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_constraints.ts
-  var init_util_names_constraints = __esm({
-    "src/util_names_constraints.ts"() {
+  // src/util/names/constraints.ts
+  var init_constraints = __esm({
+    "src/util/names/constraints.ts"() {
       init_csl();
       CSL.NameOutput.prototype.constrainNames = function() {
         this.names_count = 0;
@@ -10362,9 +10362,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_disambig.ts
-  var init_util_names_disambig = __esm({
-    "src/util_names_disambig.ts"() {
+  // src/util/names/disambig.ts
+  var init_disambig2 = __esm({
+    "src/util/names/disambig.ts"() {
       init_csl();
       CSL.NameOutput.prototype.disambigNames = function() {
         var pos;
@@ -10443,9 +10443,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_etalconfig.ts
-  var init_util_names_etalconfig = __esm({
-    "src/util_names_etalconfig.ts"() {
+  // src/util/names/etalconfig.ts
+  var init_etalconfig = __esm({
+    "src/util/names/etalconfig.ts"() {
       init_csl();
       CSL.NameOutput.prototype.getEtAlConfig = function() {
         var item = this.item;
@@ -10496,9 +10496,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_etal.ts
-  var init_util_names_etal = __esm({
-    "src/util_names_etal.ts"() {
+  // src/util/names/etal.ts
+  var init_etal2 = __esm({
+    "src/util/names/etal.ts"() {
       init_csl();
       CSL.NameOutput.prototype.setEtAlParameters = function() {
         var i, ilen, j, jlen;
@@ -10556,9 +10556,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names_render.ts
-  var init_util_names_render = __esm({
-    "src/util_names_render.ts"() {
+  // src/util/names/render.ts
+  var init_render = __esm({
+    "src/util/names/render.ts"() {
       init_csl();
       CSL.NameOutput.prototype.renderAllNames = function() {
         var pos;
@@ -11613,9 +11613,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_publishers.ts
-  var init_util_publishers = __esm({
-    "src/util_publishers.ts"() {
+  // src/util/publishers.ts
+  var init_publishers = __esm({
+    "src/util/publishers.ts"() {
       init_csl();
       CSL.PublisherOutput = function(state, group_tok) {
         this.state = state;
@@ -11694,9 +11694,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_label.ts
-  var init_util_label = __esm({
-    "src/util_label.ts"() {
+  // src/util/label.ts
+  var init_label2 = __esm({
+    "src/util/label.ts"() {
       init_csl();
       CSL.evaluateLabel = function(node, state, Item, item) {
         var myterm;
@@ -11773,9 +11773,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_name.ts
-  var init_node_name = __esm({
-    "src/node_name.ts"() {
+  // src/node/name.ts
+  var init_name = __esm({
+    "src/node/name.ts"() {
       init_csl();
       CSL.Node.name = {
         build: function(state, target) {
@@ -11886,9 +11886,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_namepart.ts
-  var init_node_namepart = __esm({
-    "src/node_namepart.ts"() {
+  // src/node/namepart.ts
+  var init_namepart = __esm({
+    "src/node/namepart.ts"() {
       init_csl();
       CSL.Node["name-part"] = {
         build: function(state) {
@@ -11898,9 +11898,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_names.ts
-  var init_node_names = __esm({
-    "src/node_names.ts"() {
+  // src/node/names.ts
+  var init_names = __esm({
+    "src/node/names.ts"() {
       init_csl();
       CSL.Node.names = {
         build: function(state, target) {
@@ -12042,9 +12042,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_number.ts
-  var init_node_number = __esm({
-    "src/node_number.ts"() {
+  // src/node/number.ts
+  var init_number = __esm({
+    "src/node/number.ts"() {
       init_csl();
       CSL.Node.number = {
         build: function(state, target) {
@@ -12118,9 +12118,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_sort.ts
-  var init_node_sort = __esm({
-    "src/node_sort.ts"() {
+  // src/node/sort.ts
+  var init_sort2 = __esm({
+    "src/node/sort.ts"() {
       init_csl();
       CSL.Node.sort = {
         build: function(state, target) {
@@ -12171,9 +12171,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_substitute.ts
-  var init_node_substitute = __esm({
-    "src/node_substitute.ts"() {
+  // src/node/substitute.ts
+  var init_substitute = __esm({
+    "src/node/substitute.ts"() {
       init_csl();
       CSL.Node.substitute = {
         build: function(state, target) {
@@ -12211,9 +12211,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_text.ts
-  var init_node_text = __esm({
-    "src/node_text.ts"() {
+  // src/node/text.ts
+  var init_text = __esm({
+    "src/node/text.ts"() {
       init_csl();
       CSL.Node.text = {
         build: function(state, target) {
@@ -12571,9 +12571,9 @@ var CSL = (() => {
     }
   });
 
-  // src/node_intext.ts
-  var init_node_intext = __esm({
-    "src/node_intext.ts"() {
+  // src/node/intext.ts
+  var init_intext = __esm({
+    "src/node/intext.ts"() {
       init_csl();
       CSL.Node.intext = {
         build: function(state, target) {
@@ -12602,9 +12602,9 @@ var CSL = (() => {
     }
   });
 
-  // src/attributes.ts
+  // src/attributes/attributes.ts
   var init_attributes = __esm({
-    "src/attributes.ts"() {
+    "src/attributes/attributes.ts"() {
       init_csl();
       CSL.Attributes = {};
       CSL.Attributes["@disambiguate"] = function(state, arg) {
@@ -14003,9 +14003,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_parallel.ts
-  var init_util_parallel = __esm({
-    "src/util_parallel.ts"() {
+  // src/util/parallel.ts
+  var init_parallel = __esm({
+    "src/util/parallel.ts"() {
       init_csl();
       CSL.Parallel = function(state) {
         this.state = state;
@@ -14147,10 +14147,10 @@ var CSL = (() => {
     }
   });
 
-  // src/util.ts
+  // src/util/util.ts
   var Match;
   var init_util = __esm({
-    "src/util.ts"() {
+    "src/util/util.ts"() {
       init_csl();
       CSL.Util = {};
       Match = class {
@@ -14205,9 +14205,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_transform.ts
-  var init_util_transform = __esm({
-    "src/util_transform.ts"() {
+  // src/util/transform.ts
+  var init_transform = __esm({
+    "src/util/transform.ts"() {
       init_csl();
       CSL.Transform = function(state) {
         this.abbrevs = {};
@@ -14720,7 +14720,7 @@ var CSL = (() => {
     }
   });
 
-  // src/obj_token.ts
+  // src/obj/token.ts
   function cloneToken(token) {
     let newtok, key, pos, len;
     if ("string" === typeof token) {
@@ -14750,8 +14750,8 @@ var CSL = (() => {
     return newtok;
   }
   var Token;
-  var init_obj_token = __esm({
-    "src/obj_token.ts"() {
+  var init_token = __esm({
+    "src/obj/token.ts"() {
       init_csl();
       Token = class {
         constructor(name, tokentype, conditional) {
@@ -14792,10 +14792,10 @@ var CSL = (() => {
     }
   });
 
-  // src/obj_ambigconfig.ts
+  // src/obj/ambigconfig.ts
   var AmbigConfig;
-  var init_obj_ambigconfig = __esm({
-    "src/obj_ambigconfig.ts"() {
+  var init_ambigconfig = __esm({
+    "src/obj/ambigconfig.ts"() {
       init_csl();
       AmbigConfig = class {
         constructor() {
@@ -14817,10 +14817,10 @@ var CSL = (() => {
     }
   });
 
-  // src/obj_blob.ts
+  // src/obj/blob.ts
   var Blob;
-  var init_obj_blob = __esm({
-    "src/obj_blob.ts"() {
+  var init_blob = __esm({
+    "src/obj/blob.ts"() {
       init_csl();
       Blob = class {
         constructor(str, token, levelname) {
@@ -14876,10 +14876,10 @@ var CSL = (() => {
     }
   });
 
-  // src/obj_number.ts
+  // src/obj/number.ts
   var NumericBlob, DefaultFormatter;
-  var init_obj_number = __esm({
-    "src/obj_number.ts"() {
+  var init_number2 = __esm({
+    "src/obj/number.ts"() {
       init_csl();
       NumericBlob = class {
         constructor(state, particle, num, mother_token, id) {
@@ -14987,9 +14987,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_datenode.ts
-  var init_util_datenode = __esm({
-    "src/util_datenode.ts"() {
+  // src/util/datenode.ts
+  var init_datenode = __esm({
+    "src/util/datenode.ts"() {
       init_csl();
       CSL.Util.fixDateNode = function(parent, pos, node) {
         var form, variable, datexml, subnode, partname, attr, val, prefix, suffix, children, subchildren, display, cslid;
@@ -15078,9 +15078,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_date.ts
-  var init_util_date = __esm({
-    "src/util_date.ts"() {
+  // src/util/date.ts
+  var init_date2 = __esm({
+    "src/util/date.ts"() {
       init_csl();
       CSL.dateMacroAsSortKey = function(state, Item) {
         CSL.dateAsSortKey.call(this, state, Item, true);
@@ -15172,9 +15172,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_names.ts
-  var init_util_names = __esm({
-    "src/util_names.ts"() {
+  // src/util/names/index.ts
+  var init_names2 = __esm({
+    "src/util/names/index.ts"() {
       init_csl();
       CSL.Util.Names = {};
       CSL.Util.Names.compareNamesets = CSL.NameOutput.prototype._compareNamesets;
@@ -15372,9 +15372,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_dates.ts
-  var init_util_dates = __esm({
-    "src/util_dates.ts"() {
+  // src/util/dates.ts
+  var init_dates = __esm({
+    "src/util/dates.ts"() {
       init_csl();
       CSL.Util.Dates = {};
       CSL.Util.Dates.year = {};
@@ -15563,9 +15563,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_sort.ts
-  var init_util_sort = __esm({
-    "src/util_sort.ts"() {
+  // src/util/sort.ts
+  var init_sort3 = __esm({
+    "src/util/sort.ts"() {
       init_csl();
       CSL.Util.Sort = {};
       CSL.Util.Sort.strip_prepositions = function(str) {
@@ -15581,9 +15581,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_substitute.ts
-  var init_util_substitute = __esm({
-    "src/util_substitute.ts"() {
+  // src/util/substitute.ts
+  var init_substitute2 = __esm({
+    "src/util/substitute.ts"() {
       init_csl();
       CSL.Util.substituteStart = function(state, target) {
         var element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
@@ -15874,9 +15874,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_number.ts
-  var init_util_number = __esm({
-    "src/util_number.ts"() {
+  // src/util/number.ts
+  var init_number3 = __esm({
+    "src/util/number.ts"() {
       init_csl();
       CSL.Util.padding = function(num) {
         let m = num.match(/\s*(-{0,1}[0-9]+)/);
@@ -16678,9 +16678,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_page.ts
-  var init_util_page = __esm({
-    "src/util_page.ts"() {
+  // src/util/page.ts
+  var init_page = __esm({
+    "src/util/page.ts"() {
       init_csl();
       CSL.Util.PageRangeMangler = {};
       CSL.Util.PageRangeMangler.getFunction = function(state, rangeType) {
@@ -16869,9 +16869,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_flipflop.ts
-  var init_util_flipflop = __esm({
-    "src/util_flipflop.ts"() {
+  // src/util/flipflop.ts
+  var init_flipflop = __esm({
+    "src/util/flipflop.ts"() {
       init_csl();
       CSL.Util.FlipFlopper = function(state) {
         var _nestingState = [];
@@ -17395,9 +17395,9 @@ var CSL = (() => {
     }
   });
 
-  // src/formatters.ts
+  // src/output/formatters.ts
   var init_formatters = __esm({
-    "src/formatters.ts"() {
+    "src/output/formatters.ts"() {
       init_csl();
       CSL.Output.Formatters = (function() {
         const rexStr = `(?:\u2018|\u2019|\u201C|\u201D| "| '|"|'|[-\u2010\u2013\u2014/.,;?!:]|\\[|\\]|\\(|\\)|<span style="font-variant: small-caps;">|<span class="no(?:case|decor)">|</span>|</?(?:i|sc|b|sub|sup)>)`;
@@ -17713,10 +17713,10 @@ var CSL = (() => {
     }
   });
 
-  // src/formats.ts
+  // src/output/formats.ts
   var OutputFormats;
   var init_formats = __esm({
-    "src/formats.ts"() {
+    "src/output/formats.ts"() {
       init_csl();
       OutputFormats = class {
       };
@@ -18228,9 +18228,9 @@ var CSL = (() => {
     }
   });
 
-  // src/registry.ts
+  // src/registry/registry.ts
   var init_registry = __esm({
-    "src/registry.ts"() {
+    "src/registry/registry.ts"() {
       init_csl();
       CSL.Registry = function(state) {
         this.debug = false;
@@ -18676,9 +18676,9 @@ var CSL = (() => {
     }
   });
 
-  // src/disambig_names.ts
-  var init_disambig_names = __esm({
-    "src/disambig_names.ts"() {
+  // src/disambig/names.ts
+  var init_names3 = __esm({
+    "src/disambig/names.ts"() {
       init_csl();
       CSL.Registry.NameReg = function(state) {
         var pkey, ikey, skey, dagopt, gdropt, items, strip_periods, set_keys, evalname, delitems, addname, myitems;
@@ -18904,9 +18904,9 @@ var CSL = (() => {
     }
   });
 
-  // src/disambig_citations.ts
-  var init_disambig_citations = __esm({
-    "src/disambig_citations.ts"() {
+  // src/disambig/citations.ts
+  var init_citations = __esm({
+    "src/disambig/citations.ts"() {
       init_csl();
       CSL.Registry.CitationReg = function() {
         this.citationById = {};
@@ -18915,9 +18915,9 @@ var CSL = (() => {
     }
   });
 
-  // src/disambig_cites.ts
-  var init_disambig_cites = __esm({
-    "src/disambig_cites.ts"() {
+  // src/disambig/cites.ts
+  var init_cites = __esm({
+    "src/disambig/cites.ts"() {
       init_csl();
       CSL.Disambiguation = function(state) {
         this.state = state;
@@ -19378,9 +19378,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_modules.ts
-  var init_util_modules = __esm({
-    "src/util_modules.ts"() {
+  // src/util/modules.ts
+  var init_modules = __esm({
+    "src/util/modules.ts"() {
       init_csl();
       CSL.Engine.prototype.getJurisdictionList = function(jurisdiction) {
         var jurisdictionList = [];
@@ -19472,9 +19472,9 @@ var CSL = (() => {
     }
   });
 
-  // src/util_name_particles.ts
-  var init_util_name_particles = __esm({
-    "src/util_name_particles.ts"() {
+  // src/util/name_particles.ts
+  var init_name_particles = __esm({
+    "src/util/name_particles.ts"() {
       init_csl();
       CSL.ParticleList = /* @__PURE__ */ (function() {
         var always_dropping_1 = [[[0, 1], null]];
@@ -19824,92 +19824,92 @@ var CSL = (() => {
       init_xmldom();
       init_system();
       init_sort();
-      init_util_disambig();
-      init_util_nodes();
-      init_util_dateparser();
+      init_disambig();
+      init_nodes();
+      init_dateparser();
       init_build();
-      init_util_static_locator();
-      init_util_processor();
-      init_util_citationlabel();
-      init_api_control();
+      init_static_locator();
+      init_processor();
+      init_citationlabel();
+      init_control();
       init_queue();
       init_state();
-      init_api_cite();
-      init_api_bibliography();
-      init_util_integration();
-      init_api_update();
-      init_util_locale();
-      init_util_locale_sniff();
-      init_node_bibliography();
-      init_node_choose();
-      init_node_citation();
-      init_node_comment();
-      init_node_date();
-      init_node_datepart();
-      init_node_elseif();
-      init_node_else();
-      init_node_etal();
-      init_node_group();
-      init_node_if();
-      init_node_conditions();
-      init_node_condition();
-      init_util_conditions();
-      init_node_info();
-      init_node_institution();
-      init_node_institutionpart();
-      init_node_key();
-      init_node_label();
-      init_node_layout();
-      init_node_macro();
-      init_node_alternative();
-      init_node_alternativetext();
-      init_util_names_output();
-      init_util_names_tests();
-      init_util_names_truncate();
-      init_util_names_divide();
-      init_util_names_join();
-      init_util_names_common();
-      init_util_names_constraints();
-      init_util_names_disambig();
-      init_util_names_etalconfig();
-      init_util_names_etal();
-      init_util_names_render();
-      init_util_publishers();
-      init_util_label();
-      init_node_name();
-      init_node_namepart();
-      init_node_names();
-      init_node_number();
-      init_node_sort();
-      init_node_substitute();
-      init_node_text();
-      init_node_intext();
+      init_cite();
+      init_bibliography();
+      init_integration();
+      init_update();
+      init_locale();
+      init_locale_sniff();
+      init_bibliography2();
+      init_choose();
+      init_citation();
+      init_comment();
+      init_date();
+      init_datepart();
+      init_elseif();
+      init_else();
+      init_etal();
+      init_group();
+      init_if();
+      init_conditions();
+      init_condition();
+      init_conditions2();
+      init_info();
+      init_institution();
+      init_institutionpart();
+      init_key();
+      init_label();
+      init_layout();
+      init_macro();
+      init_alternative();
+      init_alternativetext();
+      init_output();
+      init_tests();
+      init_truncate();
+      init_divide();
+      init_join();
+      init_common();
+      init_constraints();
+      init_disambig2();
+      init_etalconfig();
+      init_etal2();
+      init_render();
+      init_publishers();
+      init_label2();
+      init_name();
+      init_namepart();
+      init_names();
+      init_number();
+      init_sort2();
+      init_substitute();
+      init_text();
+      init_intext();
       init_attributes();
       init_stack();
-      init_util_parallel();
+      init_parallel();
       init_util();
-      init_util_transform();
-      init_obj_token();
-      init_obj_ambigconfig();
-      init_obj_blob();
-      init_obj_number();
-      init_util_datenode();
-      init_util_date();
-      init_util_names();
-      init_util_dates();
-      init_util_sort();
-      init_util_substitute();
-      init_util_number();
-      init_util_page();
-      init_util_flipflop();
+      init_transform();
+      init_token();
+      init_ambigconfig();
+      init_blob();
+      init_number2();
+      init_datenode();
+      init_date2();
+      init_names2();
+      init_dates();
+      init_sort3();
+      init_substitute2();
+      init_number3();
+      init_page();
+      init_flipflop();
       init_formatters();
       init_formats();
       init_registry();
-      init_disambig_names();
-      init_disambig_citations();
-      init_disambig_cites();
-      init_util_modules();
-      init_util_name_particles();
+      init_names3();
+      init_citations();
+      init_cites();
+      init_modules();
+      init_name_particles();
       module.exports = CSL;
     }
   });
