@@ -1,6 +1,4 @@
-import { CSL } from '../csl';
-
-class Parallel {
+export class Parallel {
     state: CslState;
 
     constructor(state: CslState) {
@@ -146,5 +144,3 @@ class Parallel {
         return false;
     }
 }
-
-CSL.Parallel = Parallel;
