@@ -3,19 +3,19 @@ import { CSL } from '../csl';
 
 
 CSL.Engine.prototype.getCitationLabel = function (this: any, Item: CslItem): string {
-    var label = "";
-    var params = this.getTrigraphParams();
-    var config = params[0];
-    var myname = this.getTerm("reference", "short", 0);
+    let label = "";
+    const params = this.getTrigraphParams();
+    let config = params[0];
+    let myname = this.getTerm("reference", "short", 0);
     if ("undefined" === typeof myname) {
         myname = "reference";
     }
     myname = myname.replace(".", "");
     myname = myname.slice(0, 1).toUpperCase() + myname.slice(1);
     for (let i = 0, ilen = CSL.NAME_VARIABLES.length; i < ilen; i += 1) {
-        var n = CSL.NAME_VARIABLES[i];
+        const n = CSL.NAME_VARIABLES[i];
         if (Item[n]) {
-            var names = Item[n];
+            const names = Item[n];
             if (names.length > params.length) {
                 config = params[params.length - 1];
             } else {
@@ -25,8 +25,8 @@ CSL.Engine.prototype.getCitationLabel = function (this: any, Item: CslItem): str
                 if (j === config.authors.length) {
                     break;
                 }
-                var res = this.nameOutput.getName(names[j], "locale-translit", true);
-                var name = res.name;
+                const res = this.nameOutput.getName(names[j], "locale-translit", true);
+                const name = res.name;
                 if (name && name.family) {
                     myname = name.family;
                     myname = myname.replace(/^([ \'\u2019a-z]+\s+)/, "");
@@ -56,8 +56,8 @@ CSL.Engine.prototype.getCitationLabel = function (this: any, Item: CslItem): str
     if (!label) {
         // Try for something using title
         if (Item.title) {
-            var skipWords = this.locale[this.opt.lang].opts["skip-words"];
-            var lst = Item.title.split(/\s+/);
+            const skipWords = this.locale[this.opt.lang].opts["skip-words"];
+            let lst = Item.title.split(/\s+/);
             for (let i2 = lst.length - 1; i2 > -1; i2 -= 1) {
                 if (skipWords.indexOf(lst[i2]) > -1) {
                     lst = lst.slice(0, i2).concat(lst.slice(i2 + 1));
@@ -73,7 +73,7 @@ CSL.Engine.prototype.getCitationLabel = function (this: any, Item: CslItem): str
             label = str;
         }
     }
-    var year = "0000";
+    let year = "0000";
     if (Item.issued) {
         if (Item.issued.year) {
             year = "" + Item.issued.year;
@@ -85,14 +85,14 @@ CSL.Engine.prototype.getCitationLabel = function (this: any, Item: CslItem): str
 };
 
 CSL.Engine.prototype.getTrigraphParams = function (this: any): any[] {
-    var params: any[] = [];
-    var ilst = this.opt.trigraph.split(":");
+    const params: any[] = [];
+    const ilst = this.opt.trigraph.split(":");
     if (!this.opt.trigraph || this.opt.trigraph.slice(0, 1) !== "A") {
         CSL.error("Bad trigraph definition: " + this.opt.trigraph);
     }
     for (let i = 0, ilen = ilst.length; i < ilen; i += 1) {
         let str = ilst[i];
-        var config = { authors: [], year: 0 };
+        let config = { authors: [], year: 0 };
         for (let j = 0, jlen = str.length; j < jlen; j += 1) {
             switch (str.slice(j, j + 1)) {
             case "A":

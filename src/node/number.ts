@@ -31,7 +31,7 @@ CSL.Node.number = {
             if (this.variables.length === 0) {
                 return;
             }
-            var varname;
+            let varname;
             varname = this.variables[0];
             if ("undefined" === typeof item) {
                 item = {};
@@ -53,7 +53,7 @@ CSL.Node.number = {
                 state.tmp.renders_collection_number = true;
             }
 
-            var node = this;
+            const node = this;
 
             if (state.tmp.group_context.tip.force_suppress) {
                 return;
@@ -69,7 +69,7 @@ CSL.Node.number = {
             }
 
             if (this.substring) {
-                var val = Item[varname].slice(this.substring);
+                const val = Item[varname].slice(this.substring);
                 state.output.append(val, node);
             } else {
                 CSL.Util.outputNumericField(state, varname, Item.id);

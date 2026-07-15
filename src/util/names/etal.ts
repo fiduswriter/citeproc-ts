@@ -2,9 +2,9 @@ import { CSL } from '../../csl';
 /*global CSL: true */
 
 CSL.NameOutput.prototype.setEtAlParameters = function (this: any): void {
-    var i: number, ilen: number, j: number, jlen: number;
+    let i: number, ilen: number, j: number, jlen: number;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
-        var v = this.variables[i];
+        const v = this.variables[i];
         if ("undefined" === typeof this.etal_spec[v]) {
             this.etal_spec[v] = { freeters: 0, institutions: 0, persons: [] };
         }
@@ -25,7 +25,7 @@ CSL.NameOutput.prototype.setEtAlParameters = function (this: any): void {
 };
 
 CSL.NameOutput.prototype._setEtAlParameter = function (this: any, type: any, v: any, j?: any): void {
-    var lst: any, count: any;
+    let lst: any, count: any;
     if (type === "persons") {
         lst = this.persons[v][j];
         count = this.persons_count[v][j];

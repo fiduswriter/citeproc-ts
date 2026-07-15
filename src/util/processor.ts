@@ -17,7 +17,7 @@ CSL.substituteOne = function (template: string): (state: CslState, list: any) =>
  */
 CSL.substituteTwo = function (template: string): (param: any) => (state: CslState, list: any) => string {
     return function (param: any): (state: CslState, list: any) => string {
-        var template2 = template.replace("%%PARAM%%", param);
+        const template2 = template.replace("%%PARAM%%", param);
         return function (state: CslState, list: any): string {
             if (!list) {
                 return "";
@@ -33,7 +33,7 @@ CSL.substituteTwo = function (template: string): (param: any) => (state: CslStat
  * @param {String} mode Either "html" or "rtf", eventually.
  */
 CSL.Mode = function (mode: string): any {
-    var decorations: any, params: any, param: any, func: any, val: any, args: any;
+    let decorations: any, params: any, param: any, func: any, val: any, args: any;
     decorations = {};
     params = CSL.Output.Formats[mode];
     for (let param in params) {
@@ -82,7 +82,7 @@ CSL.setDecorations = function (state: CslState, attributes: any): any {
     let ret: any, key: any, pos: any;
     ret = [];
     for (let pos = 0; pos < CSL.FORMAT_KEY_SEQUENCE.length; pos += 1) {
-        var key2 = CSL.FORMAT_KEY_SEQUENCE[pos];
+        const key2 = CSL.FORMAT_KEY_SEQUENCE[pos];
         if (attributes[key2]) {
             ret.push([key2, attributes[key2]]);
             delete attributes[key2];
@@ -92,25 +92,25 @@ CSL.setDecorations = function (state: CslState, attributes: any): any {
 };
 
 CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
-    var matchRex = new RegExp("(" + rexStr + ")", "g");
-    var splitRex = new RegExp(rexStr, "g");
+    const matchRex = new RegExp("(" + rexStr + ")", "g");
+    const splitRex = new RegExp(rexStr, "g");
     this.split = function (str: any): any {
         if (stringMangler) {
             str = stringMangler(str);
         }
-        var match = str.match(matchRex);
+        const match = str.match(matchRex);
         if (!match) {
             return {
                 tags: [],
                 strings: [str]
             };
         }
-        var split = str.split(splitRex);
+        const split = str.split(splitRex);
         for (let i = match.length - 1; i > -1; i -= 1) {
             if (typeof match[i] === "number") {
                 match[i] = "";
             }
-            var tag = match[i];
+            const tag = match[i];
             if (tag === "\'" && split[i + 1].length > 0 && split[i + 1][0] !== " ") {
                 split[i + 1] = match[i] + split[i + 1];
                 match[i] = "";
@@ -123,7 +123,7 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
         };
     };
     this.join = function (obj: any): string {
-        var lst = obj.strings.slice(-1);
+        const lst = obj.strings.slice(-1);
         for (let i = obj.tags.length - 1; i > -1; i -= 1) {
             lst.push(obj.tags[i]);
             lst.push(obj.strings[i]);
@@ -135,8 +135,8 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
 
 CSL.Engine.prototype.normalDecorIsOrphan = function (this: any, blob: any, params: any): boolean {
     if (params[1] === "normal") {
-        var use_param = false;
-        var all_the_decor: any;
+        let use_param = false;
+        let all_the_decor: any;
         if (this.tmp.area === "citation") {
             all_the_decor = [this.citation.opt.layout_decorations].concat(blob.alldecor);
         } else {

@@ -15,9 +15,9 @@ CSL.Util.FlipFlopper = function(state) {
      * INTERNAL
      */
 
-    var _nestingState = [];
+    const _nestingState = [];
 
-    var _nestingData = {
+    const _nestingData = {
         "<span class=\"nocase\">": {
             type: "nocase",
             opener: "<span class=\"nocase\">",
@@ -131,10 +131,10 @@ CSL.Util.FlipFlopper = function(state) {
     _nestingData["(\""] = _nestingData[" \""];
     _nestingData["(\'"] = _nestingData[" \'"];
 
-    var localeOpenQuote = state.getTerm("open-quote");
-    var localeCloseQuote = state.getTerm("close-quote");
-    var localeOpenInnerQuote = state.getTerm("open-inner-quote");
-    var localeCloseInnerQuote = state.getTerm("close-inner-quote");
+    const localeOpenQuote = state.getTerm("open-quote");
+    const localeCloseQuote = state.getTerm("close-quote");
+    const localeOpenInnerQuote = state.getTerm("open-inner-quote");
+    const localeCloseInnerQuote = state.getTerm("close-inner-quote");
 
     // If locale uses straight quotes, do not register them. All will be well.
     // Otherwise, clone straight-quote data, and adjust.
@@ -151,7 +151,7 @@ CSL.Util.FlipFlopper = function(state) {
     }
     
     function _setOuterQuoteForm(quot) {
-        var flip = {
+        const flip = {
             " \'": " \"",
             " \"": " \'",
             "(\"": "(\'",
@@ -162,8 +162,8 @@ CSL.Util.FlipFlopper = function(state) {
     }
     
     function _getNestingOpenerParams(opener) {
-        var openers = [];
-        var keys = Object.keys(_nestingData);
+        const openers = [];
+        const keys = Object.keys(_nestingData);
         for (let i = 0, l = keys.length; i < l; i++) {
             let key = keys[i];
             if (_nestingData[opener].type !== "quote" || !_nestingData[opener]) {
@@ -177,9 +177,9 @@ CSL.Util.FlipFlopper = function(state) {
         return ret;
     }
 
-    var _nestingParams = (function() {
+    const _nestingParams = (function() {
         let ret = {};
-        var keys = Object.keys(_nestingData);
+        const keys = Object.keys(_nestingData);
         for (let i = 0, l = keys.length; i < l; i++) {
             let key = keys[i];
             ret[key] = _getNestingOpenerParams(key);
@@ -187,21 +187,21 @@ CSL.Util.FlipFlopper = function(state) {
         return ret;
     }());
 
-    var _tagRex = (function() {
-        var openers = [];
-        var closers = [];
-        var vals = {};
+    const _tagRex = (function() {
+        const openers = [];
+        const closers = [];
+        const vals = {};
         for (let opener in _nestingParams) {
             openers.push(opener);
             vals[_nestingParams[opener].closer] = true;
         }
-        var keys = Object.keys(vals);
+        const keys = Object.keys(vals);
         for (let i = 0, l = keys.length; i < l; i++) {
-            var closer = keys[i];
+            const closer = keys[i];
             closers.push(closer);
         }
 
-        var all = openers.concat(closers).map(function(str){
+        const all = openers.concat(closers).map(function(str){
             return str.replace("(", "\\(");
         }).join("|");
 
@@ -216,7 +216,7 @@ CSL.Util.FlipFlopper = function(state) {
     }());
 
     function _tryOpen(tag, pos) {
-        var params = _nestingState[_nestingState.length - 1];
+        const params = _nestingState[_nestingState.length - 1];
         if (!params || tag.match(params.opener)) {
             _nestingState.push({
                 type: _nestingParams[tag].type,
@@ -240,7 +240,7 @@ CSL.Util.FlipFlopper = function(state) {
     }
     
     function _tryClose(tag, pos) {
-        var params = _nestingState[_nestingState.length - 1];
+        const params = _nestingState[_nestingState.length - 1];
         if (params && tag === params.closer) {
             _nestingState.pop();
             if (params.type === "nocase") {
@@ -275,12 +275,12 @@ CSL.Util.FlipFlopper = function(state) {
     }
     
     function _doppelString(str) {
-        var forcedSpaces = [];
+        const forcedSpaces = [];
         // Normalize markup
         str = str.replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?\"[^>]*(>)/g, "$1 $2$3;\"$4");
         str = str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3");
 
-        var match = str.match(_tagRex.matchAll);
+        const match = str.match(_tagRex.matchAll);
         if (!match) {
             return {
                 tags: [],
@@ -288,7 +288,7 @@ CSL.Util.FlipFlopper = function(state) {
                 forcedSpaces: []
             };
         }
-        var split = str.split(_tagRex.splitAll);
+        const split = str.split(_tagRex.splitAll);
 
         for (let i=0,ilen=match.length-1;i<ilen;i++) {
             if (_nestingData[match[i]]) {
@@ -307,28 +307,28 @@ CSL.Util.FlipFlopper = function(state) {
         };
     }
 
-    var TagReg = function(blob) {
-        var _stack = [];
+    const TagReg = function(blob) {
+        const _stack = [];
         this.set = function (tag) {
-            var attr = _nestingData[tag].attr;
-            var decor = null;
+            const attr = _nestingData[tag].attr;
+            let decor = null;
             for (let i=_stack.length-1;i>-1;i--) {
-                var _decor = _stack[i];
+                const _decor = _stack[i];
                 if (_decor[0] === attr) {
                     decor = _decor;
                     break;
                 }
             }
             if (!decor) {
-                var allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(blob.alldecor);
+                const allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(blob.alldecor);
                 outer:
                 for (let i=allTheDecor.length-1;i>-1;i--) {
-                    var decorset = allTheDecor[i];
+                    const decorset = allTheDecor[i];
                     if (!decorset) {
                         continue;
                     }
                     for (let j=decorset.length-1;j>-1;j--) {
-                        var _decor = decorset[j];
+                        const _decor = decorset[j];
                         if (_decor[0] === attr) {
                             decor = _decor;
                             break outer;
@@ -363,8 +363,8 @@ CSL.Util.FlipFlopper = function(state) {
     }
 
     function _undoppelToQueue(blob, doppel, leadingSpace) {
-        var firstString = true;
-        var tagReg = new TagReg(blob);
+        let firstString = true;
+        const tagReg = new TagReg(blob);
         blob.blobs = [];
         function Stack (blob) {
             this.stack = [blob];
@@ -382,13 +382,13 @@ CSL.Util.FlipFlopper = function(state) {
                 this.latest = this.stack[this.stack.length-1];
                 if (decor) {
                     if ("string" === typeof this.latest.blobs) {
-                        var child = new (CSL.Blob as any)();
+                        const child = new (CSL.Blob as any)();
                         child.blobs = this.latest.blobs;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs = [child];
                     }
-                    var tok = new CSL.Token();
-                    var newblob = new CSL.Blob(null, tok);
+                    const tok = new CSL.Token();
+                    const newblob = new CSL.Blob(null, tok);
                     newblob.alldecor = this.latest.alldecor.slice();
                     
                     // AHA! Bad naming. There is _decorset from the list, and
@@ -396,16 +396,16 @@ CSL.Util.FlipFlopper = function(state) {
                     // names and fix it up.
                     
                     if (decor[0] === "@class" && decor[1] === "nodecor") {
-                        var newdecorset = [];
-                        var seen = {};
-                        var allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(newblob.alldecor);
+                        const newdecorset = [];
+                        const seen = {};
+                        const allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(newblob.alldecor);
                         for (let i=allTheDecor.length-1;i>-1;i--) {
-                            var _decorset = allTheDecor[i];
+                            const _decorset = allTheDecor[i];
                             if (!_decorset) {
                                 continue;
                             }
                             for (let j=_decorset.length-1;j>-1;j--) {
-                                var _olddecor = _decorset[j];
+                                const _olddecor = _decorset[j];
                                 if (["@font-weight", "@font-style", "@font-variant"].indexOf(_olddecor[0]) > -1
                                     && !seen[_olddecor[0]]) {
                                     
@@ -427,15 +427,15 @@ CSL.Util.FlipFlopper = function(state) {
                     this.stack.push(newblob);
                     this.latest = newblob;
                     if (str) {
-                        var tok = new CSL.Token();
-                        var newblob = new CSL.Blob(null, tok);
+                        const tok = new CSL.Token();
+                        const newblob = new CSL.Blob(null, tok);
                         newblob.blobs = str;
                         newblob.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs.push(newblob);
                     }
                 } else {
                     if (str) {
-                        var child = new (CSL.Blob as any)();
+                        const child = new (CSL.Blob as any)();
                         child.blobs = str;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs.push(child);
@@ -446,7 +446,7 @@ CSL.Util.FlipFlopper = function(state) {
                 this.stack.pop();
             };
         }
-        var stack = new Stack(blob);
+        const stack = new Stack(blob);
         if (doppel.strings.length) {
             let str = doppel.strings[0];
             if (leadingSpace) {
@@ -455,7 +455,7 @@ CSL.Util.FlipFlopper = function(state) {
             stack.addStyling(str);
         }
         for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
-            var tag = doppel.tags[i];
+            const tag = doppel.tags[i];
             let str = doppel.strings[i+1];
             if (tag.match(_tagRex.open)) {
                 tagReg.set(tag);
@@ -474,27 +474,27 @@ CSL.Util.FlipFlopper = function(state) {
 
     this.processTags = function (blob) {
         let str = blob.blobs;
-        var leadingSpace = false;
+        let leadingSpace = false;
         if (str.slice(0, 1) === " " && !str.match(/^\s+[\'\"]/)) {
             leadingSpace = true;
         }
-        var rex = new RegExp("(" + CSL.ROMANESQUE_REGEXP.source + ")\u2019(" + CSL.ROMANESQUE_REGEXP.source + ")", "g");
+        const rex = new RegExp("(" + CSL.ROMANESQUE_REGEXP.source + ")\u2019(" + CSL.ROMANESQUE_REGEXP.source + ")", "g");
         str = " " + str.replace(rex, "$1\'$2");
-        var doppel = _doppelString(str);
+        const doppel = _doppelString(str);
         if (doppel.tags.length === 0) {
             return;
         }
-        var quoteFormSeen = false;
+        let quoteFormSeen = false;
         
     	for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
-            var tag = doppel.tags[i];
+            const tag = doppel.tags[i];
             let str = doppel.strings[i+1];
-            var apostrophe = _apostropheForce(tag, str);
+            const apostrophe = _apostropheForce(tag, str);
             if (apostrophe) {
                 doppel.strings[i+1] = apostrophe + doppel.strings[i+1];
                 doppel.tags[i] = "";
             } else {
-                var tagInfo;
+                let tagInfo;
                 while (true) {
                     tagInfo = _pushNestingState(tag, i);
                     if (tagInfo) {
@@ -505,7 +505,7 @@ CSL.Util.FlipFlopper = function(state) {
                                 doppel.strings[i+1] = "\u2019" + doppel.strings[i+1];
                                 doppel.tags[i] = "";
                             } else {
-                                var failedTag = doppel.tags[tagInfo.fixtag];
+                                let failedTag = doppel.tags[tagInfo.fixtag];
                                 if (doppel.forcedSpaces[tagInfo.fixtag-1]) {
                                     failedTag = failedTag.slice(1);
                                 }
@@ -540,8 +540,8 @@ CSL.Util.FlipFlopper = function(state) {
         }
         // Stray tags are neutralized here
         for (let i=_nestingState.length-1;i>-1;i--) {
-            var tagPos = _nestingState[i].pos;
-            var tag = doppel.tags[tagPos];
+            const tagPos = _nestingState[i].pos;
+            const tag = doppel.tags[tagPos];
             if (tag === " \'" || tag === "\'") {
 
                 doppel.strings[tagPos+1] = " \u2019" + doppel.strings[tagPos+1];
@@ -561,8 +561,8 @@ CSL.Util.FlipFlopper = function(state) {
         // Sniff initial (outer) quote form (single or double) and configure parser
         // Also add leading spaces.
         for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
-            var tag = doppel.tags[i];
-            var forcedSpace = doppel.forcedSpaces[i-1];
+            const tag = doppel.tags[i];
+            const forcedSpace = doppel.forcedSpaces[i-1];
             if ([" \"", " \'", "(\"", "(\'"].indexOf(tag) > -1) {
                 if (!quoteFormSeen) {
                     _setOuterQuoteForm(tag);

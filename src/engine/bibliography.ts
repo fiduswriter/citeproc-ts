@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 /*global CSL: true */
 
 CSL.Engine.prototype.makeBibliography = function (bibsection) {
-    var debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
+    let debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
     debug = false;
     if (!bibsection && (this.bibliography.opt.exclude_types || this.bibliography.opt.exclude_with_fields)) {
         bibsection = {
@@ -10,7 +10,7 @@ CSL.Engine.prototype.makeBibliography = function (bibsection) {
         };
         if (this.bibliography.opt.exclude_types) {
             for (let i in this.bibliography.opt.exclude_types) {
-                var val = this.bibliography.opt.exclude_types[i];
+                const val = this.bibliography.opt.exclude_types[i];
                 bibsection.exclude.push({
                     field: "type",
                     value: val
@@ -19,7 +19,7 @@ CSL.Engine.prototype.makeBibliography = function (bibsection) {
         }
         if (this.bibliography.opt.exclude_with_fields) {
             for (let i in this.bibliography.opt.exclude_with_fields) {
-                var field = this.bibliography.opt.exclude_with_fields[i];
+                const field = this.bibliography.opt.exclude_with_fields[i];
                 bibsection.exclude.push({
                     field: field, value: true
                 });
@@ -62,7 +62,7 @@ CSL.Engine.prototype.makeBibliography = function (bibsection) {
     entry_strings = ret[1];
 
     // For paged returns
-    var done = ret[2];
+    let done = ret[2];
 
     params = {
         "maxoffset": 0,
@@ -154,7 +154,7 @@ CSL.getBibliographyEntries = function (bibsection) {
     skips = {};
 
     // For paged returns
-    var page_item_count;
+    let page_item_count;
     if (bibsection && bibsection.page_start && bibsection.page_length) {
         page_item_count = 0;
         if (bibsection.page_start !== true) {
@@ -167,9 +167,9 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
     }
 
-    var processed_item_ids = [];
+    const processed_item_ids = [];
 
-    var consolidatedIDs = {};
+    const consolidatedIDs = {};
     this.tmp.container_item_count = {};
     input = input.filter(o => {
         let ret = o;
@@ -393,7 +393,7 @@ CSL.getBibliographyEntries = function (bibsection) {
         res = this.output.string(this, this.output.queue)[0];
         
         if (!res && this.opt.update_mode === CSL.NUMERIC) {
-            var err = (ret.length + 1) + ". [CSL STYLE ERROR: reference with no printed form.]";
+            const err = (ret.length + 1) + ". [CSL STYLE ERROR: reference with no printed form.]";
             res = CSL.Output.Formats[this.opt.mode]["@bibliography/entry"](this, err);
         }
         if (res) {
@@ -401,10 +401,10 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
     }
 
-    var done = false;
+    let done = false;
     if (bibsection && bibsection.page_start && bibsection.page_length) {
-        var last_expected_id = input.slice(-1)[0];
-        var last_seen_id = processed_item_ids.slice(-1)[0];
+        const last_expected_id = input.slice(-1)[0];
+        const last_seen_id = processed_item_ids.slice(-1)[0];
         if (!last_expected_id || !last_seen_id || last_expected_id == last_seen_id) {
             done = true;
         }

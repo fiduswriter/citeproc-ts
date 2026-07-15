@@ -5,9 +5,9 @@ import { CSL } from '../../csl';
 /*global CSL: true */
 
 CSL.NameOutput.prototype.disambigNames = function (this: any): void {
-    var pos: any;
+    let pos: any;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
-        var v = this.variables[i];
+        const v = this.variables[i];
         pos = this.nameset_base + i;
         if (this.freeters[v].length) {
             this._runDisambigNames(this.freeters[v], pos);
@@ -31,7 +31,7 @@ CSL.NameOutput.prototype.disambigNames = function (this: any): void {
 };
 
 CSL.NameOutput.prototype._runDisambigNames = function (this: any, lst: any, pos: any): void {
-    var chk: any, myform: any, myinitials: any, param: any, i: any, ilen: any, paramx: any;
+    let chk: any, myform: any, myinitials: any, param: any, i: any, ilen: any, paramx: any;
     for (let i = 0, ilen = lst.length; i < ilen; i += 1) {
         if (!lst[i].given && !lst[i].family) {
             continue;
@@ -56,7 +56,7 @@ CSL.NameOutput.prototype._runDisambigNames = function (this: any, lst: any, pos:
         myform = this.state.inheritOpt(this.name, "form", "name-form", "long");
         paramx = this.state.registry.namereg.evalname("" + this.Item.id, lst[i], i, 0, myform, myinitials);
         if (this.state.tmp.disambig_request) {
-            var val = this.state.tmp.disambig_settings.givens[pos][i];
+            let val = this.state.tmp.disambig_settings.givens[pos][i];
             if (val === 1 &&
                 this.state.citation.opt["givenname-disambiguation-rule"] === "by-cite" &&
                 ("undefined" === typeof this.state.inheritOpt(this.name, "initialize-with")

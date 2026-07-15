@@ -22,7 +22,7 @@ CSL.Node.date = {
                 func = CSL.dateMacroAsSortKey;
             } else {
                 func = function (state, Item, item) {
-                    var dp;
+                    let dp;
                     state.tmp.element_rendered_ok = false;
                     state.tmp.donesies = [];
                     state.tmp.dateparts = [];
@@ -143,7 +143,7 @@ CSL.Node.date = {
                         if (state.tmp.date_object.hasOwnProperty(key)) {
                             if (key.slice(0, 4) === "year") {
                                 state.tmp.issued_date = {};
-                                var lst = state.output.current.mystack.slice(-2)[0].blobs;
+                                const lst = state.output.current.mystack.slice(-2)[0].blobs;
                                 state.tmp.issued_date.list = lst;
                                 state.tmp.issued_date.pos = lst.length - 1;
                             }

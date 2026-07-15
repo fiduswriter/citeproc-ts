@@ -123,23 +123,23 @@ interface CSLNamespace {
  * Ambient globals referenced by environment shims and not provided by the
  * configured lib (``ES2018``).
  */
-declare var console: { log(...args: any[]): void; [key: string]: any };
+declare const console: { log(...args: any[]): void; [key: string]: any };
 declare function dump(...args: any[]): void;
-declare var Zotero: any;
-declare var Components: any;
+declare const Zotero: any;
+declare const Components: any;
 
 /**
  * Host-runtime globals (Rhino/Narwhal/SpiderMonkey) used by a handful of
  * modules.  They are never present in the bundled browser/CommonJS builds, so
  * they are typed as ``any``.
  */
-declare var DOMParser: any;
-declare var ActiveXObject: any;
-declare var XMLHttpRequest: any;
-declare var marknote: any;
+declare let DOMParser: any;
+declare const ActiveXObject: any;
+declare const XMLHttpRequest: any;
+declare const marknote: any;
 declare function XML(str: string): any;
 declare function readFile(...args: any[]): any;
 declare function snarf(...args: any[]): any;
 declare function read(...args: any[]): any;
-declare var load: any;
+declare const load: any;
 declare function print(...args: any[]): void;

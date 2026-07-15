@@ -7,8 +7,8 @@ CSL.Node.key = {
         target = state[state.build.root + "_sort"].tokens;
 
         let func;
-        var debug = false;
-        var start_key = new CSL.Token("key", CSL.START);
+        const debug = false;
+        const start_key = new CSL.Token("key", CSL.START);
 
         state.tmp.root = state.build.root;
 
@@ -32,7 +32,7 @@ CSL.Node.key = {
         start_key.execs.push(func);
 
         // sort direction
-        var sort_direction = [];
+        const sort_direction = [];
         if (this.strings.sort_direction === CSL.DESCENDING) {
             //print("sort: descending on "+state.tmp.area);
             sort_direction.push(1);
@@ -69,17 +69,17 @@ CSL.Node.key = {
         //
         // ops to initialize the key's output structures
         if (this.variables.length) {
-            var variable = this.variables[0];
+            const variable = this.variables[0];
             if (CSL.NAME_VARIABLES.indexOf(variable) > -1) {
                 //
                 // Start tag
-                var names_start_token = new CSL.Token("names", CSL.START);
+                const names_start_token = new CSL.Token("names", CSL.START);
                 names_start_token.tokentype = CSL.START;
                 names_start_token.variables = this.variables;
                 CSL.Node.names.build.call(names_start_token, state, target);
                 //
                 // Name tag
-                var name_token = new CSL.Token("name", CSL.SINGLETON);
+                const name_token = new CSL.Token("name", CSL.SINGLETON);
                 name_token.tokentype = CSL.SINGLETON;
                 name_token.strings["name-as-sort-order"] = "all";
                 name_token.strings["sort-separator"] = " ";
@@ -89,16 +89,16 @@ CSL.Node.key = {
                 CSL.Node.name.build.call(name_token, state, target);
                 //
                 // Institution tag
-                var institution_token = new CSL.Token("institution", CSL.SINGLETON);
+                const institution_token = new CSL.Token("institution", CSL.SINGLETON);
                 institution_token.tokentype = CSL.SINGLETON;
                 CSL.Node.institution.build.call(institution_token, state, target);
                 //
                 // End tag
-                var names_end_token = new CSL.Token("names", CSL.END);
+                const names_end_token = new CSL.Token("names", CSL.END);
                 names_end_token.tokentype = CSL.END;
                 CSL.Node.names.build.call(names_end_token, state, target);
             } else {
-                var single_text = new CSL.Token("text", CSL.SINGLETON);
+                const single_text = new CSL.Token("text", CSL.SINGLETON);
                 single_text.strings.sort_direction = this.strings.sort_direction;
                 single_text.dateparts = this.dateparts;
                 if (CSL.NUMERIC_VARIABLES.indexOf(variable) > -1) {
@@ -114,10 +114,11 @@ CSL.Node.key = {
                                     state.bibliography_sort.opt.citation_number_sort_direction = CSL.ASCENDING;
                                 }
                             }
+                            let num;
                             if (state.tmp.area === "citation_sort" && state.bibliography_sort.tmp.citation_number_map) {
-                                var num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
+                                num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
                             } else {
-                                var num = state.registry.registry[Item.id].seq;
+                                num = state.registry.registry[Item.id].seq;
                             }
                             if (num) {
                                 // Code currently in util_number.js
@@ -127,7 +128,7 @@ CSL.Node.key = {
                         };
                     } else {
                         func = function (state, Item) {
-                            var num = false;
+                            let num = false;
                             num = Item[variable];
                             // XXX What if this is NaN?
                             if (num) {
@@ -139,28 +140,28 @@ CSL.Node.key = {
                     }
                 } else if (variable === "citation-label") {
                     func = function (state, Item) {
-                        var trigraph = state.getCitationLabel(Item);
+                        const trigraph = state.getCitationLabel(Item);
                         state.output.append(trigraph, this);
                     };
                 } else if (CSL.DATE_VARIABLES.indexOf(variable) > -1) {
                     func = CSL.dateAsSortKey;
                     single_text.variables = this.variables;
                 } else if ("title" === variable) {
-                    var abbrevfam = "title";
-                    var abbrfall = false;
-                    var altvar = false;
-                    var transfall = true;
+                    const abbrevfam = "title";
+                    const abbrfall = false;
+                    const altvar = false;
+                    const transfall = true;
                     func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
                 } else if ("court-class" === variable) {
                     func = function(state, Item, item) {
                         CSL.INIT_JURISDICTION_MACROS(state, Item, item, "juris-main")
                         // true is for sortKey mode
-                        var cls = CSL.GET_COURT_CLASS(state, Item, true);
+                        const cls = CSL.GET_COURT_CLASS(state, Item, true);
                         state.output.append(cls, "empty");
                     }
                 } else {
                     func = function (state, Item) {
-                        var varval = Item[variable];
+                        const varval = Item[variable];
                         state.output.append(varval, "empty");
                     };
                 }
@@ -170,7 +171,7 @@ CSL.Node.key = {
         } else { // macro
             //
             // if it's not a variable, it's a macro
-            var token = new CSL.Token("text", CSL.SINGLETON);
+            const token = new CSL.Token("text", CSL.SINGLETON);
             token.strings.sort_direction = this.strings.sort_direction;
             token.postponed_macro = this.postponed_macro;
             CSL.expandMacro.call(state, token, target);
@@ -179,7 +180,7 @@ CSL.Node.key = {
         // ops to output the key string result to an array go
         // on the closing "key" tag before it is pushed.
         // Do not close the level.
-        var end_key = new CSL.Token("key", CSL.END);
+        const end_key = new CSL.Token("key", CSL.END);
 
         // Eliminated at revision 1.0.159.
         // Was causing non-fatal error "wanted empty but found group".
@@ -191,7 +192,7 @@ CSL.Node.key = {
         
         // store key for use
         func = function (state) {
-            var keystring = state.output.string(state, state.output.queue);
+            let keystring = state.output.string(state, state.output.queue);
             if (state.sys.normalizeUnicode) {
                 keystring = state.sys.normalizeUnicode(keystring);
             }
@@ -222,7 +223,7 @@ CSL.Node.key = {
                 state[state.build.area].opt.sort_directions.push([-1,1]);
                 func = function (state, Item) {
                     // year-suffix Key
-                    var year_suffix = state.registry.registry[Item.id].disambig.year_suffix;
+                    let year_suffix = state.registry.registry[Item.id].disambig.year_suffix;
                     if (!year_suffix) {
                         year_suffix = 0;
                     }

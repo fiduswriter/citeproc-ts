@@ -1,17 +1,17 @@
 import { CSL } from '../csl';
 CSL.ParticleList = (function () {
-    var always_dropping_1 = [[[0, 1], null]];
-    var always_dropping_3 = [[[0, 3], null]];
-    var always_non_dropping_1 = [[null, [0, 1]]];
-    var always_non_dropping_2 = [[null, [0, 2]]];
-    var always_non_dropping_3 = [[null, [0, 3]]];
-    var either_1 = [[null, [0, 1]], [[0, 1], null]];
-    var either_2 = [[null, [0, 2]], [[0, 2], null]];
-    var either_1_dropping_best = [[[0, 1], null], [null, [0, 1]]];
-    var either_2_dropping_best = [[[0, 2], null], [null, [0, 2]]];
-    var either_3_dropping_best = [[[0, 3], null], [null, [0, 3]]];
-    var non_dropping_2_alt_dropping_1_non_dropping_1 = [[null, [0, 2]], [[0, 1], [1, 2]]];
-    var PARTICLES = [
+    const always_dropping_1 = [[[0, 1], null]];
+    const always_dropping_3 = [[[0, 3], null]];
+    const always_non_dropping_1 = [[null, [0, 1]]];
+    const always_non_dropping_2 = [[null, [0, 2]]];
+    const always_non_dropping_3 = [[null, [0, 3]]];
+    const either_1 = [[null, [0, 1]], [[0, 1], null]];
+    const either_2 = [[null, [0, 2]], [[0, 2], null]];
+    const either_1_dropping_best = [[[0, 1], null], [null, [0, 1]]];
+    const either_2_dropping_best = [[[0, 2], null], [null, [0, 2]]];
+    const either_3_dropping_best = [[[0, 3], null], [null, [0, 3]]];
+    const non_dropping_2_alt_dropping_1_non_dropping_1 = [[null, [0, 2]], [[0, 1], [1, 2]]];
+    const PARTICLES = [
         ["'s", always_non_dropping_1],
         ["'s-", always_non_dropping_1],
         ["'t", always_non_dropping_1],
@@ -240,11 +240,11 @@ CSL.ParticleList = (function () {
 
 CSL.parseParticles = (function () {
     function splitParticles(nameValue: any, firstNameFlag?: any, caseOverride?: any): any {
-        var origNameValue = nameValue;
+        let origNameValue = nameValue;
         nameValue = caseOverride ? nameValue.toLowerCase() : nameValue;
-        var particleList: any[] = [];
-        var rex: any;
-        var hasParticle: any;
+        const particleList: any[] = [];
+        let rex: any;
+        let hasParticle: any;
         if (firstNameFlag) {
             nameValue = nameValue.split("").reverse().join("");
             rex = CSL.PARTICLE_GIVEN_REGEXP;
@@ -253,8 +253,8 @@ CSL.parseParticles = (function () {
         }
         let m = nameValue.match(rex);
         while (m) {
-            var m1 = firstNameFlag ? m[1].split("").reverse().join("") : m[1];
-            var firstChar = m ? m1 : false;
+            const m1 = firstNameFlag ? m[1].split("").reverse().join("") : m[1];
+            let firstChar = m ? m1 : false;
             firstChar = firstChar ? m1.replace(/^[-\'\u02bb\u2019\s]*(.).*$/, "$1") : false;
             hasParticle = firstChar ? firstChar.toUpperCase() !== firstChar : false;
             if (!hasParticle) {
@@ -290,7 +290,7 @@ CSL.parseParticles = (function () {
         return [hasParticle, nameValue, particleList];
     }
     function trimLast(str: any): any {
-        var lastChar = str.slice(-1);
+        const lastChar = str.slice(-1);
         str = str.trim();
         if (lastChar === " " && ["\'", "\u2019"].indexOf(str.slice(-1)) > -1) {
             str += " ";
@@ -301,9 +301,9 @@ CSL.parseParticles = (function () {
         if (!nameObj.suffix && nameObj.given) {
             let m = nameObj.given.match(/(\s*,!*\s*)/);
             if (m) {
-                var idx = nameObj.given.indexOf(m[1]);
-                var possible_suffix = nameObj.given.slice(idx + m[1].length);
-                var possible_comma = nameObj.given.slice(idx, idx + m[1].length).replace(/\s*/g, "");
+                const idx = nameObj.given.indexOf(m[1]);
+                const possible_suffix = nameObj.given.slice(idx + m[1].length);
+                const possible_comma = nameObj.given.slice(idx, idx + m[1].length).replace(/\s*/g, "");
                 if (possible_suffix.replace(/\./g, "") === "et al" && !nameObj["dropping-particle"]) {
                     nameObj["dropping-particle"] = possible_suffix;
                     nameObj["comma-dropping-particle"] = ",";
@@ -318,20 +318,20 @@ CSL.parseParticles = (function () {
         }
     }
     return function (nameObj: any): void {
-        var res = splitParticles(nameObj.family);
-        var lastNameValue = res[1];
-        var lastParticleList = res[2];
+        const res = splitParticles(nameObj.family);
+        const lastNameValue = res[1];
+        const lastParticleList = res[2];
         nameObj.family = lastNameValue;
-        var nonDroppingParticle = trimLast(lastParticleList.join(""));
+        const nonDroppingParticle = trimLast(lastParticleList.join(""));
         if (nonDroppingParticle) {
             nameObj["non-dropping-particle"] = nonDroppingParticle;
         }
         parseSuffix(nameObj);
-        var res2 = splitParticles(nameObj.given, true);
-        var firstNameValue = res2[1];
-        var firstParticleList = res2[2];
+        const res2 = splitParticles(nameObj.given, true);
+        const firstNameValue = res2[1];
+        const firstParticleList = res2[2];
         nameObj.given = firstNameValue;
-        var droppingParticle = firstParticleList.join("").trim();
+        const droppingParticle = firstParticleList.join("").trim();
         if (droppingParticle) {
             nameObj["dropping-particle"] = droppingParticle;
         }

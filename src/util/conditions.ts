@@ -28,7 +28,7 @@ CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
             func = function (this: CslNode, state: CslState): void {
                 state.tmp.condition_counter--;
                 if (state.tmp.condition_lang_counter_arr.length > 0) {
-                    var counter = state.tmp.condition_lang_counter_arr.slice(-1)[0];
+                    const counter = state.tmp.condition_lang_counter_arr.slice(-1)[0];
                     if (counter === state.tmp.condition_counter) {
                         state.opt.lang = state.tmp.condition_lang_val_arr.pop();
                         state.tmp.condition_lang_counter_arr.pop();
@@ -45,7 +45,7 @@ CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
         }
         // closingjump
         func = function (this: CslNode, state: CslState): any {
-            var next = this[state.tmp.jump.value()];
+            const next = this[state.tmp.jump.value()];
             return next;
         };
         this.execs.push(func);

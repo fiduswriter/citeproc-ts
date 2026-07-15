@@ -32,7 +32,7 @@ CSL.Node.citation = {
             if (state.opt.grouped_sort
                 && state.citation_sort.opt.sort_directions.length) {
 
-                var firstkey = state.citation_sort.opt.sort_directions[0].slice();
+                const firstkey = state.citation_sort.opt.sort_directions[0].slice();
                 state.citation_sort.opt.sort_directions = [firstkey].concat(state.citation_sort.opt.sort_directions);
             }
             state.citation.srt = new CSL.Registry.Comparifier(state, "citation_sort");

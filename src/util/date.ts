@@ -7,9 +7,9 @@ CSL.dateMacroAsSortKey = function (this: any, state: CslState, Item: CslItem): v
 
 
 CSL.dateAsSortKey = function (this: any, state: CslState, Item: CslItem, isMacro?: any): void {
-    var dp: any, elem: any, value: any, e: any, yr: any, prefix: any, i: any, ilen: any;
-    var variable = this.variables[0];
-    var macroFlag = "empty";
+    let dp: any, elem: any, value: any, e: any, yr: any, prefix: any, i: any, ilen: any;
+    const variable = this.variables[0];
+    let macroFlag = "empty";
     if (isMacro && state.tmp.extension) {
         macroFlag = "macro-with-date";
     }
@@ -41,7 +41,7 @@ CSL.dateAsSortKey = function (this: any, state: CslState, Item: CslItem, isMacro
             }
             if (elem.slice(0, 4) === "year") {
                 yr = CSL.Util.Dates[e].numeric(state, value);
-                var prefix2 = "1";
+                let prefix2 = "1";
                 if (yr[0] === "-") {
                     prefix2 = "0";
                     yr = yr.slice(1);

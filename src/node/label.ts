@@ -7,7 +7,7 @@ CSL.Node.label = {
         if (this.strings.term) {
             // Non-names labels
             let func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
-                var termtxt = CSL.evaluateLabel(this, state, Item, item);
+                let termtxt = CSL.evaluateLabel(this, state, Item, item);
                 if (item && this.strings.term === "locator") {
 
                     item.section_form_override = this.strings.form;
@@ -34,8 +34,8 @@ CSL.Node.label = {
             }
             // Names labels
             // Picked up in names END
-            var namevars = state.build.names_variables[state.build.names_variables.length - 1];
-            var namelabels = state.build.name_label[state.build.name_label.length - 1];
+            const namevars = state.build.names_variables[state.build.names_variables.length - 1];
+            const namelabels = state.build.name_label[state.build.name_label.length - 1];
             for (let i = 0, ilen = namevars.length; i < ilen; i += 1) {
                 if (!namelabels[namevars[i]]) {
                     namelabels[namevars[i]] = {};

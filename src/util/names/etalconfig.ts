@@ -2,7 +2,7 @@ import { CSL } from '../../csl';
 /*global CSL: true */
 
 CSL.NameOutput.prototype.getEtAlConfig = function (this: any): void {
-    var item = this.item;
+    let item = this.item;
     this["et-al"] = {};
 
     this.state.output.append(this.etal_term, this.etal_style, true);

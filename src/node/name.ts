@@ -5,7 +5,7 @@ CSL.Node.name = {
     build: function (state, target) {
         let func;
         if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {
-            var oldTmpRoot;
+            let oldTmpRoot;
             if ("undefined" === typeof state.tmp.root) {
                 oldTmpRoot = undefined;
                 state.tmp.root = "citation";

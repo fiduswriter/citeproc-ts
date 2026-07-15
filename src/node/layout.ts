@@ -11,7 +11,7 @@ CSL.Node.layout = {
                 func = function(state) {
                     // Suppress suffix on all but the last item in bibliography parallels
                     if (!state.tmp.parallel_and_not_last) {
-                        var suffix;
+                        let suffix;
                         if (state.tmp.cite_affixes[state.tmp.area][state.tmp.last_cite_locale]) {
                             suffix = state.tmp.cite_affixes[state.tmp.area][state.tmp.last_cite_locale].suffix;
                         } else {
@@ -21,7 +21,7 @@ CSL.Node.layout = {
                         // If @display is used, layout suffix is placed on the last
                         // immediate child of the layout, which we assume will be a
                         // @display group node.
-                        var topblob = state.output.current.value();
+                        const topblob = state.output.current.value();
                         if (state.opt.using_display) {
                             topblob.blobs[topblob.blobs.length-1].strings.suffix = suffix;
                         } else {
@@ -53,7 +53,7 @@ CSL.Node.layout = {
                     && Item.system_id 
                     && state.tmp.area === "citation") { 
 
-                    var cite_entry = new CSL.Token("group", CSL.START);
+                    const cite_entry = new CSL.Token("group", CSL.START);
                     cite_entry.decorations = [["@cite", "entry"]];
                     state.output.startTag("cite_entry", cite_entry);
                     state.output.current.value().item_id = Item.system_id;
@@ -113,7 +113,7 @@ CSL.Node.layout = {
             this.execs.push(func);
 
             func = function (state, Item) {
-                var tok = new CSL.Token();
+                let tok = new CSL.Token();
                 state.output.openLevel(tok);
             };
             this.execs.push(func);
@@ -127,7 +127,7 @@ CSL.Node.layout = {
                         if (!state.tmp.just_looking) {
                             prefix = state.output.checkNestedBrace.update(prefix);
                         }
-                        var ignorePredecessor = CSL.checkIgnorePredecessor(state, prefix);
+                        const ignorePredecessor = CSL.checkIgnorePredecessor(state, prefix);
                         state.output.append(prefix, this, false, ignorePredecessor);
                     }
                 };
@@ -137,7 +137,7 @@ CSL.Node.layout = {
         }
 
         // Cast token to be used in one of the configurations below.
-        var my_tok;
+        let my_tok;
         if (this.locale_raw) {
             my_tok = new CSL.Token("dummy", CSL.START);
             my_tok.locale = this.locale_raw;
@@ -181,7 +181,7 @@ CSL.Node.layout = {
                     // if layout_locale_flag is untrue,
                     // write cs:choose START and cs:if START
                     // to the token list.
-                    var choose_tok = new CSL.Token("choose", CSL.START);
+                    const choose_tok = new CSL.Token("choose", CSL.START);
                     CSL.Node.choose.build.call(choose_tok, state, target);
                     my_tok.name = "if";
                     CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
@@ -236,9 +236,8 @@ CSL.Node.layout = {
                 if (state.build.area === "citation") {
                     suffix_token = new CSL.Token("text", CSL.SINGLETON);
                     func = function (state, Item, item) {
-                        var sp;
                         if (item && item.suffix) {
-                            var suffix = CSL.checkSuffixSpacePrepend(state, item.suffix);
+                            let suffix = CSL.checkSuffixSpacePrepend(state, item.suffix);
                             if (!state.tmp.just_looking) {
                                 suffix = state.output.checkNestedBrace.update(suffix);
                             }

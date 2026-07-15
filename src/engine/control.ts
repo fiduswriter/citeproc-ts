@@ -33,7 +33,7 @@ CSL.Engine.prototype.getSortFunc = function () {
 };
 
 CSL.Engine.prototype.setLangTagsForCslSort = function (tags) {
-    var i, ilen;
+    let i, ilen;
     if (tags) {
         this.opt['locale-sort'] = [];
         for (let i = 0, ilen = tags.length; i < ilen; i += 1) {
@@ -44,7 +44,7 @@ CSL.Engine.prototype.setLangTagsForCslSort = function (tags) {
 };
     
 CSL.Engine.prototype.setLangTagsForCslTransliteration = function (tags) {
-    var i, ilen;
+    let i, ilen;
     this.opt['locale-translit'] = [];
     if (tags) {
         for (let i = 0, ilen = tags.length; i < ilen; i += 1) {
@@ -55,7 +55,7 @@ CSL.Engine.prototype.setLangTagsForCslTransliteration = function (tags) {
 };
     
 CSL.Engine.prototype.setLangTagsForCslTranslation = function (tags) {
-    var i, ilen;
+    let i, ilen;
     this.opt['locale-translat'] = [];
     if (tags) {
         for (let i = 0, ilen = tags.length; i < ilen; i += 1) {
@@ -66,17 +66,17 @@ CSL.Engine.prototype.setLangTagsForCslTranslation = function (tags) {
 };
 
 CSL.Engine.prototype.setLangPrefsForCites = function (obj, conv) {
-    var opt = this.opt['cite-lang-prefs'];
+    const opt = this.opt['cite-lang-prefs'];
     if (!conv) {
         conv = function (key) {
             return key.toLowerCase();
         };
     }
-    var segments = ['Persons', 'Institutions', 'Titles', 'Journals', 'Publishers', 'Places'];
+    const segments = ['Persons', 'Institutions', 'Titles', 'Journals', 'Publishers', 'Places'];
     // Set values in place
     for (let i = 0, ilen = segments.length; i < ilen; i += 1) {
-        var clientSegment = conv(segments[i]);
-        var citeprocSegment = segments[i].toLowerCase();
+        const clientSegment = conv(segments[i]);
+        const citeprocSegment = segments[i].toLowerCase();
         if (!obj[clientSegment]) {
             continue;
         }
@@ -84,11 +84,11 @@ CSL.Engine.prototype.setLangPrefsForCites = function (obj, conv) {
         // Normalize the sequence of secondary and tertiary
         // in the provided obj segment list.
         //
-        var supplements = [];
+        const supplements = [];
         while (obj[clientSegment].length > 1) {
             supplements.push(obj[clientSegment].pop());
         }
-        var sortval = {orig:1,translit:2,translat:3};
+        const sortval = {orig:1,translit:2,translat:3};
         if (supplements.length === 2 && sortval[supplements[0]] < sortval[supplements[1]]) {
             supplements.reverse();
         }
@@ -98,7 +98,7 @@ CSL.Engine.prototype.setLangPrefsForCites = function (obj, conv) {
         //
         // normalization done.
         //
-        var lst = opt[citeprocSegment];
+        const lst = opt[citeprocSegment];
         while (lst.length) {
             lst.pop();
         }
@@ -110,11 +110,11 @@ CSL.Engine.prototype.setLangPrefsForCites = function (obj, conv) {
 
 CSL.Engine.prototype.setLangPrefsForCiteAffixes = function (affixList) {
     if (affixList && affixList.length === 48) {
-        var affixes = this.opt.citeAffixes;
-        var count = 0;
-        var settings = ["persons", "institutions", "titles", "journals", "publishers", "places"];
-        var forms = ["translit", "orig", "translit", "translat"];
-        var value;
+        const affixes = this.opt.citeAffixes;
+        let count = 0;
+        const settings = ["persons", "institutions", "titles", "journals", "publishers", "places"];
+        const forms = ["translit", "orig", "translit", "translat"];
+        let value;
         for (let i = 0, ilen = settings.length; i < ilen; i += 1) {
             for (let j = 0, jlen = forms.length; j < jlen; j += 1) {
                 value = "";

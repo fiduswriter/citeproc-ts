@@ -5,14 +5,14 @@ CSL.Node.text = {
     build: function (state, target) {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
         if (this.postponed_macro) {
-            var group_start = CSL.Util.cloneToken(this);
+            const group_start = CSL.Util.cloneToken(this);
             group_start.name = "group";
             group_start.tokentype = CSL.START;
             CSL.Node.group.build.call(group_start, state, target);
 
             CSL.expandMacro.call(state, this, target);
 
-            var group_end = CSL.Util.cloneToken(this);
+            const group_end = CSL.Util.cloneToken(this);
             group_end.name = "group";
             group_end.tokentype = CSL.END;
             if (this.postponed_macro === 'juris-locator-label') {
@@ -74,9 +74,9 @@ CSL.Node.text = {
                                     state.tmp.group_context.tip.done_vars.push("citation-number");
                                 }
                                 if (state.tmp.area === "citation_sort" && state.bibliography_sort.tmp.citation_number_map) {
-                                    var num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
+                                    let num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
                                 } else {
-                                    var num = state.registry.registry[Item.id].seq;
+                                    let num = state.registry.registry[Item.id].seq;
                                 }
                                 if (num) {
                                     // Code currently in util_number.js
@@ -137,7 +137,7 @@ CSL.Node.text = {
                             firstoutput = false;
                             // XXX Can we do something better for length here?
                             for (let i=0,ilen=state.tmp.group_context.mystack.length; i<ilen; i++) {
-                                var flags = state.tmp.group_context.mystack[i];
+                                const flags = state.tmp.group_context.mystack[i];
                                 if (!flags.variable_success && (flags.variable_attempt || (!flags.variable_attempt && !flags.term_intended))) {
                                     firstoutput = true;
                                     break;
@@ -177,10 +177,10 @@ CSL.Node.text = {
                     
                     // printterm
                     func = function (state, Item) {
-                        var gender = state.opt.gender[Item.type];
-                        var term = this.strings.term;
+                        const gender = state.opt.gender[Item.type];
+                        let term = this.strings.term;
                         term = state.getTerm(term, form, plural, gender, CSL.TOLERANT, this.default_locale);
-                        var myterm;
+                        let myterm;
                         // if the term is not an empty string, say
                         // that we rendered a term
                         if (term !== "") {
@@ -235,7 +235,7 @@ CSL.Node.text = {
                         if (!state.tmp.group_context.tip.condition && Item[this.variables[0]]) {
                             state.tmp.just_did_number = false;
                         }
-                        var val = Item[this.variables[0]];
+                        const val = Item[this.variables[0]];
                         if (val && !state.tmp.group_context.tip.condition) {
                             if (("" + val).slice(-1).match(/[0-9]/)) {
                                 state.tmp.just_did_number = true;
@@ -258,10 +258,10 @@ CSL.Node.text = {
                         // multi-fields
                         // Initialize transform factory according to whether
                         // abbreviation is desired.
-                        var abbrevfam = this.variables[0];
-                        var abbrfall = false;
-                        var altvar: any = false;
-                        var transfall = false;
+                        let abbrevfam = this.variables[0];
+                        let abbrfall = false;
+                        let altvar: any = false;
+                        let transfall = false;
                         if (form === "short") {
                             if (this.variables_real[0].slice(-6) !== "-short") {
                                 altvar = this.variables_real[0] + "-short";
@@ -314,7 +314,7 @@ CSL.Node.text = {
                             };
                         } else if (["URL", "DOI"].indexOf(this.variables_real[0]) > -1) {
                             func = function (state, Item) {
-                                var value;
+                                let value;
                                 if (this.variables[0]) {
                                     value = state.getVariable(Item, this.variables[0], form);
                                     if (value) {
@@ -334,9 +334,9 @@ CSL.Node.text = {
                                             if (!this.decorations.length || this.decorations[0][0] !== "@" + this.variables[0]) {
                                                 // Special-casing to fix https://github.com/Juris-M/citeproc-js/issues/57
                                                 // clone current token, to avoid collateral damage
-                                                var clonetoken = CSL.Util.cloneToken(this);
+                                                const clonetoken = CSL.Util.cloneToken(this);
                                                 // cast a group blob
-                                                var groupblob = new CSL.Blob(null, null, "url-wrapper");
+                                                const groupblob = new CSL.Blob(null, null, "url-wrapper");
                                                 // set the DOI decoration on the blob
                                                 groupblob.decorations.push(["@DOI", "true"]);
                                                 if (this.variables_real[0] === "DOI") {
@@ -362,17 +362,17 @@ CSL.Node.text = {
                                                     }
                                                     // cast a text blob
                                                     // set the prefix as the content of the blob
-                                                    var prefixblob = new CSL.Blob(prefix);
+                                                    const prefixblob = new CSL.Blob(prefix);
                                                     // cast another text blob
                                                     // set the value as the content of the second blob
-                                                    var valueblob = new CSL.Blob(value);
+                                                    const valueblob = new CSL.Blob(value);
                                                     // append new text token and clone to group token
                                                     groupblob.push(prefixblob);
                                                     groupblob.push(valueblob);
                                                     // append group token to output
                                                     state.output.append(groupblob, clonetoken, false, false, true);
                                                 } else {
-                                                    var valueblob = new CSL.Blob(value);
+                                                    const valueblob = new CSL.Blob(value);
                                                     // append new text token and clone to group token
                                                     groupblob.push(valueblob);
                                                     // append group token to output
@@ -401,7 +401,7 @@ CSL.Node.text = {
                             // variable, so we save the cost of the runtime check
                             // unless it's being used.
                             func = function (state, Item) {
-                                var value;
+                                let value;
                                 value = state.getVariable(Item, this.variables[0], form);
                                 if (value) {
                                     CSL.checkNonEnglishTitleCase.call(this, state, Item);
@@ -410,7 +410,7 @@ CSL.Node.text = {
                             };
                         } else if (this.variables_real[0] === "hereinafter") {
                             func = function (state, Item) {
-                                var value = state.transform.abbrevs["default"]["hereinafter"][Item.id];
+                                let value = state.transform.abbrevs["default"]["hereinafter"][Item.id];
                                 if (value) {
                                     state.output.append(value, this);
                                     state.tmp.group_context.tip.variable_success = true;
@@ -419,7 +419,7 @@ CSL.Node.text = {
                         } else {
                             // anything left over just gets output in the normal way.
                             func = function (state, Item) {
-                                var value;
+                                let value;
                                 if (this.variables[0]) {
                                     value = state.getVariable(Item, this.variables[0], form);
                                     if (value) {

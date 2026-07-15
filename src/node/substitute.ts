@@ -7,9 +7,9 @@ CSL.Node.substitute = {
         if (this.tokentype === CSL.START) {
             /* */
             // set conditional
-            var choose_start = new CSL.Token("choose", CSL.START);
+            const choose_start = new CSL.Token("choose", CSL.START);
             CSL.Node.choose.build.call(choose_start, state, target);
-            var if_singleton = new CSL.Token("if", CSL.SINGLETON);
+            const if_singleton = new CSL.Token("if", CSL.SINGLETON);
             func = function (): boolean {
                 if (state.tmp.value.length && !state.tmp.common_term_match_fail) {
                     return true;
@@ -33,7 +33,7 @@ CSL.Node.substitute = {
         }
         if (this.tokentype === CSL.END) {
             target.push(this);
-            var choose_end = new CSL.Token("choose", CSL.END);
+            const choose_end = new CSL.Token("choose", CSL.END);
             CSL.Node.choose.build.call(choose_end, state, target);
             /* */
         }

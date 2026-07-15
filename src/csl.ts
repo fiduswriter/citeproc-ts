@@ -53,7 +53,7 @@ export const CSL: CSLNamespace = {
     },
 
     toLocaleUpperCase(str) {
-        var arr = this.tmp.lang_array;
+        const arr = this.tmp.lang_array;
         try {
             str = str.toLocaleUpperCase(arr);
         } catch (e) {
@@ -63,7 +63,7 @@ export const CSL: CSLNamespace = {
     },
 
     toLocaleLowerCase(str) {
-        var arr = this.tmp.lang_array;
+        const arr = this.tmp.lang_array;
         try {
             str = str.toLocaleLowerCase(arr);
         } catch (e) {
@@ -255,7 +255,7 @@ export const CSL: CSLNamespace = {
                 // Receives affix string, returns with flipped parens.
                 
                 str = str ? str : "";
-                var lst = str.split(/([\(\)])/);
+                let lst = str.split(/([\(\)])/);
                 for (let i=1,ilen=lst.length;i<ilen;i += 2) {
                     if (lst[i] === "(") {
                         if (1 === (this.depth % 2)) {
@@ -318,10 +318,10 @@ export const CSL: CSLNamespace = {
     },
 
     getAbbrevsDomain: function (state, country, lang) {
-		var domain = null;
+		let domain = null;
         if (state.opt.availableAbbrevDomains && country && country !== "default") {
-	        var globalDomainPreference = state.locale[state.opt.lang].opts["jurisdiction-preference"];
-		    var itemDomainPreference = null;
+	        const globalDomainPreference = state.locale[state.opt.lang].opts["jurisdiction-preference"];
+		    let itemDomainPreference = null;
 		    if (state.locale[lang]) {
 			    itemDomainPreference = state.locale[lang].opts["jurisdiction-preference"];
 		    }
@@ -383,9 +383,9 @@ export const CSL: CSLNamespace = {
             // Break out locator elements if necessary
             if (item.locator) {
                 item.locator = "" + item.locator;
-                var idx = item.locator.indexOf("|");
+                const idx = item.locator.indexOf("|");
                 if (idx > -1) {
-                    var raw_locator = item.locator;
+                    let raw_locator = item.locator;
                     item.locator = raw_locator.slice(0, idx);
                     raw_locator = raw_locator.slice(idx + 1);
                     let m = raw_locator.match(/^([0-9]{4}-[0-9]{2}-[0-9]{2}).*/);
@@ -407,7 +407,7 @@ export const CSL: CSLNamespace = {
         if (!str) {
             return;
         }
-        var lst = str.split('-');
+        let lst = str.split('-');
         lst[0] = lst[0].toLowerCase();
         if (lst[1]) {
             lst[1] = lst[1].toUpperCase();
@@ -419,15 +419,15 @@ export const CSL: CSLNamespace = {
         if ("string" !== typeof Item.note) {
             return;
         }
-        var elems = [];
-        var lines = Item.note.split('\n');
+        const elems = [];
+        let lines = Item.note.split('\n');
         // Normalize entries
         for (let i=0, ilen=lines.length; i<ilen; i++) {
-            var line = lines[i];
-            var elems = [];
+            const line = lines[i];
+            const elems = [];
             let m = line.match(CSL.NOTE_FIELDS_REGEXP);
             if (m) {
-                var splt = line.split(CSL.NOTE_FIELDS_REGEXP);
+                const splt = line.split(CSL.NOTE_FIELDS_REGEXP);
                 for (let j=0,jlen=(splt.length-1);j<jlen;j++) {
                     elems.push(splt[j]);
                     elems.push(m[j]);
@@ -446,11 +446,11 @@ export const CSL: CSLNamespace = {
         }
         // Resplit
         lines = lines.join('\n').split('\n');
-        var offset = 0;
-        var names = {};
+        let offset = 0;
+        const names = {};
         for (let i=0,ilen=lines.length;i<ilen;i++) {
-            var line = lines[i];
-            var mm = line.match(CSL.NOTE_FIELD_REGEXP);
+            const line = lines[i];
+            const mm = line.match(CSL.NOTE_FIELD_REGEXP);
             if (!line.trim()) {
                 continue;
             } else if (!mm) {
@@ -462,7 +462,7 @@ export const CSL: CSLNamespace = {
                 }
             }
             let key = mm[1];
-            var val = mm[2].replace(/^\s+/, "").replace(/\s+$/, "");
+            const val = mm[2].replace(/^\s+/, "").replace(/\s+$/, "");
             if (key === "type") {
                 Item.type = val;
                 lines[i] = "";
@@ -478,11 +478,11 @@ export const CSL: CSLNamespace = {
                     if (!names[key]) {
                         names[key] = [];
                     }
-                    var lst = val.split(/\s*\|\|\s*/);
+                    let lst = val.split(/\s*\|\|\s*/);
                     if (lst.length === 1) {
                         names[key].push({literal:lst[0]});
                     } else if (lst.length === 2) {
-                        var name = {family:lst[0],given:lst[1]};
+                        const name = {family:lst[0],given:lst[1]};
                         CSL.parseParticles(name);
                         names[key].push(name);
                     }
@@ -515,7 +515,7 @@ export const CSL: CSLNamespace = {
         if (!prefix) {
             prefix = "";
         }
-        var sp = "";
+        let sp = "";
         // We need the raw string, without decorations
         // of any kind. Markup scheme is known, though, so
         // markup can be safely stripped at string level.
@@ -525,8 +525,8 @@ export const CSL: CSLNamespace = {
         // U+00bb = right double angle bracket (guillemet)
         // U+202f = non-breaking thin space
         // U+00a0 = non-breaking space
-        var test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g,"");
-        var test_char = test_prefix.slice(-1);
+        const test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g,"");
+        const test_char = test_prefix.slice(-1);
         if (test_prefix.match(CSL.ENDSWITH_ROMANESQUE_REGEXP)) {
             sp = " ";
         } else if (CSL.TERMINAL_PUNCTUATION.slice(0,-1).indexOf(test_char) > -1) {
@@ -541,9 +541,9 @@ export const CSL: CSLNamespace = {
     },
 
     checkIgnorePredecessor: function(state, prefix) {
-        var ignorePredecessor = false;
-        var test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g,"");
-        var test_char = test_prefix.slice(-1);
+        const ignorePredecessor = false;
+        const test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g,"");
+        const test_char = test_prefix.slice(-1);
         if (CSL.TERMINAL_PUNCTUATION.slice(0,-1).indexOf(test_char) > -1 && prefix.trim().indexOf(" ") > -1) {
             state.tmp.term_predecessor = false;
             return true;
@@ -806,7 +806,7 @@ export const CSL: CSLNamespace = {
         "container-title"
     ],
     TITLE_FIELD_SPLITS: function(seg) {
-        var keys = ["title", "short", "main", "sub", "subjoin"];
+        const keys = ["title", "short", "main", "sub", "subjoin"];
         let ret = {};
         for (let i=0,ilen=keys.length;i<ilen;i++) {
             ret[keys[i]] = seg + "title" + (keys[i] === "title" ? "" : "-" + keys[i]);
@@ -815,11 +815,11 @@ export const CSL: CSLNamespace = {
     },
     
     demoteNoiseWords: function (state, fld, drop_or_demote) {
-        var SKIP_WORDS = state.locale[state.opt.lang].opts["leading-noise-words"];
+        const SKIP_WORDS = state.locale[state.opt.lang].opts["leading-noise-words"];
         if (fld && drop_or_demote) {
             fld = fld.split(/\s+/);
             fld.reverse();
-            var toEnd = [];
+            const toEnd = [];
             for (let j  = fld.length - 1; j > -1; j += -1) {
                 if (SKIP_WORDS.indexOf(fld[j].toLowerCase()) > -1) {
                     toEnd.push(fld.pop());
@@ -828,8 +828,8 @@ export const CSL: CSLNamespace = {
                 }
             }
             fld.reverse();
-            var start = fld.join(" ");
-            var end = toEnd.join(" ");
+            const start = fld.join(" ");
+            const end = toEnd.join(" ");
             if ("drop" === drop_or_demote || !end) {
                 fld = start;
             } else if ("demote" === drop_or_demote) {
@@ -840,25 +840,25 @@ export const CSL: CSLNamespace = {
     },
 
     extractTitleAndSubtitle: function (Item, narrowSpaceLocale) {
-        var narrowSpace = narrowSpaceLocale ? "\u202f" : "";
+        const narrowSpace = narrowSpaceLocale ? "\u202f" : "";
         // XXX In this function, split on split-char, but prefer exact match
         // XXX of subtitle to a split-char in title if found.
-        var segments = [""];
+        const segments = [""];
         if (this.opt.development_extensions.split_container_title) {
             segments.push("container-");
         }
         for (let i=0,ilen=segments.length;i<ilen;i++) {
-            var seg = segments[i];
-            var title = CSL.TITLE_FIELD_SPLITS(seg);
-            var langs: any[] = [false];
+            const seg = segments[i];
+            const title = CSL.TITLE_FIELD_SPLITS(seg);
+            const langs: any[] = [false];
             if (Item.multi) {
                 for (let lang in Item.multi._keys[title.short]) {
                     langs.push(lang);
                 }
             }
             for (let j=0,jlen=langs.length;j<jlen;j++) {
-                var lang = langs[j];
-                var vals = {};
+                const lang = langs[j];
+                const vals = {};
                 if (lang) {
                     if (Item.multi._keys[title.title]) {
                         vals[title.title] = Item.multi._keys[title.title][lang];
@@ -872,7 +872,7 @@ export const CSL: CSLNamespace = {
                 }
                 vals[title.main] = vals[title.title];
                 vals[title.sub] = false;
-                var shortTitle = vals[title["short"]];
+                const shortTitle = vals[title["short"]];
                 if (vals[title.title]) {
                     // Rules
                     // TITLE_SPLIT eliminates split-points of period-space preceded by a capital letter.
@@ -885,8 +885,8 @@ export const CSL: CSLNamespace = {
                         vals[title.sub] = "";
                     } else if (shortTitle) {
                         // check for valid match to shortTitle
-                        var tail = vals[title.title].slice(shortTitle.replace(/[\?\!]+$/, "").length);
-                        var top = vals[title.title].replace(tail.replace(/^[\?\!]+/, ""), "").trim();
+                        const tail = vals[title.title].slice(shortTitle.replace(/[\?\!]+$/, "").length);
+                        const top = vals[title.title].replace(tail.replace(/^[\?\!]+/, ""), "").trim();
                         let m = CSL.TITLE_SPLIT_REGEXP.matchfirst.exec(tail);
                         if (m && top.toLowerCase() === shortTitle.toLowerCase()) {
                             vals[title.main] = top;
@@ -896,7 +896,7 @@ export const CSL: CSLNamespace = {
                                 vals[title["short"]] = vals[title.main];
                             }
                         } else {
-                            var splitTitle = CSL.TITLE_SPLIT(vals[title.title]);
+                            const splitTitle = CSL.TITLE_SPLIT(vals[title.title]);
                             if (splitTitle.length == 3) {
                                 vals[title.main] = splitTitle[0];
                                 vals[title.subjoin] = splitTitle[1];
@@ -908,14 +908,14 @@ export const CSL: CSLNamespace = {
                             }
                         }
                     } else {
-                        var splitTitle = CSL.TITLE_SPLIT(vals[title.title]);
+                        const splitTitle = CSL.TITLE_SPLIT(vals[title.title]);
                         if (splitTitle.length == 3) {
                             vals[title.main] = splitTitle[0];
                             vals[title.subjoin] = splitTitle[1];
                             vals[title.sub] = splitTitle[2];
                             if (this.opt.development_extensions.implicit_short_title && Item.type !== "legal_case") {
                                 if (!Item[title.short] && !vals[title.main].match(/^[\-\.[0-9]+$/)) {
-                                    var punct = vals[title.subjoin].trim();
+                                    let punct = vals[title.subjoin].trim();
                                     if (["?", "!"].indexOf(punct) === -1) {
                                         punct = "";
                                     }
@@ -967,8 +967,8 @@ export const CSL: CSLNamespace = {
         // But this ALWAYS returns the full title, never short.
         // So sentence-casing cannot be applied to short.
         // Goes unnoticed because forced sentence-casing almost never appears in styles.
-        var title = CSL.TITLE_FIELD_SPLITS(seg);
-        var vals = {};
+        const title = CSL.TITLE_FIELD_SPLITS(seg);
+        const vals = {};
         if (lang && Item.multi) {
             if (Item.multi._keys[title.title]) {
                 vals[title.title] = Item.multi._keys[title.title][lang];
@@ -989,9 +989,9 @@ export const CSL: CSLNamespace = {
             vals[title.subjoin] = Item[title.subjoin];
         }
         if (vals[title.main] && vals[title.sub]) {
-            var mainTitle = vals[title.main];
-            var subJoin = vals[title.subjoin];
-            var subTitle = vals[title.sub];
+            let mainTitle = vals[title.main];
+            const subJoin = vals[title.subjoin];
+            let subTitle = vals[title.sub];
             if (sentenceCase) {
                 mainTitle = CSL.Output.Formatters.sentence(state, mainTitle);
                 subTitle = CSL.Output.Formatters.sentence(state, subTitle);
@@ -1004,14 +1004,14 @@ export const CSL: CSLNamespace = {
                 return CSL.Output.Formatters.sentence(state, vals[title.title]);
             } else if (state.opt.development_extensions.uppercase_subtitles) {
                 // Split and apply everywhere.
-                var splits = CSL.TITLE_SPLIT(vals[title.title]);
+                const splits = CSL.TITLE_SPLIT(vals[title.title]);
                 for (let i=0,ilen=splits.length; i<ilen; i += 2) {
                     splits[i] = CSL.Output.Formatters["capitalize-first"](state, splits[i]);
                 }
                 for (let i=1, ilen=splits.length-1; i < ilen; i += 2) {
                     let m = splits[i].match(/([:\?\!] )/);
                     if (m) {
-                        var narrowSpace = state.opt["default-locale"][0].slice(0, 2).toLowerCase() === "fr" ? "\u202f" : "";
+                        const narrowSpace = state.opt["default-locale"][0].slice(0, 2).toLowerCase() === "fr" ? "\u202f" : "";
                         splits[i] = narrowSpace + m[1];
                     }
                     if (splits[i].indexOf("-") > -1 || splits[i].indexOf("—") > -1) {
@@ -1033,7 +1033,7 @@ export const CSL: CSLNamespace = {
             // Callback to apply thin space hack
             // Callback to force LTR/RTL on parens and braces
             // XXX Is this really necessary?
-            var callbacks = [];
+            const callbacks = [];
             if (state.opt.development_extensions.thin_non_breaking_space_html_hack && state.opt.mode === "html") {
                 callbacks.push(function (txt) {
                     return txt.replace(/\u202f/g, '<span style="white-space:nowrap">&thinsp;</span>');
@@ -1293,7 +1293,7 @@ export const CSL: CSLNamespace = {
     
     UPDATE_GROUP_CONTEXT_CONDITION: function (state, str, valueTerm, token, value) {
         if (!state.opt.use_context_condition) return;
-        var flags = state.tmp.group_context.tip;
+        const flags = state.tmp.group_context.tip;
         if (flags.condition) {
             if (!flags.condition.termtxt) {
                 flags.condition.termtxt = str;
@@ -1326,19 +1326,19 @@ export const CSL: CSLNamespace = {
 
     EVALUATE_GROUP_CONDITION: function(state, flags) {
         if (!state.opt.use_context_condition) return;
-        var testres;
-        var numbersOnly = flags.condition.test === "comma-safe-numbers-only";
+        let testres;
+        const numbersOnly = flags.condition.test === "comma-safe-numbers-only";
         if (flags.condition.test === "empty-label") {
             testres = !flags.condition.termtxt;
         } else if (flags.condition.test === "empty-label-no-decor") {
             testres = !flags.condition.termtxt || flags.condition.termtxt.indexOf("%s") > -1;
         } else if (["comma-safe", "comma-safe-numbers-only"].indexOf(flags.condition.test) > -1) {
-            var locale_term = flags.condition.termtxt;
-            var termStartAlpha = false;
+            const locale_term = flags.condition.termtxt;
+            let termStartAlpha = false;
             if (flags.condition.termtxt) {
                 termStartAlpha = flags.condition.termtxt.slice(0,1).match(CSL.ALL_ROMANESQUE_REGEXP);
             }
-            var num = state.tmp.just_did_number;
+            const num = state.tmp.just_did_number;
             if (num) {
                 if (flags.condition.valueTerm) {
                     testres = numbersOnly ? false : true;
@@ -1365,10 +1365,11 @@ export const CSL: CSLNamespace = {
                 }
             }
         }
+        let force_suppress;
         if (testres) {
-            var force_suppress = false;
+            force_suppress = false;
         } else {
-            var force_suppress = true;
+            force_suppress = true;
         }
         if (flags.condition.not) {
             force_suppress = !force_suppress;
@@ -1387,7 +1388,7 @@ export const CSL: CSLNamespace = {
     ],
 
     TITLE_SPLIT_REGEXP: (function() {
-        var splits = [
+        const splits = [
             "\\.\\s+",
             "\\!\\s+",
             "\\?\\s+",
@@ -1408,7 +1409,7 @@ export const CSL: CSLNamespace = {
             return str;
         }
         let m = str.match(CSL.TITLE_SPLIT_REGEXP.match);
-        var lst = str.split(CSL.TITLE_SPLIT_REGEXP.split);
+        let lst = str.split(CSL.TITLE_SPLIT_REGEXP.split);
         for (let i=lst.length-2; i>-1; i--) {
             lst[i] = lst[i].trim();
             if (lst[i] && lst[i].slice(-1).toLowerCase() !== lst[i].slice(-1)) {
@@ -1425,11 +1426,11 @@ export const CSL: CSLNamespace = {
     
     GET_COURT_CLASS: function(state, Item, sortKey){
         // Get authority as a string
-        var cls = "";
-        var authority = null;
-        var country = Item.jurisdiction ? Item.jurisdiction.split(":")[0] : null;
+        let cls = "";
+        let authority = null;
+        const country = Item.jurisdiction ? Item.jurisdiction.split(":")[0] : null;
         // inStyle versus in module
-        var classType = "court_condition_classes";
+        let classType = "court_condition_classes";
         if (sortKey) {
             classType = "court_key_classes";
         }
@@ -1453,18 +1454,18 @@ export const CSL: CSLNamespace = {
     },
 
     SET_COURT_CLASSES: function(state, lang, myxml, dataObj) {
-        var nodes = myxml.getNodesByName(dataObj, 'court-class');
+        const nodes = myxml.getNodesByName(dataObj, 'court-class');
         for (let pos = 0, len = myxml.numberofnodes(nodes); pos < len; pos += 1) {
-            var courtclass = nodes[pos];
-            var attributes = myxml.attributes(courtclass);
-            var cls = attributes["@name"];
-            var country = attributes["@country"];
-            var courts = attributes["@courts"];
+            const courtclass = nodes[pos];
+            const attributes = myxml.attributes(courtclass);
+            let cls = attributes["@name"];
+            const country = attributes["@country"];
+            let courts = attributes["@courts"];
             
             // Okay, this is a hack.
             // If state.registry IS NOT yet defined, this is an in-style declaration.
             // If state.registry IS defined, this is an in-module declaration.
-            var classType = "court_key_classes";
+            let classType = "court_key_classes";
             if (state.registry) {
                 classType = "court_condition_classes";
             }
@@ -1491,14 +1492,14 @@ export const CSL: CSLNamespace = {
         if (!state.sys.retrieveStyleModule || !CSL.MODULE_MACROS[macroName] || !Item.jurisdiction) {
             return false;
         }
-        var jurisdictionList = state.getJurisdictionList(Item.jurisdiction);
+        const jurisdictionList = state.getJurisdictionList(Item.jurisdiction);
         // Set up a list of jurisdictions here, we will reuse it
         if (!state.opt.jurisdictions_seen[jurisdictionList[0]]) {
-            var res = state.retrieveAllStyleModules(jurisdictionList);
+            const res = state.retrieveAllStyleModules(jurisdictionList);
             // Okay. We have code for each of the novel modules in the
             // hierarchy. Load them all into the processor.
-            for (let jurisdiction in res) {
-                var fallback = state.loadStyleModule(jurisdiction, res[jurisdiction]);
+            for (const jurisdiction in res) {
+                const fallback = state.loadStyleModule(jurisdiction, res[jurisdiction]);
                 if (fallback) {
                     if (!res[fallback]) {
                         Object.assign(res, state.retrieveAllStyleModules([fallback]));
@@ -1507,7 +1508,6 @@ export const CSL: CSLNamespace = {
                 }
             }
         }
-        var jurisdictionList = state.getJurisdictionList(Item.jurisdiction);
         if (state.opt.parallel.enable) {
             if (!state.parallel) {
                 state.parallel = new CSL.Parallel(state);
@@ -1515,7 +1515,7 @@ export const CSL: CSLNamespace = {
         }
         // Identify the best jurisdiction for the item and return true, otherwise return false
         for (let i=0,ilen=jurisdictionList.length;i<ilen;i++) {
-            var jurisdiction = jurisdictionList[i];
+            const jurisdiction = jurisdictionList[i];
             if (item) {
                 if (state.juris[jurisdiction] && !item["best-jurisdiction"] && state.juris[jurisdiction].types.locator) {
                     Item["best-jurisdiction"] = jurisdiction;

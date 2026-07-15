@@ -34,7 +34,7 @@ CSL.localeResolve = function (langstr, defaultLocale) {
 
 // Use call to invoke this.
 CSL.Engine.prototype.localeConfigure = function (langspec, beShy) {
-    var localexml;
+    let localexml;
     if (beShy && this.locale[langspec.best]) {
         return;
     }
@@ -69,7 +69,7 @@ CSL.Engine.prototype.localeConfigure = function (langspec, beShy) {
         this.locale[langspec.best].terms["citation-range-delimiter"] = "\u2013";
     }
     if (this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
-        var localeLists = ["default-locale","locale-sort","locale-translit","locale-translat"];
+        const localeLists = ["default-locale","locale-sort","locale-translit","locale-translat"];
         for (let i=0,ilen=localeLists.length;i<ilen;i+=1) {
             for (let j=0,jlen=this.opt[localeLists[i]].length;j<jlen;j+=1) {
                 this.opt[localeLists[i]][j] = this.opt[localeLists[i]][j].toLowerCase();
@@ -85,7 +85,7 @@ CSL.Engine.prototype.localeConfigure = function (langspec, beShy) {
 // below.
 //
 CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
-    var blob, locale, nodes, attributes, pos, term, form, termname, styleopts, date, attrname, len, genderform, target, i, ilen;
+    let blob, locale, nodes, attributes, pos, term, form, termname, styleopts, date, attrname, len, genderform, target, i, ilen;
     lang_in = lang_in.replace("_", "-");
     lang_out = lang_out.replace("_", "-");
 
@@ -122,7 +122,7 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
         // Xml: get a list of all "locale" nodes
         //
         nodes = myxml.getNodesByName(myxml.dataObj, "locale");
-        var foundLocale = false;
+        let foundLocale = false;
         for (let pos = 0, len = myxml.numberofnodes(nodes); pos < len; pos += 1) {
             blob = nodes[pos];
             //
@@ -136,10 +136,10 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
                 locale = blob;
                 foundLocale = true;
             } else {
-                var lang = myxml.getAttributeValue(blob, 'lang', 'xml');
-                var style_options = myxml.getNodesByName(blob, 'style-options');
+                const lang = myxml.getAttributeValue(blob, 'lang', 'xml');
+                const style_options = myxml.getNodesByName(blob, 'style-options');
                 if (lang && style_options && style_options.length) {
-                    var jurispref = myxml.getAttributeValue(style_options[0], 'jurisdiction-preference');
+                    const jurispref = myxml.getAttributeValue(style_options[0], 'jurisdiction-preference');
                     if (jurispref) {
                         if (!this.locale[lang]) {
                             this.locale[lang] = {
@@ -157,9 +157,9 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
     //
     nodes = myxml.getNodesByName(locale, 'type');
     for (let i = 0, ilen = myxml.numberofnodes(nodes); i < ilen; i += 1) {
-        var typenode = nodes[i];
-        var type = myxml.getAttributeValue(typenode, 'name');
-        var gender = myxml.getAttributeValue(typenode, 'gender');
+        const typenode = nodes[i];
+        const type = myxml.getAttributeValue(typenode, 'name');
+        const gender = myxml.getAttributeValue(typenode, 'gender');
         this.opt.gender[type] = gender;
     }
     //
@@ -168,7 +168,7 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
 
     // If we are setting CSL 1.0.1 ordinals inside a style, wipe the
     // slate clean and start over.
-    var hasCslOrdinals101 = myxml.getNodesByName(locale, 'term', 'ordinal').length;
+    const hasCslOrdinals101 = myxml.getNodesByName(locale, 'term', 'ordinal').length;
     if (hasCslOrdinals101) {
         for (let key in this.locale[lang_out].ord.keys) {
             delete this.locale[lang_out].terms[key];
@@ -178,9 +178,9 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
 
     nodes = myxml.getNodesByName(locale, 'term');
     // Collect ordinals info as for 1.0.1, but save only if 1.0.1 toggle triggers
-    var ordinals101 = {"last-digit":{},"last-two-digits":{},"whole-number":{}};
-    var ordinals101_toggle = false;
-    var genderized_terms = {};
+    const ordinals101 = {"last-digit":{},"last-two-digits":{},"whole-number":{}};
+    let ordinals101_toggle = false;
+    const genderized_terms = {};
     for (let pos = 0, len = myxml.numberofnodes(nodes); pos < len; pos += 1) {
         term = nodes[pos];
         //
@@ -194,9 +194,9 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
             if (termname === "ordinal") {
                 ordinals101_toggle = true;
             } else {
-                var match = myxml.getAttributeValue(term, 'match');
-                var termstub = termname.slice(8);
-                var genderform = myxml.getAttributeValue(term, 'gender-form');
+                let match = myxml.getAttributeValue(term, 'match');
+                let termstub = termname.slice(8);
+                let genderform = myxml.getAttributeValue(term, 'gender-form');
                 if (!genderform) {
                     genderform = "neuter";
                 }
@@ -291,8 +291,8 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
     // and iterate over gendered terms, filling in default values for use by getTerm.
     if (ordinals101_toggle) {
         for (let ikey in genderized_terms) {
-            var gender_segments: any = {};
-            var form_segments = 0;
+            const gender_segments: any = {};
+            let form_segments = 0;
             for (let jkey in this.locale[lang_out].terms[ikey]) {
                 if (["masculine","feminine"].indexOf(jkey) > -1) {
                     gender_segments[jkey] = this.locale[lang_out].terms[ikey][jkey];
@@ -354,32 +354,32 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
                             this.locale[lang_out].opts[attrname.slice(1)] = false;
                         }
                     } else if (attrname === "@jurisdiction-preference") {
-                        var jurisdiction_preference = attributes[attrname].split(/\s+/);
+                        const jurisdiction_preference = attributes[attrname].split(/\s+/);
                         this.locale[lang_out].opts[attrname.slice(1)] = jurisdiction_preference;
                     } else if (attrname === "@skip-words") {
-                        var skip_words = attributes[attrname].split(/\s*,\s*/);
+                        const skip_words = attributes[attrname].split(/\s*,\s*/);
                         this.locale[lang_out].opts[attrname.slice(1)] = skip_words;
                     } else if (attrname === "@leading-noise-words") {
-                        var val = attributes[attrname].split(/\s*,\s*/);
+                        const val = attributes[attrname].split(/\s*,\s*/);
                         this.locale[lang_out].opts["leading-noise-words"] = val;
                     } else if (attrname === "@name-as-sort-order") {
                         // Fallback is okay here.
                         this.locale[lang_out].opts["name-as-sort-order"] = {};
-                        var lst = attributes[attrname].split(/\s+/);
+                        const lst = attributes[attrname].split(/\s+/);
                         for (let i=0,ilen=lst.length;i<ilen;i+=1) {
                             this.locale[lang_out].opts["name-as-sort-order"][lst[i]] = true;
                         }
                     } else if (attrname === "@name-as-reverse-order") {
                         // Fallback is okay here.
                         this.locale[lang_out].opts["name-as-reverse-order"] = {};
-                        var lst = attributes[attrname].split(/\s+/);
+                        const lst = attributes[attrname].split(/\s+/);
                         for (let i=0,ilen=lst.length;i<ilen;i+=1) {
                             this.locale[lang_out].opts["name-as-reverse-order"][lst[i]] = true;
                         }
                     } else if (attrname === "@name-never-short") {
                         // Here too.
                         this.locale[lang_out].opts["name-never-short"] = {};
-                        var lst = attributes[attrname].split(/\s+/);
+                        const lst = attributes[attrname].split(/\s+/);
                         for (let i=0,ilen=lst.length;i<ilen;i+=1) {
                             this.locale[lang_out].opts["name-never-short"][lst[i]] = true;
                         }
@@ -394,7 +394,7 @@ CSL.Engine.prototype.localeSet = function (myxml, lang_in, lang_out) {
     nodes = myxml.getNodesByName(locale, 'date');
     for (let pos = 0, len = myxml.numberofnodes(nodes); pos < len; pos += 1) {
         if (true) {
-            var date = nodes[pos];
+            const date = nodes[pos];
             //
             // Xml: get string value of attribute
             //

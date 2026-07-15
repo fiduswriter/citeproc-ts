@@ -27,7 +27,7 @@ CSL.Disambiguation.prototype.run = function(akey) {
 };
 
 CSL.Disambiguation.prototype.runDisambig = function () {
-    var ismax;
+    let ismax;
     //SNIP-START
     if (this.debug) {
         this.state.sys.print("[C] === runDisambig() ===");
@@ -48,8 +48,8 @@ CSL.Disambiguation.prototype.runDisambig = function () {
         // spins forever (a sibling of GH #179). Bound the scans per list; if
         // the bound is exceeded, register the remaining clashing items as-is
         // and abandon the list so rendering proceeds instead of hanging.
-        var loopGuard = 0;
-        var loopGuardMax = (this.lists[0][1].length + 2) * 1000;
+        let loopGuard = 0;
+        const loopGuardMax = (this.lists[0][1].length + 2) * 1000;
         // each list is scanned repeatedly until all
         // items either succeed or ultimately fail.
         while(this.lists[0][1].length) {
@@ -62,8 +62,8 @@ CSL.Disambiguation.prototype.runDisambig = function () {
             this.evalScan(ismax);
             loopGuard += 1;
             if (loopGuard > loopGuardMax) {
-                var giveupBase = this.betterbase || this.base;
-                var remaining = this.lists[0][1];
+                const giveupBase = this.betterbase || this.base;
+                const remaining = this.lists[0][1];
                 for (let gi = 0, gilen = remaining.length; gi < gilen; gi += 1) {
                     this.state.registry.registerAmbigToken(this.akey, "" + remaining[gi].id, giveupBase);
                 }
@@ -76,7 +76,7 @@ CSL.Disambiguation.prototype.runDisambig = function () {
 };
 
 CSL.Disambiguation.prototype.scanItems = function (list) {
-    var pos, len, otherItem;
+    let pos, len, otherItem;
     //SNIP-START
     if (this.debug) {
         this.state.sys.print("[2] === scanItems() ===");
@@ -90,11 +90,11 @@ CSL.Disambiguation.prototype.scanItems = function (list) {
     this.partners = [];
     this.partners.push(this.Item);
     this.nonpartners = [];
-    var clashes = 0;
+    let clashes = 0;
 
     for (let pos = 1, len = list[1].length; pos < len; pos += 1) {
         otherItem = list[1][pos];
-        var otherItemCite = CSL.getAmbiguousCite.call(this.state, otherItem, this.base, true);
+        const otherItemCite = CSL.getAmbiguousCite.call(this.state, otherItem, this.base, true);
         //SNIP-START
         if (this.debug) {
             if (pos > 1) {
@@ -137,7 +137,7 @@ CSL.Disambiguation.prototype.evalScan = function (maxed) {
 };
 
 CSL.Disambiguation.prototype.disNames = function (ismax) {
-    var i, ilen;
+    let i, ilen;
     
     //SNIP-START
     if (this.debug) {
@@ -242,7 +242,7 @@ CSL.Disambiguation.prototype.disExtraText = function () {
     }
     //SNIP-END
     
-    var done = false;
+    let done = false;
 
     if (this.clashes[1] === 0 && this.nonpartners.length < 2) {
         done = true;
@@ -272,7 +272,7 @@ CSL.Disambiguation.prototype.disExtraText = function () {
         if (done || this.modeindex === this.modes.length - 1) {
             // If this is the end, disambiguation failed.
             // Discard disambiguate=true (?) and set parameters
-            var base = this.lists[this.listpos][0];
+            let base = this.lists[this.listpos][0];
             for (let i = 0, ilen = this.lists[this.listpos][1].length; i < ilen; i += 1) {
                 this.state.tmp.taintedItemIDs[this.lists[this.listpos][1][i].id] = true;
                 this.state.registry.registerAmbigToken(this.akey, "" + this.lists[this.listpos][1][i].id, base);
@@ -285,7 +285,7 @@ CSL.Disambiguation.prototype.disExtraText = function () {
             // This may be a bit over-aggressive for cases in which the
             // disambiguate condition does not add the date
             this.modeindex = this.modes.length - 1;
-            var base = this.lists[this.listpos][0];
+            let base = this.lists[this.listpos][0];
             base.disambiguate = true;
             for (let i = 0, ilen = this.lists[this.listpos][1].length; i < ilen; i += 1) {
                 // Always tainting here might be a little over-aggressive, but a taint may be required.
@@ -297,22 +297,22 @@ CSL.Disambiguation.prototype.disExtraText = function () {
 };
 
 CSL.Disambiguation.prototype.disYears = function () {
-    var pos, len, tokens, token;
+    let pos, len, tokens, token;
     //SNIP-START
     if (this.debug) {
         this.state.sys.print("[3] === disYears ==");
     }
     //SNIP-END
     tokens = [];
-    var base = this.lists[this.listpos][0];
+    let base = this.lists[this.listpos][0];
     if (this.clashes[1]) {
         // That is, if the initial increment on the ambigs group returns no
         // clashes, don't apply suffix. The condition is a necessary failsafe.
 		// In original submission order
 		for (let i = 0, ilen = this.state.registry.mylist.length; i < ilen; i += 1) {
-			var origid = this.state.registry.mylist[i];
+			const origid = this.state.registry.mylist[i];
 			for (let j = 0, jlen = this.lists[this.listpos][1].length; j < jlen; j += 1) {
-				var token = this.lists[this.listpos][1][j];
+				const token = this.lists[this.listpos][1][j];
 				// Warning: token.id can be number. This should be fixed at a higher level in citeproc-js if poss.
 				if (token.id == origid) {
 					tokens.push(this.registry[token.id]);
@@ -324,7 +324,7 @@ CSL.Disambiguation.prototype.disYears = function () {
     tokens.sort(this.state.registry.sorter.compareKeys);
     for (let pos = 0, len = tokens.length; pos < len; pos += 1) {
         base.year_suffix = ""+pos;
-        var oldBase = this.state.registry.registry[tokens[pos].id].disambig;
+        const oldBase = this.state.registry.registry[tokens[pos].id].disambig;
         this.state.registry.registerAmbigToken(this.akey, "" + tokens[pos].id, base);
         if (CSL.ambigConfigDiff(oldBase,base)) {
             this.state.tmp.taintedItemIDs[tokens[pos].id] = true;
@@ -343,8 +343,8 @@ CSL.Disambiguation.prototype.incrementDisambig = function () {
         this.initGivens = false;
         return false;
     }
-    var maxed = false;
-    var increment_names = true;
+    let maxed = false;
+    let increment_names = true;
     if ("disNames" === this.modes[this.modeindex]) {
         // this.gnameset: the index pos of the current nameset
         // this.gname: the index pos of the current name w/in the current nameset
@@ -366,7 +366,7 @@ CSL.Disambiguation.prototype.incrementDisambig = function () {
         if ("number" !== typeof this.givensMax) {
             increment_names = true;
         }
-        var increment_namesets = false;
+        let increment_namesets = false;
         if ("number" !== typeof this.namesMax) {
             increment_namesets = true;
         }
@@ -436,7 +436,7 @@ CSL.Disambiguation.prototype.incrementDisambig = function () {
 };
 
 CSL.Disambiguation.prototype.initVars = function (akey) {
-    var i, ilen, myIds, myItemBundles, myItems;
+    let i, ilen, myIds, myItemBundles, myItems;
     //SNIP-START
     if (this.debug) {
         this.state.sys.print("[B] === initVars() ===");
@@ -455,7 +455,7 @@ CSL.Disambiguation.prototype.initVars = function (akey) {
     if (!myIds || !myIds.length) {
         return false;
     }
-    var myItem = this.state.refetchItem("" + myIds[0]);
+    let myItem = this.state.refetchItem("" + myIds[0]);
     this.getCiteData(myItem);
     this.base = CSL.getAmbigConfig.call(this.state);
     if (myIds && myIds.length > 1) {
@@ -501,7 +501,7 @@ CSL.Disambiguation.prototype.initVars = function (akey) {
     if (this.state.citation.opt["disambiguate-add-names"] || true) {
         this.namesMax = this.maxNamesByItemId[this.Item.id][0];
     } else {
-        var namesMax = this.base.names[0];
+        let namesMax = this.base.names[0];
         for (let i=1,ilen=this.base.names.length;i<ilen;i+=1){
             namesMax = Math.max(namesMax,this.base.names.names[i]);
         }
@@ -539,7 +539,7 @@ CSL.Disambiguation.prototype.padBase = function (base) {
  * Set available modes for disambiguation
  */
 CSL.Disambiguation.prototype.configModes = function () {
-    var dagopt, gdropt;
+    let dagopt, gdropt;
     // Modes are function names prototyped to this instance.
     this.modes = [];
     dagopt = this.state.opt["disambiguate-add-givenname"];

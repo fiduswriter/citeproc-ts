@@ -11,7 +11,7 @@ CSL.Output.Queue = function (state) {
     this.state = state;
     this.queue = [];
     this.empty = new CSL.Token("empty");
-    var tokenstore: any = {};
+    let tokenstore: any = {};
     tokenstore.empty = this.empty;
     this.formats = new CSL.Stack(tokenstore);
     this.current = new CSL.Stack(this.queue);
@@ -25,7 +25,7 @@ CSL.Output.Queue = function (state) {
 CSL.Output.Queue.prototype.pop = function () {
     // For some reason, state.output.current.value() here can be an array, 
     // not a blob ... ?
-    var drip = this.current.value();
+    const drip = this.current.value();
     if (drip.length) {
         return drip.pop();
     } else {
@@ -39,7 +39,7 @@ CSL.Output.Queue.prototype.getToken = function (name) {
 };
 
 CSL.Output.Queue.prototype.mergeTokenStrings = function (base, modifier) {
-    var base_token, modifier_token, ret, key;
+    let base_token, modifier_token, ret, key;
     base_token = this.formats.value()[base];
     modifier_token = this.formats.value()[modifier];
     ret = base_token;
@@ -67,7 +67,7 @@ CSL.Output.Queue.prototype.mergeTokenStrings = function (base, modifier) {
 
 // Store a new output format token based on another
 CSL.Output.Queue.prototype.addToken = function (name, modifier, token) {
-    var newtok, attr;
+    let newtok, attr;
     newtok = new CSL.Token("output");
     if ("string" === typeof token) {
         token = this.formats.value()[token];
@@ -104,7 +104,7 @@ CSL.Output.Queue.prototype.popFormats = function () {
 };
 
 CSL.Output.Queue.prototype.startTag = function (name, token) {
-    var tokenstore = {};
+    let tokenstore = {};
     if (this.state.tmp["doing-macro-with-date"] && this.state.tmp.extension) {
         token = this.empty;
         name = "empty";
@@ -125,7 +125,7 @@ CSL.Output.Queue.prototype.endTag = function (name) {
 // appends are made to blob list of the new object.
 
 CSL.Output.Queue.prototype.openLevel = function (token) {
-    var blob, curr;
+    let blob, curr;
     if ("object" === typeof token) {
         // delimiter, prefix, suffix, decorations from token
         blob = new CSL.Blob(undefined, token);
@@ -159,7 +159,7 @@ CSL.Output.Queue.prototype.closeLevel = function (name) {
     if (name && name !== this.current.value().levelname) {
         CSL.error("Level mismatch error:  wanted " + name + " but found " + this.current.value().levelname);
     }
-    var blob = this.current.pop();
+    let blob = this.current.pop();
     if (!this.state.tmp.just_looking && this.checkNestedBrace) {
         blob.strings.suffix = this.checkNestedBrace.update(blob.strings.suffix);
     }
@@ -171,8 +171,8 @@ CSL.Output.Queue.prototype.closeLevel = function (name) {
 // and the current pointer is not moved after the push.
 
 CSL.Output.Queue.prototype.append = function (str, tokname, notSerious, ignorePredecessor, noStripPeriods) {
-    var token, blob, curr;
-    var useblob = true;
+    let token, blob, curr;
+    let useblob = true;
     if (notSerious) {
         ignorePredecessor = true;
     }
@@ -265,8 +265,8 @@ CSL.Output.Queue.prototype.append = function (str, tokname, notSerious, ignorePr
     if ("string" === typeof str) {
         if ("string" === typeof blob.blobs) {
             if (blob.blobs.slice(0, 1) !== " ") {
-                var blobPrefix = "";
-                var blobBlobs = blob.blobs;
+                let blobPrefix = "";
+                let blobBlobs = blob.blobs;
                 while (CSL.TERMINAL_PUNCTUATION.indexOf(blobBlobs.slice(0, 1)) > -1) {
                     blobPrefix = blobPrefix + blobBlobs.slice(0, 1);
                     blobBlobs = blobBlobs.slice(1);
@@ -317,20 +317,20 @@ CSL.Output.Queue.prototype.append = function (str, tokname, notSerious, ignorePr
 };
 
 CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
-    var i, ilen, j, jlen, b;
+    let i, ilen, j, jlen, b;
     //if (blob && blob.strings.delimiter) {
     //    print("DELIMITER: "+blob.strings.delimiter+" on "+[x.blobs[0].num for each (x in myblobs)]);
     //}
     //var blobs, ret, blob_delimiter, i, params, blobjr, last_str, last_char, b, use_suffix, qres, addtoret, span_split, j, res, blobs_start, blobs_end, key, pos, len, ppos, llen, ttype, ltype, terminal, leading, delimiters, use_prefix, txt_esc;
-    var txt_esc = CSL.getSafeEscape(this.state);
-    var blobs = myblobs.slice();
+    let txt_esc = CSL.getSafeEscape(this.state);
+    const blobs = myblobs.slice();
     let ret = [];
     
     if (blobs.length === 0) {
         return ret;
     }
 
-    var blob_delimiter = "";
+    let blob_delimiter = "";
     if (blob) {
         blob_delimiter = blob.strings.delimiter;
     } else {
@@ -344,7 +344,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
         state.opt.lang = blob.new_locale;
     }
 
-    var blobjr, use_suffix, use_prefix, params;
+    let blobjr, use_suffix, use_prefix, params;
     for (let i = 0, ilen = blobs.length; i < ilen; i += 1) {
         blobjr = blobs[i];
 
@@ -365,7 +365,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
                 // (skips empty strings)
                 //b = txt_esc(blobjr.blobs);
                 b = txt_esc(blobjr.blobs);
-                var blen = b.length;
+                const blen = b.length;
 
                 if (!state.tmp.suppress_decorations) {
                     for (let j = 0, jlen = blobjr.decorations.length; j < jlen; j += 1) {
@@ -402,11 +402,11 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
                 }
             }
         } else if (blobjr.blobs.length) {
-            var addtoret = state.output.string(state, blobjr.blobs, blobjr);
+            const addtoret = state.output.string(state, blobjr.blobs, blobjr);
             if (blob) {
                 // Patch up world-class weird bug in the ill-constructed code of mine.
                 if ("string" !== addtoret && addtoret.length > 1 && blobjr.strings.delimiter) {
-                    var numberSeen = false;
+                    let numberSeen = false;
                     for (let j=0,jlen=addtoret.length;j<jlen;j++) {
                         if ("string" !== typeof addtoret[j]) {
                             numberSeen = true;
@@ -435,7 +435,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
         }
     }
 
-    var span_split = 0;
+    let span_split = 0;
     for (let i = 0, ilen = ret.length; i < ilen; i += 1) {
         if ("string" === typeof ret[i]) {
             span_split = (parseInt(i as any, 10) + 1);
@@ -469,7 +469,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
         }
     }
 
-    var blobs_start = state.output.renderBlobs(ret.slice(0, span_split), blob_delimiter, false, blob);
+    let blobs_start = state.output.renderBlobs(ret.slice(0, span_split), blob_delimiter, false, blob);
     if (blobs_start && blob && (blob.decorations.length || blob.strings.suffix || blob.strings.prefix)) {
         if (!state.tmp.suppress_decorations) {
             for (let i = 0, ilen = blob.decorations.length; i < ilen; i += 1) {
@@ -512,7 +512,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
         }
     }
 
-    var blobs_end = ret.slice(span_split, ret.length);
+    const blobs_end = ret.slice(span_split, ret.length);
     if (!blobs_end.length && blobs_start) {
         ret = [blobs_start];
     } else if (blobs_end.length && !blobs_start) {
@@ -544,7 +544,7 @@ CSL.Output.Queue.prototype.string = function (state, myblobs, blob) {
 };
 
 CSL.Output.Queue.prototype.clearlevel = function () {
-    var blob, pos, len;
+    let blob, pos, len;
     blob = this.current.value();
     len = blob.blobs.length;
     for (let pos = 0; pos < len; pos += 1) {
@@ -553,7 +553,7 @@ CSL.Output.Queue.prototype.clearlevel = function () {
 };
 
 CSL.Output.Queue.prototype.renderBlobs = function (blobs, delim, in_cite, parent) {
-    var state, ret, ret_last_char, use_delim, blob, pos, len, ppos, llen, str, params, txt_esc;
+    let state, ret, ret_last_char, use_delim, blob, pos, len, ppos, llen, str, params, txt_esc;
     txt_esc = CSL.getSafeEscape(this.state);
     if (!delim) {
         delim = "";
@@ -570,7 +570,7 @@ CSL.Output.Queue.prototype.renderBlobs = function (blobs, delim, in_cite, parent
         blobs[0].params = parent.params;
         return blobs[0];
     }
-    var start = true;
+    let start = true;
     for (let pos = 0; pos < len; pos += 1) {
         if (blobs[pos].checkNext) {
             blobs[pos].checkNext(blobs[pos + 1],start);
@@ -585,7 +585,7 @@ CSL.Output.Queue.prototype.renderBlobs = function (blobs, delim, in_cite, parent
     
     // print("LEN="+len+" "+JSON.stringify(blobs, null, 2));
     // Fix last non-range join
-    var doit = true;
+    let doit = true;
     for (let pos = blobs.length - 1; pos > 0; pos += -1) {
         if (blobs[pos].checkLast) {
             if (doit && blobs[pos].checkLast(blobs[pos - 1])) {
@@ -626,11 +626,11 @@ CSL.Output.Queue.prototype.renderBlobs = function (blobs, delim, in_cite, parent
                 str = blob.formatter.format(blob.num, blob.gender);
             }
             // Workaround to get a more or less accurate value.
-            var strlen = str.replace(/<[^>]*>/g, "").length;
+            const strlen = str.replace(/<[^>]*>/g, "").length;
             // notSerious
             this.append(str, "empty", true);
-            var str_blob = this.pop();
-            var count_offset_characters = state.tmp.count_offset_characters;
+            const str_blob = this.pop();
+            const count_offset_characters = state.tmp.count_offset_characters;
             str = this.string(state, [str_blob], false);
             state.tmp.count_offset_characters = count_offset_characters;
             if (blob.strings["text-case"]) {
@@ -650,7 +650,7 @@ CSL.Output.Queue.prototype.renderBlobs = function (blobs, delim, in_cite, parent
                 }
             }
             str = txt_esc(blob.strings.prefix) + str + txt_esc(blob.strings.suffix);
-            var addme = "";
+            let addme = "";
             if (blob.status === CSL.END) {
                 //print("  CSL.END");
                 addme = txt_esc(blob.range_prefix);
@@ -689,9 +689,9 @@ CSL.Output.Queue.purgeEmptyBlobs = function (parent) {
     // back-to-front, bottom-first
     for (let i=parent.blobs.length-1;i>-1;i--) {
         CSL.Output.Queue.purgeEmptyBlobs(parent.blobs[i]);
-        var child = parent.blobs[i];
+        const child = parent.blobs[i];
         if (!child || !child.blobs || !child.blobs.length) {
-            var buf = [];
+            const buf = [];
             while ((parent.blobs.length-1) > i) {
                 buf.push(parent.blobs.pop());
             }
@@ -711,18 +711,18 @@ CSL.Output.Queue.purgeEmptyBlobs = function (parent) {
 
 CSL.Output.Queue.adjust = function (punctInQuote) {
 
-    var NO_SWAP_IN = {
+    const NO_SWAP_IN = {
         ";": true,
         ":": true
     };
 
-    var NO_SWAP_OUT = {
+    const NO_SWAP_OUT = {
         ".": true,
         "!": true,
         "?": true
     };
 
-    var LtoR_MAP = {
+    const LtoR_MAP = {
         "!": {
             ".": "!",
             "?": "!?",
@@ -767,10 +767,10 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         }
     };
 
-    var SWAP_IN = {};
-    var SWAP_OUT = {};
-    var PUNCT = {};
-    var PUNCT_OR_SPACE = {};
+    const SWAP_IN = {};
+    const SWAP_OUT = {};
+    const PUNCT = {};
+    const PUNCT_OR_SPACE = {};
     for (let key in LtoR_MAP) {
         PUNCT[key] = true;
         PUNCT_OR_SPACE[key] = true;
@@ -784,7 +784,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     PUNCT_OR_SPACE[" "] = true;
     PUNCT_OR_SPACE[" "] = true;
 
-    var RtoL_MAP = {};
+    const RtoL_MAP = {};
     for (let key in LtoR_MAP) {
         for (let subkey in LtoR_MAP[key]) {
             if (!RtoL_MAP[subkey]) {
@@ -812,7 +812,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     
     function blobHasDecorations(blob, includeQuotes?) {
         let ret = false;
-        var decorlist = ['@font-style','@font-variant','@font-weight','@text-decoration','@vertical-align'];
+        const decorlist = ['@font-style','@font-variant','@font-weight','@text-decoration','@vertical-align'];
         if (includeQuotes) {
             decorlist.push('@quotes');
         }
@@ -846,11 +846,11 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     }
     
     function blobHasDescendantMergingPunctuation(parentChar,blob) {
-        var childChar = blob.strings.suffix.slice(-1);
+        let childChar = blob.strings.suffix.slice(-1);
         if (!childChar && "string" === typeof blob.blobs) {
             childChar = blob.blobs.slice(-1);
         }
-        var mergedChars = RtoL_MAP[parentChar][childChar];
+        const mergedChars = RtoL_MAP[parentChar][childChar];
         if (mergedChars && mergedChars.length === 1) {
             return true;
         }
@@ -875,9 +875,9 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
                 return false;
             }
         } else {
-            var child = blob.blobs[blob.blobs.length-1];
+            const child = blob.blobs[blob.blobs.length-1];
             if (child) {
-                var childChar = child.strings.suffix.slice(-1);
+                let childChar = child.strings.suffix.slice(-1);
                 if (!childChar) {
                     return matchLastChar(child,chr);
                 } else if (child.strings.suffix.slice(-1) == chr) {
@@ -892,10 +892,10 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     }
     
     function mergeChars (First, first, Second, second, merge_right?) {
-        var FirstStrings = "blobs" === first ? First : First.strings;
-        var SecondStrings = "blobs" === second ? Second: Second.strings;
-        var firstChar = FirstStrings[first].slice(-1);
-        var secondChar = SecondStrings[second].slice(0,1);
+        const FirstStrings = "blobs" === first ? First : First.strings;
+        const SecondStrings = "blobs" === second ? Second: Second.strings;
+        const firstChar = FirstStrings[first].slice(-1);
+        const secondChar = SecondStrings[second].slice(0,1);
         function cullRight () {
             SecondStrings[second] = SecondStrings[second].slice(1);
         }
@@ -908,16 +908,16 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         function addLeft (chr) {
             FirstStrings[first] += chr;
         }
-        var cull = merge_right ? cullLeft : cullRight;
+        const cull = merge_right ? cullLeft : cullRight;
         function matchOnRight () {
             return RtoL_MAP[secondChar];
         }
         function matchOnLeft () {
             return LtoR_MAP[firstChar];
         }
-        var match = merge_right ? matchOnLeft : matchOnRight;
+        const match = merge_right ? matchOnLeft : matchOnRight;
         function mergeToRight () {
-            var chr = LtoR_MAP[firstChar][secondChar];
+            const chr = LtoR_MAP[firstChar][secondChar];
             if ("string" === typeof chr) {
                 cullLeft();
                 cullRight();
@@ -928,7 +928,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
             }
         }
         function mergeToLeft () {
-            var chr = RtoL_MAP[secondChar][firstChar];
+            const chr = RtoL_MAP[secondChar][firstChar];
             if ("string" === typeof chr) {
                 cullLeft();
                 cullRight();
@@ -938,9 +938,9 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
                 cullRight();
             }
         }
-        var merge = merge_right ? mergeToRight: mergeToLeft;
+        const merge = merge_right ? mergeToRight: mergeToLeft;
 
-        var isDuplicate = firstChar === secondChar;
+        const isDuplicate = firstChar === secondChar;
         if (isDuplicate) {
             cull();
         } else {
@@ -965,18 +965,18 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         }
 
         // back-to-front, bottom-first
-        var parentDecorations = blobHasDecorations(parent,true);
+        const parentDecorations = blobHasDecorations(parent,true);
         for (let i=parent.blobs.length-1;i>-1;i--) {
             this.upward(parent.blobs[i]);
-            var parentStrings = parent.strings;
-            var childStrings = parent.blobs[i].strings;
+            const parentStrings = parent.strings;
+            const childStrings = parent.blobs[i].strings;
             if (i === 0) {
                 // Remove leading space on first-position child node prefix if there is a trailing space on the node prefix above 
                 if (" " === parentStrings.prefix.slice(-1) && " " === childStrings.prefix.slice(0, 1)) {
                     childStrings.prefix = childStrings.prefix.slice(1);
                 }
                 // Migrate leading punctuation or space on a first-position prefix upward
-                var childChar = childStrings.prefix.slice(0, 1);
+                let childChar = childStrings.prefix.slice(0, 1);
                 if (!parentDecorations && PUNCT_OR_SPACE[childChar] && !parentStrings.prefix) {
                     parentStrings.prefix += childChar;
                     childStrings.prefix = childStrings.prefix.slice(1);
@@ -984,7 +984,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
             }
             if (i === (parent.blobs.length - 1)) {
                 // Migrate trailing space ONLY on a last-position suffix upward, controlling for duplicates
-                var childChar = childStrings.suffix.slice(-1);
+                let childChar = childStrings.suffix.slice(-1);
                 // ZZZ Loosened to fix initialized names wrapped in a span and followed by a period
                 if (!parentDecorations && [" "].indexOf(childChar) > -1) {
                     if (parentStrings.suffix.slice(0,1) !== childChar) {
@@ -1028,16 +1028,16 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
             if ((i < parent.blobs.length -1) && !parent.strings.delimiter) {
                 // If there is a trailing swappable character on a sibling prefix with no intervening delimiter, copy it to suffix,
                 // controlling for duplicates
-                var child = parent.blobs[i];
-                var childChar = child.strings.suffix.slice(-1);
-                var sibling = parent.blobs[i+1];
-                var siblingChar = sibling.strings.prefix.slice(0, 1);
-                var hasDecorations = blobHasDecorations(child) || blobHasDecorations(sibling);
-                var hasNumber = "number" === typeof childChar || "number" === typeof siblingChar;
+                const child = parent.blobs[i];
+                let childChar = child.strings.suffix.slice(-1);
+                const sibling = parent.blobs[i+1];
+                const siblingChar = sibling.strings.prefix.slice(0, 1);
+                const hasDecorations = blobHasDecorations(child) || blobHasDecorations(sibling);
+                const hasNumber = "number" === typeof childChar || "number" === typeof siblingChar;
 
                 if (!hasDecorations && !hasNumber && PUNCT[siblingChar] && !hasNumber) {
-                    var suffixAndPrefixMatch = siblingChar === child.strings.suffix.slice(-1);
-                    var suffixAndFieldMatch = (!child.strings.suffix && "string" === typeof child.blobs && child.blobs.slice(-1) === siblingChar);
+                    const suffixAndPrefixMatch = siblingChar === child.strings.suffix.slice(-1);
+                    const suffixAndFieldMatch = (!child.strings.suffix && "string" === typeof child.blobs && child.blobs.slice(-1) === siblingChar);
                     if (!suffixAndPrefixMatch && !suffixAndFieldMatch) {
                         mergeChars(child, 'suffix', sibling, 'prefix');
                         //child.strings.suffix += siblingChar;
@@ -1066,9 +1066,9 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         //    print("JSON "+JSON.stringify(parent, ["strings", "decorations", "blobs", "prefix", "suffix", "delimiter"], 2));
         //}
 
-        var parentStrings = parent.strings;
+        const parentStrings = parent.strings;
         // Check for numeric child
-        var someChildrenAreNumbers = false;
+        let someChildrenAreNumbers = false;
         for (let i=0,ilen=parent.blobs.length;i<ilen;i++) {
             if (blobIsNumber(parent.blobs[i])) {
                 someChildrenAreNumbers = true;
@@ -1078,9 +1078,9 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         if (true || !someChildrenAreNumbers) {
             // If there is a leading swappable character on delimiter, copy it to suffixes IFF none of the targets are numbers
             if (parentStrings.delimiter && PUNCT[parentStrings.delimiter.slice(0, 1)]) {
-                var delimChar = parentStrings.delimiter.slice(0, 1);
+                const delimChar = parentStrings.delimiter.slice(0, 1);
                 for (let i=parent.blobs.length-2;i>-1;i--) {
-                    var childStrings = parent.blobs[i].strings;
+                    const childStrings = parent.blobs[i].strings;
                     if (childStrings.suffix.slice(-1) !== delimChar) {
                         childStrings.suffix += delimChar;
                     }
@@ -1090,10 +1090,10 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         }
         // back-to-front, top-first
         for (let i=parent.blobs.length-1;i>-1;i--) {
-            var child = parent.blobs[i];
-            var childStrings = parent.blobs[i].strings;
-            var childDecorations = blobHasDecorations(child, true);
-            var childIsNumber = blobIsNumber(child);
+            const child = parent.blobs[i];
+            const childStrings = parent.blobs[i].strings;
+            const childDecorations = blobHasDecorations(child, true);
+            const childIsNumber = blobIsNumber(child);
 
             if (i === (parent.blobs.length - 1)) {
 
@@ -1106,13 +1106,13 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
                     // If so, we allow migration anyway.
                     // Original discussion is here:
                     // https://forums.zotero.org/discussion/37091/citeproc-bug-punctuation-in-quotes/
-                    var parentChar = parentStrings.suffix.slice(0, 1);
+                    const parentChar = parentStrings.suffix.slice(0, 1);
 
                     // Hmm.
                     // Consider writing out the matching child from blobHasDescendant functions.
                     // It should save some cycles, and produce the same result.
 
-                    var allowMigration = false;
+                    let allowMigration = false;
                     if (PUNCT[parentChar]) {
                         allowMigration = blobHasDescendantMergingPunctuation(parentChar,child);
                         if (!allowMigration && punctInQuote) {
@@ -1163,7 +1163,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
                 }
             } else {
                 // Otherwise it's a sibling. We don't care about moving spaces here, just suppress a duplicate
-                var siblingStrings = parent.blobs[i+1].strings;
+                const siblingStrings = parent.blobs[i+1].strings;
                 if (!blobIsNumber(child) 
                     && !childDecorations
                     && PUNCT_OR_SPACE[childStrings.suffix.slice(-1)]
@@ -1200,7 +1200,7 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     }
     // Abstract out a couple of utility functions, used in fix() below.
     function swapToTheLeft (child) {
-        var childChar = child.strings.suffix.slice(0,1);
+        let childChar = child.strings.suffix.slice(0,1);
         if ("string" === typeof child.blobs) {
             while (SWAP_IN[childChar]) {
                 mergeChars(child, 'blobs', child, 'suffix');
@@ -1215,13 +1215,13 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
     }
     function swapToTheRight (child) {
         if ("string" === typeof child.blobs) {
-            var childChar = child.blobs.slice(-1);
+            let childChar = child.blobs.slice(-1);
             while (SWAP_OUT[childChar]) {
                 mergeChars(child, 'blobs', child, 'suffix', true);
                 childChar = child.blobs.slice(-1);
             }
         } else {
-            var childChar = child.blobs[child.blobs.length-1].strings.suffix.slice(-1);
+            let childChar = child.blobs[child.blobs.length-1].strings.suffix.slice(-1);
             while (SWAP_OUT[childChar]) {
                 mergeChars(child.blobs[child.blobs.length-1], 'suffix', child, 'suffix', true);
                 childChar = child.blobs[child.blobs.length-1].strings.suffix.slice(-1);
@@ -1237,17 +1237,17 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
         
         //print("START4");
         // Do the swap, front-to-back, bottom-first
-        var lastChar;
+        let lastChar;
 
         // XXX Two things to fix with this:
         // XXX (1) Stalls after one character
         // XXX (2) Moves colon and semicolon, both of which SHOULD stall
 
         for (let i=0,ilen=parent.blobs.length;i<ilen;i++) {
-            var child = parent.blobs[i];
-            var quoteSwap = false;
+            const child = parent.blobs[i];
+            let quoteSwap = false;
             for (let j=0,jlen=child.decorations.length;j<jlen;j++) {
-                var decoration = child.decorations[j];
+                const decoration = child.decorations[j];
                 if (decoration[0] === "@quotes" && decoration[1] !== "false") {
                     quoteSwap = true;
                 }

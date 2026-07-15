@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 /*global CSL: true */
 
 CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, item: any): string {
-    var myterm: string;
+    let myterm: string;
     if ("locator" === node.strings.term) {
         if (item && item.label) {
             if (item.label === "sub verbo") {
@@ -19,10 +19,10 @@ CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, ite
     }
 
     // Plurals detection.
-    var plural: any = node.strings.plural;
+    let plural: any = node.strings.plural;
     if ("number" !== typeof plural) {
         // (node, ItemObject, variable, type)
-        var theItem = (item && node.strings.term === "locator") ? item : Item;
+        const theItem = (item && node.strings.term === "locator") ? item : Item;
         if (theItem[node.strings.term]) {
             state.processNumber(false, theItem, node.strings.term, Item.type);
             plural = state.tmp.shadow_numbers[node.strings.term].plural;
@@ -51,8 +51,8 @@ CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, ite
 };
 
 CSL.castLabel = function (state: CslState, node: CslNode, term: any, plural: any, mode: any): string {
-    var label_form = node.strings.form;
-    var label_capitalize_if_first = node.strings.capitalize_if_first;
+    let label_form = node.strings.form;
+    let label_capitalize_if_first = node.strings.capitalize_if_first;
     if (state.tmp.group_context.tip.label_form) {
         if (label_form === "static") {
             state.tmp.group_context.tip.label_static = true;

@@ -17,11 +17,11 @@ CSL.Engine.prototype.rebuildProcessorState = function (citations, mode, uncitedI
     if (!mode) {
         mode = 'html';
     }
-    var doneIDs = {};
-    var itemIDs = [];
+    const doneIDs = {};
+    const itemIDs = [];
     for (let i=0,ilen=citations.length;i<ilen;i+=1) {
         for (let j=0,jlen=citations[i].citationItems.length;j<jlen;j+=1) {
-            var itemID = "" + citations[i].citationItems[j].id;
+            const itemID = "" + citations[i].citationItems[j].id;
             if (!doneIDs[itemID]) {
                 itemIDs.push(itemID);
             }
@@ -29,18 +29,18 @@ CSL.Engine.prototype.rebuildProcessorState = function (citations, mode, uncitedI
         }
     }
     this.updateItems(itemIDs);
-    var pre = [];
-    var post = [];
+    const pre = [];
+    const post = [];
     let ret = [];
-    var oldMode = this.opt.mode;
+    const oldMode = this.opt.mode;
     this.setOutputFormat(mode);
     for (let i=0,ilen=citations.length;i<ilen;i+=1) {
         // res contains a result report and a list of [index,string] pairs
         // index begins at 0
-        var res = this.processCitationCluster(citations[i],pre,post,CSL.ASSUME_ALL_ITEMS_REGISTERED);
+        const res = this.processCitationCluster(citations[i],pre,post,CSL.ASSUME_ALL_ITEMS_REGISTERED);
         pre.push([citations[i].citationID,citations[i].properties.noteIndex]);
         for (let j=0,jlen=res[1].length;j<jlen;j+=1) {
-            var index = res[1][j][0];
+            const index = res[1][j][0];
             ret[index] = [
                 pre[index][0],
                 pre[index][1],
@@ -55,7 +55,7 @@ CSL.Engine.prototype.rebuildProcessorState = function (citations, mode, uncitedI
 
 
 CSL.Engine.prototype.restoreProcessorState = function (citations) {
-    var i, ilen, j, jlen, item, Item, newitem, citationList, itemList, sortedItems;
+    let i, ilen, j, jlen, item, Item, newitem, citationList, itemList, sortedItems;
     
     // This function is deprecated.
     // Use rebuildProcessorState() instead.
@@ -76,8 +76,8 @@ CSL.Engine.prototype.restoreProcessorState = function (citations) {
         citations = [];
     }
     // Adjust citationIDs to avoid duplicates, save off index numbers
-    var indexNumbers = [];
-    var citationIds = {};
+    const indexNumbers = [];
+    const citationIds = {};
     for (let i = 0, ilen = citations.length; i < ilen; i += 1) {
         if (citationIds[citations[i].citationID]) {
             this.setCitationId(citations[i], true);
@@ -87,7 +87,7 @@ CSL.Engine.prototype.restoreProcessorState = function (citations) {
     }
     // Slice citations and sort by their declared index positions, if any,
     // then reassign index and noteIndex numbers.
-    var oldCitations = citations.slice();
+    const oldCitations = citations.slice();
     oldCitations.sort(
         function (a,b) {
             if (a.properties.index < b.properties.index) {
@@ -145,10 +145,10 @@ CSL.Engine.prototype.restoreProcessorState = function (citations) {
 
 
 CSL.Engine.prototype.updateItems = function (idList, nosort, rerun_ambigs, implicitUpdate) {
-    var debug = false;
-    var oldArea = this.tmp.area;
-    var oldRoot = this.tmp.root;
-    var oldExtension = this.tmp.extension;
+    const debug = false;
+    const oldArea = this.tmp.area;
+    const oldRoot = this.tmp.root;
+    const oldExtension = this.tmp.extension;
     if (this.bibliography_sort.tokens.length === 0) {
         nosort = true;
     }
@@ -204,10 +204,10 @@ CSL.Engine.prototype.updateItems = function (idList, nosort, rerun_ambigs, impli
 };
 
 CSL.Engine.prototype.updateUncitedItems = function (idList, nosort) {
-    var idHash;
-    var oldArea = this.tmp.area;
-    var oldRoot = this.tmp.root;
-    var oldExtension = this.tmp.extension;
+    let idHash;
+    const oldArea = this.tmp.area;
+    const oldRoot = this.tmp.root;
+    const oldExtension = this.tmp.extension;
     if (this.bibliography_sort.tokens.length === 0) {
         nosort = true;
     }

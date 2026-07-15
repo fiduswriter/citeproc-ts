@@ -14,8 +14,8 @@ CSL.Node.names = {
         if (this.tokentype === CSL.SINGLETON) {
             state.build.names_variables[state.build.names_variables.length-1].concat(this.variables);
             for (let i in this.variables) {
-                var variable = this.variables[i];
-                var name_labels = state.build.name_label[state.build.name_label.length-1];
+                const variable = this.variables[i];
+                const name_labels = state.build.name_label[state.build.name_label.length-1];
                 if (Object.keys(name_labels).length) {
                     name_labels[variable] = name_labels[Object.keys(name_labels)[0]];
                 }
@@ -116,14 +116,14 @@ CSL.Node.names = {
                 state.nameOutput["with"] = this["with"];
 
                 // REMOVE THIS
-                var mywith = "with";
-                var with_default_prefix = "";
-                var with_suffix = "";
+                const mywith = "with";
+                let with_default_prefix = "";
+                let with_suffix = "";
                 if (CSL.STARTSWITH_ROMANESQUE_REGEXP.test(mywith)) {
                     with_default_prefix = " ";
                     with_suffix = " ";
                 }
-                var thewith: any = {};
+                const thewith: any = {};
                 thewith.single = new CSL.Blob(mywith);
                 thewith.single.strings.suffix = with_suffix;
                 thewith.multiple = new CSL.Blob(mywith);

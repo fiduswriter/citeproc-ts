@@ -1,8 +1,8 @@
 import { CSL } from '../csl';
 CSL.Engine.prototype.remapSectionVariable = function (this: any, inputList: any): void {
     for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
-        var Item = inputList[i][0];
-        var item = inputList[i][1];
+        const Item = inputList[i][0];
+        const item = inputList[i][1];
 
         if (["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1) {
             if (item.locator) {
@@ -16,10 +16,10 @@ CSL.Engine.prototype.remapSectionVariable = function (this: any, inputList: any)
                     }
                 }
             }
-            var sectionMasterLabel = null;
+            let sectionMasterLabel = null;
             if (Item.section) {
                 Item.section = Item.section.trim();
-                var m2 = Item.section.match(CSL.STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
+                const m2 = Item.section.match(CSL.STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
                 if (!m2) {
                     Item.section = "sec. " + Item.section;
                     sectionMasterLabel = "sec.";
@@ -31,8 +31,8 @@ CSL.Engine.prototype.remapSectionVariable = function (this: any, inputList: any)
                 if (!item.locator) {
                     item.locator = Item.section;
                 } else {
-                    var m3 = item.locator.match(/^([^ ]*)\s*(.*)/);
-                    var space = " ";
+                    const m3 = item.locator.match(/^([^ ]*)\s*(.*)/);
+                    let space = " ";
                     if (m3) {
                         if (m3[1] === "p." && sectionMasterLabel !== "p.") {
                             item.locator = m3[2];
@@ -65,14 +65,14 @@ CSL.Engine.prototype.setNumberLabels = function (this: any, Item: CslItem): void
         this.tmp.shadow_numbers["number"].numeric = false;
         this.tmp.shadow_numbers["number"].label = false;
 
-        var value = "" + Item.number;
+        let value = "" + Item.number;
         value = value.split("\\").join("");
-        var firstword = value.split(/\s+/)[0];
-        var firstlabel = CSL.STATUTE_SUBDIV_STRINGS[firstword];
+        const firstword = value.split(/\s+/)[0];
+        const firstlabel = CSL.STATUTE_SUBDIV_STRINGS[firstword];
         if (firstlabel) {
-            var splt = value.split(CSL.STATUTE_SUBDIV_PLAIN_REGEX);
+            const splt = value.split(CSL.STATUTE_SUBDIV_PLAIN_REGEX);
             if (splt.length > 1) {
-                var lst = [];
+                const lst = [];
                 for (let j = 1, jlen = splt.length; j < jlen; j += 1) {
                     lst.push(splt[j].replace(/\s*$/, "").replace(/^\s*/, ""));
                 }

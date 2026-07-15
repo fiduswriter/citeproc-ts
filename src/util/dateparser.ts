@@ -9,7 +9,7 @@ CSL.DateParser = function () {
      */
 
     // jse imperial years
-    var epochPairs = [
+    const epochPairs = [
         ["\u660E\u6CBB", 1867],
         ["\u5927\u6B63", 1911],
         ["\u662D\u548C", 1925],
@@ -17,57 +17,57 @@ CSL.DateParser = function () {
     ];
 
     // years by jse imperial epoch
-    var epochYearByName = {};
+    const epochYearByName = {};
     for (let i=0,ilen=epochPairs.length; i<ilen; i++) {
         let key = epochPairs[i][0];
-        var val = epochPairs[i][1];
+        const val = epochPairs[i][1];
         epochYearByName[key] = val;
     }
     
-    var epochMatchStrings = [];
-    var epochMap = {};
+    const epochMatchStrings = [];
+    const epochMap = {};
     for (let i=0,ilen=epochPairs.length; i<ilen; i++) {
-        var pair = epochPairs[i];
-        var val = pair[0];
+        const pair = epochPairs[i];
+        const val = pair[0];
         epochMatchStrings.push(val);
         epochMap[pair[0]] = pair[1];
     }
-    var epochMatchString = epochMatchStrings.join("|");
+    const epochMatchString = epochMatchStrings.join("|");
 
     // regular expression to trap year name and year
     // (splitter and matcher, to cope with ancient JS implementations)
-    var epochSplitter = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)");
-    var epochMatcher = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)", "g");
+    const epochSplitter = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)");
+    const epochMatcher = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)", "g");
 
     // regular expression for month or day kanji label
-    var kanjiMonthDay = /(\u6708|\u5E74)/g;
+    const kanjiMonthDay = /(\u6708|\u5E74)/g;
 
     // regular expression for year kanji label
-    var kanjiYear = /\u65E5/g;
+    const kanjiYear = /\u65E5/g;
 
     // regular expression for double-width Japanese range marker
-    var kanjiRange = /\u301c/g;
+    const kanjiRange = /\u301c/g;
 
     // parsing regexps for normalized strings
     //   raw materials
-    var yearLast = "(?:[?0-9]{1,2}%%NUMD%%){0,2}[?0-9]{4}(?![0-9])";
-    var yearFirst = "[?0-9]{4}(?:%%NUMD%%[?0-9]{1,2}){0,2}(?![0-9])";
-    var numberVal = "[?0-9]{1,3}";
-    var rangeSeparator = "[%%DATED%%]";
-    var fuzzyChar = "[?~]";
-    var chars = "[^\-\/\~\?0-9]+";
-    var rexString = "(" + yearFirst + "|" + yearLast + "|" + numberVal + "|" + rangeSeparator + "|" + fuzzyChar + "|" + chars + ")";
+    const yearLast = "(?:[?0-9]{1,2}%%NUMD%%){0,2}[?0-9]{4}(?![0-9])";
+    const yearFirst = "[?0-9]{4}(?:%%NUMD%%[?0-9]{1,2}){0,2}(?![0-9])";
+    const numberVal = "[?0-9]{1,3}";
+    const rangeSeparator = "[%%DATED%%]";
+    const fuzzyChar = "[?~]";
+    const chars = "[^\-\/\~\?0-9]+";
+    const rexString = "(" + yearFirst + "|" + yearLast + "|" + numberVal + "|" + rangeSeparator + "|" + fuzzyChar + "|" + chars + ")";
     //   composed regexps
-    var rexDash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "-"));
-    var rexDashSlash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "\/"));
-    var rexSlashDash = new RegExp(rexString.replace(/%%NUMD%%/g, "\/").replace(/%%DATED%%/g, "-"));
+    const rexDash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "-"));
+    const rexDashSlash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "\/"));
+    const rexSlashDash = new RegExp(rexString.replace(/%%NUMD%%/g, "\/").replace(/%%DATED%%/g, "-"));
 
     /*
      * Mutable values
      */
 
     // months
-    var monthString = "january february march april may june july august september october november december spring summer fall winter spring summer";
+    const monthString = "january february march april may june july august september october november december spring summer fall winter spring summer";
     this.monthStrings = monthString.split(" ");
 
     /*
@@ -123,10 +123,10 @@ CSL.DateParser = function () {
         // Extend as necessary to resolve ambiguities
         // For each new month string ...
         for (let i=0,ilen=lst.length; i<ilen; i++) {
-            var abbrevLength = null;
-            var skip = false;
-            var insert = 3;
-            var extendedSets = {};
+            let abbrevLength = null;
+            let skip = false;
+            let insert = 3;
+            const extendedSets = {};
             for (let j=0,jlen=this.monthAbbrevs.length; j<jlen; j++) {
                 extendedSets[j] = {};
                 if (j === i) {
@@ -196,8 +196,8 @@ CSL.DateParser = function () {
         // Converts object in place and returns object
         thedate["date-parts"] = [];
         thedate["date-parts"].push([]);
-        var slicelen = 0;
-        var part;
+        let slicelen = 0;
+        let part;
         for (let i=0,ilen=3; i<ilen; i++) {
             part = ["year", "month", "day"][i];
             if (!thedate[part]) {
@@ -244,7 +244,7 @@ CSL.DateParser = function () {
         if (!suff) {
             suff = "";
         }
-        var lst = txt.split(delim);
+        let lst = txt.split(delim);
         
         for (let i=0, ilen=lst.length; i<ilen; i++) {
             if (lst[i].length === 4) {
@@ -261,14 +261,14 @@ CSL.DateParser = function () {
             lst[i] = parseInt(lst[i], 10);
         }
         if (lst.length === 1 || (lst.length === 2 && !lst[1])) {
-            var month = lst[0];
+            const month = lst[0];
             if (month) {
                 ret[("month" + suff)] = "" + lst[0];
             }
         } else if (lst.length === 2) {
             if (lst[this.monthGuess] > 12) {
-                var month = lst[this.dayGuess];
-                var day = lst[this.monthGuess];
+                const month = lst[this.dayGuess];
+                const day = lst[this.monthGuess];
                 if (month) {
                     ret[("month" + suff)] = "" + month;
                     if (day) {
@@ -276,8 +276,8 @@ CSL.DateParser = function () {
                     }
                 }
             } else {
-                var month = lst[this.monthGuess];
-                var day = lst[this.dayGuess];
+                const month = lst[this.monthGuess];
+                const day = lst[this.dayGuess];
                 if (month) {
                     ret[("month" + suff)] = "" + month;
                     if (day) {
@@ -296,11 +296,11 @@ CSL.DateParser = function () {
         //
         // Normalize the format and the year if it's a Japanese date
         //
-        var orig = txt;
-        var slashPos = -1;
-        var dashPos = -1;
-        var yearIsNegative = false;
-        var lst;
+        const orig = txt;
+        let slashPos = -1;
+        let dashPos = -1;
+        let yearIsNegative = false;
+        let lst;
         if (txt) {
             txt = txt.replace(/^(.*[0-9])T[0-9].*/, "$1");
             // If string leads with a minus sign, strip and memo it.
@@ -330,11 +330,11 @@ CSL.DateParser = function () {
                 txt = txt.replace(/-$/g,"");
 
                 // Tortuous workaround for IE6
-                var slst = txt.split(epochSplitter);
+                const slst = txt.split(epochSplitter);
                 lst = [];
-                var mm = txt.match(epochMatcher);
+                const mm = txt.match(epochMatcher);
                 if (mm) {
-                    var mmx = [];
+                    let mmx = [];
                     for (let i=0,ilen=mm.length; i<ilen; i++) {
                         mmx = mmx.concat(mm[i].match(/([^0-9]+)([0-9]+)/).slice(1));
                     }
@@ -342,7 +342,7 @@ CSL.DateParser = function () {
                         lst.push(slst[i]);
                         if (i !== (ilen - 1)) {
                             // pos is undeclared, and multiplying by 2 here is insane.
-                            var mmpos = (i * 2);
+                            const mmpos = (i * 2);
                             lst.push(mmx[mmpos]);
                             lst.push(mmx[mmpos + 1]);
                         }
@@ -372,17 +372,17 @@ CSL.DateParser = function () {
         // drop punctuation from a.d., b.c.
         txt = txt.replace(/([A-Za-z])\./g, "$1");
 
-        var number: any = "";
-        var note = "";
-        var thedate: any = {};
-        var rangeDelim;
-        var dateDelim;
+        let number: any = "";
+        let note = "";
+        let thedate: any = {};
+        let rangeDelim;
+        let dateDelim;
         if (txt.slice(0, 1) === "\"" && txt.slice(-1) === "\"") {
             thedate.literal = txt.slice(1, -1);
             return thedate;
         }
         if (slashPos > -1 && dashPos > -1) {
-            var slashCount = txt.split("/");
+            const slashCount = txt.split("/");
             if (slashCount.length > 3) {
                 rangeDelim = "-";
                 txt = txt.replace(/\_/g, "-");
@@ -411,9 +411,9 @@ CSL.DateParser = function () {
         //
         // Phase 2
         //
-        var delimPos = ret.indexOf(rangeDelim);
-        var delims = [];
-        var isRange = false;
+        const delimPos = ret.indexOf(rangeDelim);
+        const delims = [];
+        let isRange = false;
         if (delimPos > -1) {
             delims.push([0, delimPos]);
             delims.push([(delimPos + 1), ret.length]);
@@ -424,17 +424,17 @@ CSL.DateParser = function () {
         //
         // For each side of a range divide ...
         //
-        var suff = "";
+        let suff = "";
         
         for (let i=0,ilen=delims.length; i<ilen; i++) {
-            var delim = delims[i];
+            const delim = delims[i];
             //
             // Process each element ...
             //
-            var date = ret.slice(delim[0], delim[1]);
+            const date = ret.slice(delim[0], delim[1]);
             outer: 
             for (let j=0,jlen=date.length; j<jlen; j++) {
-                var element = date[j];
+                const element = date[j];
                 //
                 // If it's a numeric date, process it.
                 //
@@ -518,7 +518,7 @@ CSL.DateParser = function () {
         //
         if (isRange) {
             for (let j=0,jlen=CSL.DATE_PARTS_ALL.length; j<jlen; j++) {
-                var item = CSL.DATE_PARTS_ALL[j];
+                const item = CSL.DATE_PARTS_ALL[j];
                 if (thedate[item] && !thedate[(item + "_end")]) {
                     thedate[(item + "_end")] = thedate[item];
                 } else if (!thedate[item] && thedate[(item + "_end")]) {
@@ -532,9 +532,9 @@ CSL.DateParser = function () {
         if (!thedate.year || (thedate.year && thedate.day && !thedate.month)) {
             thedate = { "literal": orig };
         }
-        var parts = ["year", "month", "day", "year_end", "month_end", "day_end"];
+        const parts = ["year", "month", "day", "year_end", "month_end", "day_end"];
         for (let i=0,ilen=parts.length; i<ilen; i++) {
-            var part = parts[i];
+            let part = parts[i];
             if ("string" === typeof thedate[part] && thedate[part].match(/^[0-9]+$/)) {
                 thedate[part] = parseInt(thedate[part], 10);
             }

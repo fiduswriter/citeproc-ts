@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 /*global CSL: true */
 
 CSL.ambigConfigDiff = function (a: any, b: any): number {
-    var pos: number, len: number, ppos: number, llen: number;
+    let pos: number, len: number, ppos: number, llen: number;
     // return of true means the ambig configs differ
     if (a.names.length !== b.names.length) {
         return 1;
@@ -29,7 +29,7 @@ CSL.ambigConfigDiff = function (a: any, b: any): number {
 };
 
 CSL.cloneAmbigConfig = function (config: any, oldconfig?: any): any {
-    var i: number, ilen: number, j: number, jlen: number, param: any;
+    let i: number, ilen: number, j: number, jlen: number, param: any;
     let ret: any = {};
     ret.names = [];
     ret.givens = [];
@@ -60,12 +60,12 @@ CSL.cloneAmbigConfig = function (config: any, oldconfig?: any): any {
  * Return current base configuration for disambiguation
  */
 CSL.getAmbigConfig = function (this: any): any {
-    var config: any, ret: any;
+    let config: any, ret: any;
     config = this.tmp.disambig_request;
     if (!config) {
         config = this.tmp.disambig_settings;
     }
-    var ret2 = CSL.cloneAmbigConfig(config);
+    const ret2 = CSL.cloneAmbigConfig(config);
     return ret2;
 };
 

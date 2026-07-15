@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 /*global CSL: true */
 
 CSL.Util.substituteStart = function (state, target) {
-    var element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
+    let element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
     func = function (state, Item, item) {
         for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
             if ("@strip-periods" === this.decorations[i][0] && "true" === this.decorations[i][1]) {
@@ -139,45 +139,45 @@ CSL.Util.substituteStart = function (state, target) {
             if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
                 // Attach item data and variable names.
                 // Do with them what you will.
-                var variable_entry = new CSL.Token("text", CSL.START);
+                const variable_entry = new CSL.Token("text", CSL.START);
                 variable_entry.decorations = [["@showid", "true"]];
                 state.output.startTag("variable_entry", variable_entry);
-                var position = null;
+                let position = null;
                 if (item) {
                     position = item.position;
                 }
                 if (!position) {
                     position = 0;
                 }
-                var positionMap = [
+                const positionMap = [
                     "first",
                     "container-subsequent",
                     "subsequent",
                     "ibid",
                     "ibid-with-locator"
                 ];
-                var noteNumber = 0;
+                let noteNumber = 0;
                 if (item && item.noteIndex) {
                     noteNumber = item.noteIndex;
                 }
-                var firstReferenceNoteNumber = 0;
+                let firstReferenceNoteNumber = 0;
                 if (item && item['first-reference-note-number']) {
                     firstReferenceNoteNumber = item['first-reference-note-number'];
                 }
-                var firstContainerReferenceNoteNumber = 0;
+                let firstContainerReferenceNoteNumber = 0;
                 if (item && item['first-container-reference-note-number']) {
                     firstContainerReferenceNoteNumber = item['first-container-reference-note-number'];
                 }
-                var citationNumber = 0;
+                let citationNumber = 0;
                 // XXX Will this EVER happen?
                 if (item && item['citation-number']) {
                     citationNumber = item['citation-number'];
                 }
-                var index = 0;
+                let index = 0;
                 if (item && item.index) {
                     index = item.index;
                 }
-                var params = {
+                const params = {
                     itemData: Item,
                     variableNames: this.variables,
                     context: state.tmp.area,
@@ -261,7 +261,7 @@ CSL.Util.substituteEnd = function (state, target) {
 
     if ("names" === this.name || ("text" === this.name && this.variables_real !== "title")) {
         author_substitute = new CSL.Token("text", CSL.SINGLETON);
-        var substitution_name = this.name;
+        const substitution_name = this.name;
         func = function (state, Item) {
             if (state.tmp.area !== "bibliography") {
                 return;
@@ -279,20 +279,20 @@ CSL.Util.substituteEnd = function (state, target) {
                 return;
             }
 
-            var subrule = state.bibliography.opt["subsequent-author-substitute-rule"];
-            var i, ilen;
+            const subrule = state.bibliography.opt["subsequent-author-substitute-rule"];
+            let i, ilen;
             //var text_esc = CSL.getSafeEscape(state);
-            var printing = !state.tmp.suppress_decorations;
+            const printing = !state.tmp.suppress_decorations;
             if (printing && state.tmp.subsequent_author_substitute_ok) {
                 if (state.tmp.rendered_name) {
                     if ("partial-each" === subrule || "partial-first" === subrule) {
-                        var dosub = true;
+                        let dosub = true;
                         let rendered_name = [];
                         // This is a wee bit risky, as we're assuming that the name
                         // children and the list of stringified names are congruent.
                         // That *should* always be true, but you never know.
                         for (let i = 0, ilen = state.tmp.name_node.children.length; i < ilen; i += 1) {
-                            var name = state.tmp.rendered_name[i];
+                            const name = state.tmp.rendered_name[i];
                             if (dosub
                                 && state.tmp.last_rendered_name && state.tmp.last_rendered_name.length > (i - 1)
                                 && name && !name.localeCompare(state.tmp.last_rendered_name[i])) {

@@ -4,9 +4,9 @@ import { CSL } from '../csl';
 CSL.Util.PageRangeMangler = {};
 
 CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: string): any {
-    var rangerex: RegExp, pos: any, len: any, stringify: any, listify: any, expand: any, minimize: any, minimize_internal: any, chicago15: any, chicago16: any, lst: any, m: any, b: any, e: any, ret: any, begin: any, end: any, ret_func: any;
+    let rangerex: RegExp, pos: any, len: any, stringify: any, listify: any, expand: any, minimize: any, minimize_internal: any, chicago15: any, chicago16: any, lst: any, m: any, b: any, e: any, ret: any, begin: any, end: any, ret_func: any;
 
-    var range_delimiter = state.getTerm(rangeType + "-range-delimiter");
+    const range_delimiter = state.getTerm(rangeType + "-range-delimiter");
 
     rangerex = /([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)\s*(?:\u2013|-)\s*([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)/;
 
@@ -24,12 +24,12 @@ CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: st
 
     listify = function (str: any): any {
         let m: any, lst: any, ret: any;
-        var hyphens = "\\s+\\-\\s+";
-        var this_range_delimiter = range_delimiter === "-" ? "" : range_delimiter;
-        var delimRex = new RegExp("([^\\\\])[-" + this_range_delimiter + "\\u2013]", "g");
+        const hyphens = "\\s+\\-\\s+";
+        const this_range_delimiter = range_delimiter === "-" ? "" : range_delimiter;
+        const delimRex = new RegExp("([^\\\\])[-" + this_range_delimiter + "\\u2013]", "g");
         str = str.replace(delimRex, "$1 - ").replace(/\s+-\s+/g, " - ");
-        var rexm = new RegExp("((?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*)", "g");
-        var rexlst = new RegExp("(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*");
+        const rexm = new RegExp("((?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*)", "g");
+        const rexlst = new RegExp("(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*");
         m = str.match(rexm);
         lst = str.split(rexlst);
         if (lst.length === 0) {
@@ -95,7 +95,7 @@ CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: st
                     ret.pop();
                 } else {
                     if (minchars && isyear && ret.length === 3) {
-                        var front = b.slice(0, i);
+                        const front = b.slice(0, i);
                         front.reverse();
                         ret = ret.concat(front);
                     }
@@ -119,7 +119,7 @@ CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: st
                 } else if (begin >= 10000) {
                     e = "" + end;
                     for (let i = 3; i < e.length; i += 1) {
-                        var divisor = Math.pow(10, i);
+                        const divisor = Math.pow(10, i);
                         if (Math.floor(begin / divisor) === Math.floor(end / divisor)) {
                             m[3] = "" + (end % divisor);
                             break;
@@ -144,7 +144,7 @@ CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: st
                 e = "" + end;
                 if (begin > 100 && begin % 100) {
                     for (let i = 2; i < e.length; i += 1) {
-                        var divisor = Math.pow(10, i);
+                        const divisor = Math.pow(10, i);
                         if (Math.floor(begin / divisor) === Math.floor(end / divisor)) {
                             m[3] = "" + (end % divisor);
                             break;
@@ -159,9 +159,9 @@ CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: st
         return stringify(lst);
     };
 
-    var sniff = function (str: any, func: any, minchars?: any, isyear?: any): string {
+    const sniff = function (str: any, func: any, minchars?: any, isyear?: any): string {
         str = "" + str;
-        var lst = expand(str);
+        let lst = expand(str);
         let ret = func(lst, minchars, isyear);
         return ret;
     };

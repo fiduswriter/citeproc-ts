@@ -2,7 +2,7 @@ import { CSL } from '../../csl';
 /*global CSL: true */
 
 CSL.NameOutput.prototype.truncatePersonalNameLists = function (this: any): void {
-    var v: any, i: number, ilen: number, j: number, jlen: number, chopvar: any, values: any;
+    let v: any, i: number, ilen: number, j: number, jlen: number, chopvar: any, values: any;
     this.freeters_count = {};
     this.persons_count = {};
     this.institutions_count = {};
@@ -95,7 +95,7 @@ CSL.NameOutput.prototype.truncatePersonalNameLists = function (this: any): void 
 };
 
 CSL.NameOutput.prototype._truncateNameList = function (this: any, container: any, variable: any, index?: any): any {
-    var lst: any;
+    let lst: any;
     if ("undefined" === typeof index) {
         lst = container[variable];
     } else {
@@ -105,7 +105,7 @@ CSL.NameOutput.prototype._truncateNameList = function (this: any, container: any
         && lst.length > 50
         && lst.length > (this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names + 2)) {
 
-        var limit = this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names;
+        const limit = this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names;
         lst = lst.slice(0, limit + 1).concat(lst.slice(-1));
     }
     return lst;

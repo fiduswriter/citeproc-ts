@@ -36,8 +36,8 @@ CSL.Node.group = {
                         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.prefix, null, this);
                     }
                     
-                    var condition: any = false;
-                    var force_suppress = false;
+                    let condition: any = false;
+                    let force_suppress = false;
 
                     // XXX Can we do something better for length here?
                     if (state.tmp.group_context.mystack.length) {
@@ -45,12 +45,12 @@ CSL.Node.group = {
                     }
                     
                     // fieldcontextflag
-                    var label_form = state.tmp.group_context.tip.label_form;
+                    let label_form = state.tmp.group_context.tip.label_form;
                     if (!label_form) {
                         label_form = this.strings.label_form_override;
                     }
                     
-                    var label_capitalize_if_first = state.tmp.group_context.tip.label_capitalize_if_first;
+                    let label_capitalize_if_first = state.tmp.group_context.tip.label_capitalize_if_first;
                     if (!label_capitalize_if_first) {
                         label_capitalize_if_first = this.strings.label_capitalize_if_first;
                     }
@@ -69,7 +69,7 @@ CSL.Node.group = {
                             not: false
                         };
                     }
-                    var context: any = {
+                    const context: any = {
                         old_term_predecessor: state.tmp.term_predecessor,
                         term_intended: false,
                         variable_attempt: false,
@@ -86,7 +86,7 @@ CSL.Node.group = {
                         done_vars: state.tmp.group_context.tip.done_vars.slice()
                     };
                     if(this.non_parallel) {
-                        var non_parallel = state.tmp.group_context.tip.non_parallel;
+                        let non_parallel = state.tmp.group_context.tip.non_parallel;
                         if (!non_parallel) {
                             non_parallel = {};
                         }
@@ -94,7 +94,7 @@ CSL.Node.group = {
                         context.non_parallel = non_parallel;
                     }
                     if(this.parallel_first) {
-                        var parallel_first = state.tmp.group_context.tip.parallel_first;
+                        let parallel_first = state.tmp.group_context.tip.parallel_first;
                         if (!parallel_first) {
                             parallel_first = {};
                         }
@@ -102,7 +102,7 @@ CSL.Node.group = {
                         context.parallel_first = parallel_first;
                     }
                     if(this.parallel_last) {
-                        var parallel_last = state.tmp.group_context.tip.parallel_last;
+                        let parallel_last = state.tmp.group_context.tip.parallel_last;
                         if (!parallel_last) {
                             parallel_last = {};
                         }
@@ -168,8 +168,8 @@ CSL.Node.group = {
                     // node.
                     func = function (state, Item) {
                         if (Item.publisher && Item["publisher-place"]) {
-                            var publisher_lst = Item.publisher.split(/;\s*/);
-                            var publisher_place_lst = Item["publisher-place"].split(/;\s*/);
+                            const publisher_lst = Item.publisher.split(/;\s*/);
+                            const publisher_place_lst = Item["publisher-place"].split(/;\s*/);
                             if (publisher_lst.length > 1
                                 && publisher_lst.length === publisher_place_lst.length) {
                                 state.publisherOutput = new CSL.PublisherOutput(state, this);
@@ -207,10 +207,10 @@ CSL.Node.group = {
                 
                 // Code for fetching an instantiating?
 
-                var choose_start = new CSL.Token("choose", CSL.START);
+                const choose_start = new CSL.Token("choose", CSL.START);
                 CSL.Node.choose.build.call(choose_start, state, target);
                 
-                var if_start = new CSL.Token("if", CSL.START);
+                const if_start = new CSL.Token("if", CSL.START);
 
                 func = (function (macroName) {
                     return function (Item, item) {
@@ -222,14 +222,14 @@ CSL.Node.group = {
                 if_start.tests.push(func);
                 if_start.test = state.fun.match.any(if_start, state, if_start.tests);
                 target.push(if_start);
-                var text_node = new CSL.Token("text", CSL.SINGLETON);
+                const text_node = new CSL.Token("text", CSL.SINGLETON);
                 func = function (state, Item, item) {
                     // This will run the juris- token list.
-                    var itemItem = Item;
+                    let itemItem = Item;
                     if (item && item["best-jurisdiction"] && this.juris === "juris-locator") {
                         itemItem = item;
                     }
-                    var next = 0;
+                    let next = 0;
                     if (state.juris[itemItem["best-jurisdiction"]][this.juris]) {
                         while (next < state.juris[itemItem["best-jurisdiction"]][this.juris].length) {
                             next = CSL.tokenExec.call(state, state.juris[itemItem["best-jurisdiction"]][this.juris][next], Item, item);
@@ -240,9 +240,9 @@ CSL.Node.group = {
                 text_node.execs.push(func);
                 target.push(text_node);
 
-                var if_end = new CSL.Token("if", CSL.END);
+                const if_end = new CSL.Token("if", CSL.END);
                 CSL.Node["if"].build.call(if_end, state, target);
-                var else_start = new CSL.Token("else", CSL.START);
+                const else_start = new CSL.Token("else", CSL.START);
                 CSL.Node["else"].build.call(else_start, state, target);
             }
         }
@@ -274,7 +274,7 @@ CSL.Node.group = {
                 }
                 state.output.endTag();
                 if (this.realGroup) {
-                    var flags = state.tmp.group_context.pop();
+                    const flags = state.tmp.group_context.pop();
                     if (flags.parallel_delimiter_override) {
                         state.tmp.group_context.tip.parallel_delimiter_override = flags.parallel_delimiter_override;
                         if (!state.tmp.just_looking && state.registry.registry[Item.id].master) {
@@ -285,7 +285,7 @@ CSL.Node.group = {
                         state.tmp.group_context.tip.parallel_delimiter_override_on_suppress = flags.parallel_delimiter_override_on_suppress;
                     }
                     if (state.tmp.area === "bibliography_sort") {
-                        var citationNumberIdx = flags.done_vars.indexOf("citation-number");
+                        const citationNumberIdx = flags.done_vars.indexOf("citation-number");
                         if (this.strings.sort_direction && citationNumberIdx > -1 && state.tmp.group_context.length() == 1) {
                             if (this.strings.sort_direction === CSL.DESCENDING) {
                                 state.bibliography_sort.opt.citation_number_sort_direction = CSL.DESCENDING;
@@ -311,15 +311,15 @@ CSL.Node.group = {
                         if (!this.isJurisLocatorLabel) {
                             state.tmp.group_context.tip.variable_success = true;
                         }
-                        var blobs = state.output.current.value().blobs;
-                        var pos = state.output.current.value().blobs.length - 1;
+                        const blobs = state.output.current.value().blobs;
+                        const pos = state.output.current.value().blobs.length - 1;
 
                         if (!state.tmp.just_looking && (flags.non_parallel || flags.parallel_last || flags.parallel_first || flags.parallel_delimiter_override || flags.parallel_delimiter_override_on_suppress)) {
                             // flags.parallel_last
                             // flags.parallel_first
 
                             // Returns true ONLY if all variables listed on this group are repeats.
-                            var hasRepeat = state.parallel.checkRepeats(flags);
+                            const hasRepeat = state.parallel.checkRepeats(flags);
                             if (hasRepeat) {
                                 if (blobs) {
                                     blobs.pop();
@@ -327,7 +327,7 @@ CSL.Node.group = {
                             }
                             if (state.tmp.cite_index > 0 && (hasRepeat || (!flags.parallel_first && !flags.parallel_last && !flags.non_parallel))) {
                                 //state.sys.print(`${state.tmp.cite_index} ${JSON.stringify(state.tmp.suppress_repeats, null, 2)}`)
-                                var info = state.tmp.suppress_repeats[state.tmp.cite_index-1];
+                                const info = state.tmp.suppress_repeats[state.tmp.cite_index-1];
                                 if (hasRepeat && flags.parallel_delimiter_override_on_suppress && (info.SIBLING || info.ORPHAN)) {
                                     state.output.queue.slice(-1)[0].parallel_delimiter = flags.parallel_delimiter_override_on_suppress;
                                 } else if (flags.parallel_delimiter_override && info.SIBLING) {
@@ -350,7 +350,7 @@ CSL.Node.group = {
                             // later in the cite if desired.
                             // Currently no tests fail from removing the condition, but leaving it in.
                             for (let i=0,ilen=flags.done_vars.length;i<ilen;i++) {
-                                var doneVar = flags.done_vars[i];
+                                const doneVar = flags.done_vars[i];
                                 for (let j=0,jlen=state.tmp.done_vars.length; j<jlen; j++) {
                                     if (state.tmp.done_vars[j] === doneVar) {
                                         state.tmp.done_vars = state.tmp.done_vars.slice(0, j).concat(state.tmp.done_vars.slice(j+1));
@@ -367,9 +367,9 @@ CSL.Node.group = {
             this.execs.push(func);
             
             if (this.juris) {
-                var else_end = new CSL.Token("else", CSL.END);
+                const else_end = new CSL.Token("else", CSL.END);
                 CSL.Node["else"].build.call(else_end, state, target);
-                var choose_end = new CSL.Token("choose", CSL.END);
+                const choose_end = new CSL.Token("choose", CSL.END);
                 CSL.Node.choose.build.call(choose_end, state, target);
             }
         }

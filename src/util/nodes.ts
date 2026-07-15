@@ -9,7 +9,7 @@ var INDENT = "";
 
 CSL.tokenExec = function (token, Item, item) {
     // Called on state object
-    var next, maybenext, exec, debug;
+    let next, maybenext, exec, debug;
     debug = false;
     next = token.next;
     maybenext = false;
@@ -30,7 +30,7 @@ CSL.tokenExec = function (token, Item, item) {
     }
     */
 
-    var record = function (result) {
+    const record = function (result) {
         if (result) {
             this.tmp.jump.replace("succeed");
             return token.succeed;
@@ -62,17 +62,17 @@ CSL.tokenExec = function (token, Item, item) {
  * <p>Called on the state object.</p>
  */
 CSL.expandMacro = function (macro_key_token, target) {
-    var mkey, macro_nodes, end_of_macro, func;
+    let mkey, macro_nodes, end_of_macro, func;
 
     mkey = macro_key_token.postponed_macro;
 
-    var sort_direction = macro_key_token.strings.sort_direction;
+    const sort_direction = macro_key_token.strings.sort_direction;
     
     // Decorations and affixes are in wrapper applied in cs:text
     macro_key_token = new CSL.Token("group", CSL.START);
     
-    var hasDate = false;
-    var macroid = false;
+    let hasDate = false;
+    let macroid = false;
     macro_nodes = this.cslXml.getNodesByName(this.cslXml.dataObj, 'macro', mkey);
     if (macro_nodes.length) {
         macroid = this.cslXml.getAttributeValue(macro_nodes[0],'cslid');
@@ -109,7 +109,7 @@ CSL.expandMacro = function (macro_key_token, target) {
     }
 
     // Let's macro
-    var mytarget = CSL.getMacroTarget.call(this, mkey);
+    let mytarget = CSL.getMacroTarget.call(this, mkey);
     if (mytarget) {
         CSL.buildMacro.call(this, mytarget, macro_nodes);
         CSL.configureMacro.call(this, mytarget);
@@ -117,25 +117,25 @@ CSL.expandMacro = function (macro_key_token, target) {
     if (this.build.extension) {
         let func = (function(macro_name) {
             return function (state, Item, item) {
-                var next = 0;
+                let next = 0;
                 while (next < state.sort_macros[macro_name].length) {
                     next = CSL.tokenExec.call(state, state.sort_macros[macro_name][next], Item, item);
                 }
             };
         }(mkey));
-        var text_node = new CSL.Token("text", CSL.SINGLETON);
+        const text_node = new CSL.Token("text", CSL.SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     } else {
         let func = (function(macro_name) {
             return function (state, Item, item) {
-                var next = 0;
+                let next = 0;
                 while (next < state.macros[macro_name].length) {
                     next = CSL.tokenExec.call(state, state.macros[macro_name][next], Item, item);
                 }
             };
         }(mkey));
-        var text_node = new CSL.Token("text", CSL.SINGLETON);
+        const text_node = new CSL.Token("text", CSL.SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     }
@@ -162,7 +162,7 @@ CSL.expandMacro = function (macro_key_token, target) {
 };
 
 CSL.getMacroTarget = function (mkey) {
-    var mytarget: any = false;
+    let mytarget: any = false;
     if (this.build.extension) {
         // Cache sort-mode macro expansions separately, just like non-sort macros.
         // This avoids duplicating tokens when the same macro is referenced by
@@ -182,8 +182,8 @@ CSL.getMacroTarget = function (mkey) {
 };
 
 CSL.buildMacro = function (mytarget, macro_nodes) {
-    var builder = CSL.makeBuilder(this, mytarget);
-    var mynode;
+    const builder = CSL.makeBuilder(this, mytarget);
+    let mynode;
     if ("undefined" === typeof macro_nodes.length) {
         mynode = macro_nodes;
     } else {
@@ -213,7 +213,7 @@ CSL.configureMacro = function (mytarget) {
  * <code>CSL.END</code> or <code>CSL.SINGLETON</code>.
  */
 CSL.XmlToToken = function (state, tokentype, explicitTarget, var_stack) {
-    var name, txt, attrfuncs, attributes, decorations, token, key, target;
+    let name, txt, attrfuncs, attributes, decorations, token, key, target;
     name = state.cslXml.nodename(this);
     //CSL.debug(tokentype + " : " + name);
     if (state.build.skip && state.build.skip !== name) {

@@ -61,13 +61,13 @@ CSL.NameOutput.prototype.init = function (names) {
 
     // Abort and proceed to the next substitution if a match is required,
     // two variables are called, and they do not match.
-    var checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
+    const checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
     if (checkCommonTerm) {
         this.state.tmp.can_substitute.pop();
         this.state.tmp.can_substitute.push(true);
         //this.state.tmp.group_context.mystack[this.state.tmp.group_context.mystack.length-1].variable_success = false;
         for (let i in this.variables) {
-            var idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
+            const idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
             if (idx > -1) {
                 this.state.tmp.done_vars = this.state.tmp.done_vars.slice(0, idx).concat(this.state.tmp.done_vars.slice(i+1));
             }
@@ -90,7 +90,7 @@ CSL.NameOutput.prototype.reinit = function (names, labelVariable) {
         this.variables = names.variables;
         
         // Not sure why this is necessary. Guards against a memory leak perhaps?
-        var oldval = this.state.tmp.value.slice();
+        const oldval = this.state.tmp.value.slice();
         this.state.tmp.value = [];
 
         for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
@@ -107,12 +107,12 @@ CSL.NameOutput.prototype.reinit = function (names, labelVariable) {
     }
     // Abort and proceed to the next substitution if a match is required,
     // two variables are called, and they do not match.
-    var checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
+    const checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
     if (checkCommonTerm) {
         this.state.tmp.can_substitute.pop();
         this.state.tmp.can_substitute.push(true);
         for (let i in this.variables) {
-            var idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
+            const idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
             if (idx > -1) {
                 this.state.tmp.done_vars = this.state.tmp.done_vars.slice(0, idx).concat(this.state.tmp.done_vars.slice(i+1));
             }
@@ -122,8 +122,8 @@ CSL.NameOutput.prototype.reinit = function (names, labelVariable) {
 };
 
 CSL.NameOutput.prototype.outputNames = function () {
-    var i, ilen;
-    var variables = this.variables;
+    let i, ilen;
+    const variables = this.variables;
     if (this.institution.and) {
         if (!this.institution.and.single.blobs || !this.institution.and.single.blobs.length) {
             this.institution.and.single.blobs = this.name.and.single.blobs;
@@ -235,12 +235,12 @@ CSL.NameOutput.prototype.outputNames = function () {
         this.state.sys.print("(11)");
     }
     //SNIP-END
-    var blob_list = [];
+    const blob_list = [];
     for (let i = 0, ilen = variables.length; i < ilen; i += 1) {
-        var v = variables[i];
-        var institution_sets = [];
-        var institutions = false;
-        var varblob = null;
+        const v = variables[i];
+        const institution_sets = [];
+        let institutions = false;
+        let varblob = null;
         if (!this.state.opt.development_extensions.spoof_institutional_affiliations) {
             varblob = this._join([this.freeters[v]], "");
         } else {
@@ -258,7 +258,7 @@ CSL.NameOutput.prototype.outputNames = function () {
             }
             //SNIP-END
             if (this.institutions[v].length) {
-                var pos = this.nameset_base + this.variable_offset[v];
+                let pos = this.nameset_base + this.variable_offset[v];
                 if (this.freeters[v].length) {
                     pos += 1;
                 }
@@ -269,7 +269,7 @@ CSL.NameOutput.prototype.outputNames = function () {
                 this.state.sys.print("(11c)");
             }
             //SNIP-END
-            var varblob = this.joinFreetersAndInstitutionSets([this.freeters[v], institutions]);
+            let varblob = this.joinFreetersAndInstitutionSets([this.freeters[v], institutions]);
             //SNIP-START
             if (this.debug) {
                 this.state.sys.print("(11d)");
@@ -322,7 +322,7 @@ CSL.NameOutput.prototype.outputNames = function () {
         this.state.sys.print("(15)");
     }
     //SNIP-END
-    var blob = this.state.output.pop();
+    let blob = this.state.output.pop();
     this.state.tmp.name_node.top = blob;
     //SNIP-START
     if (this.debug) {
@@ -333,7 +333,7 @@ CSL.NameOutput.prototype.outputNames = function () {
     // Append will drop the names on the floor here if suppress-me is
     // set on element_trace.
     // Need to rescue the value for collapse comparison.
-    var namesToken = CSL.Util.cloneToken(this.names);
+    const namesToken = CSL.Util.cloneToken(this.names);
     if (this.state.tmp.group_context.tip.condition) {
         CSL.UPDATE_GROUP_CONTEXT_CONDITION(this.state, this.names.strings.prefix, null, this.names);
     }
@@ -355,11 +355,11 @@ CSL.NameOutput.prototype.outputNames = function () {
     //SNIP-END
     if (variables[0] !== "authority") {
         // Just grab the string values in the name
-        var name_node_string: any = [];
-        var nameobjs = this.Item[variables[0]];
+        let name_node_string: any = [];
+        const nameobjs = this.Item[variables[0]];
         if (nameobjs) {
             for (let i = 0, ilen = nameobjs.length; i < ilen; i += 1) {
-                var substring = CSL.Util.Names.getRawName(nameobjs[i]);
+                const substring = CSL.Util.Names.getRawName(nameobjs[i]);
                 if (substring) {
                     name_node_string.push(substring);
                 }
@@ -382,7 +382,7 @@ CSL.NameOutput.prototype.outputNames = function () {
     }
     if ("classic" === this.Item.type) {
         if (this.state.tmp.first_name_string) {
-            var author_title: any = [];
+            let author_title: any = [];
             author_title.push(this.state.tmp.first_name_string);
             if (this.Item.title) {
                 author_title.push(this.Item.title);
@@ -421,12 +421,12 @@ CSL.NameOutput.prototype.outputNames = function () {
 };
 
 CSL.NameOutput.prototype._applyLabels = function (blob, v) {
-    var txt;
+    let txt;
     if (!this.label || !this.label[this.labelVariable]) {
         return blob;
     }
-    var plural = 0;
-    var num = this.freeters_count[v] + this.institutions_count[v];
+    let plural = 0;
+    let num = this.freeters_count[v] + this.institutions_count[v];
     if (num > 1) {
         plural = 1;
     } else {
@@ -470,7 +470,7 @@ CSL.NameOutput.prototype._buildLabel = function (term, plural, position, v) {
     }
 
     let ret = false;
-    var node = this.label[v][position];
+    const node = this.label[v][position];
     if (node) {
         ret = CSL.castLabel(this.state, node, term, plural, CSL.TOLERANT);
     }
@@ -479,7 +479,7 @@ CSL.NameOutput.prototype._buildLabel = function (term, plural, position, v) {
 
 
 CSL.NameOutput.prototype._collapseAuthor = function () {
-    var myqueue, mystr, oldchars;
+    let myqueue, mystr, oldchars;
     // collapse can be undefined, an array of length zero, and probably
     // other things ... ugh.
     if (this.state.tmp.name_node.top.blobs.length === 0) {

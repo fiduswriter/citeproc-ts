@@ -33,7 +33,7 @@ CSL.Util.Dates.year["long"] = function (state: CslState, num: any): string {
  * <p>Returns the result as a string.</p>
  */
 CSL.Util.Dates.year.imperial = function (state: CslState, num: any, end?: any): string {
-    var year = "";
+    let year = "";
     if (!num) {
         if ("boolean" === typeof num) {
             num = "";
@@ -42,19 +42,19 @@ CSL.Util.Dates.year.imperial = function (state: CslState, num: any, end?: any): 
         }
     }
     end = end ? "_end" : "";
-    var month = state.tmp.date_object["month" + end];
+    let month = state.tmp.date_object["month" + end];
     month = month ? "" + month : "1";
     while (month.length < 2) {
         month = "0" + month;
     }
-    var day = state.tmp.date_object["day" + end];
+    let day = state.tmp.date_object["day" + end];
     day = day ? "" + day : "1";
     while (day.length < 2) {
         day = "0" + day;
     }
-    var date = parseInt(num + month + day, 10);
-    var label: any;
-    var offset: any;
+    const date = parseInt(num + month + day, 10);
+    let label: any;
+    let offset: any;
     if (date >= 18680908 && date < 19120730) {
         label = "\u660e\u6cbb";
         offset = 1867;
@@ -69,7 +69,7 @@ CSL.Util.Dates.year.imperial = function (state: CslState, num: any, end?: any): 
         offset = 1988;
     }
     if (label && offset) {
-        var normalizedKey = label;
+        let normalizedKey = label;
         if (state.sys.normalizeAbbrevsKey) {
             normalizedKey = state.sys.normalizeAbbrevsKey("number", label);
         }
@@ -104,7 +104,7 @@ CSL.Util.Dates.year["short"] = function (state: CslState, num: any): string {
 CSL.Util.Dates.year.numeric = function (state: CslState, num: any): string {
     let m: any, pre: any;
     num = "" + num;
-    var m2 = num.match(/([0-9]*)$/);
+    const m2 = num.match(/([0-9]*)$/);
     if (m2) {
         pre = num.slice(0, m2[1].length * -1);
         num = m2[1];
@@ -135,7 +135,7 @@ CSL.Util.Dates.normalizeMonth = function (num: any, useSeason?: any): any {
     }
     num = parseInt(num, 10);
     if (useSeason) {
-        var res = { stub: "month-", num: num };
+        const res = { stub: "month-", num: num };
         if (res.num < 1 || res.num > 24) {
             res.num = 0;
         } else {
@@ -164,7 +164,7 @@ CSL.Util.Dates.month = {};
  * <p>This just passes the number back as a string.</p>
  */
 CSL.Util.Dates.month.numeric = function (state: CslState, num: any): any {
-    var num2 = CSL.Util.Dates.normalizeMonth(num);
+    let num2 = CSL.Util.Dates.normalizeMonth(num);
     if (!num2) {
         num2 = "";
     }
@@ -176,7 +176,7 @@ CSL.Util.Dates.month.numeric = function (state: CslState, num: any): any {
  * <p>This just passes the number back as string padded with zeros.</p>
  */
 CSL.Util.Dates.month["numeric-leading-zeros"] = function (state: CslState, num: any): any {
-    var num2 = CSL.Util.Dates.normalizeMonth(num);
+    let num2 = CSL.Util.Dates.normalizeMonth(num);
     if (!num2) {
         num2 = "";
     } else {
@@ -193,8 +193,8 @@ CSL.Util.Dates.month["numeric-leading-zeros"] = function (state: CslState, num: 
  * <p>This passes back the month of the locale in long form.</p>
  */
 CSL.Util.Dates.month["long"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
-    var res = CSL.Util.Dates.normalizeMonth(num, true);
-    var num2 = res.num;
+    const res = CSL.Util.Dates.normalizeMonth(num, true);
+    let num2 = res.num;
     if (!num2) {
         num2 = "";
     } else {
@@ -212,8 +212,8 @@ CSL.Util.Dates.month["long"] = function (state: CslState, num: any, gender?: any
  * <p>This passes back the month of the locale in short form.</p>
  */
 CSL.Util.Dates.month["short"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
-    var res = CSL.Util.Dates.normalizeMonth(num, true);
-    var num2 = res.num;
+    const res = CSL.Util.Dates.normalizeMonth(num, true);
+    let num2 = res.num;
     if (!num2) {
         num2 = "";
     } else {

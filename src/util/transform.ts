@@ -58,7 +58,7 @@ CSL.Transform = function (state) {
     this.abbrevs["default"] = new state.sys.AbbreviationSegments();
 
     function getCountryOrJurisdiction(variable, normalizedKey, quashCountry) {
-        var value = "";
+        let value = "";
         if (state.sys.getHumanForm) {
             if (variable === "country") {
                 value = state.sys.getHumanForm(normalizedKey.toLowerCase(), false, true);
@@ -79,20 +79,20 @@ CSL.Transform = function (state) {
     // Internal function
     function abbreviate(state, tok, Item, altvar, basevalue, family_var, use_field) {
 
-        var value = "";
-        var myabbrev_family = CSL.FIELD_CATEGORY_REMAP[family_var];
-        var preferredJurisdiction;
+        let value = "";
+        const myabbrev_family = CSL.FIELD_CATEGORY_REMAP[family_var];
+        let preferredJurisdiction;
         if (!myabbrev_family) {
             return basevalue;
         }
 
-        var variable = family_var;
-        var normalizedKey = basevalue;
+        const variable = family_var;
+        let normalizedKey = basevalue;
 
         if (state.sys.normalizeAbbrevsKey) {
             normalizedKey = state.sys.normalizeAbbrevsKey(family_var, basevalue);
         }
-        var quashCountry = false;
+        let quashCountry = false;
         if (variable === "jurisdiction" && normalizedKey) {
             quashCountry = normalizedKey.indexOf(":") === -1;
         }
@@ -112,7 +112,7 @@ CSL.Transform = function (state) {
             } else {
                 preferredJurisdiction = "default";
             }
-            var jurisdiction = state.transform.loadAbbreviation(preferredJurisdiction, myabbrev_family, normalizedKey, Item.language);
+            let jurisdiction = state.transform.loadAbbreviation(preferredJurisdiction, myabbrev_family, normalizedKey, Item.language);
 
             // Some rules:
             // # variable === "country"
@@ -136,7 +136,7 @@ CSL.Transform = function (state) {
 
             if (state.transform.abbrevs[jurisdiction][myabbrev_family] && normalizedKey) {
                 // Safe to test presence of abbrev against raw object in this block
-                var abbrev = state.transform.abbrevs[jurisdiction][myabbrev_family][normalizedKey];
+                const abbrev = state.transform.abbrevs[jurisdiction][myabbrev_family][normalizedKey];
                 if (tok.strings.form === "short" && abbrev) {
                     if (quashCountry) {
                         value = "";
@@ -171,7 +171,7 @@ CSL.Transform = function (state) {
 
     function getFieldLocale(Item,field) {
         let ret = state.opt["default-locale"][0].slice(0, 2);
-        var localeRex;
+        let localeRex;
         if (state.opt.development_extensions.strict_text_case_locales) {
             localeRex = new RegExp("^([a-zA-Z]{2})(?:$|-.*| .*)");
         } else {
@@ -199,9 +199,9 @@ CSL.Transform = function (state) {
 
     // Internal functions
     function getTextSubField (Item, field, locale_type, use_default, stopOrig, family_var) {
-        var opt, o, ret, opts;
-        var usedOrig = stopOrig;
-        var usingOrig = false;
+        let opt, o, ret, opts;
+        const usedOrig = stopOrig;
+        let usingOrig = false;
 
         if (!Item[field]) {
             return {
@@ -214,16 +214,16 @@ CSL.Transform = function (state) {
         // here, it means short-form requested), and the variable
         // has a short-form partner (i.e. it is in array
         // VARIABLES_WITH_SHORT_FORM), then it is run here as *-short".
-        var stickyLongForm = false;
+        let stickyLongForm = false;
         if (CSL.VARIABLES_WITH_SHORT_FORM.indexOf(field) > -1
             && family_var) {
 
             field = field + "-short";
             stickyLongForm = true;
         }
-        var breakMe = false;
-        var firstValue = null;
-        var fieldsToTry = [];
+        let breakMe = false;
+        let firstValue = null;
+        const fieldsToTry = [];
         if (field.slice(-6) === "-short") {
             fieldsToTry.push(field);
             fieldsToTry.push(field.slice(0, -6))
@@ -232,13 +232,13 @@ CSL.Transform = function (state) {
         }
 
         for (let h=0,hlen=fieldsToTry.length; h<hlen; h++) {
-            var variantMatch = false;
-            var field = fieldsToTry[h];
+            let variantMatch = false;
+            let field = fieldsToTry[h];
 
             ret = {name:"", usedOrig:stopOrig,locale:getFieldLocale(Item,field)};
 
             opts = state.opt[locale_type] ? state.opt[locale_type].slice() : [];
-            var hasVal = false;
+            let hasVal = false;
 
             if (locale_type === 'locale-orig') {
                 if (!stopOrig) {
@@ -306,15 +306,15 @@ CSL.Transform = function (state) {
                     && (!ret.token.strings["text-case"]
                         || ret.token.strings["text-case"] === "sentence"
                         || ret.token.strings["text-case"] === "normal")) {
-                    var locale = state.opt.lang;
-                    var lang;
+                    const locale = state.opt.lang;
+                    let lang;
                     if (usingOrig) {
                         lang = false;
                     } else {
                         lang = ret.locale;
                     }
-                    var seg = field.slice(0,-5);
-                    var sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
+                    const seg = field.slice(0,-5);
+                    const sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
                     ret.name = CSL.titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase);
                     delete ret.token.strings["text-case"];
                 }
@@ -334,8 +334,8 @@ CSL.Transform = function (state) {
         if (!jurisdiction) {
             jurisdiction = "default";
         }
-        var country = jurisdiction.split(":")[0];
-        var domain = CSL.getAbbrevsDomain(state, country, lang);
+        const country = jurisdiction.split(":")[0];
+        const domain = CSL.getAbbrevsDomain(state, country, lang);
         if (domain) {
             jurisdiction += ("@" + domain);
         }
@@ -369,7 +369,7 @@ CSL.Transform = function (state) {
     this.loadAbbreviation = loadAbbreviation;
 
     function publisherCheck (tok, Item, primary, family_var) {
-        var varname = tok.variables[0];
+        const varname = tok.variables[0];
         if (state.publisherOutput && primary) {
             if (["publisher","publisher-place"].indexOf(varname) === -1) {
                 return false;
@@ -378,7 +378,7 @@ CSL.Transform = function (state) {
                 // at the close of the group, by the closing group node.
                 state.publisherOutput[varname + "-token"] = tok;
                 state.publisherOutput.varlist.push(varname);
-                var lst = primary.split(/;\s*/);
+                const lst = primary.split(/;\s*/);
                 if (lst.length === state.publisherOutput[varname + "-list"].length) {
                     state.publisherOutput[varname + "-list"] = lst;
                 }
@@ -408,13 +408,13 @@ CSL.Transform = function (state) {
         if (m) {
             value = value.slice(m[0].length);
             if (m[1]) {
-                var fields = m[1].split(",");
+                const fields = m[1].split(",");
                 for (let i = 0, ilen = fields.length; i < ilen; i += 1) {
-                    var rawField = fields[i];
-                    var mm = rawField.match(/^([-_a-z]+)(?:\:(.*))*$/);
-                    var field = mm[1];
+                    const rawField = fields[i];
+                    const mm = rawField.match(/^([-_a-z]+)(?:\:(.*))*$/);
+                    let field = mm[1];
                     // trimmer is not available in getAmbiguousCite
-                    var trimmer = state.tmp.abbrev_trimmer;
+                    const trimmer = state.tmp.abbrev_trimmer;
                     if (mm[2]) {
                         if (trimmer && jurisdiction) {
                             if (!trimmer[jurisdiction]) {
@@ -446,8 +446,8 @@ CSL.Transform = function (state) {
         // No instance helper function for this; everything can be derived
         // from processor settings and rendering context.
 
-        var localesets;
-        var langPrefs = CSL.LangPrefsMap[variables[0]];
+        let localesets;
+        const langPrefs = CSL.LangPrefsMap[variables[0]];
         if (!langPrefs) {
             localesets = false;
         } else {
@@ -455,7 +455,7 @@ CSL.Transform = function (state) {
         }
 
         return function (state, Item, item) {
-            var primary, primary_locale, secondary, secondary_locale, tertiary, tertiary_locale, primary_tok;
+            let primary, primary_locale, secondary, secondary_locale, tertiary, tertiary_locale;
             if (!variables[0] || (!Item[variables[0]] && !Item[alternative_varname])) {
                 return null;
             }
@@ -468,7 +468,7 @@ CSL.Transform = function (state) {
                     return null;
                 }
             }
-            var slot: any = {primary:false, secondary:false, tertiary:false};
+            const slot: any = {primary:false, secondary:false, tertiary:false};
             if (state.tmp.area.slice(-5) === "_sort") {
                 slot.primary = 'locale-sort';
             } else {
@@ -476,7 +476,7 @@ CSL.Transform = function (state) {
                     slot.primary = "locale-orig";
                     localesets = false;
                 } else if (localesets && !state.tmp.multi_layout) {
-                    var slotnames = ["primary", "secondary", "tertiary"];
+                    const slotnames = ["primary", "secondary", "tertiary"];
                     for (let i = 0, ilen = slotnames.length; i < ilen; i += 1) {
                         if (localesets.length - 1 <  i) {
                             break;
@@ -520,14 +520,14 @@ CSL.Transform = function (state) {
             // tmp.lang_array carries the current locale IDs of the style
             // and the item. Field-level locale IDs are added here, so
             // we clone it to allow reset.
-            var oldLangArray = state.tmp.lang_array.slice();
+            const oldLangArray = state.tmp.lang_array.slice();
 
             // True is for transform fallback
-            var res = getTextSubField.call(this, Item, variables[0], slot.primary, true, null, family_var);
+            let res = getTextSubField.call(this, Item, variables[0], slot.primary, true, null, family_var);
             primary = res.name;
             primary_locale = res.locale;
-            var primary_tok = res.token;
-            var primaryUsedOrig = res.usedOrig;
+            const primary_tok = res.token;
+            const primaryUsedOrig = res.usedOrig;
             if (family_var && !res.found_variant_ok) {
                 primary = abbreviate(state, primary_tok, Item, alternative_varname, primary, family_var, true);
                 // Suppress subsequent use of another variable if requested by
@@ -548,8 +548,8 @@ CSL.Transform = function (state) {
             // No fallback for secondary and tertiary
             secondary = false;
             tertiary = false;
-            var secondary_tok;
-            var tertiary_tok;
+            let secondary_tok;
+            let tertiary_tok;
             if (slot.secondary) {
                 res = getTextSubField.call(this, Item, variables[0], slot.secondary, false, res.usedOrig, null, family_var);
                 secondary = res.name;
@@ -578,7 +578,7 @@ CSL.Transform = function (state) {
             }
             
             // Decoration of primary (currently translit only) goes here
-            var primaryPrefix;
+            let primaryPrefix;
             if (slot.primary === "locale-translit") {
                 primaryPrefix = state.opt.citeAffixes[langPrefs][slot.primary].prefix;
             }                
@@ -586,7 +586,7 @@ CSL.Transform = function (state) {
             // levels.
 
             if (primaryPrefix === "<i>" && variables[0] === 'title' && !primaryUsedOrig) {
-                var hasItalic = false;
+                let hasItalic = false;
                 for (let i = 0, ilen = primary_tok.decorations.length; i < ilen; i += 1) {
                     if (primary_tok.decorations[i][0] === "@font-style"
                         && primary_tok.decorations[i][1] === "italic") {
@@ -642,15 +642,15 @@ CSL.Transform = function (state) {
                     if (secondary_locale) {
                         state.tmp.lang_array = [secondary_locale].concat(oldLangArray);
                     }
-                    var secondary_outer = new CSL.Token();
+                    const secondary_outer = new CSL.Token();
                     secondary_outer.decorations.push(["@font-style", "normal"]);
                     secondary_outer.decorations.push(["@font-weight", "normal"]);
                     state.output.openLevel(secondary_outer);
                     state.output.append(secondary, secondary_tok);
                     state.output.closeLevel();
 
-                    var blob_obj = state.output.current.value();
-                    var blobs_pos = state.output.current.value().blobs.length - 1;
+                    const blob_obj = state.output.current.value();
+                    const blobs_pos = state.output.current.value().blobs.length - 1;
                     // Suppress supplementary multilingual info on subsequent
                     // partners of a parallel cite?
                 }
@@ -677,15 +677,15 @@ CSL.Transform = function (state) {
                     if (tertiary_locale) {
                         state.tmp.lang_array = [tertiary_locale].concat(oldLangArray);
                     }
-                    var tertiary_outer = new CSL.Token();
+                    const tertiary_outer = new CSL.Token();
                     tertiary_outer.decorations.push(["@font-style", "normal"]);
                     tertiary_outer.decorations.push(["@font-weight", "normal"]);
                     state.output.openLevel(tertiary_outer);
                     state.output.append(tertiary, tertiary_tok);
                     state.output.closeLevel();
 
-                    var blob_obj = state.output.current.value();
-                    var blobs_pos = state.output.current.value().blobs.length - 1;
+                    const blob_obj = state.output.current.value();
+                    const blobs_pos = state.output.current.value().blobs.length - 1;
                     // Suppress supplementary multilingual info on subsequent
                     // partners of a parallel cite?
                     // See note above.

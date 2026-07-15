@@ -1,5 +1,5 @@
 import { CSL } from './csl';
-var StdRhinoTest = function(myname,engineNickname){
+const StdRhinoTest = function(myname,engineNickname){
     this.myname = myname;
     this.engineNickname = engineNickname;
     this._cache = {};
@@ -8,7 +8,7 @@ var StdRhinoTest = function(myname,engineNickname){
     this._ids = [];
     this.test = {};
     if (myname){
-        var test;
+        let test;
         if (this.engineNickname == "rhino") {
             test = readFile("./tests/fixtures/run/machines/" + myname + ".json", "UTF-8");
         } else if (this.engineNickname == "jsc") {
@@ -72,7 +72,7 @@ StdRhinoTest.prototype.retrieveStyleModule = function(jurisdiction, preference) 
     if (this.submode.nojuris) {
         return ret;
     }
-    var id: any = [jurisdiction];
+    let id: any = [jurisdiction];
     if (preference) {
         id.push(preference);
     }
@@ -106,14 +106,14 @@ StdRhinoTest.prototype.getAbbreviation = function(dummyListNameVar, obj, jurisdi
     if (!obj[jurisdiction]) {
         obj[jurisdiction] = new CSL.AbbreviationSegments();
     }    
-    var jurisdictions = ["default"];
+    const jurisdictions = ["default"];
     if (jurisdiction !== "default") {
         jurisdictions.push(jurisdiction);
     }
     jurisdictions.reverse();
-    var haveHit = false;
+    let haveHit = false;
     for (let i = 0, ilen = jurisdictions.length; i < ilen; i += 1) {
-        var myjurisdiction = jurisdictions[i];
+        const myjurisdiction = jurisdictions[i];
         if (this._acache[myjurisdiction][category][key]) {
             obj[myjurisdiction][category][key] = this._acache[myjurisdiction][category][key];
             jurisdiction = myjurisdiction;
@@ -134,7 +134,7 @@ StdRhinoTest.prototype.addAbbreviation = function(jurisdiction,category,key,val)
 // Build phoney database.
 StdRhinoTest.prototype._setCache = function(){
     for (let i=0,ilen=this.test.input.length;i<ilen;i++) {
-        var item = this.test.input[i];
+        const item = this.test.input[i];
         this._cache[item.id] = item;
         this._ids.push(item.id);
     }
@@ -142,10 +142,10 @@ StdRhinoTest.prototype._setCache = function(){
 
 
 StdRhinoTest.prototype._readTest = function(){
-    var test, ret;
-    var filename = "std/machines/" + this.myname + ".json";
+    let test, ret;
+    const filename = "std/machines/" + this.myname + ".json";
     
-    var teststring = null;
+    const teststring = null;
     if (this.engineNickname == "rhino") {
         ret = readFile(filename, "UTF-8");
     } else if (this.engineNickname == "jsc") {
@@ -166,13 +166,13 @@ StdRhinoTest.prototype._readTest = function(){
 };
 
 StdRhinoTest.prototype.updateDoc = function() {
-    var data, result;
+    let data, result;
     for (let i=0,ilen=this.test.citations.length;i<ilen;i++) {
         let citation = this.test.citations[i];
         [data, result] = this.style.processCitationCluster(citation[0], citation[1], citation[2]);
         // To get the indexes right, we have to do removals first.
         for (let j=this.doc.length-1; j>-1; j--) {
-            var citationID = this.doc[j].citationID;
+            const citationID = this.doc[j].citationID;
             if (!this.style.registry.citationreg.citationById[citationID]) {
                 this.doc = this.doc.slice(0, j).concat(this.doc.slice(j + 1));
             }
@@ -183,9 +183,9 @@ StdRhinoTest.prototype.updateDoc = function() {
         }
         // If citationID matches in doc, just replace the existing one.
         for (let j in result) {
-            var insert = result[j];
+            const insert = result[j];
             for (let k in this.doc) {
-                var cite = this.doc[k];
+                const cite = this.doc[k];
                 if (cite.citationID === insert[2]) {
                     // replace cite with insert, somehow
                     this.doc[k] = {
@@ -200,7 +200,7 @@ StdRhinoTest.prototype.updateDoc = function() {
         }
         // For citationIDs that don't yet exist in doc, insert at the specified index locations.
         for (let j in result) {
-            var insert = result[j];
+            const insert = result[j];
             if (!insert) {
                 continue;
             }
@@ -218,7 +218,7 @@ StdRhinoTest.prototype.updateDoc = function() {
 StdRhinoTest.prototype.run = function(){
     //print("-->"+this.myname);
     // print(this.myname);
-    var len, pos, ret, id_set;
+    let len, pos, ret, id_set;
     ret = [];
 
     function variableWrapper(params, prePunct, str, postPunct) {
@@ -245,9 +245,9 @@ StdRhinoTest.prototype.run = function(){
     if (this.test.options.variableWrapper) {
         this.variableWrapper = variableWrapper;
     }
-    var lang_bases_needed = {};
+    const lang_bases_needed = {};
     for (let lang in CSL.LANGS) {
-        var lang_base = lang.split("-")[0];
+        const lang_base = lang.split("-")[0];
         lang_bases_needed[lang_base] = true;
     } 
     for (let lang_base in lang_bases_needed) {
@@ -255,7 +255,7 @@ StdRhinoTest.prototype.run = function(){
             throw "ERROR: missing in CSL.LANG_BASES: " + lang_base;
         }
     }
-    var testCSL = this.test.csl;
+    let testCSL = this.test.csl;
     if (this.engineNickname == "rhino") {
         testCSL = CSL.stripXmlProcessingInstruction(this.test.csl);
         testCSL = XML(testCSL);
@@ -263,7 +263,7 @@ StdRhinoTest.prototype.run = function(){
     this.style = new CSL.Engine(this,testCSL);
     this.style.fun.dateparser.addDateParserMonths(["ocak", "Şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık", "bahar", "yaz", "sonbahar", "kış"]);
 
-    var mode = this.test.mode.split("-");
+    const mode = this.test.mode.split("-");
     this.submode = {};
     for (let i=1,ilen=mode.length;i<ilen;i++) {
         this.submode[mode[i]] = true;
@@ -293,7 +293,7 @@ StdRhinoTest.prototype.run = function(){
 
     //this.style.opt.development_extensions.thin_non_breaking_space_html_hack = true;
     //this.style.opt.development_extensions.wrap_url_and_doi = true;
-    var langParams = {
+    const langParams = {
         persons:["translit"],
         institutions:["translit"],
         titles:["translit", "translat"],
@@ -322,7 +322,7 @@ StdRhinoTest.prototype.run = function(){
 
     if (this.test.bibentries){
         for (let i=0,ilen=this.test.bibentries.length;i<ilen;i++) {
-            var id_set = this.test.bibentries[i];
+            const id_set = this.test.bibentries[i];
             this.style.updateItems(id_set, this.submode["nosort"]);
         }
     } else if (!this.test.citations) {
@@ -331,12 +331,12 @@ StdRhinoTest.prototype.run = function(){
     if (!this.test.citation_items && !this.test.citations){
         let citation = [];
         for (let i=0,ilen=this.style.registry.reflist.length;i<ilen;i++) {
-            var item = this.style.registry.reflist[i];
+            const item = this.style.registry.reflist[i];
             citation.push({"id":item.id});
         }
         this.test.citation_items = [citation];
     }
-    var citations = [];
+    let citations = [];
     if (this.test.citation_items){
         for (let i=0,ilen=this.test.citation_items.length;i<ilen;i++) {
             let citation = this.test.citation_items[i];
@@ -363,10 +363,10 @@ StdRhinoTest.prototype.run = function(){
         }
         ret = ret[0]["bibstart"] + ret[1].join("") + ret[0]["bibend"];
     } else if (this.test.mode == "bibliography" && this.submode["header"]){
-        var obj = this.style.makeBibliography()[0];
-        var lst = [];
+        const obj = this.style.makeBibliography()[0];
+        const lst = [];
         for (let key in obj) {
-            var keyval = [];
+            const keyval = [];
             keyval.push(key);
             keyval.push(obj[key]);
             lst.push(keyval);

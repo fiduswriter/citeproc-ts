@@ -167,7 +167,7 @@ CSL.Registry = function (state) {
 //
 
 CSL.Registry.prototype.init = function (itemIDs, uncited_flag) {
-    var i, ilen;
+    let i, ilen;
     this.oldseq = {};
     //  1. Receive list as function argument, store as hash and as list.
     //
@@ -196,7 +196,7 @@ CSL.Registry.prototype.init = function (itemIDs, uncited_flag) {
         for (let key in this.uncited) {
             itemIDs.push(key);
         }
-        var myhash = {};
+        let myhash = {};
         for (let i=itemIDs.length-1;i>-1; i += -1) {
             if (myhash[itemIDs[i]]) {
                 itemIDs = itemIDs.slice(0, i).concat(itemIDs.slice(i + 1));
@@ -232,7 +232,7 @@ CSL.Registry.prototype.dopurge = function (myhash) {
 };
 
 CSL.Registry.prototype.dodeletes = function (myhash) {
-    var otheritems, key, ambig, pos, len, items, kkey, mypos, id;
+    let otheritems, key, ambig, pos, len, items, kkey, mypos, id;
     if ("string" === typeof myhash) {
         let key = myhash;
         myhash = {};
@@ -287,17 +287,17 @@ CSL.Registry.prototype.dodeletes = function (myhash) {
             //
             if (this.registry[key].siblings) {
                 if (this.registry[key].siblings.length == 1) {
-                    var loneSiblingID = this.registry[key].siblings[0];
+                    const loneSiblingID = this.registry[key].siblings[0];
                     if (this.registry[loneSiblingID].siblings) {
                         this.registry[loneSiblingID].siblings.pop();
                         this.registry[loneSiblingID].master = true;
                         // this.registry[loneSiblingID].parallel = false;
                     }
                 } else if (this.registry[key].siblings.length > 1) {
-                    var removeIDs = [key];
+                    const removeIDs = [key];
                     if (this.registry[key].master) {
-                        var newmasterID = this.registry[key].siblings[0];
-                        var newmaster = this.registry[newmasterID];
+                        const newmasterID = this.registry[key].siblings[0];
+                        const newmaster = this.registry[newmasterID];
                         newmaster.master = true;
                         // newmaster.parallel_delimiter is set externally, if at all
                         // newmaster.parallel = false;
@@ -306,9 +306,9 @@ CSL.Registry.prototype.dodeletes = function (myhash) {
                         //     this.registry[this.registry[key].siblings[k]].parallel = newmasterID;
                         // }
                     }
-                    var buffer = [];
+                    const buffer = [];
                     for (let k = this.registry[key].siblings.length - 1; k > -1; k += -1) {
-                        var siblingID = this.registry[key].siblings.pop();
+                        const siblingID = this.registry[key].siblings.pop();
                         if (removeIDs.indexOf(siblingID) === -1) {
                             buffer.push(siblingID);
                         }
@@ -340,7 +340,7 @@ CSL.Registry.prototype.dodeletes = function (myhash) {
 };
 
 CSL.Registry.prototype.doinserts = function (mylist) {
-    var item, Item, akey, newitem, abase, i, ilen;
+    let item, Item, akey, newitem, abase, i, ilen;
     if ("string" === typeof mylist) {
         mylist = [mylist];
     }
@@ -440,7 +440,7 @@ CSL.Registry.prototype.douncited = function () {
 */
 
 CSL.Registry.prototype.rebuildlist = function (nosort) {
-    var len, pos, item, Item;
+    let len, pos, item, Item;
     //
     //  5. Create "new" list of hash pointers, in the order given in the argument
     //     to the update function.
@@ -514,7 +514,7 @@ CSL.Registry.prototype.dorefreshes = function () {
         }
         for (let akkey in this.ambigresets) {
             if (this.ambigresets[akkey] === 1) {
-                var loneKey = this.ambigcites[akey][0];
+                const loneKey = this.ambigcites[akey][0];
                 Item = this.state.refetchItem(loneKey);
                 this.registry[loneKey].disambig = new CSL.AmbigConfig();
                 this.state.tmp.disambig_settings = false;
@@ -563,7 +563,7 @@ CSL.Registry.prototype.setdisambigs = function () {
 
 
 CSL.Registry.prototype.renumber = function () {
-    var len, pos, item;
+    let len, pos, item;
     //
     // 19. Reset citation numbers on list items
     //
@@ -615,9 +615,9 @@ CSL.Registry.prototype._locationOf = function(element, array, start, end) {
     }
     start = start || 0;
     end = end || array.length;
-    var pivot = (start + end) >> 1;  // should be faster than dividing by 2
+    const pivot = (start + end) >> 1;  // should be faster than dividing by 2
     
-    var c = this.sorter.compareKeys(element, array[pivot]);
+    const c = this.sorter.compareKeys(element, array[pivot]);
     if (end - start <= 1) {
         return c == -1 ? pivot - 1 : pivot;
     }
@@ -629,7 +629,7 @@ CSL.Registry.prototype._locationOf = function(element, array, start, end) {
 };
 
 CSL.Registry.prototype.sorttokens = function (nosort) {
-    var len, item, Item, pos;
+    let len, item, Item, pos;
     //
     // 18. Resort token list.
     //
@@ -657,7 +657,7 @@ CSL.Registry.prototype.sorttokens = function (nosort) {
             }
         }
         for (let i=0,ilen=this.reflist_inserts.length;i<ilen;i++) {
-            var Item = this.reflist_inserts[i];
+            let Item = this.reflist_inserts[i];
             delete Item.newItem;
             this.reflist = this._insertItem(Item, this.reflist);
         }
@@ -674,8 +674,8 @@ CSL.Registry.prototype.sorttokens = function (nosort) {
  * <p>Nested, because keys are an array.</p>
  */
 CSL.Registry.Comparifier = function (state, keyset) {
-    var sort_directions, len, pos, compareKeys;
-    var sortCompare = CSL.getSortCompare.call(state, state.opt["default-locale-sort"]);
+    let sort_directions, len, pos, compareKeys;
+    const sortCompare = CSL.getSortCompare.call(state, state.opt["default-locale-sort"]);
     sort_directions = state[keyset].opt.sort_directions;
     this.compareKeys = function (a, b) {
         len = a.sortkeys ? a.sortkeys.length : 0;
@@ -689,7 +689,7 @@ CSL.Registry.Comparifier = function (state, keyset) {
             // needed) from undefined values.  Everywhere, in all
             // compares.
             //
-            var cmp = 0;
+            let cmp = 0;
             if (a.sortkeys[pos] === b.sortkeys[pos]) {
                 cmp = 0;
             } else if ("undefined" === typeof a.sortkeys[pos]) {
@@ -743,15 +743,15 @@ CSL.Registry.prototype.registerAmbigToken = function (akey, id, ambig_config) {
     // Taint if number of names to be included has changed
     if (this.registry[id] && this.registry[id].disambig && this.registry[id].disambig.names) {
         for (let i = 0, ilen = ambig_config.names.length; i < ilen; i += 1) {
-            var new_names_params = ambig_config.names[i];
-            var old_names_params = this.registry[id].disambig.names[i];
+            const new_names_params = ambig_config.names[i];
+            const old_names_params = this.registry[id].disambig.names[i];
             if (new_names_params !== old_names_params) {
                 this.state.tmp.taintedItemIDs[id] = true;
             } else if (ambig_config.givens[i]) {
                 // Compare givenses only if the number of names is aligned.
                 for (let j=0,jlen=ambig_config.givens[i].length;j<jlen;j+=1) {
-                    var new_gnames_params = ambig_config.givens[i][j];
-                    var old_gnames_params = this.registry[id].disambig.givens[i][j];
+                    const new_gnames_params = ambig_config.givens[i][j];
+                    const old_gnames_params = this.registry[id].disambig.givens[i][j];
                     if (new_gnames_params !== old_gnames_params) {
                         this.state.tmp.taintedItemIDs[id] = true;
                     }
@@ -776,7 +776,7 @@ CSL.Registry.prototype.registerAmbigToken = function (akey, id, ambig_config) {
  * <p>This is used internally by the Registry.</p>
  */
 CSL.getSortKeys = function (Item, key_type) {
-    var area, root, extension, strip_prepositions, len, pos;
+    let area, root, extension, strip_prepositions, len, pos;
     //SNIP-START
     if (false) {
         CSL.debug("KEY TYPE: " + key_type);

@@ -5,10 +5,10 @@ CSL.Node.alternative = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if (this.tokentype === CSL.START) {
 
-            var choose_tok = new CSL.Token("choose", CSL.START);
+            const choose_tok = new CSL.Token("choose", CSL.START);
             CSL.Node["choose"].build.call(choose_tok, state, target);
 
-            var if_tok = new CSL.Token("if", CSL.START);
+            const if_tok = new CSL.Token("if", CSL.START);
             CSL.Attributes["@alternative-node-internal"].call(if_tok, state);
             CSL.Node["if"].build.call(if_tok, state, target);
 
@@ -18,19 +18,20 @@ CSL.Node.alternative = {
                 state.tmp.oldLang = state.opt.lang;
                 state.tmp.abort_alternative = true;
 
+                let newItem: any;
                 if (Item["language-name"] && Item["language-name-original"]) {
 
-                    var newItem = JSON.parse(JSON.stringify(Item));
+                    newItem = JSON.parse(JSON.stringify(Item));
 
                     newItem.language = newItem["language-name"];
-                    var langspec = CSL.localeResolve(newItem.language, state.opt["default-locale"][0]);
+                    const langspec = CSL.localeResolve(newItem.language, state.opt["default-locale"][0]);
 
                     if (state.opt.multi_layout) {
                         for (let i in state.opt.multi_layout) {
-                            var locale_list = state.opt.multi_layout[i];
-                            var gotlang: any = false;
+                            const locale_list = state.opt.multi_layout[i];
+                            let gotlang: any = false;
                             for (let j in locale_list) {
-                                var tryspec = locale_list[j];
+                                const tryspec = locale_list[j];
                                 if (langspec.best === tryspec.best || langspec.base === tryspec.base || langspec.bare === tryspec.bare) {
                                     gotlang = locale_list[0].best;
                                     break;
@@ -46,7 +47,7 @@ CSL.Node.alternative = {
                     for (let key in newItem) {
                         if (["id", "type", "language", "multi"].indexOf(key) === -1 && key.slice(0, 4) !== "alt-") {
                             if (newItem.multi && newItem.multi._keys[key]) {
-                                var deleteme = true;
+                                let deleteme = true;
                                 for (let lang in newItem.multi._keys[key]) {
                                     if (langspec.bare === lang.replace(/^([a-zA-Z]+).*/, "$1")) {
                                         deleteme = false;
@@ -91,12 +92,12 @@ CSL.Node.alternative = {
             this.execs.push(func);
             target.push(this);
 
-            var choose_tok2 = new CSL.Token("choose", CSL.START);
+            const choose_tok2 = new CSL.Token("choose", CSL.START);
             CSL.Node["choose"].build.call(choose_tok2, state, target);
 
-            var if_tok2 = new CSL.Token("if", CSL.START);
+            const if_tok2 = new CSL.Token("if", CSL.START);
             CSL.Attributes["@alternative-node-internal"].call(if_tok2, state);
-            var func2 = function (this: CslNode, state: CslState): void {
+            const func2 = function (this: CslNode, state: CslState): void {
                 state.tmp.abort_alternative = true;
             };
             if_tok2.execs.push(func2);
@@ -104,13 +105,13 @@ CSL.Node.alternative = {
 
         } else if (this.tokentype === CSL.END) {
 
-            var if_tok3 = new CSL.Token("if", CSL.END);
+            const if_tok3 = new CSL.Token("if", CSL.END);
             CSL.Node["if"].build.call(if_tok3, state, target);
 
-            var choose_tok3 = new CSL.Token("choose", CSL.END);
+            const choose_tok3 = new CSL.Token("choose", CSL.END);
             CSL.Node["choose"].build.call(choose_tok3, state, target);
 
-            var func3 = function (this: CslNode, state: CslState, Item: CslItem): void {
+            const func3 = function (this: CslNode, state: CslState, Item: CslItem): void {
                 state.output.closeLevel();
                 state.registry.refhash[Item.id] = state.tmp.oldItem;
                 state.opt.lang = state.tmp.oldLang;
@@ -120,10 +121,10 @@ CSL.Node.alternative = {
             this.execs.push(func3);
             target.push(this);
 
-            var if_tok4 = new CSL.Token("if", CSL.END);
+            const if_tok4 = new CSL.Token("if", CSL.END);
             CSL.Node["if"].build.call(if_tok4, state, target);
 
-            var choose_tok4 = new CSL.Token("choose", CSL.END);
+            const choose_tok4 = new CSL.Token("choose", CSL.END);
             CSL.Node["choose"].build.call(choose_tok4, state, target);
 
         }

@@ -53,10 +53,10 @@ CSL.Util.Ordinalizer.prototype.init = function () {
     if (!this.suffixes[this.state.opt.lang]) {
         this.suffixes[this.state.opt.lang] = {};
         for (let i = 0, ilen = 3; i < ilen; i += 1) {
-            var gender = [undefined, "masculine", "feminine"][i];
+            let gender = [undefined, "masculine", "feminine"][i];
             this.suffixes[this.state.opt.lang][gender] = [];
             for (let j = 1; j < 5; j += 1) {
-                var ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
+                const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
                 if ("undefined" === typeof ordinal) {
                     delete this.suffixes[this.state.opt.lang][gender];
                     break;
@@ -71,18 +71,18 @@ CSL.Util.Ordinalizer.prototype.format = function (num, gender) {
     let str;
     num = parseInt(num, 10);
     str = "" + num;
-    var suffix = "";
-    var trygenders = [];
+    let suffix = "";
+    const trygenders = [];
     if (gender) {
         trygenders.push(gender);
     }
     trygenders.push("neuter");
     if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
         suffix = this.state.getTerm("ordinal",false,0,gender);
-        var trygender;
+        let trygender;
         for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
             trygender = trygenders[i];
-            var ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
+            const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
             if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
                 suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender],false,0,gender);
             } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
@@ -158,7 +158,7 @@ CSL.Util.Suffixator = function (slist) {
 CSL.Util.Suffixator.prototype.format = function (N) {
     // Many thanks to Avram Lyon for this code, and good
     // riddance to the several functions that it replaces.
-    var X;
+    let X;
     N += 1;
     let key = "";
     do {
@@ -172,27 +172,27 @@ CSL.Util.Suffixator.prototype.format = function (N) {
 
 CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     //print("** processNumber() ItemObject[variable]="+ItemObject[variable]);
-    var val;
+    let val;
 
-    var me = this;
+    const me = this;
 
-    var realVariable = variable;
+    const realVariable = variable;
     variable = (variable === "page-first") ? "page" : variable;
 
-    var fullformAnd = ",\\s+and\\s+|\\s+and\\s+";
+    let fullformAnd = ",\\s+and\\s+|\\s+and\\s+";
     if (this.opt.lang.slice(0, 2) !== "en") {
         fullformAnd += "|,\\s+" + this.getTerm("and") + "\\s+|\\s+" + this.getTerm("and") + "\\s+";
     }
-    var symbolAnd = "\\s*&\\s*";
-    var andRex = new RegExp("^" + symbolAnd+ "$");
-    var joinerMatchRex = new RegExp("(" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)", "g");
-    var joinerSplitRex = new RegExp("(?:" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)");
+    const symbolAnd = "\\s*&\\s*";
+    const andRex = new RegExp("^" + symbolAnd+ "$");
+    const joinerMatchRex = new RegExp("(" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)", "g");
+    const joinerSplitRex = new RegExp("(?:" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)");
 
     // This guesses whether the symbol form is defined or not.
     // It's the best we can do, because when locales are built, all of the
     // holes are filled explictly with fallback values: the symbol form is never undefined.
-    var localeAnd = this.getTerm("and");
-    var localeAmpersand = this.getTerm("and", "symbol");
+    const localeAnd = this.getTerm("and");
+    let localeAmpersand = this.getTerm("and", "symbol");
     if (localeAnd === localeAmpersand) {
         localeAmpersand = "&";
     }
@@ -230,7 +230,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         str = str.trim();
         let m = str.match(/^([^ ]+)/);
         if (m && !CSL.STATUTE_SUBDIV_STRINGS[m[1]]) {
-            var embeddedLabel = null;
+            let embeddedLabel = null;
             if (["locator", "locator-extra", "page"].indexOf(variable) > -1) {
                 if (ItemObject.label) {
                     embeddedLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[ItemObject.label];
@@ -250,7 +250,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
 
     function composeNumberInfo(origLabel, label, val, joiningSuffix, parsePosition?) {
         joiningSuffix = joiningSuffix ? joiningSuffix : "";
-        var info: any = {};
+        const info: any = {};
 
         if (!label && !CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable]) {
             label = "var:"+ variable;
@@ -302,7 +302,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         
         str = normalizeFieldValue(str, defaultLabel);
 
-        var jmrex, jsrex, mystr;
+        let jmrex, jsrex, mystr;
         if ("page" === variable) {
             if (str.indexOf("\u2013") > -1) {
                 str = str.replace(/\u2013/g, "-");
@@ -311,7 +311,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         if (str.indexOf("\\-") > -1) {
             jmrex = new RegExp(joinerMatchRex.source.replace("\\-", ""));
             jsrex = new RegExp(joinerSplitRex.source.replace("\\-", ""));
-            var lst = str.split("\\-");
+            let lst = str.split("\\-");
             for (let i=0,ilen=lst.length;i<ilen;i++) {
                 lst[i] = lst[i].replace(/\-/g, "\u2013");
             }
@@ -326,10 +326,10 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         // jsrex = joinerSplitRex;
         
         // Split chunks and collate delimiters.
-        var elems = [];
+        let elems = [];
         let m = mystr.match(jmrex);
         if (m) {
-            var lst = mystr.split(jsrex);
+            let lst = mystr.split(jsrex);
             for (let i=0, ilen=m.length; i<ilen; i++) {
                 if (m[i].match(andRex)) {
                     if (lst[i].match(/[a-zA-Z]$/) && lst[i].match(/^[a-zA-Z]/)) {
@@ -339,7 +339,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
                     }
                 }
             }
-            var recombine = false;
+            const recombine = false;
             for (let i in lst) {
                 if (("" + lst[i]).replace(/^[a-z]\.\s+/, "").match(/[^\s0-9ivxlcmIVXLCM]/)) {
                     //recombine = true;
@@ -359,12 +359,12 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
                 //print("  fixup: "+elems);
             }
         } else {
-            var elems = [mystr];
+            let elems = [mystr];
         }
         // Split elements within each chunk build list of value objects.
         let values = [];
-        var label = defaultLabel;
-        var origLabel = "";
+        let label = defaultLabel;
+        let origLabel = "";
         for (let i=0,ilen=elems.length;i<ilen;i += 2) {
             
             // AHA! HERE'S THE CULPRIT!!!
@@ -373,7 +373,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             
             let m = elems[i].match(/((?:^| )(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z]|subpara|subch|amend|bibliog|annot|illus|princ|intro|sched|subdiv|subsec)(?:\.| ) *)/g);
             if (m) {
-                var lst = elems[i].split(/(?:(?:^| )(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z]|subpara|subch|amend|bibliog|annot|illus|princ|intro|sched|subdiv|subsec)(?:\.| ) *)/);
+                let lst = elems[i].split(/(?:(?:^| )(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z]|subpara|subch|amend|bibliog|annot|illus|princ|intro|sched|subdiv|subsec)(?:\.| ) *)/);
                 // Head off disaster by merging parsed labels on non-numeric values into content
                 for (let j=lst.length-1;j>0;j--) {
                     if (lst[j-1] && (!lst[j].match(/^[0-9]+([-;,:a-zA-Z]*)$/) || !lst[j-1].match(/^[0-9]+([-;,:a-zA-Z]*)$/))) {
@@ -384,8 +384,8 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
                 }
                 // merge bad leading label into content
                 if (m.length > 0) {
-                    var slug = m[0].trim();
-                    var notAlabel = !CSL.STATUTE_SUBDIV_STRINGS[slug]
+                    const slug = m[0].trim();
+                    const notAlabel = !CSL.STATUTE_SUBDIV_STRINGS[slug]
                         || "undefined" === typeof me.getTerm(CSL.STATUTE_SUBDIV_STRINGS[slug])
                         || (["locator", "number", "locator-extra", "page"].indexOf(variable) === -1 && CSL.STATUTE_SUBDIV_STRINGS[slug] !== variable);
                     if (notAlabel) {
@@ -401,7 +401,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
 
                 for (let j=0,jlen=lst.length; j<jlen; j++) {
                     if (lst[j] || j === (lst.length-1)) {
-                        var filteredOrigLabel;
+                        let filteredOrigLabel;
                         label = m[j-1] ? m[j-1] : label;
                         if (origLabel === label.trim()) {
                             filteredOrigLabel = "";
@@ -418,7 +418,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
                     }
                 }
             } else {
-                var filteredOrigLabel;
+                let filteredOrigLabel;
                 if (origLabel === label.trim()) {
                     filteredOrigLabel = "";
                 } else {
@@ -440,14 +440,14 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     }
 
     function fixNumericAndCount(values, i, currentLabelInfo) {
-        var master = values[currentLabelInfo.pos];
-        var val = values[i].value;
-        var isEscapedHyphen = master.joiningSuffix === "\\-";
+        const master = values[currentLabelInfo.pos];
+        let val = values[i].value;
+        const isEscapedHyphen = master.joiningSuffix === "\\-";
         if (val.particle && val.particle !== master.particle) {
             currentLabelInfo.collapsible = false;
         }
-        var mVal = val.match(/^[0-9]+([-,:a-zA-Z]*)$/);
-        var mCurrentLabel = master.value.match(/^(?:[0-9]+|[ixv]+)([-,:a-zA-Z]*|\-[\-0-9]+)$/);
+        const mVal = val.match(/^[0-9]+([-,:a-zA-Z]*)$/);
+        const mCurrentLabel = master.value.match(/^(?:[0-9]+|[ixv]+)([-,:a-zA-Z]*|\-[\-0-9]+)$/);
         if (!val || !mVal || !mCurrentLabel || isEscapedHyphen) {
             currentLabelInfo.collapsible = false;
             if (!val || !mCurrentLabel) {
@@ -470,7 +470,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             }
             currentLabelInfo.collapsible = values[i].collapsible;
         }
-        var isCollapsible = currentLabelInfo.collapsible;
+        const isCollapsible = currentLabelInfo.collapsible;
         for (let j=currentLabelInfo.pos,jlen=(currentLabelInfo.pos + currentLabelInfo.count); j<jlen; j++) {
             if (currentLabelInfo.count > 1 && isCollapsible) {
                 values[j].plural = 1;
@@ -512,16 +512,16 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         if (values.length === 0) {
             return;
         }
-        var groupStartPos = 0;
-        var groupCount = 1;
+        let groupStartPos = 0;
+        let groupCount = 1;
         
         for (let i=1,ilen=values.length;i<ilen;i++) {
-            var lastVal = values[i-1];
-            var thisVal = values[i];
+            const lastVal = values[i-1];
+            const thisVal = values[i];
             if (lastVal.label === thisVal.label && lastVal.particle === lastVal.particle) {
                 groupCount++;
             } else {
-                var currentLabelInfo = JSON.parse(JSON.stringify(values[groupStartPos]));
+                const currentLabelInfo = JSON.parse(JSON.stringify(values[groupStartPos]));
                 currentLabelInfo.pos = groupStartPos;
                 currentLabelInfo.count = groupCount;
                 currentLabelInfo.numeric = true;
@@ -534,7 +534,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             }
         }
         // Not sure why this repetition is necessary?
-        var currentLabelInfo = JSON.parse(JSON.stringify(values[groupStartPos]));
+        const currentLabelInfo = JSON.parse(JSON.stringify(values[groupStartPos]));
         currentLabelInfo.pos = groupStartPos;
         currentLabelInfo.count = groupCount;
         currentLabelInfo.numeric = true;
@@ -552,8 +552,8 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     }
 
     function setStyling(values) {
-        var masterNode = CSL.Util.cloneToken(node);
-        var masterStyling = new CSL.Token();
+        const masterNode = CSL.Util.cloneToken(node);
+        const masterStyling = new CSL.Token();
         if (!me.tmp.just_looking) {
             // Per discussion @ https://discourse.citationstyles.org/t/formatting-attributes-and-hyphen/1518
             masterStyling.decorations = masterNode.decorations;
@@ -571,12 +571,12 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             masterStyling.strings.suffix = masterNode.strings.suffix;
             masterNode.strings.suffix = "";
         }
-        var masterLabel = values.length ? values[0].label : null;
+        const masterLabel = values.length ? values[0].label : null;
         if (values.length) {
             for (let i=0,ilen=values.length; i<ilen; i++) {
-                var val = values[i];
+                let val = values[i];
                 // Clone node, make styling parameters on each instance sane.
-                var newnode = CSL.Util.cloneToken(masterNode);
+                const newnode = CSL.Util.cloneToken(masterNode);
                 newnode.gender = node.gender;
                 if (masterLabel === val.label) {
                     newnode.formatter = node.formatter;
@@ -601,7 +601,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     function checkTerm(variable, val) {
         let ret = true;
         if (["locator", "locator-extra", "page"].indexOf(variable) > -1) {
-            var label;
+            let label;
             if (val.origLabel) {
                 label = val.origLabel;
             } else {
@@ -618,8 +618,8 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     }
     
     function fixupRangeDelimiter(variable, val, rangeDelimiter, isNumeric) {
-        var isPage = checkPage(variable, val);
-        var hasTerm = checkTerm(variable, val);
+        const isPage = checkPage(variable, val);
+        const hasTerm = checkTerm(variable, val);
         if (hasTerm && rangeDelimiter === "-") {
             if (isNumeric) {
                 if (isPage || ["locator", "locator-extra", "issue", "volume", "edition", "number"].indexOf(variable) > -1) {
@@ -660,9 +660,9 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             values[i-1].joiningSuffix = fixupRangeDelimiter(variable, values[i], values[i-1].joiningSuffix, true);
             return;
         }
-        var val = values[i];
+        let val = values[i];
 
-        var isPage = checkPage(variable, val);
+        const isPage = checkPage(variable, val);
         let str;
         if (isPage && !isNaN(parseInt(values[i-1].value)) && !isNaN(parseInt(values[i].value))) {
             str = values[i-1].particle + values[i-1].value + " - " + values[i].particle + values[i].value;
@@ -677,7 +677,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         let m = str.match(/^((?:[0-9]*[a-zA-Z]+0*))?([0-9]+[a-z]*)(\s*[^0-9]+\s*)([-,a-zA-Z]?0*)([0-9]+[a-z]*)$/);
         // let m = str.match(/^((?:[0-9]*[a-zA-Z]+0*))?([0-9]+[a-z]*)(\s*[^0-9]+\s*)([-,a-zA-Z]?0*)([0-9]+[a-z]*)$/);
         if (m) {
-            var rangeDelimiter = m[3];
+            let rangeDelimiter = m[3];
             rangeDelimiter = fixupRangeDelimiter(variable, val, rangeDelimiter, values[i].numeric);
             values[i-1].particle = m[1];
             values[i-1].value = m[2];
@@ -697,18 +697,18 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
             return;
         }
 
-        var currentInfo = {
+        const currentInfo = {
             count: 0,
             label: null,
             lastHadRangeDelimiter: false
         };
 
         for (let i=0,ilen=values.length; i<ilen; i++) {
-            var val = values[i];
+            let val = values[i];
             if (!val.collapsible) {
                 currentInfo.count = 0;
                 currentInfo.label = null;
-                var isNumeric = val.numeric;
+                const isNumeric = val.numeric;
                 val.joiningSuffix = fixupRangeDelimiter(variable, val, val.joiningSuffix, isNumeric);
             } else if (currentInfo.label === val.label && val.joiningSuffix === "-") {
                 // So if there is a hyphen here, and none previous, reset to 1
@@ -737,7 +737,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     }
 
     function setVariableParams(shadow_numbers, realVariable, values) {
-        var obj = shadow_numbers[realVariable];
+        const obj = shadow_numbers[realVariable];
         if (values.length) {
             obj.numeric = values[0].numeric;
             obj.collapsible = values[0].collapsible;
@@ -781,9 +781,9 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
     }
 
     // Possibly apply multilingual transform
-    var languageRole = CSL.LangPrefsMap[variable];
+    const languageRole = CSL.LangPrefsMap[variable];
     if (languageRole) {
-        var localeType = this.opt["cite-lang-prefs"][languageRole][0];
+        const localeType = this.opt["cite-lang-prefs"][languageRole][0];
         val = this.transform.getTextSubField(ItemObject, realVariable, "locale-"+localeType, true);
         val = val.name;
     } else {
@@ -802,12 +802,13 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
 
         // No need for this.
         //val = ("" + val).replace(/^\"/, "").replace(/\"$/, "");
+        let normval;
         if (this.sys.normalizeAbbrevsKey) {
-            var normval = this.sys.normalizeAbbrevsKey(realVariable, val);
+            normval = this.sys.normalizeAbbrevsKey(realVariable, val);
         } else {
-            var normval = val;
+            normval = val;
         }
-        var jurisdiction = this.transform.loadAbbreviation(ItemObject.jurisdiction, "number", normval, ItemObject.language);
+        const jurisdiction = this.transform.loadAbbreviation(ItemObject.jurisdiction, "number", normval, ItemObject.language);
         if (this.transform.abbrevs[jurisdiction].number) {
             if (this.transform.abbrevs[jurisdiction].number[normval]) {
                 val = this.transform.abbrevs[jurisdiction].number[normval];
@@ -839,7 +840,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         if ("number" === typeof val) {
             val = "" + val;
         }
-        var defaultLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable];
+        const defaultLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable];
 
         if (this.tmp.shadow_numbers[realVariable].values.length === 0) {
             // XXX
@@ -867,7 +868,7 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
         }
         
         // hack in support for non-numeric numerics like "91 Civ. 5442 (RPP)|91 Civ. 5471"
-        var info = this.tmp.shadow_numbers[realVariable];
+        const info = this.tmp.shadow_numbers[realVariable];
         if (variable === "number") {
             if (info.values.length === 1 && info.values[0].value.indexOf("|") > -1) {
                 info.values[0].value = info.values[0].value.replace(/\|/g, ", ");
@@ -903,26 +904,26 @@ CSL.Engine.prototype.processNumber = function (node, ItemObject, variable) {
 CSL.Util.outputNumericField = function(state, varname, itemID) {
 
     state.output.openLevel(state.tmp.shadow_numbers[varname].masterStyling);
-    var masterStyling = state.tmp.shadow_numbers[varname].masterStyling;
-    var nums = state.tmp.shadow_numbers[varname].values;
-    var masterLabel = nums.length ? nums[0].label : null;
-    var labelForm = state.tmp.shadow_numbers[varname].labelForm;
-    var tryStatic = state.tmp.group_context.tip.label_static;
-    var embeddedLabelForm;
+    const masterStyling = state.tmp.shadow_numbers[varname].masterStyling;
+    const nums = state.tmp.shadow_numbers[varname].values;
+    const masterLabel = nums.length ? nums[0].label : null;
+    const labelForm = state.tmp.shadow_numbers[varname].labelForm;
+    const tryStatic = state.tmp.group_context.tip.label_static;
+    let embeddedLabelForm;
     if (labelForm) {
         embeddedLabelForm = labelForm;
     } else {
         embeddedLabelForm = "short";
         //labelForm = "short";
     }
-    var labelCapitalizeIfFirst = state.tmp.shadow_numbers[varname].labelCapitalizeIfFirst;
-    var labelDecorations = state.tmp.shadow_numbers[varname].labelDecorations;
-    var lastLabelName = null;
+    const labelCapitalizeIfFirst = state.tmp.shadow_numbers[varname].labelCapitalizeIfFirst;
+    const labelDecorations = state.tmp.shadow_numbers[varname].labelDecorations;
+    let lastLabelName = null;
 
     for (let i=0,ilen=nums.length;i<ilen;i++) {
-        var num = nums[i];
-        var label = "";
-        var labelName;
+        const num = nums[i];
+        let label = "";
+        let labelName;
         if (num.label) {
             if ('var:' === num.label.slice(0,4)) {
                 labelName = num.label.slice(4);
@@ -957,11 +958,11 @@ CSL.Util.outputNumericField = function(state, varname, itemID) {
                 }
             }
         }
-        var labelPlaceholderPos = -1;
+        let labelPlaceholderPos = -1;
         if (label) {
             labelPlaceholderPos = label.indexOf("%s");
         }
-        var numStyling = CSL.Util.cloneToken(num.styling);
+        const numStyling = CSL.Util.cloneToken(num.styling);
         numStyling.formatter = num.styling.formatter;
         numStyling.type = num.styling.type;
         numStyling.num = num.styling.num;
@@ -976,7 +977,7 @@ CSL.Util.outputNumericField = function(state, varname, itemID) {
                 labelName = num.label;
             }
             if (labelPlaceholderPos > 0) {
-                var prefixLabelStyling = new CSL.Token();
+                const prefixLabelStyling = new CSL.Token();
                 prefixLabelStyling.decorations = labelDecorations;
                 state.output.append(label.slice(0,labelPlaceholderPos), prefixLabelStyling);
             } else if (labelPlaceholderPos === (label.length-2) || labelPlaceholderPos === -1) {
@@ -986,7 +987,7 @@ CSL.Util.outputNumericField = function(state, varname, itemID) {
         }
         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, masterStyling.strings.prefix, null, masterStyling, `${num.particle}${num.value}`);
         if (num.collapsible) {
-            var blob;
+            let blob;
             if (num.value.match(/^[1-9][0-9]*$/) && Number.isSafeInteger(parseInt(num.value, 10))) {
                 blob = new CSL.NumericBlob(state, num.particle, parseInt(num.value, 10), numStyling, itemID);
             } else {
@@ -1005,7 +1006,7 @@ CSL.Util.outputNumericField = function(state, varname, itemID) {
                 lastLabelName = labelName;
             }
             if (labelName !== lastLabelName || i === (nums.length-1)) {
-                var suffixLabelStyling = new CSL.Token();
+                const suffixLabelStyling = new CSL.Token();
                 suffixLabelStyling.decorations = labelDecorations;
                 state.output.append(label.slice(labelPlaceholderPos+2), suffixLabelStyling);
             }
