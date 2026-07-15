@@ -15,5 +15,12 @@
         "Frank Bennett <biercenator@gmail.com> (https://juris-m.github.io)"
     ],
     "license": "(CPAL-1.0 OR AGPL-3.0-or-later)",
-    "dependencies": {}
+    "scripts": {
+        "build": "node tools/build-bundle.js",
+        "typecheck": "tsc --noEmit -p tsconfig.json"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.1",
+        "typescript": "^5.9.3"
+    }
 }

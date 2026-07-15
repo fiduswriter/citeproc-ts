@@ -2741,17 +2741,19 @@ CSL.setupXml = function(xmlObject) {
 };
 
 /*global CSL: true */
-
-CSL.getSortCompare = function (default_locale) {
+/**
+ * Returns a comparison function for sorting, honouring any
+ * processor-supplied ``CSL.stringCompare`` and locale collation rules.
+ */
+function getSortCompare(default_locale) {
     if (CSL.stringCompare) {
         return CSL.stringCompare;
     }
-    var me = this;
-    var strcmp;
-    var strcmp_opts = {
-        sensitivity:"base",
-        ignorePunctuation:true,
-        numeric:true
+    const me = this;
+    const strcmp_opts = {
+        sensitivity: "base",
+        ignorePunctuation: true,
+        numeric: true
     };
     // In order, attempt the following:
     //   (1) Set locale collation from processor language
@@ -2759,31 +2761,33 @@ CSL.getSortCompare = function (default_locale) {
     if (!default_locale) {
         default_locale = "en-US";
     }
-    strcmp = function (a, b) {
-        return CSL.toLocaleLowerCase.call(me, a).localeCompare(CSL.toLocaleLowerCase.call(me, b),default_locale,strcmp_opts);
+    const strcmp = function (a, b) {
+        return CSL.toLocaleLowerCase.call(me, a).localeCompare(CSL.toLocaleLowerCase.call(me, b), default_locale, strcmp_opts);
     };
-    var stripPunct = function (str) {
+    const stripPunct = function (str) {
         return str.replace(/^[\[\]\'\"]*/g, "");
     };
-    var getBracketPreSort = function () {
-        if (!strcmp("[x","x")) {
+    const getBracketPreSort = function () {
+        if (!strcmp("[x", "x")) {
             return false;
-        } else {
+        }
+        else {
             return function (a, b) {
                 return strcmp(stripPunct(a), stripPunct(b));
             };
         }
     };
-    var bracketPreSort = getBracketPreSort();
-    var sortCompare = function (a, b) {
+    const bracketPreSort = getBracketPreSort();
+    return function (a, b) {
         if (bracketPreSort) {
             return bracketPreSort(a, b);
-        } else {
+        }
+        else {
             return strcmp(a, b);
         }
     };
-    return sortCompare;
-};
+}
+CSL.getSortCompare = getSortCompare;
 
 /*global CSL: true */
 
@@ -17648,99 +17652,76 @@ CSL.Attributes["@display"] = function (state, arg) {
 
 
 /*global CSL: true */
-
-
 /**
  * String stack object.
  * <p>Numerous string stacks are used to track nested
  * parameters at runtime.  This class provides methods
  * that remove some of the aggravation of managing
  * them.</p>
- * @class
  */
-CSL.Stack = function (val, literal) {
-    this.mystack = [];
-    if (literal || val) {
-        this.mystack.push(val);
+class Stack {
+    constructor(val, literal) {
+        this.mystack = [];
+        if (literal || val) {
+            this.mystack.push(val);
+        }
+        this.tip = this.mystack[0];
     }
-    this.tip = this.mystack[0];
-};
-
-/**
- * Push a value onto the stack.
- * <p>This just does what it says.</p>
- */
-CSL.Stack.prototype.push = function (val, literal) {
-    if (literal || val) {
-        this.mystack.push(val);
-    } else {
-        this.mystack.push("");
-    }
-    this.tip = this.mystack[this.mystack.length - 1];
-};
-
-/**
- * Clear the stack
- */
-CSL.Stack.prototype.clear = function () {
-    this.mystack = [];
-    this.tip = {};
-};
-
-/**
- * Replace the top value on the stack.
- * <p>This removes some ugly syntax from the
- * main code.</p>
- */
-CSL.Stack.prototype.replace = function (val, literal) {
-    //
-    // safety fix after a bug was chased down.  Rhino
-    // JS will process a negative index without error (!).
-    if (this.mystack.length === 0) {
-        CSL.error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
-    }
-    if (literal || val) {
-        this.mystack[(this.mystack.length - 1)] = val;
-    } else {
-        this.mystack[(this.mystack.length - 1)] = "";
-    }
-    this.tip = this.mystack[this.mystack.length - 1];
-};
-
-
-/**
- * Remove the top value from the stack.
- * <p>Just does what it says.</p>
- */
-CSL.Stack.prototype.pop = function () {
-    var ret = this.mystack.pop();
-    if (this.mystack.length) {
+    /** Push a value onto the stack. */
+    push(val, literal) {
+        if (literal || val) {
+            this.mystack.push(val);
+        }
+        else {
+            this.mystack.push("");
+        }
         this.tip = this.mystack[this.mystack.length - 1];
-    } else {
+    }
+    /** Clear the stack */
+    clear() {
+        this.mystack = [];
         this.tip = {};
     }
-    return ret;
-};
-
-
-/**
- * Return the top value on the stack.
- * <p>Removes a little hideous complication from
- * the main code.</p>
- */
-CSL.Stack.prototype.value = function () {
-    return this.mystack.slice(-1)[0];
-};
-
-
-/**
- * Return length (depth) of stack.
- * <p>Used to identify if there is content to
- * be handled on the stack</p>
- */
-CSL.Stack.prototype.length = function () {
-    return this.mystack.length;
-};
+    /**
+     * Replace the top value on the stack.
+     * <p>This removes some ugly syntax from the
+     * main code.</p>
+     */
+    replace(val, literal) {
+        // safety fix after a bug was chased down.  Rhino
+        // JS will process a negative index without error (!).
+        if (this.mystack.length === 0) {
+            CSL.error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
+        }
+        if (literal || val) {
+            this.mystack[(this.mystack.length - 1)] = val;
+        }
+        else {
+            this.mystack[(this.mystack.length - 1)] = "";
+        }
+        this.tip = this.mystack[this.mystack.length - 1];
+    }
+    /** Remove the top value from the stack. */
+    pop() {
+        const ret = this.mystack.pop();
+        if (this.mystack.length) {
+            this.tip = this.mystack[this.mystack.length - 1];
+        }
+        else {
+            this.tip = {};
+        }
+        return ret;
+    }
+    /** Return the top value on the stack. */
+    value() {
+        return this.mystack.slice(-1)[0];
+    }
+    /** Return length (depth) of stack. */
+    length() {
+        return this.mystack.length;
+    }
+}
+CSL.Stack = Stack;
 
 /*global CSL: true */
 
@@ -18680,7 +18661,6 @@ CSL.Transform = function (state) {
 };
 
 /*global CSL: true */
-
 /**
  * Style token.
  * <p>This class provides the tokens that define
@@ -18689,111 +18669,51 @@ CSL.Transform = function (state) {
  * must be post-processed with
  * {@link CSL.Core.Configure} before it can be used to generate
  * citations.</p>
- * @param {String} name The node name represented by this token.
- * @param {Int} tokentype A flag indicating whether this token
- * marks the start of a node, the end of a node, or is a singleton.
- * @class
  */
-CSL.Token = function (name, tokentype, conditional) {
-    /**
-     * Name of the element.
-     * <p>This corresponds to the element name of the
-     * relevant tag in the CSL file.
-     */
-    this.name = name;
-    /**
-     * Strings and other static content specific to the element.
-     */
-    this.strings = {};
-    this.strings.delimiter = undefined;
-    this.strings.prefix = "";
-    this.strings.suffix = "";
-    /**
-     * Formatting parameters.
-     * <p>This is a placeholder at instantiation.  It is
-     * replaced by the result of {@link CSL.setDecorations}
-     * when the tag is created and configured during {@link CSL.Core.Build}
-     * by {@link CSL.XmlToToken}.  The parameters for particular
-     * formatting attributes are stored as string arrays, which
-     * map to formatting functions at runtime,
-     * when the output format is known.  Note that the order in which
-     * parameters are registered is fixed by the constant
-     * {@link CSL.FORMAT_KEY_SEQUENCE}.
-     */
-    this.decorations = [];
-    this.variables = [];
-    /**
-     * Element functions.
-     * <p>Functions implementing the styling behaviour of the element
-     * are pushed into this array in the {@link CSL.Core.Build} phase.
-     */
-    this.execs = [];
-    /**
-     * Token type.
-     * <p>This is a flag constant indicating whether the token represents
-     * a start tag, an end tag, or is a singleton.</p>
-     */
-    this.tokentype = tokentype;
-
-    // Conditional attributes added to bare tokens at runtime
-    
-    /**
-     * Condition evaluator.
-     * <p>This is a placeholder that receives a single function, and is
-     * only relevant for a conditional branching tag (<code>if</code> or
-     * <code>else-if</code>).  The function implements the argument to
-     * the <code>match=</code> attribute (<code>any</code>, <code>all</code>
-     * or <code>none</code>), by executing the functions registered in the
-     * <code>tests</code> array (see below), and reacting accordingly.  This
-     * function is invoked by the execution wrappers found in
-     * {@link CSL.Engine}.</p>
-     */
-    // this.evaluator = false;
-    /**
-     * Conditions.
-     * <p>Functions that evaluate to true or false, implementing
-     * various posisble attributes to the conditional branching tags,
-     * are registered here during {@link CSL.Core.Build}.
-     * </p>
-     */
-    // this.tests = [];
-    /**
-     * Jump point on success.
-     * <p>This holds the list jump point to be used when the
-     * <code>evaluator</code> function of a conditional tag
-     * returns true (success).  The jump index value is set during the
-     * back-to-front token pass performed during {@link CSL.Core.Configure}.
-     * </p>
-     */
-    // this.succeed = false;
-    /**
-     * Jump point on failure.
-     * <p>This holds the list jump point to be used when the
-     * <code>evaluator</code> function of a conditional tag
-     * returns false (failure).  Jump index values are set during the
-     * back-to-front token pass performed during {@link CSL.Core.Configure}.
-     * </p>
-     */
-    // this.fail = false;
-    /**
-     * Index of next token.
-     * <p>This holds the index of the next token in the
-     * token list, which is the default "jump-point" for ordinary
-     * processing.  Jump index values are set during the
-     * back-to-front token pass performed during {@link CSL.Core.Configure}.
-     * </p>
-     */
-    // this.next = false;
-};
-
-// Have needed this for yonks
-CSL.Util.cloneToken = function (token) {
-    var newtok, key, pos, len;
+class Token {
+    constructor(name, tokentype, conditional) {
+        /**
+         * Name of the element.
+         * <p>This corresponds to the element name of the
+         * relevant tag in the CSL file.</p>
+         */
+        this.name = name;
+        /**
+         * Strings and other static content specific to the element.
+         */
+        this.strings = {};
+        this.strings.delimiter = undefined;
+        this.strings.prefix = "";
+        this.strings.suffix = "";
+        /**
+         * Formatting parameters.
+         */
+        this.decorations = [];
+        this.variables = [];
+        /**
+         * Element functions.
+         */
+        this.execs = [];
+        /**
+         * Token type.
+         */
+        this.tokentype = tokentype;
+        // Conditional attributes added to bare tokens at runtime
+        this.evaluator = false;
+        this.tests = [];
+        this.succeed = false;
+        this.fail = false;
+        this.next = false;
+    }
+}
+CSL.Token = Token;
+function cloneToken(token) {
+    let newtok, key, pos, len;
     if ("string" === typeof token) {
         return token;
     }
     newtok = new CSL.Token(token.name, token.tokentype);
-    for (var key in token.strings) {
+    for (key in token.strings) {
         if (token.strings.hasOwnProperty(key)) {
             newtok.strings[key] = token.strings[key];
         }
@@ -18816,74 +18736,83 @@ CSL.Util.cloneToken = function (token) {
         }
     }
     return newtok;
-};
+}
+CSL.Util.cloneToken = cloneToken;
 
 /*global CSL: true */
-
 /**
  * Ambiguous Cite Configuration Object
- * @class
  */
-CSL.AmbigConfig = function () {
-    this.maxvals = [];
-    this.minval = 1;
-    this.names = [];
-    this.givens = [];
-    this.year_suffix = false;
-    this.disambiguate = 0;
-};
+class AmbigConfig {
+    constructor() {
+        this.maxvals = [];
+        this.minval = 1;
+        this.names = [];
+        this.givens = [];
+        this.year_suffix = false;
+        this.disambiguate = 0;
+    }
+}
+CSL.AmbigConfig = AmbigConfig;
 
 /*global CSL: true */
-
-CSL.Blob = function (str, token, levelname) {
-    var len, pos, key;
-    this.levelname = levelname;
-    //print(levelname);
-    if (token) {
-        this.strings = {"prefix":"","suffix":""};
-        for (var key in token.strings) {
-            if (token.strings.hasOwnProperty(key)) {
-                this.strings[key] = token.strings[key];
+/**
+ * A blob is a unit of rendered output, carrying its own formatting
+ * strings, decorations and nested child blobs.
+ */
+class Blob {
+    constructor(str, token, levelname) {
+        this.levelname = levelname;
+        if (token) {
+            this.strings = { "prefix": "", "suffix": "" };
+            for (const key in token.strings) {
+                if (token.strings.hasOwnProperty(key)) {
+                    this.strings[key] = token.strings[key];
+                }
+            }
+            this.decorations = [];
+            let len;
+            if (token.decorations === undefined) {
+                len = 0;
+            }
+            else {
+                len = token.decorations.length;
+            }
+            for (let pos = 0; pos < len; pos += 1) {
+                this.decorations.push(token.decorations[pos].slice());
             }
         }
-        this.decorations = [];
-        if (token.decorations === undefined) {
-            len = 0;
-        } else {
-            len = token.decorations.length;
+        else {
+            this.strings = {};
+            this.strings.prefix = "";
+            this.strings.suffix = "";
+            this.strings.delimiter = "";
+            this.decorations = [];
         }
-        for (pos = 0; pos < len; pos += 1) {
-            this.decorations.push(token.decorations[pos].slice());
+        if ("string" === typeof str) {
+            this.blobs = str;
         }
-    } else {
-        this.strings = {};
-        this.strings.prefix = "";
-        this.strings.suffix = "";
-        this.strings.delimiter = "";
-        this.decorations = [];
+        else if (str) {
+            this.blobs = [str];
+        }
+        else {
+            this.blobs = [];
+        }
+        this.alldecor = [this.decorations];
     }
-    if ("string" === typeof str) {
-        this.blobs = str;
-    } else if (str) {
-        this.blobs = [str];
-    } else {
-        this.blobs = [];
+    push(blob) {
+        if ("string" === typeof this.blobs) {
+            CSL.error("Attempt to push blob onto string object");
+        }
+        else if (false !== blob) {
+            blob.alldecor = blob.alldecor.concat(this.alldecor);
+            this.blobs.push(blob);
+        }
     }
-    this.alldecor = [this.decorations];
-};
-
-
-CSL.Blob.prototype.push = function (blob) {
-    if ("string" === typeof this.blobs) {
-        CSL.error("Attempt to push blob onto string object");
-    } else if (false !== blob) {
-        blob.alldecor = blob.alldecor.concat(this.alldecor);
-        this.blobs.push(blob);
-    }
-};
+}
+CSL.Blob = Blob;
 
 /*global CSL: true */
-
 /**
  * An output instance object representing a number or a range
  *
@@ -18893,109 +18822,106 @@ CSL.Blob.prototype.push = function (blob) {
  * collapsing of these objects in the queue, according to
  * configurable options, and apply any decorations registered
  * in the object to the output elements.
- * @namespace Range object and friends.
  */
-
-CSL.NumericBlob = function (state, particle, num, mother_token, id) {
-    // item id is used to assure that prefix delimiter is invoked only
-    // when joining blobs across items
-    this.id = id;
-    this.alldecor = [];
-    this.num = num;
-    this.particle = particle;
-    this.blobs = num.toString();
-    this.status = CSL.START;
-    this.strings = {};
-    if (mother_token) {
-        if (mother_token.strings["text-case"]) {
-            var textCase = mother_token.strings["text-case"];
-            this.particle = CSL.Output.Formatters[textCase](state, this.particle);
-            this.blobs = CSL.Output.Formatters[textCase](state, this.blobs);
-        }
-        this.gender = mother_token.gender;
-        this.decorations = mother_token.decorations;
-        this.strings.prefix = mother_token.strings.prefix;
-        this.strings.suffix = mother_token.strings.suffix;
-        this.strings["text-case"] = mother_token.strings["text-case"];
-        this.successor_prefix = mother_token.successor_prefix;
-        this.range_prefix = mother_token.range_prefix;
-        this.splice_prefix = mother_token.splice_prefix;
-        this.formatter = mother_token.formatter;
-        if (!this.formatter) {
-            this.formatter =  new CSL.Output.DefaultFormatter();
-        }
-        if (this.formatter) {
-            this.type = this.formatter.format(1);
-        }
-    } else {
-        this.decorations = [];
-        this.strings.prefix = "";
-        this.strings.suffix = "";
-        this.successor_prefix = "";
-        this.range_prefix = "";
-        this.splice_prefix = "";
-        this.formatter = new CSL.Output.DefaultFormatter();
-    }
-};
-
-
-CSL.NumericBlob.prototype.setFormatter = function (formatter) {
-    this.formatter = formatter;
-    this.type = this.formatter.format(1);
-};
-
-
-CSL.Output.DefaultFormatter = function () {};
-
-CSL.Output.DefaultFormatter.prototype.format = function (num) {
-    return num.toString();
-};
-
-CSL.NumericBlob.prototype.checkNext = function (next,start) {
-    if (start) {
+class NumericBlob {
+    constructor(state, particle, num, mother_token, id) {
+        // item id is used to assure that prefix delimiter is invoked only
+        // when joining blobs across items
+        this.id = id;
+        this.alldecor = [];
+        this.num = num;
+        this.particle = particle;
+        this.blobs = num.toString();
         this.status = CSL.START;
-        if ("object" === typeof next) {
-            if (next.num === (this.num + 1)) {
-                next.status = CSL.SUCCESSOR;
-            } else {
+        this.strings = {};
+        if (mother_token) {
+            if (mother_token.strings["text-case"]) {
+                const textCase = mother_token.strings["text-case"];
+                this.particle = CSL.Output.Formatters[textCase](state, this.particle);
+                this.blobs = CSL.Output.Formatters[textCase](state, this.blobs);
+            }
+            this.gender = mother_token.gender;
+            this.decorations = mother_token.decorations;
+            this.strings.prefix = mother_token.strings.prefix;
+            this.strings.suffix = mother_token.strings.suffix;
+            this.strings["text-case"] = mother_token.strings["text-case"];
+            this.successor_prefix = mother_token.successor_prefix;
+            this.range_prefix = mother_token.range_prefix;
+            this.splice_prefix = mother_token.splice_prefix;
+            this.formatter = mother_token.formatter;
+            if (!this.formatter) {
+                this.formatter = new CSL.Output.DefaultFormatter();
+            }
+            if (this.formatter) {
+                this.type = this.formatter.format(1);
+            }
+        }
+        else {
+            this.decorations = [];
+            this.strings.prefix = "";
+            this.strings.suffix = "";
+            this.successor_prefix = "";
+            this.range_prefix = "";
+            this.splice_prefix = "";
+            this.formatter = new CSL.Output.DefaultFormatter();
+        }
+    }
+    setFormatter(formatter) {
+        this.formatter = formatter;
+        this.type = this.formatter.format(1);
+    }
+    checkNext(next, start) {
+        if (start) {
+            this.status = CSL.START;
+            if ("object" === typeof next) {
+                if (next.num === (this.num + 1)) {
+                    next.status = CSL.SUCCESSOR;
+                }
+                else {
+                    next.status = CSL.SEEN;
+                }
+            }
+        }
+        else if (!next || !next.num || this.type !== next.type || next.num !== (this.num + 1)) {
+            if (this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
+                this.status = CSL.END;
+            }
+            if ("object" === typeof next) {
                 next.status = CSL.SEEN;
             }
         }
-    } else if (! next || !next.num || this.type !== next.type || next.num !== (this.num + 1)) {
-        if (this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
-            this.status = CSL.END;
-        }
-        if ("object" === typeof next) { 
-           next.status = CSL.SEEN;
-        }
-    } else { // next number is in the sequence
-        if (this.status === CSL.START || this.status === CSL.SEEN) {
-            next.status = CSL.SUCCESSOR;
-        } else if (this.status === CSL.SUCCESSOR || this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
-            if (this.range_prefix) {
-                next.status = CSL.SUCCESSOR_OF_SUCCESSOR;
-                this.status = CSL.SUPPRESS;
-            } else {
+        else { // next number is in the sequence
+            if (this.status === CSL.START || this.status === CSL.SEEN) {
                 next.status = CSL.SUCCESSOR;
             }
+            else if (this.status === CSL.SUCCESSOR || this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
+                if (this.range_prefix) {
+                    next.status = CSL.SUCCESSOR_OF_SUCCESSOR;
+                    this.status = CSL.SUPPRESS;
+                }
+                else {
+                    next.status = CSL.SUCCESSOR;
+                }
+            }
         }
-        // wakes up the correct delimiter.
-        //if (this.status === CSL.SEEN) {
-        //    this.status = CSL.SUCCESSOR;
-        //}
     }
-};
-
-
-CSL.NumericBlob.prototype.checkLast = function (last) {
-    // Used to adjust final non-range join
-    if (this.status === CSL.SEEN 
-    || (last.num !== (this.num - 1) && this.status === CSL.SUCCESSOR)) {
-        this.status = CSL.SUCCESSOR;
-        return true;
+    checkLast(last) {
+        // Used to adjust final non-range join
+        if (this.status === CSL.SEEN
+            || (last.num !== (this.num - 1) && this.status === CSL.SUCCESSOR)) {
+            this.status = CSL.SUCCESSOR;
+            return true;
+        }
+        return false;
     }
-    return false;
-};
+}
+CSL.NumericBlob = NumericBlob;
+class DefaultFormatter {
+    format(num) {
+        return num.toString();
+    }
+}
+CSL.Output.DefaultFormatter = DefaultFormatter;
 
 /*global CSL: true */
 

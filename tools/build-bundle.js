@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 
@@ -40,14 +41,39 @@ const SOURCES = [
     'disambig_citations', 'disambig_cites', 'util_modules', 'util_name_particles'
 ];
 
+function compileTypeScript() {
+    // Compile src/*.ts -> .tsbuild/ using the project tsconfig.  This is a
+    // no-op if there is no TypeScript toolchain installed; in that case the
+    // build falls back to the plain .js sources.
+    let tsc = path.join(__dirname, '..', 'node_modules', '.bin', 'tsc');
+    if (!fs.existsSync(tsc)) {
+        try {
+            execFileSync('tsc', ['--version'], { stdio: 'ignore' });
+            tsc = 'tsc';
+        } catch (e) {
+            return false;
+        }
+    }
+    const tsconfig = path.join(__dirname, '..', 'tsconfig.json');
+    if (!fs.existsSync(tsconfig)) {
+        return false;
+    }
+    execFileSync(tsc, ['-p', tsconfig], { stdio: 'inherit' });
+    return true;
+}
+
 function buildBundle() {
     const header = fs.readFileSync(path.join(__dirname, '..', 'citeproc.js'), 'utf8')
         .split('/*global CSL: true */')[0].replace(/\s+$/, '');
     const parts = [header];
+    const TSBUILD_DIR = path.join(__dirname, '..', '.tsbuild');
     for (const name of SOURCES) {
-        const file = path.join(SRC_DIR, name + '.js');
+        let file = path.join(TSBUILD_DIR, name + '.js');
         if (!fs.existsSync(file)) {
-            throw new Error('Missing source file: ' + file);
+            file = path.join(SRC_DIR, name + '.js');
+        }
+        if (!fs.existsSync(file)) {
+            throw new Error('Missing source file for module: ' + name);
         }
         parts.push(fs.readFileSync(file, 'utf8'));
     }
@@ -55,6 +81,7 @@ function buildBundle() {
 }
 
 function main() {
+    compileTypeScript();
     const body = buildBundle();
     const browser = body + '\n';
     const commonjs = body + '\n\nmodule.exports = CSL';

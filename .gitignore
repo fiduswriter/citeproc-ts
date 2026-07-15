@@ -5,3 +5,5 @@ node_modules
 test
 .cslValidationPos
 cslrun.yaml
+# TypeScript build output
+.tsbuild
