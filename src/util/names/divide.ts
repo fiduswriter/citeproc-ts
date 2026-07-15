@@ -1,7 +1,6 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.divideAndTransliterateNames = function (this: any): void {
+export function divideAndTransliterateNames(this: any): void {
     let i: number, ilen: number, j: number, jlen: number;
     const Item = this.Item;
     const variables = this.variables;
@@ -41,7 +40,7 @@ CSL.NameOutput.prototype.divideAndTransliterateNames = function (this: any): voi
     }
 };
 
-CSL.NameOutput.prototype._normalizeVariableValue = function (this: any, Item: CslItem, variable: any): any {
+export function _normalizeVariableValue(this: any, Item: CslItem, variable: any): any {
     let names: any;
     if ("string" === typeof Item[variable] || "number" === typeof Item[variable]) {
         CSL.debug("name variable \"" + variable + "\" is string or number, not array. Attempting to fix.");
@@ -58,7 +57,7 @@ CSL.NameOutput.prototype._normalizeVariableValue = function (this: any, Item: Cs
     return names;
 };
 
-CSL.NameOutput.prototype._getFreeters = function (this: any, v: any, values: any): void {
+export function _getFreeters(this: any, v: any, values: any): void {
     this.freeters[v] = [];
     if (this.state.opt.development_extensions.spoof_institutional_affiliations) {
         for (let i = values.length - 1; i > -1; i -= 1) {
@@ -86,7 +85,7 @@ CSL.NameOutput.prototype._getFreeters = function (this: any, v: any, values: any
     }
 };
 
-CSL.NameOutput.prototype._getPersonsAndInstitutions = function (this: any, v: any, values: any): void {
+export function _getPersonsAndInstitutions(this: any, v: any, values: any): void {
     this.persons[v] = [];
     this.institutions[v] = [];
     if (!this.state.opt.development_extensions.spoof_institutional_affiliations) {
@@ -120,13 +119,13 @@ CSL.NameOutput.prototype._getPersonsAndInstitutions = function (this: any, v: an
     }
 };
 
-CSL.NameOutput.prototype._clearValues = function (this: any, values: any): void {
+export function _clearValues(this: any, values: any): void {
     for (let i = values.length - 1; i > -1; i -= 1) {
         values.pop();
     }
 };
 
-CSL.NameOutput.prototype._checkNickname = function (this: any, name: any): any {
+export function _checkNickname(this: any, name: any): any {
     if (["interview", "personal_communication"].indexOf(this.Item.type) > -1) {
         let author = "";
         author = CSL.Util.Names.getRawName(name);

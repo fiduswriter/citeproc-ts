@@ -1,9 +1,9 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
+import { _compareNamesets } from './common';
 
 CSL.Util.Names = {};
 
-CSL.Util.Names.compareNamesets = CSL.NameOutput.prototype._compareNamesets;
+CSL.Util.Names.compareNamesets = _compareNamesets;
 
 /**
  * Un-initialize a name (quash caps after first character)

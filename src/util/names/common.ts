@@ -1,7 +1,6 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.checkCommonAuthor = function (this: any, requireMatch: any): boolean {
+export function checkCommonAuthor(this: any, requireMatch: any): boolean {
     if (!requireMatch) {
         return false;
     }
@@ -31,19 +30,14 @@ CSL.NameOutput.prototype.checkCommonAuthor = function (this: any, requireMatch: 
         this.state.tmp.done_vars.push(this.variables[0]);
         this.state.tmp.done_vars.push(this.variables[1]);
     }
-    // This may be counter-intuitive.
-    // This check controls whether we will fail on the this attempt at rendering
-    // and proceed with substitution. If the names match exactly (true), then
-    // we do *not* want to abort and continue with substitution.
     return !perfectMatch;
 };
 
-CSL.NameOutput.prototype.setCommonTerm = function (this: any): void {
+export function setCommonTerm(this: any): void {
     const variables = this.variables;
     const varnames = variables.slice();
     varnames.sort();
     this.common_term = varnames.join("");
-    // When no varnames are on offer
     if (!this.common_term) {
         return;
     }
@@ -56,7 +50,6 @@ CSL.NameOutput.prototype.setCommonTerm = function (this: any): void {
         }
     }
 
-    // When there is no common term
     if (!this.state.locale[this.state.opt.lang].terms[this.common_term]
         || !has_term
         || this.variables.length < 2) {
@@ -89,7 +82,7 @@ CSL.NameOutput.prototype.setCommonTerm = function (this: any): void {
     }
 };
 
-CSL.NameOutput.prototype._compareNamesets = function (this: any, base_nameset: any, nameset: any): boolean {
+export function _compareNamesets(this: any, base_nameset: any, nameset: any): boolean {
     if (!base_nameset || !nameset || base_nameset.length !== nameset.length) {
         return false;
     }

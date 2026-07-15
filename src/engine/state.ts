@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { Suffixator, Romanizer, Ordinalizer, LongOrdinalizer } from '../util/number';
 
 export class Opt {
     [key: string]: any;
@@ -273,13 +274,13 @@ export class Fun {
     constructor(state: any) {
         this.match = new CSL.Util.Match();
 
-        this.suffixator = new CSL.Util.Suffixator(CSL.SUFFIX_CHARS);
+        this.suffixator = new Suffixator(CSL.SUFFIX_CHARS);
 
-        this.romanizer = new CSL.Util.Romanizer();
+        this.romanizer = new Romanizer();
 
-        this.ordinalizer = new CSL.Util.Ordinalizer(state);
+        this.ordinalizer = new Ordinalizer(state);
 
-        this.long_ordinalizer = new CSL.Util.LongOrdinalizer();
+        this.long_ordinalizer = new LongOrdinalizer();
     }
 }
 

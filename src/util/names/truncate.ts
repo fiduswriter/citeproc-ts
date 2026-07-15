@@ -1,7 +1,6 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.truncatePersonalNameLists = function (this: any): void {
+export function truncatePersonalNameLists(this: any): void {
     let v: any, i: number, ilen: number, j: number, jlen: number, chopvar: any, values: any;
     this.freeters_count = {};
     this.persons_count = {};
@@ -94,7 +93,7 @@ CSL.NameOutput.prototype.truncatePersonalNameLists = function (this: any): void 
     }
 };
 
-CSL.NameOutput.prototype._truncateNameList = function (this: any, container: any, variable: any, index?: any): any {
+export function _truncateNameList(this: any, container: any, variable: any, index?: any): any {
     let lst: any;
     if ("undefined" === typeof index) {
         lst = container[variable];

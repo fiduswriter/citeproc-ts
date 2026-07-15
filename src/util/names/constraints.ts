@@ -1,21 +1,17 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.constrainNames = function (this: any): void {
-    // figure out how many names to include, in light of the disambig params
+export function constrainNames(this: any): void {
     this.names_count = 0;
     let pos: any;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
         const v = this.variables[i];
         pos = this.nameset_base + i;
-        // Constrain independent authors here
         if (this.freeters[v].length) {
             this.state.tmp.names_max.push(this.freeters[v].length, "literal");
             this._imposeNameConstraints(this.freeters, this.freeters_count, v, pos);
             this.names_count += this.freeters[v].length;
         }
 
-        // Constrain institutions here
         if (this.institutions[v].length) {
             this.state.tmp.names_max.push(this.institutions[v].length, "literal");
             this._imposeNameConstraints(this.institutions, this.institutions_count, v, pos);
@@ -24,7 +20,6 @@ CSL.NameOutput.prototype.constrainNames = function (this: any): void {
         }
 
         for (let j = 0, jlen = this.persons[v].length; j < jlen; j += 1) {
-            // Constrain affiliated authors here
             if (this.persons[v][j].length) {
                 this.state.tmp.names_max.push(this.persons[v][j].length, "literal");
                 this._imposeNameConstraints(this.persons[v], this.persons_count[v], j, pos);
@@ -34,13 +29,10 @@ CSL.NameOutput.prototype.constrainNames = function (this: any): void {
     }
 };
 
-CSL.NameOutput.prototype._imposeNameConstraints = function (this: any, lst: any, count: any, key: any, pos: any): void {
-    // display_names starts as the original length of this list of names.
+export function _imposeNameConstraints(this: any, lst: any, count: any, key: any, pos: any): void {
     const display_names = lst[key];
     let discretionary_names_length = this.state.tmp["et-al-min"];
 
-    // Mappings, to allow existing disambiguation machinery to
-    // remain untouched.
     if (this.state.tmp.suppress_decorations) {
         if (this.state.tmp.disambig_request && this.state.tmp.disambig_request.names[pos]) {
             discretionary_names_length = this.state.tmp.disambig_request.names[pos];
@@ -65,15 +57,9 @@ CSL.NameOutput.prototype._imposeNameConstraints = function (this: any, lst: any,
     }
     const sane = this.etal_min >= this.etal_use_first;
     const overlength = count[key] > discretionary_names_length;
-    // This var is used to control contextual join, and
-    // lies about the number of names when forceEtAl is true,
-    // unless normalized.
     if (discretionary_names_length > count[key]) {
-        // Use actual truncated list length, to avoid overrun.
         discretionary_names_length = display_names.length;
     }
-    // forceEtAl is relevant when the author list is
-    // truncated to eliminate clutter.
     if (sane && overlength) {
         if (this.etal_use_last) {
             lst[key] = display_names.slice(0, discretionary_names_length).concat(display_names.slice(-1));

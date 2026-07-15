@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { Suffixator } from '../util/number';
 /*global CSL: true */
 
 CSL.Node.text = {
@@ -131,7 +132,7 @@ CSL.Node.text = {
                                 this.successor_prefix = state[state.tmp.area].opt.cite_group_delimiter;
                             }
                             number = new CSL.NumericBlob(state, false, num, this, Item.id);
-                            formatter = new CSL.Util.Suffixator(CSL.SUFFIX_CHARS);
+                            formatter = new Suffixator(CSL.SUFFIX_CHARS);
                             number.setFormatter(formatter);
                             state.output.append(number, "literal");
                             firstoutput = false;

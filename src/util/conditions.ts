@@ -11,7 +11,7 @@ CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
         }
         if (!this.tests || !this.tests.length) {
             // Set up the condition compiler with our current context
-            state.tmp.conditions = new CSL.Conditions.Engine(state, this);
+            state.tmp.conditions = new EngineCondition(state, this);
         } else {
             // The usual.
             this.test = state.fun.match[this.match](this, state, this.tests);
@@ -73,20 +73,25 @@ CSL.Conditions.Configure = function (this: CslNode, state: CslState, pos: number
     }
 };
 
-CSL.Conditions.Engine = function (this: any, state: CslState, token: any): void {
-    this.token = token;
-    this.state = state;
-};
+export class EngineCondition {
+    token: any;
+    state: any;
 
-CSL.Conditions.Engine.prototype.addTest = function (this: any, test: any): void {
-    this.token.tests ? {} : this.token.tests = [];
-    this.token.tests.push(test);
-};
+    constructor(state: CslState, token: any) {
+        this.token = token;
+        this.state = state;
+    }
 
-CSL.Conditions.Engine.prototype.addMatch = function (this: any, match: any): void {
-    this.token.match = match;
-};
+    addTest(test: any): void {
+        this.token.tests ? {} : this.token.tests = [];
+        this.token.tests.push(test);
+    }
 
-CSL.Conditions.Engine.prototype.matchCombine = function (this: any): void {
-    this.token.test = this.state.fun.match[this.token.match](this.token, this.state, this.token.tests);
-};
+    addMatch(match: any): void {
+        this.token.match = match;
+    }
+
+    matchCombine(): void {
+        this.token.test = this.state.fun.match[this.token.match](this.token, this.state, this.token.tests);
+    }
+}

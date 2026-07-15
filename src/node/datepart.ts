@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { Suffixator } from '../util/number';
 /*global CSL: true */
 
 CSL.Node["date-part"] = {
@@ -280,7 +281,7 @@ CSL.Node["date-part"] = {
                     number = new CSL.NumericBlob(state, false, num, this, Item.id);
                     this.successor_prefix = state[state.build.area].opt.layout_delimiter;
                     this.splice_prefix = state[state.build.area].opt.layout_delimiter;
-                    formatter = new CSL.Util.Suffixator(CSL.SUFFIX_CHARS);
+                    formatter = new Suffixator(CSL.SUFFIX_CHARS);
                     number.setFormatter(formatter);
                     if (state[state.tmp.area].opt.collapse === "year-suffix-ranged") {
                         number.range_prefix = state.getTerm("citation-range-delimiter");

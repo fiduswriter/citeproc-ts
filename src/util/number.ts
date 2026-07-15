@@ -16,159 +16,150 @@ CSL.Util.padding = function (num) {
     return num;
 };
 
-CSL.Util.LongOrdinalizer = function () {};
+export class LongOrdinalizer {
+    state: any;
 
-CSL.Util.LongOrdinalizer.prototype.init = function (state) {
-    this.state = state;
-};
-
-CSL.Util.LongOrdinalizer.prototype.format = function (num, gender) {
-    if (num < 10) {
-        num = "0" + num;
+    init(state: any) {
+        this.state = state;
     }
-    // Argument true means "loose".
-    let ret = CSL.Engine.getField(
-        CSL.LOOSE, 
-        this.state.locale[this.state.opt.lang].terms,
-        "long-ordinal-" + num,
-        "long", 
-        0, 
-        gender
-    );
-    if (!ret) {
-        ret = this.state.fun.ordinalizer.format(num, gender);
+
+    format(num: any, gender: any) {
+        if (num < 10) {
+            num = "0" + num;
+        }
+        let ret = CSL.Engine.getField(
+            CSL.LOOSE, 
+            this.state.locale[this.state.opt.lang].terms,
+            "long-ordinal-" + num,
+            "long", 
+            0, 
+            gender
+        );
+        if (!ret) {
+            ret = this.state.fun.ordinalizer.format(num, gender);
+        }
+        this.state.tmp.cite_renders_content = true;
+        return ret;
     }
-    // Probably too optimistic -- what if only renders in _sort?
-    this.state.tmp.cite_renders_content = true;
-    return ret;
-};
+}
 
+export class Ordinalizer {
+    state: any;
+    suffixes: any;
 
-CSL.Util.Ordinalizer = function (state) {
-    this.state = state;
-    this.suffixes = {};
-};
+    constructor(state: any) {
+        this.state = state;
+        this.suffixes = {};
+    }
 
-CSL.Util.Ordinalizer.prototype.init = function () {
-    if (!this.suffixes[this.state.opt.lang]) {
-        this.suffixes[this.state.opt.lang] = {};
-        for (let i = 0, ilen = 3; i < ilen; i += 1) {
-            let gender = [undefined, "masculine", "feminine"][i];
-            this.suffixes[this.state.opt.lang][gender] = [];
-            for (let j = 1; j < 5; j += 1) {
-                const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
-                if ("undefined" === typeof ordinal) {
-                    delete this.suffixes[this.state.opt.lang][gender];
+    init() {
+        if (!this.suffixes[this.state.opt.lang]) {
+            this.suffixes[this.state.opt.lang] = {};
+            for (let i = 0, ilen = 3; i < ilen; i += 1) {
+                let gender = [undefined, "masculine", "feminine"][i];
+                this.suffixes[this.state.opt.lang][gender] = [];
+                for (let j = 1; j < 5; j += 1) {
+                    const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
+                    if ("undefined" === typeof ordinal) {
+                        delete this.suffixes[this.state.opt.lang][gender];
+                        break;
+                    }
+                    this.suffixes[this.state.opt.lang][gender].push(ordinal);
+                }
+            }
+        }
+    }
+
+    format(num: any, gender: any) {
+        let str;
+        num = parseInt(num, 10);
+        str = "" + num;
+        let suffix = "";
+        const trygenders = [];
+        if (gender) {
+            trygenders.push(gender);
+        }
+        trygenders.push("neuter");
+        if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
+            suffix = this.state.getTerm("ordinal",false,0,gender);
+            let trygender;
+            for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
+                trygender = trygenders[i];
+                const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
+                if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender],false,0,gender);
+                } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender],false,0,gender);
+                } else if (ordinfo["last-digit"][str.slice(str.length - 1)] && ordinfo["last-digit"][str.slice(str.length - 1)][trygender]) {
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender],false,0,gender);
+                }
+                if (suffix) {
                     break;
                 }
-                this.suffixes[this.state.opt.lang][gender].push(ordinal);
             }
-        }
-    }
-};
-
-CSL.Util.Ordinalizer.prototype.format = function (num, gender) {
-    let str;
-    num = parseInt(num, 10);
-    str = "" + num;
-    let suffix = "";
-    const trygenders = [];
-    if (gender) {
-        trygenders.push(gender);
-    }
-    trygenders.push("neuter");
-    if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
-        suffix = this.state.getTerm("ordinal",false,0,gender);
-        let trygender;
-        for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
-            trygender = trygenders[i];
-            const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
-            if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
-                suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender],false,0,gender);
-            } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
-                suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender],false,0,gender);
-            } else if (ordinfo["last-digit"][str.slice(str.length - 1)] && ordinfo["last-digit"][str.slice(str.length - 1)][trygender]) {
-                suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender],false,0,gender);
-            }
-            if (suffix) {
-                break;
-            }
-        }
-    } else {
-        if (!gender) {
-            // XXX hack to prevent crash on CSL 1.0 styles.
-            // Reported by Carles.
-            gender = undefined;
-        }
-        this.state.fun.ordinalizer.init();
-        if ((num / 10) % 10 === 1 || (num > 10 && num < 20)) {
-            suffix = this.suffixes[this.state.opt.lang][gender][3];
-        } else if (num % 10 === 1 && num % 100 !== 11) {
-            suffix = this.suffixes[this.state.opt.lang][gender][0];
-        } else if (num % 10 === 2 && num % 100 !== 12) {
-            suffix = this.suffixes[this.state.opt.lang][gender][1];
-        } else if (num % 10 === 3 && num % 100 !== 13) {
-            suffix = this.suffixes[this.state.opt.lang][gender][2];
         } else {
-            suffix = this.suffixes[this.state.opt.lang][gender][3];
+            if (!gender) {
+                gender = undefined;
+            }
+            this.state.fun.ordinalizer.init();
+            if ((num / 10) % 10 === 1 || (num > 10 && num < 20)) {
+                suffix = this.suffixes[this.state.opt.lang][gender][3];
+            } else if (num % 10 === 1 && num % 100 !== 11) {
+                suffix = this.suffixes[this.state.opt.lang][gender][0];
+            } else if (num % 10 === 2 && num % 100 !== 12) {
+                suffix = this.suffixes[this.state.opt.lang][gender][1];
+            } else if (num % 10 === 3 && num % 100 !== 13) {
+                suffix = this.suffixes[this.state.opt.lang][gender][2];
+            } else {
+                suffix = this.suffixes[this.state.opt.lang][gender][3];
+            }
         }
+        str = str += suffix;
+        return str;
     }
-    str = str += suffix;
-    return str;
-};
+}
 
-CSL.Util.Romanizer = function () {};
-
-CSL.Util.Romanizer.prototype.format = function (num) {
-    let ret, pos, n, numstr, len;
-    ret = "";
-    if (num < 6000) {
-        numstr = num.toString().split("");
-        numstr.reverse();
-        pos = 0;
-        n = 0;
-        len = numstr.length;
-        for (let pos = 0; pos < len; pos += 1) {
-            n = parseInt(numstr[pos], 10);
-            ret = CSL.ROMAN_NUMERALS[pos][n] + ret;
+export class Romanizer {
+    format(num: any) {
+        let ret, pos, n, numstr, len;
+        ret = "";
+        if (num < 6000) {
+            numstr = num.toString().split("");
+            numstr.reverse();
+            pos = 0;
+            n = 0;
+            len = numstr.length;
+            for (let pos = 0; pos < len; pos += 1) {
+                n = parseInt(numstr[pos], 10);
+                ret = CSL.ROMAN_NUMERALS[pos][n] + ret;
+            }
         }
+        return ret;
     }
-    return ret;
-};
+}
 
+export class Suffixator {
+    slist: string[];
 
-/**
- * Create a suffix formed from a list of arbitrary characters of arbitrary length.
- * <p>This is a <i>lot</i> harder than it seems.</p>
- */
-CSL.Util.Suffixator = function (slist) {
-    if (!slist) {
-        slist = CSL.SUFFIX_CHARS;
+    constructor(slist: any) {
+        if (!slist) {
+            slist = CSL.SUFFIX_CHARS;
+        }
+        this.slist = slist.split(",");
     }
-    this.slist = slist.split(",");
-};
 
-/**
- * The format method.
- * <p>This method is used in generating ranges.  Every numeric
- * formatter (of which Suffixator is one) must be an instantiated
- * object with such a "format" method.</p>
- */
-
-CSL.Util.Suffixator.prototype.format = function (N) {
-    // Many thanks to Avram Lyon for this code, and good
-    // riddance to the several functions that it replaces.
-    let X;
-    N += 1;
-    let key = "";
-    do {
-        X = ((N % 26) === 0) ? 26 : (N % 26);
-        key = this.slist[X-1] + key;
-        N = (N - X) / 26;
-    } while ( N !== 0 );
-    return key;
-};
-
+    format(N: any) {
+        let X;
+        N += 1;
+        let key = "";
+        do {
+            X = ((N % 26) === 0) ? 26 : (N % 26);
+            key = this.slist[X-1] + key;
+            N = (N - X) / 26;
+        } while ( N !== 0 );
+        return key;
+    }
+}
 
 export function processNumber(node, ItemObject, variable) {
     //print("** processNumber() ItemObject[variable]="+ItemObject[variable]);

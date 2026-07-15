@@ -1,7 +1,6 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.getEtAlConfig = function (this: any): void {
+export function getEtAlConfig(this: any): void {
     let item = this.item;
     this["et-al"] = {};
 
@@ -15,8 +14,6 @@ CSL.NameOutput.prototype.getEtAlConfig = function (this: any): void {
     this["et-al"].multiple.strings.suffix = this.etal_suffix;
     this["et-al"].multiple.strings.prefix = this.etal_prefix_multiple;
 
-    // Et-al style parameters (may be sidestepped by disambiguation
-    // in util_names_constraints.js)
     if ("undefined" === typeof item) {
         item = {};
     }
@@ -49,7 +46,6 @@ CSL.NameOutput.prototype.getEtAlConfig = function (this: any): void {
             this.etal_use_last = this.state.inheritOpt(this.name, "et-al-use-last");
         }
     }
-    // Provided for use as the starting level for disambiguation.
     if (!this.state.tmp["et-al-min"]) {
         this.state.tmp["et-al-min"] = this.etal_min;
     }

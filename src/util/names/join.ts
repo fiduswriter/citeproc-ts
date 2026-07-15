@@ -1,16 +1,15 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype._purgeEmptyBlobs = function (this: any, blobs: any): any {
+export function _purgeEmptyBlobs(this: any, blobs: any): any {
     for (let i = blobs.length - 1; i > -1; i -= 1) {
         if (!blobs[i] || blobs[i].length === 0 || !blobs[i].blobs.length) {
             blobs = blobs.slice(0, i).concat(blobs.slice(i + 1));
         }
     }
     return blobs;
-};
+}
 
-CSL.NameOutput.prototype.joinPersons = function (this: any, blobs: any, pos: any, j?: any, tokenname?: any): any {
+export function joinPersons(this: any, blobs: any, pos: any, j?: any, tokenname?: any): any {
     let ret: any;
     blobs = this._purgeEmptyBlobs(blobs);
     if (!tokenname) {
@@ -38,10 +37,10 @@ CSL.NameOutput.prototype.joinPersons = function (this: any, blobs: any, pos: any
         }
     }
     return ret;
-};
+}
 
 
-CSL.NameOutput.prototype.joinInstitutionSets = function (this: any, blobs: any, pos: any): any {
+export function joinInstitutionSets(this: any, blobs: any, pos: any): any {
     let ret: any;
     blobs = this._purgeEmptyBlobs(blobs);
     if (this.etal_spec[pos].institutions === 1) {
@@ -52,23 +51,23 @@ CSL.NameOutput.prototype.joinInstitutionSets = function (this: any, blobs: any, 
         ret = this._joinAnd(blobs);
     }
     return ret;
-};
+}
 
 
-CSL.NameOutput.prototype.joinPersonsAndInstitutions = function (this: any, blobs: any): any {
+export function joinPersonsAndInstitutions(this: any, blobs: any): any {
     blobs = this._purgeEmptyBlobs(blobs);
     let ret = this._join(blobs, this.state.tmp.name_delimiter);
     ret.isInstitution = true;
     return ret;
-};
+}
 
-CSL.NameOutput.prototype.joinFreetersAndInstitutionSets = function (this: any, blobs: any): any {
+export function joinFreetersAndInstitutionSets(this: any, blobs: any): any {
     blobs = this._purgeEmptyBlobs(blobs);
     let ret = this._join(blobs, "[never here]", this["with"].single, this["with"].multiple);
     return ret;
-};
+}
 
-CSL.NameOutput.prototype._getAfterInvertedName = function (this: any, blobs: any, delimiter: any, finalJoin: any): any {
+export function _getAfterInvertedName(this: any, blobs: any, delimiter: any, finalJoin: any): any {
     if (finalJoin && blobs.length > 1) {
         if (this.state.inheritOpt(this.name, "delimiter-precedes-last") === "after-inverted-name") {
             const prevBlob = blobs[blobs.length - 2];
@@ -78,9 +77,9 @@ CSL.NameOutput.prototype._getAfterInvertedName = function (this: any, blobs: any
         }
     }
     return finalJoin;
-};
+}
 
-CSL.NameOutput.prototype._getAndJoin = function (this: any, blobs: any, delimiter: any): any {
+export function _getAndJoin(this: any, blobs: any, delimiter: any): any {
     let finalJoin = false;
     if (blobs.length > 1) {
         let singleOrMultiple = "single";
@@ -96,9 +95,9 @@ CSL.NameOutput.prototype._getAndJoin = function (this: any, blobs: any, delimite
         finalJoin = this._getAfterInvertedName(blobs, delimiter, finalJoin);
     }
     return finalJoin;
-};
+}
 
-CSL.NameOutput.prototype._joinEtAl = function (this: any, blobs: any): any {
+export function _joinEtAl(this: any, blobs: any): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     const blob = this._join(blobs, delimiter);
 
@@ -112,10 +111,10 @@ CSL.NameOutput.prototype._joinEtAl = function (this: any, blobs: any): any {
     }
     this.state.output.closeLevel();
     return this.state.output.pop();
-};
+}
 
 
-CSL.NameOutput.prototype._joinEllipsis = function (this: any, blobs: any): any {
+export function _joinEllipsis(this: any, blobs: any): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     let finalJoin = false;
     if (blobs.length > 1) {
@@ -128,16 +127,16 @@ CSL.NameOutput.prototype._joinEllipsis = function (this: any, blobs: any): any {
 
     }
     return this._join(blobs, delimiter, finalJoin);
-};
+}
 
-CSL.NameOutput.prototype._joinAnd = function (this: any, blobs: any): any {
+export function _joinAnd(this: any, blobs: any): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     const finalJoin = this._getAndJoin(blobs, delimiter);
     return this._join(blobs, delimiter, finalJoin);
-};
+}
 
 
-CSL.NameOutput.prototype._join = function (this: any, blobs: any, delimiter: any, finalJoin?: any): any {
+export function _join(this: any, blobs: any, delimiter: any, finalJoin?: any): any {
     let i: number, ilen: number;
     if (!blobs) {
         return false;
@@ -176,14 +175,14 @@ CSL.NameOutput.prototype._join = function (this: any, blobs: any, delimiter: any
     }
     this.state.output.closeLevel();
     return this.state.output.pop();
-};
+}
 
 
-CSL.NameOutput.prototype._getToken = function (this: any, tokenname: any): any {
+export function _getToken(this: any, tokenname: any): any {
     const token = this[tokenname];
     if (tokenname === "institution") {
         const newtoken = new CSL.Token();
         return newtoken;
     }
     return token;
-};
+}

@@ -55,6 +55,8 @@ import './node/group';
 import './node/if';
 import './node/conditions';
 import './node/condition';
+import { EngineCondition } from './util/conditions';
+CSL.Conditions.Engine = EngineCondition;
 import './util/conditions';
 import './node/info';
 import './node/institution';
@@ -67,15 +69,48 @@ import './node/alternative';
 import './node/alternativetext';
 import { NameOutput } from './util/names/output';
 CSL.NameOutput = NameOutput;
-import './util/names/tests';
-import './util/names/truncate';
-import './util/names/divide';
-import './util/names/join';
-import './util/names/common';
-import './util/names/constraints';
-import './util/names/disambig';
-import './util/names/etalconfig';
-import './util/names/etal';
+import { isPerson } from './util/names/tests';
+import { truncatePersonalNameLists, _truncateNameList } from './util/names/truncate';
+import { divideAndTransliterateNames, _normalizeVariableValue, _getFreeters, _getPersonsAndInstitutions, _clearValues, _checkNickname } from './util/names/divide';
+import { _purgeEmptyBlobs, joinPersons, joinInstitutionSets, joinPersonsAndInstitutions, joinFreetersAndInstitutionSets, _getAfterInvertedName, _getAndJoin, _joinEtAl, _joinEllipsis, _joinAnd, _join, _getToken } from './util/names/join';
+import { checkCommonAuthor, setCommonTerm, _compareNamesets } from './util/names/common';
+import { constrainNames, _imposeNameConstraints } from './util/names/constraints';
+import { disambigNames, _runDisambigNames } from './util/names/disambig';
+import { getEtAlConfig } from './util/names/etalconfig';
+import { setEtAlParameters, _setEtAlParameter } from './util/names/etal';
+Object.assign(CSL.NameOutput.prototype, {
+  isPerson,
+  truncatePersonalNameLists,
+  _truncateNameList,
+  divideAndTransliterateNames,
+  _normalizeVariableValue,
+  _getFreeters,
+  _getPersonsAndInstitutions,
+  _clearValues,
+  _checkNickname,
+  _purgeEmptyBlobs,
+  joinPersons,
+  joinInstitutionSets,
+  joinPersonsAndInstitutions,
+  joinFreetersAndInstitutionSets,
+  _getAfterInvertedName,
+  _getAndJoin,
+  _joinEtAl,
+  _joinEllipsis,
+  _joinAnd,
+  _join,
+  _getToken,
+  checkCommonAuthor,
+  setCommonTerm,
+  _compareNamesets,
+  constrainNames,
+  _imposeNameConstraints,
+  disambigNames,
+  _runDisambigNames,
+  getEtAlConfig,
+  setEtAlParameters,
+  _setEtAlParameter,
+});
 import { PublisherOutput } from './util/publishers';
 CSL.PublisherOutput = PublisherOutput;
 import './util/label';
@@ -104,7 +139,11 @@ import './util/names/index';
 import './util/dates';
 import './util/sort';
 import './util/substitute';
-import { processNumber } from './util/number';
+import { processNumber, LongOrdinalizer, Ordinalizer, Romanizer, Suffixator } from './util/number';
+CSL.Util.LongOrdinalizer = LongOrdinalizer;
+CSL.Util.Ordinalizer = Ordinalizer;
+CSL.Util.Romanizer = Romanizer;
+CSL.Util.Suffixator = Suffixator;
 import './util/number';
 import './util/page';
 import './util/flipflop';

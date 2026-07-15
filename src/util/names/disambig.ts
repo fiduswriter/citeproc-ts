@@ -1,10 +1,6 @@
 import { CSL } from '../../csl';
-// Disambiguate names (the number of names is controlled externally, by successive
-// runs of the processor).
 
-/*global CSL: true */
-
-CSL.NameOutput.prototype.disambigNames = function (this: any): void {
+export function disambigNames(this: any): void {
     let pos: any;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
         const v = this.variables[i];
@@ -30,7 +26,7 @@ CSL.NameOutput.prototype.disambigNames = function (this: any): void {
     }
 };
 
-CSL.NameOutput.prototype._runDisambigNames = function (this: any, lst: any, pos: any): void {
+export function _runDisambigNames(this: any, lst: any, pos: any): void {
     let chk: any, myform: any, myinitials: any, param: any, i: any, ilen: any, paramx: any;
     for (let i = 0, ilen = lst.length; i < ilen; i += 1) {
         if (!lst[i].given && !lst[i].family) {

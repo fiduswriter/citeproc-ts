@@ -1,7 +1,6 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
-CSL.NameOutput.prototype.setEtAlParameters = function (this: any): void {
+export function setEtAlParameters(this: any): void {
     let i: number, ilen: number, j: number, jlen: number;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
         const v = this.variables[i];
@@ -24,7 +23,7 @@ CSL.NameOutput.prototype.setEtAlParameters = function (this: any): void {
     }
 };
 
-CSL.NameOutput.prototype._setEtAlParameter = function (this: any, type: any, v: any, j?: any): void {
+export function _setEtAlParameter(this: any, type: any, v: any, j?: any): void {
     let lst: any, count: any;
     if (type === "persons") {
         lst = this.persons[v][j];
