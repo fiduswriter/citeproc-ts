@@ -1,9 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node = {};
-
-CSL.Node.bibliography = {
+export const Node_bibliography = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if (this.tokentype === CSL.START) {
 

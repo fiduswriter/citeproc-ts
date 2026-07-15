@@ -1,7 +1,6 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, item: any): string {
+export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, item: any): string {
     let myterm: string;
     if ("locator" === node.strings.term) {
         if (item && item.label) {
@@ -18,10 +17,8 @@ CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, ite
         myterm = node.strings.term;
     }
 
-    // Plurals detection.
     let plural: any = node.strings.plural;
     if ("number" !== typeof plural) {
-        // (node, ItemObject, variable, type)
         const theItem = (item && node.strings.term === "locator") ? item : Item;
         if (theItem[node.strings.term]) {
             state.processNumber(false, theItem, node.strings.term, Item.type);
@@ -47,10 +44,10 @@ CSL.evaluateLabel = function (node: CslNode, state: CslState, Item: CslItem, ite
             }
         }
     }
-    return CSL.castLabel(state, node, myterm, plural, CSL.TOLERANT);
+    return castLabel(state, node, myterm, plural, CSL.TOLERANT);
 };
 
-CSL.castLabel = function (state: CslState, node: CslNode, term: any, plural: any, mode: any): string {
+export function castLabel(state: CslState, node: CslNode, term: any, plural: any, mode: any): string {
     let label_form = node.strings.form;
     let label_capitalize_if_first = node.strings.capitalize_if_first;
     if (state.tmp.group_context.tip.label_form) {

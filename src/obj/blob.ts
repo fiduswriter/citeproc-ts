@@ -1,11 +1,10 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 /**
  * A blob is a unit of rendered output, carrying its own formatting
  * strings, decorations and nested child blobs.
  */
-class Blob {
+export class Blob {
     public levelname: any;
     public strings: any;
     public decorations: any[];
@@ -57,5 +56,3 @@ class Blob {
         }
     }
 }
-
-CSL.Blob = Blob;

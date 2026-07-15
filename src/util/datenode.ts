@@ -1,7 +1,6 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.Util.fixDateNode = function (this: any, parent: any, pos: any, node: any): any {
+export function Util_fixDateNode(this: any, parent: any, pos: any, node: any): any {
     const lingo = this.cslXml.getAttributeValue(node, "lingo");
 
     const default_locale = this.cslXml.getAttributeValue(node, "default-locale");

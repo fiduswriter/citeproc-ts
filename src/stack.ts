@@ -1,6 +1,4 @@
-import { CSL } from './csl';
 /*global CSL: true */
-
 
 /**
  * String stack object.
@@ -9,7 +7,7 @@ import { CSL } from './csl';
  * that remove some of the aggravation of managing
  * them.</p>
  */
-class Stack {
+export class Stack {
     public mystack: any[];
     public tip: any;
 
@@ -43,8 +41,6 @@ class Stack {
      * main code.</p>
      */
     public replace(val: any, literal?: boolean): void {
-        // safety fix after a bug was chased down.  Rhino
-        // JS will process a negative index without error (!).
         if (this.mystack.length === 0) {
             CSL.error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
         }
@@ -77,5 +73,3 @@ class Stack {
         return this.mystack.length;
     }
 }
-
-CSL.Stack = Stack;

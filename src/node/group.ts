@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.group = {
+export const Node_group = {
     build: function (state, target, realGroup) {
         let func, execs;
         this.realGroup = realGroup;

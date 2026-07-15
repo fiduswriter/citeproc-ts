@@ -1,7 +1,6 @@
-import { CSL } from './csl';
 /*global CSL: true */
 
-CSL.setupXml = function (xmlObject: any): any {
+export function setupXml(xmlObject: any): any {
     let dataObj: any = {};
     let parser: any = null;
     if ("undefined" !== typeof xmlObject) {

@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.institution = {
+export const Node_institution = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {
 

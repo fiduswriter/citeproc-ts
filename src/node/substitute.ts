@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.substitute = {
+export const Node_substitute = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: any;
         if (this.tokentype === CSL.START) {

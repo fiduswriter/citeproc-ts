@@ -1,9 +1,8 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.Util.PageRangeMangler = {};
+export const Util_PageRangeMangler: any = {};
 
-CSL.Util.PageRangeMangler.getFunction = function (state: CslState, rangeType: string): any {
+Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string): any {
     let rangerex: RegExp, pos: any, len: any, stringify: any, listify: any, expand: any, minimize: any, minimize_internal: any, chicago15: any, chicago16: any, lst: any, m: any, b: any, e: any, ret: any, begin: any, end: any, ret_func: any;
 
     const range_delimiter = state.getTerm(rangeType + "-range-delimiter");

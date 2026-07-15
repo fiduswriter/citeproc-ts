@@ -1,12 +1,11 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.dateMacroAsSortKey = function (this: any, state: CslState, Item: CslItem): void {
-    CSL.dateAsSortKey.call(this, state, Item, true);
+export function dateMacroAsSortKey(this: any, state: CslState, Item: CslItem): void {
+    dateAsSortKey.call(this, state, Item, true);
 };
 
 
-CSL.dateAsSortKey = function (this: any, state: CslState, Item: CslItem, isMacro?: any): void {
+export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro?: any): void {
     let dp: any, elem: any, value: any, e: any, yr: any, prefix: any, i: any, ilen: any;
     const variable = this.variables[0];
     let macroFlag = "empty";

@@ -120,6 +120,12 @@ interface CSLNamespace {
 }
 
 /**
+ * Ambient global CSL namespace.  Populated at module-init time by the
+ * index module; available in every module that references it.
+ */
+declare const CSL: CSLNamespace;
+
+/**
  * Ambient globals referenced by environment shims and not provided by the
  * configured lib (``ES2018``).
  */

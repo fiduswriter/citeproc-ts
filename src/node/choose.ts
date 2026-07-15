@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.choose = {
+export const Node_choose = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: (state: CslState) => void;
         if (this.tokentype === CSL.START) {

@@ -1,14 +1,9 @@
-import { CSL } from '../csl';
-/*global CSL: true */
-
-CSL.Util = {};
-
 /**
  * Matcher used by conditional (if/else-if) branching tags to combine the
  * result of a set of test functions with ``any``/``all``/``none``/``nand``
  * semantics.
  */
-class Match {
+export class Match {
     constructor() {
         // A bare <if> with no match attribute falls back to "all".
         (this as any)["undefined"] = this.all;
@@ -59,8 +54,6 @@ class Match {
     }
 }
 
-CSL.Util.Match = Match;
-
-CSL.Util.encodeDoiForUrl = function (doi: string): string {
+export function encodeDoiForUrl(doi: string): string {
     return doi.replace(/[\u0000-\u0020"#%<>?[\\\]^`{|}\u007F-\u009F]/g, encodeURIComponent);
-};
+}

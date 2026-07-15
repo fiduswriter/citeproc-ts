@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.key = {
+export const Node_key = {
     build: function (state, target) {
         
         target = state[state.build.root + "_sort"].tokens;

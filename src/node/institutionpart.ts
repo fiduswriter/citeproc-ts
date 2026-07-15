@@ -1,7 +1,4 @@
-import { CSL } from '../csl';
-/*global CSL: true */
-
-CSL.Node["institution-part"] = {
+export const Node_institution_part = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: ((this: CslNode, state: CslState) => void) | undefined;
         if ("long" === this.strings.name) {

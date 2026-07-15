@@ -1,17 +1,8 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-/**
- * Helper functions for constructing sort keys.
- * @namespace Sort key utilities
- */
-CSL.Util.Sort = {};
+export const Util_Sort: any = {};
 
-/**
- * Strip prepositions from a string
- * <p>Used when generating sort keys.</p>
- */
-CSL.Util.Sort.strip_prepositions = function (str: string): string {
+Util_Sort.strip_prepositions = function (str: string): string {
     let m: RegExpMatchArray | null = null;
     if ("string" === typeof str) {
         m = str.match(/^(([aA]|[aA][nN]|[tT][hH][eE])\s+)/);

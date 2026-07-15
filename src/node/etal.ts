@@ -1,7 +1,4 @@
-import { CSL } from '../csl';
-/*global CSL: true */
-
-CSL.Node["et-al"] = {
+export const Node_et_al = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if (state.build.area === "citation" || state.build.area === "bibliography") {
             let func = function (this: CslNode, state: CslState): void {

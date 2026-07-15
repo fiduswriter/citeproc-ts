@@ -1,23 +1,10 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-/**
- * Date mangling functions.
- * @namespace Date construction utilities
- */
-CSL.Util.Dates = {};
+export const Util_Dates: any = {};
 
-/**
- * Year manglers
- * <p>short, long</p>
- */
-CSL.Util.Dates.year = {};
+Util_Dates.year = {};
 
-/**
- * Convert year to long form
- * <p>This just passes the number back as a string.</p>
- */
-CSL.Util.Dates.year["long"] = function (state: CslState, num: any): string {
+Util_Dates.year["long"] = function (state: CslState, num: any): string {
     if (!num) {
         if ("boolean" === typeof num) {
             num = "";
@@ -28,11 +15,7 @@ CSL.Util.Dates.year["long"] = function (state: CslState, num: any): string {
     return num.toString();
 };
 
-/**
- * Crudely convert to Japanese Imperial form.
- * <p>Returns the result as a string.</p>
- */
-CSL.Util.Dates.year.imperial = function (state: CslState, num: any, end?: any): string {
+Util_Dates.year.imperial = function (state: CslState, num: any, end?: any): string {
     let year = "";
     if (!num) {
         if ("boolean" === typeof num) {
@@ -84,11 +67,7 @@ CSL.Util.Dates.year.imperial = function (state: CslState, num: any, end?: any): 
     return year;
 };
 
-/**
- * Convert year to short form
- * <p>Just crops any 4-digit year to the last two digits.</p>
- */
-CSL.Util.Dates.year["short"] = function (state: CslState, num: any): string {
+Util_Dates.year["short"] = function (state: CslState, num: any): string {
     num = num.toString();
     if (num && num.length === 4) {
         return num.substr(2);
@@ -96,12 +75,7 @@ CSL.Util.Dates.year["short"] = function (state: CslState, num: any): string {
     return num;
 };
 
-
-/**
- * Convert year to short form
- * <p>Just crops any 4-digit year to the last two digits.</p>
- */
-CSL.Util.Dates.year.numeric = function (state: CslState, num: any): string {
+Util_Dates.year.numeric = function (state: CslState, num: any): string {
     let m: any, pre: any;
     num = "" + num;
     const m2 = num.match(/([0-9]*)$/);
@@ -118,13 +92,7 @@ CSL.Util.Dates.year.numeric = function (state: CslState, num: any): string {
     return (pre + num);
 };
 
-
-/*
- * MONTH manglers
- * normalize
- * long, short, numeric, numeric-leading-zeros
- */
-CSL.Util.Dates.normalizeMonth = function (num: any, useSeason?: any): any {
+Util_Dates.normalizeMonth = function (num: any, useSeason?: any): any {
     let ret: any;
     if (!num) {
         num = 0;
@@ -157,26 +125,18 @@ CSL.Util.Dates.normalizeMonth = function (num: any, useSeason?: any): any {
     return ret;
 };
 
-CSL.Util.Dates.month = {};
+Util_Dates.month = {};
 
-/**
- * Convert month to numeric form
- * <p>This just passes the number back as a string.</p>
- */
-CSL.Util.Dates.month.numeric = function (state: CslState, num: any): any {
-    let num2 = CSL.Util.Dates.normalizeMonth(num);
+Util_Dates.month.numeric = function (state: CslState, num: any): any {
+    let num2 = Util_Dates.normalizeMonth(num);
     if (!num2) {
         num2 = "";
     }
     return num2;
 };
 
-/**
- * Convert month to numeric-leading-zeros form
- * <p>This just passes the number back as string padded with zeros.</p>
- */
-CSL.Util.Dates.month["numeric-leading-zeros"] = function (state: CslState, num: any): any {
-    let num2 = CSL.Util.Dates.normalizeMonth(num);
+Util_Dates.month["numeric-leading-zeros"] = function (state: CslState, num: any): any {
+    let num2 = Util_Dates.normalizeMonth(num);
     if (!num2) {
         num2 = "";
     } else {
@@ -188,12 +148,8 @@ CSL.Util.Dates.month["numeric-leading-zeros"] = function (state: CslState, num: 
     return num2;
 };
 
-/**
- * Convert month to long form
- * <p>This passes back the month of the locale in long form.</p>
- */
-CSL.Util.Dates.month["long"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
-    const res = CSL.Util.Dates.normalizeMonth(num, true);
+Util_Dates.month["long"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
+    const res = Util_Dates.normalizeMonth(num, true);
     let num2 = res.num;
     if (!num2) {
         num2 = "";
@@ -207,12 +163,8 @@ CSL.Util.Dates.month["long"] = function (state: CslState, num: any, gender?: any
     return num2;
 };
 
-/**
- * Convert month to long form
- * <p>This passes back the month of the locale in short form.</p>
- */
-CSL.Util.Dates.month["short"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
-    const res = CSL.Util.Dates.normalizeMonth(num, true);
+Util_Dates.month["short"] = function (state: CslState, num: any, gender?: any, forceDefaultLocale?: any): any {
+    const res = Util_Dates.normalizeMonth(num, true);
     let num2 = res.num;
     if (!num2) {
         num2 = "";
@@ -226,27 +178,15 @@ CSL.Util.Dates.month["short"] = function (state: CslState, num: any, gender?: an
     return num2;
 };
 
-/*
- * DAY manglers
- * numeric, numeric-leading-zeros, ordinal
- */
-CSL.Util.Dates.day = {};
+Util_Dates.day = {};
 
-/**
- * Convert day to numeric form
- * <p>This just passes the number back as a string.</p>
- */
-CSL.Util.Dates.day.numeric = function (state: CslState, num: any): string {
+Util_Dates.day.numeric = function (state: CslState, num: any): string {
     return num.toString();
 };
 
-CSL.Util.Dates.day["long"] = CSL.Util.Dates.day.numeric;
+Util_Dates.day["long"] = Util_Dates.day.numeric;
 
-/**
- * Convert day to numeric-leading-zeros form
- * <p>This just passes the number back as a string padded with zeros.</p>
- */
-CSL.Util.Dates.day["numeric-leading-zeros"] = function (state: CslState, num: any): string {
+Util_Dates.day["numeric-leading-zeros"] = function (state: CslState, num: any): string {
     if (!num) {
         num = 0;
     }
@@ -257,9 +197,6 @@ CSL.Util.Dates.day["numeric-leading-zeros"] = function (state: CslState, num: an
     return num.toString();
 };
 
-/**
- * Convert day to ordinal form
- */
-CSL.Util.Dates.day.ordinal = function (state: CslState, num: any, gender?: any): string {
+Util_Dates.day.ordinal = function (state: CslState, num: any, gender?: any): string {
     return state.fun.ordinalizer.format(num, gender);
 };

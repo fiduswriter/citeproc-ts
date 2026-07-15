@@ -1,8 +1,7 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
-/*global CSL: true */
 
-CSL.Node["date-part"] = {
+export const Node_date_part = {
     build: function (state, target) {
         let func, pos, len, first_date, value, value_end, real, have_collapsed, invoked, precondition, known_year, bc, ad, bc_end, ad_end, ready, curr, dcurr, number, num, formatter, item, blob;
         if (!this.strings.form) {

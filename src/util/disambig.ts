@@ -1,9 +1,7 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.ambigConfigDiff = function (a: any, b: any): number {
+export function ambigConfigDiff(a: any, b: any): number {
     let pos: number, len: number, ppos: number, llen: number;
-    // return of true means the ambig configs differ
     if (a.names.length !== b.names.length) {
         return 1;
     } else {
@@ -28,7 +26,7 @@ CSL.ambigConfigDiff = function (a: any, b: any): number {
     return 0;
 };
 
-CSL.cloneAmbigConfig = function (config: any, oldconfig?: any): any {
+export function cloneAmbigConfig(config: any, oldconfig?: any): any {
     let i: number, ilen: number, j: number, jlen: number, param: any;
     let ret: any = {};
     ret.names = [];
@@ -59,26 +57,26 @@ CSL.cloneAmbigConfig = function (config: any, oldconfig?: any): any {
 /**
  * Return current base configuration for disambiguation
  */
-CSL.getAmbigConfig = function (this: any): any {
+export function getAmbigConfig(this: any): any {
     let config: any, ret: any;
     config = this.tmp.disambig_request;
     if (!config) {
         config = this.tmp.disambig_settings;
     }
-    const ret2 = CSL.cloneAmbigConfig(config);
+    const ret2 = cloneAmbigConfig(config);
     return ret2;
 };
 
 /**
  * Return max values for disambiguation
  */
-CSL.getMaxVals = function (this: any): any {
+export function getMaxVals(this: any): any {
     return this.tmp.names_max.mystack.slice();
 };
 
 /**
  * Return min value for disambiguation
  */
-CSL.getMinVal = function (this: any): any {
+export function getMinVal(this: any): any {
     return this.tmp["et-al-min"];
 };

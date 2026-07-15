@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 /**
@@ -10,7 +9,7 @@ import { CSL } from '../csl';
  * {@link CSL.Core.Configure} before it can be used to generate
  * citations.</p>
  */
-class Token {
+export class Token {
     public name: any;
     public strings: any;
     public decorations: any[];
@@ -64,14 +63,12 @@ class Token {
     }
 }
 
-CSL.Token = Token;
-
-function cloneToken(token: any): any {
+export function Util_cloneToken(token: any): any {
     let newtok: any, key: any, pos: number, len: number;
     if ("string" === typeof token) {
         return token;
     }
-    newtok = new CSL.Token(token.name, token.tokentype);
+    newtok = new Token(token.name, token.tokentype);
     for (let key in token.strings) {
         if (token.strings.hasOwnProperty(key)) {
             newtok.strings[key] = token.strings[key];
@@ -96,5 +93,3 @@ function cloneToken(token: any): any {
     }
     return newtok;
 }
-
-CSL.Util.cloneToken = cloneToken;

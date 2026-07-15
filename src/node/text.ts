@@ -1,8 +1,7 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
-/*global CSL: true */
 
-CSL.Node.text = {
+export const Node_text = {
     build: function (state, target) {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
         if (this.postponed_macro) {
@@ -459,7 +458,7 @@ CSL.Node.text = {
 };
 
 
-CSL.checkNonEnglishTitleCase = function (state, Item) {
+export function Node_checkNonEnglishTitleCase(state, Item) {
     if (this.strings["text-case"] === "title") {
         let lang = Item.language ? Item.language : state.opt.lang;
         if (lang && lang.slice(0, 2) !== "en") {

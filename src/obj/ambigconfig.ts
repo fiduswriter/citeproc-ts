@@ -1,10 +1,9 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 /**
  * Ambiguous Cite Configuration Object
  */
-class AmbigConfig {
+export class AmbigConfig {
     public maxvals: any[];
     public minval: number;
     public names: any[];
@@ -21,5 +20,3 @@ class AmbigConfig {
         this.disambiguate = 0;
     }
 }
-
-CSL.AmbigConfig = AmbigConfig;

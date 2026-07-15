@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 export function NameReg(state) {
@@ -156,20 +155,11 @@ export function NameReg(state) {
                     pkey = key[0];
                     ikey = key[1];
                     skey = key[2];
-                    // Skip names that have been deleted already.
-                    // Needed to clear integration DisambiguateAddGivenname1.txt
-                    // and integration DisambiguateAddGivenname2.txt
                     if ("undefined" === typeof this.namereg[pkey]) {
                         continue;
                     }
 
-                    // ????
-                    //posA = this.namereg[pkey].items.indexOf(posA);
-
                     items = this.namereg[pkey].items;
-                    // This was really, really unperceptive. They key elements
-                    // have absolutely nothing to do with whether there was ever
-                    // a registration at each key level.
                     if (skey && this.namereg[pkey].ikey[ikey] && this.namereg[pkey].ikey[ikey].skey[skey]) {
                         const myitems = this.namereg[pkey].ikey[ikey].skey[skey].items;
                         posB = myitems.indexOf("" + id);
@@ -240,21 +230,7 @@ export function NameReg(state) {
                 return;
         }
 
-        // A hack. Safe if the name object is used only here, for disambiguation purposes.
-        /*
-        */
-        
-        //CSL.debug("INS");
         set_keys(this.state, "" + item_id, nameobj);
-        // pkey, ikey and skey should be stored in separate cascading objects.
-        // there should also be a kkey, on each, which holds the item ids using
-        // that form of the name.
-        //
-        // (later note: well, we seem to have slipped a notch here.
-        // Adding lists of IDs all over the place here makes no sense;
-        // the lists need to include _only_ the items currently rendered
-        // at the given level, and the place to do that is in evalname,
-        // and in delnames, not here.)
         if (pkey) {
             if ("undefined" === typeof this.namereg[pkey]) {
                 this.namereg[pkey] = {};
@@ -264,9 +240,6 @@ export function NameReg(state) {
             } else if (this.namereg[pkey].items.indexOf(item_id) === -1) {
                 this.namereg[pkey].items.push(item_id);
             }
-//            if (this.namereg[pkey].items.indexOf(item_id) === -1) {
-//                this.namereg[pkey].items.push(item_id);
-//            }
         }
         if (pkey && ikey) {
             if ("undefined" === typeof this.namereg[pkey].ikey[ikey]) {
@@ -283,9 +256,6 @@ export function NameReg(state) {
             } else if (this.namereg[pkey].ikey[ikey].items.indexOf(item_id) === -1) {
                 this.namereg[pkey].ikey[ikey].items.push(item_id);
             }
-//            if (this.namereg[pkey].ikey[ikey].items.indexOf(item_id) === -1) {
-//                this.namereg[pkey].ikey[ikey].items.push(item_id);
-//            }
         }
         if (pkey && ikey && skey) {
             if ("undefined" === typeof this.namereg[pkey].ikey[ikey].skey[skey]) {
@@ -300,20 +270,15 @@ export function NameReg(state) {
             } else if (this.namereg[pkey].ikey[ikey].skey[skey].items.indexOf(item_id) === -1) {
                 this.namereg[pkey].ikey[ikey].skey[skey].items.push(item_id);
             }
-//            if (this.namereg[pkey].ikey[ikey].skey[skey].items.indexOf(item_id) === -1) {
-//                this.namereg[pkey].ikey[ikey].skey[skey].items.push(item_id);
-//            }
         }
         if ("undefined" === typeof this.nameind[item_id]) {
             this.nameind[item_id] = {};
             this.nameindpkeys[item_id] = {};
         }
-        //CSL.debug("INS-A: [" + pkey + "] [" + ikey + "] [" + skey + "]");
         if (pkey) {
             this.nameind[item_id][pkey + "::" + ikey + "::" + skey] = true;
             this.nameindpkeys[item_id][pkey] = this.namereg[pkey];
         }
-        //CSL.debug("INS-B");
     };
     this.addname = addname;
     this.delitems = delitems;

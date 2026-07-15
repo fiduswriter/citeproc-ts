@@ -1,14 +1,14 @@
 import { CSL } from '../../csl';
 import { _compareNamesets } from './common';
 
-CSL.Util.Names = {};
+export const Util_Names: any = {};
 
-CSL.Util.Names.compareNamesets = _compareNamesets;
+Util_Names.compareNamesets = _compareNamesets;
 
 /**
  * Un-initialize a name (quash caps after first character)
  */
-CSL.Util.Names.unInitialize = function (state, name) {
+Util_Names.unInitialize = function (state, name) {
     let i, ilen, namelist, punctlist, ret;
     if (!name) {
         return "";
@@ -17,18 +17,6 @@ CSL.Util.Names.unInitialize = function (state, name) {
     punctlist = name.match(/(\-|\s+)/g);
     ret = "";
     for (let i = 0, ilen = namelist.length; i < ilen; i += 1) {
-        // if (CSL.ALL_ROMANESQUE_REGEXP.exec(namelist[i].slice(0,-1)) 
-        //    && namelist[i] 
-        //    && namelist[i] !== namelist[i].toUpperCase()) {
-
-            // More or less like this, to address the following fault report:
-            // http://forums.zotero.org/discussion/17610/apsa-problems-with-capitalization-of-mc-mac-etc/
-
-            // Leaving the name string untouched because name capitalization is varied and wonderful.
-            // https://github.com/Juris-M/citeproc-js/issues/43
-            
-            //namelist[i] = namelist[i].slice(0, 1) + namelist[i].slice(1, 2).toLowerCase() + namelist[i].slice(2);
-        // }
         ret += namelist[i];
         if (i < ilen - 1) {
             ret += punctlist[i];
@@ -40,7 +28,7 @@ CSL.Util.Names.unInitialize = function (state, name) {
 /**
  * Initialize a name.
  */
-CSL.Util.Names.initializeWith = function (state, name, terminator, normalizeOnly) {
+Util_Names.initializeWith = function (state, name, terminator, normalizeOnly) {
     let i, ilen, mm, lst, ret;
     if (!name) {
         return "";
@@ -58,15 +46,6 @@ CSL.Util.Names.initializeWith = function (state, name, terminator, normalizeOnly
         name = name.replace(/\-/g, " ");
     }
 
-    // We need to suss out what is a set of initials or abbreviation,
-    // so that they can be selectively normalized. Steps might be:
-    //   (1) Split the string
-    //   (2) Step through the string, deleting periods and, if initalize="false", then
-    //       (a) note abbreviations and initials (separately).
-    //   (3) If initialize="false" then:
-    //       (a) Do the thing below, but only pushing terminator; or else
-    //       (b) Do the thing below
-
     name = name.replace(/\s*\-\s*/g, "-").replace(/\s+/g, " ");
     name = name.replace(/-([a-z])/g, "\u2013$1");
 
@@ -76,7 +55,6 @@ CSL.Util.Names.initializeWith = function (state, name, terminator, normalizeOnly
         }
     }
 
-    // (1) Split the string
     const nameSplits = (CSL.Output.Formatters.nameDoppel as any).split(name);
     let namelist = [];
     namelist = [nameSplits.strings[0]];
@@ -93,7 +71,6 @@ CSL.Util.Names.initializeWith = function (state, name, terminator, normalizeOnly
         namelist.push(nameSplits.strings[i]);
     }
 
-    // Use doInitializeName or doNormalizeName, depending on requirements.
     if (normalizeOnly) {
         ret = this.doNormalize(state, namelist, terminator);
     } else {
@@ -103,11 +80,11 @@ CSL.Util.Names.initializeWith = function (state, name, terminator, normalizeOnly
     return ret;
 };
 
-CSL.Util.Names.notag = function(str) {
+Util_Names.notag = function(str) {
     return str.replace(/^(?:<[^>]+>)*/, "");
 };
 
-CSL.Util.Names.mergetag = function(state, tagstr, newstr) {
+Util_Names.mergetag = function(state, tagstr, newstr) {
     let m = tagstr.match(/(?:-*<[^>]+>-*)/g);
     if (!m) {
         return newstr;
@@ -124,7 +101,7 @@ CSL.Util.Names.mergetag = function(state, tagstr, newstr) {
     return newstr;
 };
 
-CSL.Util.Names.tagonly = function(state, str) {
+Util_Names.tagonly = function(state, str) {
     let m = str.match(/(?:<[^>]+>)+/);
     if (!m) {
         return str;
@@ -133,15 +110,12 @@ CSL.Util.Names.tagonly = function(state, str) {
     }
 };
 
-CSL.Util.Names.doNormalize = function (state, namelist, terminator) {
+Util_Names.doNormalize = function (state, namelist, terminator) {
     let i, ilen;
-    // namelist is a flat list of given-name elements and space-like separators between them
     terminator = terminator ? terminator : "";
-    // Flag elements that look like abbreviations
     const isAbbrev = [];
     for (let i = 0, ilen = namelist.length; i < ilen; i += 1) {
         if (this.notag(namelist[i]).length > 1 && this.notag(namelist[i]).slice(-1) === ".") {
-            // namelist[i] = namelist[i].slice(0, -1);
             namelist[i] = namelist[i].replace(/^(.*)\.(.*)$/, "$1$2");
             isAbbrev.push(true);
         } else if (namelist[i].length === 1 && namelist[i].toUpperCase() === namelist[i]) {
@@ -150,38 +124,28 @@ CSL.Util.Names.doNormalize = function (state, namelist, terminator) {
             isAbbrev.push(false);
         }
     }
-    // Step through the elements of the givenname array
     for (let i = 0, ilen = namelist.length; i < ilen; i += 2) {
-        // If the element is not an abbreviation, leave it and its trailing spaces alone
         if (isAbbrev[i]) {
-            // For all elements but the last
             if (i < namelist.length - 2) {
-                // Start from scratch on space-like things following an abbreviation
                 namelist[i + 1] = this.tagonly(state, namelist[i+1]);
                 if (!isAbbrev[i+2]) {
                     namelist[i + 1] = this.tagonly(state, namelist[i+1]) + " ";
                 }
-                
-                // Add the terminator to the element
-                // If the following element is not a single-character abbreviation, remove a trailing zero-width non-break space, if present
-                // These ops may leave some duplicate cruft in the elements and separators. This will be cleaned at the end of the function.
                 if (namelist[i + 2].length > 1) {
                     namelist[i+1] = terminator.replace(/\ufeff$/, "") + namelist[i+1];
                 } else {
                     namelist[i+1] = this.mergetag(state, namelist[i+1], terminator);
                 }
             }
-            // For the last element (if it is an abbreviation), just append the terminator
             if (i === namelist.length - 1) {
                 namelist[i] = namelist[i] + terminator;
             }
         }
     }
-    // Remove trailing cruft and duplicate spaces, and return
     return namelist.join("").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020\ufeff\u00a0]+$/,"").replace(/\s*\-\s*/g, "-").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020]+/g, " ");
 };
 
-CSL.Util.Names.doInitialize = function (state, namelist, terminator) {
+Util_Names.doInitialize = function (state, namelist, terminator) {
     let i, ilen, m, j, jlen, lst, n;
     for (let i = 0, ilen = namelist.length; i < ilen; i += 2) {
         n = namelist[i];
@@ -240,7 +204,7 @@ CSL.Util.Names.doInitialize = function (state, namelist, terminator) {
     return ret;
 };
 
-CSL.Util.Names.getRawName = function (name) {
+Util_Names.getRawName = function (name) {
     let ret = [];
     if (name.literal) {
         ret.push(name.literal);

@@ -1,5 +1,5 @@
-import { CSL } from '../csl';
-CSL.ParticleList = (function () {
+/*global CSL: true */
+export const ParticleList = (function () {
     const always_dropping_1 = [[[0, 1], null]];
     const always_dropping_3 = [[[0, 3], null]];
     const always_non_dropping_1 = [[null, [0, 1]]];
@@ -238,7 +238,7 @@ CSL.ParticleList = (function () {
     return PARTICLES;
 }());
 
-CSL.parseParticles = (function () {
+export const parseParticles = (function () {
     function splitParticles(nameValue: any, firstNameFlag?: any, caseOverride?: any): any {
         let origNameValue = nameValue;
         nameValue = caseOverride ? nameValue.toLowerCase() : nameValue;

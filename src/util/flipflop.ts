@@ -1,15 +1,13 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 // Use a state machine
 
-// Okay, good!
 // Needs some tweaks:
 // 1. First pass: quotes only
 //    Special: Convert all sandwiched single-quote markup to apostrophe
 // 2. Second pass: tags
 
-CSL.Util.FlipFlopper = function(state) {
+export function Util_FlipFlopper(state) {
     
     /**
      * INTERNAL
@@ -136,8 +134,6 @@ CSL.Util.FlipFlopper = function(state) {
     const localeOpenInnerQuote = state.getTerm("open-inner-quote");
     const localeCloseInnerQuote = state.getTerm("close-inner-quote");
 
-    // If locale uses straight quotes, do not register them. All will be well.
-    // Otherwise, clone straight-quote data, and adjust.
     if (localeOpenQuote && localeCloseQuote && [" \""," \'","\"","\'"].indexOf(localeOpenQuote) === -1) {
         _nestingData[localeOpenQuote] = JSON.parse(JSON.stringify(_nestingData[" \""]));
         _nestingData[localeOpenQuote].opener = localeOpenQuote;
@@ -276,7 +272,6 @@ CSL.Util.FlipFlopper = function(state) {
     
     function _doppelString(str) {
         const forcedSpaces = [];
-        // Normalize markup
         str = str.replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?\"[^>]*(>)/g, "$1 $2$3;\"$4");
         str = str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3");
 
@@ -391,10 +386,6 @@ CSL.Util.FlipFlopper = function(state) {
                     const newblob = new CSL.Blob(null, tok);
                     newblob.alldecor = this.latest.alldecor.slice();
                     
-                    // AHA! Bad naming. There is _decorset from the list, and
-                    // there WAS decorset that we are building. Dumb. Fix the
-                    // names and fix it up.
-                    
                     if (decor[0] === "@class" && decor[1] === "nodecor") {
                         const newdecorset = [];
                         const seen = {};
@@ -486,7 +477,7 @@ CSL.Util.FlipFlopper = function(state) {
         }
         let quoteFormSeen = false;
         
-    	for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
+        for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
             const tag = doppel.tags[i];
             let str = doppel.strings[i+1];
             const apostrophe = _apostropheForce(tag, str);
@@ -538,12 +529,10 @@ CSL.Util.FlipFlopper = function(state) {
                 }
             }
         }
-        // Stray tags are neutralized here
         for (let i=_nestingState.length-1;i>-1;i--) {
             const tagPos = _nestingState[i].pos;
             const tag = doppel.tags[tagPos];
             if (tag === " \'" || tag === "\'") {
-
                 doppel.strings[tagPos+1] = " \u2019" + doppel.strings[tagPos+1];
             } else {
                 doppel.strings[tagPos+1] = doppel.tags[tagPos] + doppel.strings[tagPos+1];
@@ -558,8 +547,6 @@ CSL.Util.FlipFlopper = function(state) {
                 doppel.strings = doppel.strings.slice(0,i+1).concat(doppel.strings.slice(i+2));
             }
         }
-        // Sniff initial (outer) quote form (single or double) and configure parser
-        // Also add leading spaces.
         for (let i=0,ilen=doppel.tags.length;i<ilen;i++) {
             const tag = doppel.tags[i];
             const forcedSpace = doppel.forcedSpaces[i-1];
@@ -573,8 +560,6 @@ CSL.Util.FlipFlopper = function(state) {
                 }
             }
         }
-        //print(JSON.stringify(doppel, null, 2))
-        //print(_undoppelString(doppel));
         _undoppelToQueue(blob, doppel, leadingSpace);
     };
 };

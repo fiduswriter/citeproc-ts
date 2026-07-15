@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.intext = {
+export const Node_intext = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if (this.tokentype === CSL.START) {
 

@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.name = {
+export const Node_name = {
     build: function (state, target) {
         let func;
         if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {

@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.layout = {
+export const Node_layout = {
     build: function (state, target) {
         let func, prefix_token, suffix_token, tok;
 

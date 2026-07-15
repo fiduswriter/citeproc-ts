@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
-CSL.Node["alternative-text"] = {
+
+export const Node_alternative_text = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         if (this.tokentype === CSL.SINGLETON) {
             let func = function (this: CslNode, state: CslState, Item: CslItem): void {

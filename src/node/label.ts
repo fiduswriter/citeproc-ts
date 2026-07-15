@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.label = {
+export const Node_label = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
 
         if (this.strings.term) {

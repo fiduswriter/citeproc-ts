@@ -1,6 +1,3 @@
-import { CSL } from '../csl';
-/*global CSL: true */
-
-CSL.Node.macro = {
+export const Node_macro = {
     build: function (this: CslNode): void {}
 };

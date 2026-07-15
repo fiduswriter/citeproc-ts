@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
-CSL.getLocaleNames = function (myxml: any, preferredLocale?: string): string[] {
+
+export function getLocaleNames(myxml: any, preferredLocale?: string): string[] {
     const stylexml = CSL.setupXml(myxml);
 
     function extendLocaleList(localeList: string[], locale?: string): void {
@@ -23,7 +24,7 @@ CSL.getLocaleNames = function (myxml: any, preferredLocale?: string): string[] {
             if (nodeLocales) {
                 nodeLocales = nodeLocales.split(/ +/);
                 for (let j = 0, jlen = nodeLocales.length; j < jlen; j += 1) {
-                    this.extendLocaleList(localeIDs, nodeLocales[j]);
+                    extendLocaleList(localeIDs, nodeLocales[j]);
                 }
             }
         }
@@ -40,4 +41,4 @@ CSL.getLocaleNames = function (myxml: any, preferredLocale?: string): string[] {
         sniffLocaleOnOneNodeName(stylexml, localeIDs, nodeNames[i]);
     }
     return localeIDs;
-};
+}

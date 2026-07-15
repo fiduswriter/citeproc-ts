@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node["else-if"] = {
+export const Node_else_if = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         CSL.Conditions.TopNode.call(this, state, target);
         target.push(this);

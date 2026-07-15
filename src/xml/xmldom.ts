@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 /**
  * Functions for parsing an XML object using E4X.
  */
@@ -39,8 +38,6 @@ export class XmlDOM {
         }
         this.parser = new DOMParser();
 
-        // This seems horribly tormented, but there might be a reason for it.
-        // Perhaps this was the only way I found to get namespacing to work ... ?
         let str = "<docco><institution institution-parts=\"long\" delimiter=\", \" substitute-use-first=\"1\" use-last=\"1\"><institution-part name=\"long\"/></institution></docco>";
         const inst_doc = this.parser.parseFromString(str, "text/xml");
         const inst_node = inst_doc.getElementsByTagName("institution");
@@ -70,13 +67,8 @@ export class XmlDOM {
         return ret;
     }
 
-    // In case importNode is not available.
-    // Thx + hat tip to Anthony T. Holdener III
-    // http://www.alistapart.com/articles/crossbrowserscripting
-    // cases 3, 4, 8 = text, cdata, comment
     _importNode(doc, node, allChildren) {
         switch (node.nodeType) {
-            // element node
             case 1:
                 const newNode = doc.createElement(node.nodeName);
                 if (node.attributes && node.attributes.length > 0)
@@ -90,16 +82,9 @@ export class XmlDOM {
             case 3:
             case 4:
             case 8:
-                // Drop comments on the floor as well.
-                //return doc.createTextNode(node.nodeValue);
-                //break;
         }
     }
 
-    /**
-     * No need for cleaning with the DOM, I think.  This will probably just be a noop.
-     * But first, let's get XML mode switching up and running.
-     */
     clean(xml) {
         xml = xml.replace(/<\?[^?]+\?>/g, "");
         xml = xml.replace(/<![^>]+>/g, "");
@@ -109,9 +94,6 @@ export class XmlDOM {
         return xml;
     }
 
-    /**
-     * Methods to call on a node.
-     */
     getStyleId(myxml, styleName) {
         let text = "";
         let tagName = "id";
@@ -123,15 +105,12 @@ export class XmlDOM {
             node = node.item(0);
         }
         if (node) {
-            // W3C conformant browsers
             text = node.textContent;
         }
         if (!text) {
-            // Opera, IE 6 & 7
             text = node.innerText;
         }
         if (!text) {
-            // Safari
             text = node.innerHTML;
         }
         return text;
@@ -207,9 +186,6 @@ export class XmlDOM {
         return ret;
     }
 
-    //
-    // Can't this be, you know ... simplified?
-    //
     getNodeValue(myxml,name) {
         let ret = null;
         if (name){
@@ -276,10 +252,6 @@ export class XmlDOM {
         if (!myxml.ownerDocument) {
             myxml = myxml.firstChild;
         }
-        // "unknown" to satisfy IE8, which crashes when setAttribute
-        // is checked directly as a property, and report its type as
-        // "unknown".
-        // Many thanks to Phil Lord for tracing the cause of the fault.
         if (["function", "unknown"].indexOf(typeof myxml.setAttribute) > -1) {
             myxml.setAttribute(attr, val);
         }
@@ -298,7 +270,6 @@ export class XmlDOM {
         for (let pos = 0, len = nodes.length; pos < len; pos += 1) {
             node = nodes.item(pos);
             if (nameattrval && !(this.hasAttributes(node) && node.getAttribute("name") == nameattrval)) {
-//        if (nameattrval && !(this.attributes && node.attributes.name && node.attributes.name.value == nameattrval)) {
                 continue;
             }
             ret.push(node);

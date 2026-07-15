@@ -549,4 +549,4 @@ class OutputFormats {
     }
 };
 
-CSL.Output.Formats = new OutputFormats();
+export const Output_formats = new OutputFormats();

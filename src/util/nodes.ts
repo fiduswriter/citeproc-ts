@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 /* For node execution pretty-printing (see below) */
@@ -7,28 +6,11 @@ import { CSL } from '../csl';
 var INDENT = "";
 */
 
-CSL.tokenExec = function (token, Item, item) {
-    // Called on state object
+export function tokenExec(token, Item, item) {
     let next, maybenext, exec, debug;
     debug = false;
     next = token.next;
     maybenext = false;
-
-    /* Pretty-print node executions */
-
-    /*
-    if (["if", "else-if", "else"].indexOf(token.name) === -1) {
-        if (token.tokentype == 1) {
-            INDENT = INDENT.slice(0, -2);
-        }
-    }
-    this.sys.print(INDENT + "---> Token: " + token.name + " (" + token.tokentype + ") in " + this.tmp.area + ", " + this.output.current.mystack.length);
-    if (["if", "else-if", "else"].indexOf(token.name) === -1) {
-        if (token.tokentype == 0) {
-            INDENT += "  ";
-        }
-    }
-    */
 
     const record = function (result) {
         if (result) {
@@ -49,11 +31,9 @@ CSL.tokenExec = function (token, Item, item) {
             next = maybenext;
         }
     }
-    //SNIP-START
     if (debug) {
         CSL.debug(token.name + " (" + token.tokentype + ") ---> done");
     }
-    //SNIP-END
     return next;
 };
 
@@ -61,14 +41,13 @@ CSL.tokenExec = function (token, Item, item) {
  * Macro expander.
  * <p>Called on the state object.</p>
  */
-CSL.expandMacro = function (macro_key_token, target) {
+export function expandMacro(macro_key_token, target) {
     let mkey, macro_nodes, end_of_macro, func;
 
     mkey = macro_key_token.postponed_macro;
 
     const sort_direction = macro_key_token.strings.sort_direction;
     
-    // Decorations and affixes are in wrapper applied in cs:text
     macro_key_token = new CSL.Token("group", CSL.START);
     
     let hasDate = false;
@@ -103,23 +82,21 @@ CSL.expandMacro = function (macro_key_token, target) {
     // Macro group is treated as a real node in the style
     CSL.Node.group.build.call(macro_key_token, this, target, true);
 
-    // Node does not exist in the CSL
     if (!this.cslXml.getNodeValue(macro_nodes)) {
         CSL.error("CSL style error: undefined macro \"" + mkey + "\"");
     }
 
-    // Let's macro
-    let mytarget = CSL.getMacroTarget.call(this, mkey);
+    let mytarget = getMacroTarget.call(this, mkey);
     if (mytarget) {
-        CSL.buildMacro.call(this, mytarget, macro_nodes);
-        CSL.configureMacro.call(this, mytarget);
+        buildMacro.call(this, mytarget, macro_nodes);
+        configureMacro.call(this, mytarget);
     }
     if (this.build.extension) {
         let func = (function(macro_name) {
             return function (state, Item, item) {
                 let next = 0;
                 while (next < state.sort_macros[macro_name].length) {
-                    next = CSL.tokenExec.call(state, state.sort_macros[macro_name][next], Item, item);
+                    next = tokenExec.call(state, state.sort_macros[macro_name][next], Item, item);
                 }
             };
         }(mkey));
@@ -131,7 +108,7 @@ CSL.expandMacro = function (macro_key_token, target) {
             return function (state, Item, item) {
                 let next = 0;
                 while (next < state.macros[macro_name].length) {
-                    next = CSL.tokenExec.call(state, state.macros[macro_name][next], Item, item);
+                    next = tokenExec.call(state, state.macros[macro_name][next], Item, item);
                 }
             };
         }(mkey));
@@ -140,7 +117,6 @@ CSL.expandMacro = function (macro_key_token, target) {
         target.push(text_node);
     }
 
-    // Decorations and affixes are in wrapper applied in cs:text
     end_of_macro = new CSL.Token("group", CSL.END);
     end_of_macro.strings.sort_direction = sort_direction;
     
@@ -155,18 +131,14 @@ CSL.expandMacro = function (macro_key_token, target) {
     if (macro_key_token.juris) {
         end_of_macro.juris = mkey;
      }
-    // Macro group is treated as a real node in the style
     CSL.Node.group.build.call(end_of_macro, this, target, true);
 
     this.build.macro_stack.pop();
 };
 
-CSL.getMacroTarget = function (mkey) {
+export function getMacroTarget(mkey) {
     let mytarget: any = false;
     if (this.build.extension) {
-        // Cache sort-mode macro expansions separately, just like non-sort macros.
-        // This avoids duplicating tokens when the same macro is referenced by
-        // multiple sort keys.
         if (!this.sort_macros) {
             this.sort_macros = {};
         }
@@ -181,7 +153,7 @@ CSL.getMacroTarget = function (mkey) {
     return mytarget;
 };
 
-CSL.buildMacro = function (mytarget, macro_nodes) {
+export function buildMacro(mytarget, macro_nodes) {
     const builder = CSL.makeBuilder(this, mytarget);
     let mynode;
     if ("undefined" === typeof macro_nodes.length) {
@@ -192,30 +164,16 @@ CSL.buildMacro = function (mytarget, macro_nodes) {
     builder(mynode);
 };
 
-CSL.configureMacro = function (mytarget) {
+export function configureMacro(mytarget) {
     this.configureTokenList(mytarget);
 };
 
-
 /**
  * Convert XML node to token.
- * <p>This is called on an XML node.  After extracting the name and attribute
- * information from the node, it performs three operations.  Attribute information
- * relating to output formatting is stored on the node as an array of tuples,
- * which fixes the sequence of execution of output functions to be invoked
- * in the next phase of processing.  Other attribute information is reduced
- * to functions, and is pushed into an array on the token in no particular
- * order, for later execution.  The element name is used as a key to
- * invoke the relevant <code>build</code> method of the target element.
- * Element methods are defined in {@link CSL.Node}.</p>
- * @param {Object} state  The state object returned by {@link CSL.Engine}.
- * @param {Int} tokentype  A CSL namespace constant (<code>CSL.START</code>,
- * <code>CSL.END</code> or <code>CSL.SINGLETON</code>.
  */
-CSL.XmlToToken = function (state, tokentype, explicitTarget, var_stack) {
+export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
     let name, txt, attrfuncs, attributes, decorations, token, key, target;
     name = state.cslXml.nodename(this);
-    //CSL.debug(tokentype + " : " + name);
     if (state.build.skip && state.build.skip !== name) {
         return;
     }
@@ -234,9 +192,6 @@ CSL.XmlToToken = function (state, tokentype, explicitTarget, var_stack) {
     decorations = CSL.setDecorations.call(this, state, attributes);
     token = new CSL.Token(name, tokentype);
     if (tokentype !== CSL.END || name === "if" || name === "else-if" || name === "layout") {
-        //
-        // xml: more xml stuff
-        //
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 if (tokentype === CSL.END && key !== "@language" && key !== "@locale") {
@@ -265,18 +220,10 @@ CSL.XmlToToken = function (state, tokentype, explicitTarget, var_stack) {
             token.variables = var_stack.pop();
         }
     }
-    //
-    // !!!!!: eliminate diversion of tokens to separate
-    // token list (formerly used for reading in macros
-    // and terms).
-    //
     if (explicitTarget) {
         target = explicitTarget;
     } else {
         target = state[state.build.area].tokens;
     }
-    // True flags real nodes in the style
     CSL.Node[name].build.call(token, state, target, true);
 };
-
-

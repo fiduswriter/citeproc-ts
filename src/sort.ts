@@ -1,11 +1,10 @@
-import { CSL } from './csl';
 /*global CSL: true */
 
 /**
  * Returns a comparison function for sorting, honouring any
  * processor-supplied ``CSL.stringCompare`` and locale collation rules.
  */
-function getSortCompare(default_locale?: string): (a: string, b: string) => number {
+export function getSortCompare(default_locale?: string): (a: string, b: string) => number {
     if (CSL.stringCompare) {
         return CSL.stringCompare;
     }
@@ -15,9 +14,6 @@ function getSortCompare(default_locale?: string): (a: string, b: string) => numb
         ignorePunctuation: true,
         numeric: true
     };
-    // In order, attempt the following:
-    //   (1) Set locale collation from processor language
-    //   (2) Use localeCompare()
     if (!default_locale) {
         default_locale = "en-US";
     }
@@ -45,5 +41,3 @@ function getSortCompare(default_locale?: string): (a: string, b: string) => numb
         }
     };
 }
-
-CSL.getSortCompare = getSortCompare;

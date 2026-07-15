@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.names = {
+export const Node_names = {
     build: function (state, target) {
         let func;
         // CSL.debug = print;

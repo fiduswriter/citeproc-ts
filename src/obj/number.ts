@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
 /**
@@ -11,7 +10,7 @@ import { CSL } from '../csl';
  * configurable options, and apply any decorations registered
  * in the object to the output elements.
  */
-class NumericBlob {
+export class NumericBlob {
     public id: any;
     public alldecor: any[];
     public num: any;
@@ -116,13 +115,8 @@ class NumericBlob {
     }
 }
 
-CSL.NumericBlob = NumericBlob;
-
-
-class DefaultFormatter {
+export class Output_DefaultFormatter {
     public format(num: any): string {
         return num.toString();
     }
 }
-
-CSL.Output.DefaultFormatter = DefaultFormatter;

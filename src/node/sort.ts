@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.sort = {
+export const Node_sort = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         target = state[state.build.root + "_sort"].tokens;
         if (this.tokentype === CSL.START) {

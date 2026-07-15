@@ -1,7 +1,6 @@
-import { CSL } from '../csl';
 /*global CSL: true */
 
-CSL.Util.substituteStart = function (state, target) {
+export function Util_substituteStart(state, target) {
     let element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
     func = function (state, Item, item) {
         for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
@@ -17,10 +16,6 @@ CSL.Util.substituteStart = function (state, target) {
         this.decorations.push(["@showid","true", this.cslid]);
         this.decorations.reverse();
     }
-    //
-    // Contains body code for both substitute and first-field/remaining-fields
-    // formatting.
-    //
 
     nodetypes = ["number", "date", "names"];
     if (("text" === this.name && !this.postponed_macro) || nodetypes.indexOf(this.name) > -1) {
@@ -44,16 +39,8 @@ CSL.Util.substituteStart = function (state, target) {
                         state.tmp.element_trace.push("suppress-me");
                     }
                 }
-                /*
-                if (!state.tmp.just_looking && item && item["suppress-author"]) {
-                    if (state.tmp.probably_rendered_something) {
-                        //state.tmp.element_trace.push("suppress-me");
-                    }
-                }
-                */
             } else {
                 if (!state.tmp.just_looking && item && item["author-only"] && state.tmp.area !== "intext") {
-                    // XXX can_block_substitute probably is doing nothing here. The value is always true.
                     if (!state.tmp.probably_rendered_something && state.tmp.can_block_substitute) {
                     } else {
                         state.tmp.element_trace.push("suppress-me");
@@ -68,13 +55,6 @@ CSL.Util.substituteStart = function (state, target) {
     display = this.strings.cls;
     this.strings.cls = false;
     if (state.build.render_nesting_level === 0) {
-        //
-        // The markup formerly known as @bibliography/first
-        //
-        // Separate second-field-align from the generic display logic.
-        // There will be some code replication, but not in the
-        // assembled style.
-        //
         if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
             bib_first = new CSL.Token("group", CSL.START);
             bib_first.decorations = [["@display", "left-margin"]];
@@ -99,26 +79,10 @@ CSL.Util.substituteStart = function (state, target) {
         state.build.cls = display;
     }
     state.build.render_nesting_level += 1;
-    // Should this be render_nesting_level, with the increment
-    // below? ... ?
     if (state.build.substitute_level.value() === 1) {
-        //
-        // All top-level elements in a substitute environment get
-        // wrapped in conditionals.  The substitute_level variable
-        // is a stack, because spanned names elements (with their
-        // own substitute environments) can be nested inside
-        // a substitute environment.
-        //
-        // (okay, we use conditionals a lot more than that.
-        // we slot them in for author-only as well...)
         choose_start = new CSL.Token("choose", CSL.START);
         CSL.Node.choose.build.call(choose_start, state, target);
         if_start = new CSL.Token("if", CSL.START);
-        //
-        // Set a test of the shadow if token to skip this
-        // macro if we have acquired a name value.
-
-        // check for variable
         func = function () {
             if (state.tmp.can_substitute.value()) {
                 return true;
@@ -137,8 +101,6 @@ CSL.Util.substituteStart = function (state, target) {
 
         func = function (state, Item, item) {
             if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
-                // Attach item data and variable names.
-                // Do with them what you will.
                 const variable_entry = new CSL.Token("text", CSL.START);
                 variable_entry.decorations = [["@showid", "true"]];
                 state.output.startTag("variable_entry", variable_entry);
@@ -169,7 +131,6 @@ CSL.Util.substituteStart = function (state, target) {
                     firstContainerReferenceNoteNumber = item['first-container-reference-note-number'];
                 }
                 let citationNumber = 0;
-                // XXX Will this EVER happen?
                 if (item && item['citation-number']) {
                     citationNumber = item['citation-number'];
                 }
@@ -198,7 +159,7 @@ CSL.Util.substituteStart = function (state, target) {
 };
 
 
-CSL.Util.substituteEnd = function (state, target) {
+export function Util_substituteEnd(state, target) {
     let func, bib_first_end, bib_other, if_end, choose_end, author_substitute, str;
 
     if (state.sys.variableWrapper
@@ -232,10 +193,9 @@ CSL.Util.substituteEnd = function (state, target) {
             state.build.cls = false;
         } else if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
             bib_first_end = new CSL.Token("group", CSL.END);
-            // first func end
             func = function (state) {
                 if (!state.tmp.render_seen) {
-                    state.output.endTag("bib_first"); // closes bib_first
+                    state.output.endTag("bib_first");
                 }
             };
             bib_first_end.execs.push(func);
@@ -272,25 +232,18 @@ CSL.Util.substituteEnd = function (state, target) {
             if (this.variables_real && !Item[this.variables_real]) {
                 return;
             }
-            // The logic of these two is not obvious. The effect is to enable placeholder substitution
-            // on a text macro name substitution, without printing both the text macro AND the placeholder.
-            // See https://forums.zotero.org/discussion/comment/350407
             if (this.variables_real && substitution_name === "names") {
                 return;
             }
 
             const subrule = state.bibliography.opt["subsequent-author-substitute-rule"];
             let i, ilen;
-            //var text_esc = CSL.getSafeEscape(state);
             const printing = !state.tmp.suppress_decorations;
             if (printing && state.tmp.subsequent_author_substitute_ok) {
                 if (state.tmp.rendered_name) {
                     if ("partial-each" === subrule || "partial-first" === subrule) {
                         let dosub = true;
                         let rendered_name = [];
-                        // This is a wee bit risky, as we're assuming that the name
-                        // children and the list of stringified names are congruent.
-                        // That *should* always be true, but you never know.
                         for (let i = 0, ilen = state.tmp.name_node.children.length; i < ilen; i += 1) {
                             const name = state.tmp.rendered_name[i];
                             if (dosub
@@ -306,7 +259,6 @@ CSL.Util.substituteEnd = function (state, target) {
                             }
                             rendered_name.push(name);
                         }
-                        // might want to slice this?
                         state.tmp.last_rendered_name = rendered_name;
                     } else if ("complete-each" === subrule) {
                         let rendered_name = state.tmp.rendered_name.join(",");
@@ -344,15 +296,7 @@ CSL.Util.substituteEnd = function (state, target) {
     }
 
     if (("text" === this.name && !this.postponed_macro) || ["number", "date", "names"].indexOf(this.name) > -1) {
-        // element trace
         func = function (state, Item) {
-            // element_trace is a mess, but it's trying to do something simple.
-            // A queue append is done, and element_trace.value() returns "suppress-me"
-            // the append is aborted. That's it.
-            // It seems only to be used on numeric elements of numeric styles ATM.
-            // If used only for that purpose, it could be greatly simplified.
-            // If cleaned up, it could do more interesting things, like control
-            // the suppression of names set later than first position.
             if (state.tmp.element_trace.mystack.length>1) {
                 state.tmp.element_trace.pop();
             }

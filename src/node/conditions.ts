@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
-CSL.Node["conditions"] = {
+
+export const Node_conditions = {
     build: function (this: CslNode, state: CslState): void {
         if (this.tokentype === CSL.START) {
             state.tmp.conditions.addMatch(this.match);

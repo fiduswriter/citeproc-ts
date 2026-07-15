@@ -1,7 +1,6 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
-CSL.Node.number = {
+export const Node_number = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: (this: CslNode, state: CslState, Item: CslItem, item: any) => void;
         CSL.Util.substituteStart.call(this, state, target);
