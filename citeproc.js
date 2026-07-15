@@ -303,7 +303,7 @@ var CSL = {
         }
     },
 
-    MULTI_FIELDS: ["archive", "archive_collection", "archive_location", "archive-place", "authority", "collection-title", "container-title", "country", "division", "edition", "event", "event-place", "event-title", "genre", "jurisdiction", "medium", "original-publisher", "original-publisher-place", "original-title", "part-title", "publisher", "publisher-place", "reviewed-genre", "reviewed-title", "section", "source", "title", "title-short", "volume-title"],
+    MULTI_FIELDS: ["archive", "archive_collection", "archive_location", "archive-place", "authority", "collection-title", "container-title", "country", "division", "event", "event-place", "event-title", "genre", "jurisdiction", "medium", "original-publisher", "original-publisher-place", "original-title", "part-title", "publisher", "publisher-place", "reviewed-genre", "reviewed-title", "source", "title", "title-short", "volume-title"],
 
     LangPrefsMap: {
         "title":"titles",
@@ -713,6 +713,9 @@ var CSL = {
     VIETNAMESE_SPECIALS: /[\u00c0-\u00c3\u00c8-\u00ca\u00cc\u00cd\u00d2-\u00d5\u00d9\u00da\u00dd\u00e0-\u00e3\u00e8-\u00ea\u00ec\u00ed\u00f2-\u00f5\u00f9\u00fa\u00fd\u0101\u0103\u0110\u0111\u0128\u0129\u0168\u0169\u01a0\u01a1\u01af\u01b0\u1ea0-\u1ef9]/,
 
     VIETNAMESE_NAMES: /^(?:(?:[.AaBbCcDdEeGgHhIiKkLlMmNnOoPpQqRrSsTtUuVvXxYy \u00c0-\u00c3\u00c8-\u00ca\u00cc\u00cd\u00d2-\u00d5\u00d9\u00da\u00dd\u00e0-\u00e3\u00e8-\u00ea\u00ec\u00ed\u00f2-\u00f5\u00f9\u00fa\u00fd\u0101\u0103\u0110\u0111\u0128\u0129\u0168\u0169\u01a0\u01a1\u01af\u01b0\u1ea0-\u1ef9]{2,6})(\s+|$))+$/,
+    
+    KATAKANA_REGEXP: /^[\u30a0-\u30ff,\uff60-\uff9f,\u3000,\s]+$/,
+    STARTSWITH_KATAKANA_REGEXP: /^[\u30a0-\u30ff,\uff60-\uff9f]+[\u3000,a-zA-Z\s\.]*$/,
 
     NOTE_FIELDS_REGEXP: /\{:(?:[\-_a-z]+|[A-Z]+):[^\}]+\}/g,
     NOTE_FIELD_REGEXP: /^([\-_a-z]+|[A-Z]+):\s*([^\}]+)$/,
@@ -1580,7 +1583,6 @@ CSL.XmlJSON = function (dataObj) {
         name:"institution",
         attrs:{
             "institution-parts":"long",
-            "delimiter":", "
         },
         children:[
             {
@@ -1796,31 +1798,53 @@ CSL.XmlJSON.prototype.nodeCopy = function (myjson,clone) {
     return clone;
 }
 
-CSL.XmlJSON.prototype.getNodesByName = function (myjson,name,nameattrval,ret) {
+CSL.XmlJSON._nodesByNameCaches = new WeakMap();
+
+CSL.XmlJSON.prototype.getNodesByName = function (myjson,name,nameattrval) {
     //print("getNodesByName()");
-    var nodes, node, pos, len;
-    if (!ret) {
-        var ret = [];
-    }
     if (!myjson || !myjson.children) {
-        return ret;
+        return [];
     }
-    if (name === myjson.name) {
-        if (nameattrval) {
-            if (nameattrval === myjson.attrs.name) {
-                ret.push(myjson);
+
+    let getCache = (myjson) => {
+        if (CSL.XmlJSON._nodesByNameCaches.has(myjson)) {
+            return CSL.XmlJSON._nodesByNameCaches.get(myjson);
+        }
+
+        let cache = new Map();
+        CSL.XmlJSON._nodesByNameCaches.set(myjson, cache);
+
+        let name = myjson.name;
+        if (!cache.has(name)) {
+            cache.set(name, []);
+        }
+        cache.get(name).push(myjson);
+
+        for (let child of myjson.children) {
+            if (typeof child !== "object") continue;
+            let childCache = getCache(child);
+            // Copy cache entries upwards
+            for (let [cacheKey, nodes] of childCache) {
+                if (!cache.has(cacheKey)) {
+                    cache.set(cacheKey, []);
+                }
+                cache.get(cacheKey).push(...nodes);
             }
-        } else {
-            ret.push(myjson);
         }
+
+        return cache;
+    };
+    
+    let cache = getCache(myjson);
+    let nodes = cache.get(name);
+    if (!nodes) {
+        return [];
     }
-    for (var i=0,ilen=myjson.children.length;i<ilen;i+=1){
-        if ("object" !== typeof myjson.children[i]) {
-            continue;
-        }
-        this.getNodesByName(myjson.children[i],name,nameattrval,ret);
+    if (nameattrval) {
+        return nodes.filter(node => node.attrs.name === nameattrval);
+    } else {
+        return Array.from(nodes);
     }
-    return ret;
 }
 
 CSL.XmlJSON.prototype.nodeNameIs = function (myjson,name) {
@@ -1981,8 +2005,6 @@ CSL.XmlJSON.prototype.addInstitutionNodes = function(myjson) {
                 for (var key in myjson.children[i].attrs) {
                     attributes[key] = myjson.children[i].attrs[key];
                 }
-                attributes.delimiter = myjson.children[i].attrs.delimiter;
-                attributes.and = myjson.children[i].attrs.and;
                 insertPos = i;
                 for (var k=0,klen=myjson.children[i].children.length;k<klen;k+=1) {
                     if (myjson.children[i].children[k].attrs.name !== 'family') {
@@ -2000,16 +2022,16 @@ CSL.XmlJSON.prototype.addInstitutionNodes = function(myjson) {
         }
         if (insertPos > -1) {
             var institution = this.nodeCopy(this.institution);
+            for (var i = 0, ilen = CSL.NAME_ATTRIBUTES.length; i < ilen; i += 1) {
+                var attrname = CSL.NAME_ATTRIBUTES[i];
+                if ("undefined" !== typeof attributes[attrname]) {
+                    institution.attrs[attrname] = attributes[attrname];
+                }
+            }
             for (var i=0,ilen = CSL.INSTITUTION_KEYS.length;i<ilen;i+=1) {
                 var attrname = CSL.INSTITUTION_KEYS[i];
                 if ("undefined" !== typeof attributes[attrname]) {
                     institution.children[0].attrs[attrname] = attributes[attrname];
-                }
-                if (attributes.delimiter) {
-                    institution.attrs.delimiter = attributes.delimiter;
-                }
-                if (attributes.and) {
-                    institution.attrs.and = attributes.and;
                 }
             }
             myjson.children = myjson.children.slice(0,insertPos+1).concat([institution]).concat(myjson.children.slice(insertPos+1));
@@ -2973,7 +2995,19 @@ CSL.expandMacro = function (macro_key_token, target) {
         CSL.buildMacro.call(this, mytarget, macro_nodes);
         CSL.configureMacro.call(this, mytarget);
     }
-    if (!this.build.extension) {
+    if (this.build.extension) {
+        var func = (function(macro_name) {
+            return function (state, Item, item) {
+                var next = 0;
+                while (next < state.sort_macros[macro_name].length) {
+                    next = CSL.tokenExec.call(state, state.sort_macros[macro_name][next], Item, item);
+                }
+            };
+        }(mkey));
+        var text_node = new CSL.Token("text", CSL.SINGLETON);
+        text_node.execs.push(func);
+        target.push(text_node);
+    } else {
         var func = (function(macro_name) {
             return function (state, Item, item) {
                 var next = 0;
@@ -3011,7 +3045,16 @@ CSL.expandMacro = function (macro_key_token, target) {
 CSL.getMacroTarget = function (mkey) {
     var mytarget = false;
     if (this.build.extension) {
-        mytarget = this[this.build.root + this.build.extension].tokens;
+        // Cache sort-mode macro expansions separately, just like non-sort macros.
+        // This avoids duplicating tokens when the same macro is referenced by
+        // multiple sort keys.
+        if (!this.sort_macros) {
+            this.sort_macros = {};
+        }
+        if (!this.sort_macros[mkey]) {
+            mytarget = [];
+            this.sort_macros[mkey] = mytarget;
+        }
     } else if (!this.macros[mkey]) {
         mytarget = [];
         this.macros[mkey] = mytarget;
@@ -3031,9 +3074,7 @@ CSL.buildMacro = function (mytarget, macro_nodes) {
 };
 
 CSL.configureMacro = function (mytarget) {
-    if (!this.build.extension) {
-        this.configureTokenList(mytarget);
-    }
+    this.configureTokenList(mytarget);
 };
 
 
@@ -4712,13 +4753,11 @@ CSL.setDecorations = function (state, attributes) {
     var ret, key, pos;
     // This applies a fixed processing sequence
     ret = [];
-    for (pos in CSL.FORMAT_KEY_SEQUENCE) {
-        if (true) {
-            var key = CSL.FORMAT_KEY_SEQUENCE[pos];
-            if (attributes[key]) {
-                ret.push([key, attributes[key]]);
-                delete attributes[key];
-            }
+    for (pos = 0; pos < CSL.FORMAT_KEY_SEQUENCE.length; pos++) {
+        var key = CSL.FORMAT_KEY_SEQUENCE[pos];
+        if (attributes[key]) {
+            ret.push([key, attributes[key]]);
+            delete attributes[key];
         }
     }
     return ret;
@@ -6467,6 +6506,13 @@ CSL.Engine.Opt = function () {
     // suffixes we support in separate fields.
     this["parse-names"] = true;
     // this["auto-vietnamese-names"] = true;
+    
+    /*
+    Support Japanese katakana
+    default "legacy-order": always セイメイ
+    activate "normal-order": メイ、セイ and セイ・メイ 
+    */
+    this["katakana-display"] = "normal-order";
 
     this.citation_number_slug = false;
     this.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00";
@@ -8718,10 +8764,9 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
         return false;
     }
-    function eval_list(a, lst) {
-        lllen = lst.length;
-        for (pppos = 0; pppos < lllen; pppos += 1) {
-            if (eval_string(a, lst[pppos])) {
+	function eval_list(a, lst) {
+        for (const [key, value] of Object.entries(lst)) {
+            if (eval_spec(a, value)) {
                 return true;
             }
         }
@@ -8735,9 +8780,11 @@ CSL.getBibliographyEntries = function (bibsection) {
                 return !b;
             }
         } else {
-            if ("string" === typeof b) {
+            if ("string" === typeof b ) {
                 return eval_string(a, b);
-            } else if (!b) {
+            } else if ("number" === typeof b) {
+                return eval_string(a, b.toString());
+            }else if (!b) {
                 return false;
             } else {
                 return eval_list(a, b);
@@ -13371,8 +13418,6 @@ CSL.NameOutput.prototype.renderInstitutionNames = function () {
 
             var name = this.institutions[v][j];
 
-            
-
             // XXX Start here for institutions
             // Figure out the three segments: primary, secondary, tertiary
             var j, jlen, localesets;
@@ -13742,6 +13787,51 @@ CSL.NameOutput.prototype._renderPersonalName = function (v, name, slot, pos, i, 
     return personblob;
 };
 
+/** Japanese */
+CSL.NameOutput.prototype._isJapanese = function(name) 
+{
+    /**
+    0: Not japanese
+    1: Japanese
+    */
+    var ret = 0;
+    var top_locale;
+    if(name.multi && name.multi.main) {
+        top_locale = name.multi.main.slice(0, 2);
+    } else if (this.Item.language) {
+        top_locale = this.Item.language.slice(0, 2);
+    }
+    if(top_locale==="ja") {
+        ret = 1;
+    }
+    return ret;
+}
+
+CSL.NameOutput.prototype._isKatakana = function (name) {
+    // 0 =　katakana + kanji || hiragana => Normal Japanese
+    // 1 = katakana or katakana + initial.
+    var ret = 0;
+    var fullname = name.family.replace(/\"/g, '');
+    if(name.given)
+    {
+        fullname = name.family.replace(/\"/g, '')+name.given.replace(/\"/g, '');
+    }
+    
+    if(fullname.match(CSL.KATAKANA_REGEXP)) {
+        ret = 1;
+    }
+    else if(name.family.replace(/\"/g, '').match(CSL.KATAKANA_REGEXP) && name.given.match(CSL.STARTSWITH_KATAKANA_REGEXP))
+    {
+        /**
+        Initial in given name
+        */
+        ret = 1;
+    }
+    return ret;
+}
+
+/***/
+
 CSL.NameOutput.prototype._isRomanesque = function (name) {
     // 0 = entirely non-romanesque
     // 1 = mixed content
@@ -13754,6 +13844,7 @@ CSL.NameOutput.prototype._isRomanesque = function (name) {
         ret = 1;
     }
     var top_locale;
+    
     if (ret == 2) {
         if (name.multi && name.multi.main) {
             top_locale = name.multi.main.slice(0, 2);
@@ -13768,6 +13859,65 @@ CSL.NameOutput.prototype._isRomanesque = function (name) {
     return ret;
 };
 
+/**
+It would be great if this function was renamed something like _renderCJK(language, name, non_dropping_particle, given, family, sort_sep) in the future. Japanese should work as long as family and given are provided.
+*/
+CSL.NameOutput.prototype._renderJapaneseName = function (japanese, katakana, family, given, i, j, sort_sep) {
+    var blob;
+    /**
+    katakana-display
+    "legacy-order": セイメイ 
+    "normal-order": メイ、セイ and セイ・メイ (Family, Given and Given・Family)
+    */
+    
+    /**
+    Take care of "and", which will not be displayed for Japanese. It will be likely "symbol", used for English names
+    Leave delimiter only
+    This is a hacky way to override "name.and". Looking for a better idea.
+    */
+    this.name.and.single.strings.prefix="";
+    this.name.and.single.strings.suffix="";
+    this.name.and.single.blobs=this.name.strings.delimiter;
+    
+    this.name.and.multiple.blobs=this.name.strings.delimiter;
+    this.name.and.multiple.strings.prefix="";
+    this.name.and.multiple.strings.suffix="";
+    
+    if(katakana===1 && this.state.opt["katakana-display"]!=="legacy-order")
+    {
+        if (this.state.inheritOpt(this.name, "name-as-sort-order") === "all" || (this.state.inheritOpt(this.name, "name-as-sort-order") === "first" && i === 0 && (j === 0 || "undefined" === typeof j)))
+        {
+            blob = this._join([family, given], sort_sep);
+        }
+        else
+        {
+            blob = this._join([given, family], "・");
+        }
+    }
+    
+    /**
+    1. Some styles in Japanese require space between Family and Given. We should allow affixing in Japanese too.
+    2. This should be the default but if it leads to issues for existing Japanese styles, we could add a global option to activate it as well. e.g. kanji-display: ["legacy-order", "normal-order"]. It depends on how much we can "pollute" the global options :D 
+    */
+    else if(japanese===1)
+    {
+        /*
+        Romanesque names will not lead here even if language-name is ja
+        */
+        
+        if(this.family && this.family.strings) {
+            family.strings.prefix = this.family.strings.prefix;
+            family.strings.suffix = this.family.strings.suffix;
+        }
+        if(this.given && this.given.strings) {
+            given.strings.prefix = this.given.strings.prefix;
+            given.strings.suffix = this.given.strings.suffix;
+        }
+        blob = this._join([family, given], "");
+    }
+    return blob;
+}
+
 CSL.NameOutput.prototype._renderOnePersonalName = function (value, pos, i, j) {
     var name = value;
     var dropping_particle = this._droppingParticle(name, pos, j);
@@ -13781,6 +13931,7 @@ CSL.NameOutput.prototype._renderOnePersonalName = function (value, pos, i, j) {
         suffix = false;
     }
     var sort_sep = this.state.inheritOpt(this.name, "sort-separator");
+    
     if (!sort_sep) {
         sort_sep = "";
     }
@@ -13791,6 +13942,9 @@ CSL.NameOutput.prototype._renderOnePersonalName = function (value, pos, i, j) {
         suffix_sep = " ";
     }
     var romanesque = this._isRomanesque(name);
+    var katakana = this._isKatakana(name);
+    var japanese = this._isJapanese(name);
+    
     function hasJoiningPunctuation(blob) {
         if (!blob) {
             return false;
@@ -13813,11 +13967,32 @@ CSL.NameOutput.prototype._renderOnePersonalName = function (value, pos, i, j) {
     } else {
         nbspace = " ";
     }
-
+    
+    /**
+    Keep roman rendering if name is Romanesque but language is Japanese
+    The style may still depend on language to render other parts
+    */
+    if((romanesque===2 || romanesque===1) && japanese===1){
+        japanese = 0;
+        romanesque = 2;
+    }
+    
     var blob, merged, first, second;
+        
     if (romanesque === 0) {
-        // XXX handle affixes for given and family
-        blob = this._join([non_dropping_particle, family, given], "");
+        if((katakana===1 && this.state.opt["katakana-display"]!=="legacy-order") || japanese===1){
+            blob = this._renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep);
+        } else {
+            // XXX handle affixes for given and family
+            blob = this._join([non_dropping_particle, family, given], "");
+        }
+    }
+    else if((katakana===1 && this.state.opt["katakana-display"]!=="legacy-order") || japanese===1){
+        /*
+        Sometimes katakana can be partially romanesque when mixed with initials.
+        Initializing katakana is difficult programatically.
+        */
+        blob = this._renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep);
     } else if (romanesque === 1 || name["static-ordering"]) { // entry likes sort order
         merged = this._join([non_dropping_particle, family], nbspace);
         blob = this._join([merged, given], " ");
@@ -15542,6 +15717,7 @@ CSL.Node.text = {
                             myterm = term;
                         }
                         
+                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
                         // XXXXX Cut-and-paste code in multiple locations. This code block should be
                         // collected in a function.
                         // Tag: strip-periods-block
@@ -15650,6 +15826,7 @@ CSL.Node.text = {
                             // page gets mangled with the correct collapsing
                             // algorithm
                             func = function(state, Item) {
+                                CSL.checkNonEnglishTitleCase.call(this, state, Item);
                                 state.processNumber(this, Item, this.variables[0], Item.type);
                                 CSL.Util.outputNumericField(state, this.variables[0], Item.id);
                             };
@@ -15745,6 +15922,7 @@ CSL.Node.text = {
                                 var value;
                                 value = state.getVariable(Item, this.variables[0], form);
                                 if (value) {
+                                    CSL.checkNonEnglishTitleCase.call(this, state, Item);
                                     state.output.append(value, this);
                                 }
                             };
@@ -15765,6 +15943,7 @@ CSL.Node.text = {
                                     if (value) {
                                         value = "" + value;
                                         value = value.split("\\").join("");
+                                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
                                         state.output.append(value, this);
                                     }
                                 }
@@ -15774,10 +15953,11 @@ CSL.Node.text = {
                     this.execs.push(func);
                 } else if (this.strings.value) {
                     // for the text value attribute.
-                    func = function (state) {
+                    func = function (state, Item) {
                         state.tmp.group_context.tip.term_intended = true;
                         // true flags that this is a literal-value term
                         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.value, true, this);
+                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
                         state.output.append(this.strings.value, this);
                         if (state.tmp.can_block_substitute) {
                             // Black magic here. This causes the cs:substitution condition to pass,
@@ -15796,7 +15976,14 @@ CSL.Node.text = {
 };
 
 
-
+CSL.checkNonEnglishTitleCase = function (state, Item) {
+    if (this.strings["text-case"] === "title") {
+        let lang = Item.language ? Item.language : state.opt.lang;
+        if (lang && lang.slice(0, 2) !== "en") {
+            this.strings["text-case"] = "passthrough";
+        }
+    }
+};
 /*global CSL: true */
 
 CSL.Node.intext = {
@@ -17337,9 +17524,12 @@ CSL.Attributes["@text-case"] = function (state, arg) {
         } else {
             this.strings["text-case"] = arg;
             if (arg === "title") {
-                if (Item.jurisdiction) {
+                let lang = Item.language ? Item.language : state.opt.lang;
+                if (lang && lang.slice(0, 2).toLowerCase() !== "en" && this.name !== "text") {
                     this.strings["text-case"] = "passthrough";
-                }
+                } else if (Item.jurisdiction) {
+                    this.strings["text-case"] = "passthrough";
+                } 
             }
         }
     };
@@ -17395,7 +17585,7 @@ CSL.Attributes["@default-locale-sort"] = function (state, arg) {
     state.opt["default-locale-sort"] = arg;
 };
 
-CSL.Attributes["@demote-non-dropping-particle"] = function (state, arg) {
+CSL.Attributes["@demote-non-dropping-particle"] = function(state, arg) {
     state.opt["demote-non-dropping-particle"] = arg;
 };
 
@@ -17403,6 +17593,13 @@ CSL.Attributes["@initialize-with-hyphen"] = function (state, arg) {
     if (arg === "false") {
         state.opt["initialize-with-hyphen"] = false;
     }
+};
+
+/**
+Japanese katakana
+*/
+CSL.Attributes["@katakana-display"] = function (state, arg) {
+    state.opt["katakana-display"] = arg;
 };
 
 CSL.Attributes["@institution-parts"] = function (state, arg) {
@@ -21775,7 +21972,7 @@ CSL.Util.FlipFlopper = function(state) {
 /*global CSL: true */
 
 CSL.Output.Formatters = (function () {
-    var rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
+    var rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2010\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
     var tagDoppel = new CSL.Doppeler(rexStr, function(str) {
         return str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3").replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?(\")[^>]*(>)/g, "$1 $2 $3;$4$5");
     });
@@ -24007,6 +24204,16 @@ CSL.Disambiguation.prototype.runDisambig = function () {
         this.gnameset = 0;
         this.gname = 0;
         this.clashes = [1, 0];
+        // Failsafe against non-converging disambiguation. Some inputs never
+        // reduce the clash set and never reach "maxed" -- most notably two or
+        // more items whose only name carries no distinguishing content (e.g. a
+        // literal "." placeholder author) under an author-date style: name
+        // expansion can't change the rendered cite, so the scan loop below
+        // spins forever (a sibling of GH #179). Bound the scans per list; if
+        // the bound is exceeded, register the remaining clashing items as-is
+        // and abandon the list so rendering proceeds instead of hanging.
+        var loopGuard = 0;
+        var loopGuardMax = (this.lists[0][1].length + 2) * 1000;
         // each list is scanned repeatedly until all
         // items either succeed or ultimately fail.
         while(this.lists[0][1].length) {
@@ -24017,6 +24224,16 @@ CSL.Disambiguation.prototype.runDisambig = function () {
             ismax = this.incrementDisambig();
             this.scanItems(this.lists[0]);
             this.evalScan(ismax);
+            loopGuard += 1;
+            if (loopGuard > loopGuardMax) {
+                var giveupBase = this.betterbase || this.base;
+                var remaining = this.lists[0][1];
+                for (var gi = 0, gilen = remaining.length; gi < gilen; gi += 1) {
+                    this.state.registry.registerAmbigToken(this.akey, "" + remaining[gi].id, giveupBase);
+                }
+                this.lists[0] = [giveupBase, []];
+                break;
+            }
         }
         this.lists = this.lists.slice(1);
     }

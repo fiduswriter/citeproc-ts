@@ -1506,9 +1506,12 @@ CSL.Attributes["@text-case"] = function (state, arg) {
         } else {
             this.strings["text-case"] = arg;
             if (arg === "title") {
-                if (Item.jurisdiction) {
+                let lang = Item.language ? Item.language : state.opt.lang;
+                if (lang && lang.slice(0, 2).toLowerCase() !== "en" && this.name !== "text") {
                     this.strings["text-case"] = "passthrough";
-                }
+                } else if (Item.jurisdiction) {
+                    this.strings["text-case"] = "passthrough";
+                } 
             }
         }
     };
@@ -1564,7 +1567,7 @@ CSL.Attributes["@default-locale-sort"] = function (state, arg) {
     state.opt["default-locale-sort"] = arg;
 };
 
-CSL.Attributes["@demote-non-dropping-particle"] = function (state, arg) {
+CSL.Attributes["@demote-non-dropping-particle"] = function(state, arg) {
     state.opt["demote-non-dropping-particle"] = arg;
 };
 
@@ -1572,6 +1575,13 @@ CSL.Attributes["@initialize-with-hyphen"] = function (state, arg) {
     if (arg === "false") {
         state.opt["initialize-with-hyphen"] = false;
     }
+};
+
+/**
+Japanese katakana
+*/
+CSL.Attributes["@katakana-display"] = function (state, arg) {
+    state.opt["katakana-display"] = arg;
 };
 
 CSL.Attributes["@institution-parts"] = function (state, arg) {

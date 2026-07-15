@@ -27,7 +27,6 @@ CSL.XmlJSON = function (dataObj) {
         name:"institution",
         attrs:{
             "institution-parts":"long",
-            "delimiter":", "
         },
         children:[
             {
@@ -243,31 +242,53 @@ CSL.XmlJSON.prototype.nodeCopy = function (myjson,clone) {
     return clone;
 }
 
-CSL.XmlJSON.prototype.getNodesByName = function (myjson,name,nameattrval,ret) {
+CSL.XmlJSON._nodesByNameCaches = new WeakMap();
+
+CSL.XmlJSON.prototype.getNodesByName = function (myjson,name,nameattrval) {
     //print("getNodesByName()");
-    var nodes, node, pos, len;
-    if (!ret) {
-        var ret = [];
-    }
     if (!myjson || !myjson.children) {
-        return ret;
+        return [];
     }
-    if (name === myjson.name) {
-        if (nameattrval) {
-            if (nameattrval === myjson.attrs.name) {
-                ret.push(myjson);
+
+    let getCache = (myjson) => {
+        if (CSL.XmlJSON._nodesByNameCaches.has(myjson)) {
+            return CSL.XmlJSON._nodesByNameCaches.get(myjson);
+        }
+
+        let cache = new Map();
+        CSL.XmlJSON._nodesByNameCaches.set(myjson, cache);
+
+        let name = myjson.name;
+        if (!cache.has(name)) {
+            cache.set(name, []);
+        }
+        cache.get(name).push(myjson);
+
+        for (let child of myjson.children) {
+            if (typeof child !== "object") continue;
+            let childCache = getCache(child);
+            // Copy cache entries upwards
+            for (let [cacheKey, nodes] of childCache) {
+                if (!cache.has(cacheKey)) {
+                    cache.set(cacheKey, []);
+                }
+                cache.get(cacheKey).push(...nodes);
             }
-        } else {
-            ret.push(myjson);
         }
+
+        return cache;
+    };
+    
+    let cache = getCache(myjson);
+    let nodes = cache.get(name);
+    if (!nodes) {
+        return [];
     }
-    for (var i=0,ilen=myjson.children.length;i<ilen;i+=1){
-        if ("object" !== typeof myjson.children[i]) {
-            continue;
-        }
-        this.getNodesByName(myjson.children[i],name,nameattrval,ret);
+    if (nameattrval) {
+        return nodes.filter(node => node.attrs.name === nameattrval);
+    } else {
+        return Array.from(nodes);
     }
-    return ret;
 }
 
 CSL.XmlJSON.prototype.nodeNameIs = function (myjson,name) {
@@ -428,8 +449,6 @@ CSL.XmlJSON.prototype.addInstitutionNodes = function(myjson) {
                 for (var key in myjson.children[i].attrs) {
                     attributes[key] = myjson.children[i].attrs[key];
                 }
-                attributes.delimiter = myjson.children[i].attrs.delimiter;
-                attributes.and = myjson.children[i].attrs.and;
                 insertPos = i;
                 for (var k=0,klen=myjson.children[i].children.length;k<klen;k+=1) {
                     if (myjson.children[i].children[k].attrs.name !== 'family') {
@@ -447,16 +466,16 @@ CSL.XmlJSON.prototype.addInstitutionNodes = function(myjson) {
         }
         if (insertPos > -1) {
             var institution = this.nodeCopy(this.institution);
+            for (var i = 0, ilen = CSL.NAME_ATTRIBUTES.length; i < ilen; i += 1) {
+                var attrname = CSL.NAME_ATTRIBUTES[i];
+                if ("undefined" !== typeof attributes[attrname]) {
+                    institution.attrs[attrname] = attributes[attrname];
+                }
+            }
             for (var i=0,ilen = CSL.INSTITUTION_KEYS.length;i<ilen;i+=1) {
                 var attrname = CSL.INSTITUTION_KEYS[i];
                 if ("undefined" !== typeof attributes[attrname]) {
                     institution.children[0].attrs[attrname] = attributes[attrname];
-                }
-                if (attributes.delimiter) {
-                    institution.attrs.delimiter = attributes.delimiter;
-                }
-                if (attributes.and) {
-                    institution.attrs.and = attributes.and;
                 }
             }
             myjson.children = myjson.children.slice(0,insertPos+1).concat([institution]).concat(myjson.children.slice(insertPos+1));

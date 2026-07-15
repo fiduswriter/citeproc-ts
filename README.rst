@@ -59,8 +59,28 @@ reports on the `citeproc-js GitHub tracker <https://github.com/juris-m/citeproc-
 Building the processor
 ----------------------
 
-The processor files `citeproc.js`` and ``citeproc_commonjs.js`` are built
-automatically when tests are run (see below).
+The processor lives in the ``src`` directory as a set of individual
+source files. These are bundled into the two distributable copies in the
+repository root:
+
+``citeproc.js``
+    A raw browser bundle that exposes a global ``CSL`` object.
+
+``citeproc_commonjs.js``
+    An CommonJS module (``module.exports = CSL``) suitable for use with
+    ``require()`` under Node.js.
+
+The bundles are rebuilt automatically when tests are run via the
+``citeproc-test-runner`` package (see below). They can also be rebuilt
+standalone, without installing the test runner, with::
+
+    node tools/build-bundle.js
+
+``tools/build-bundle.js`` concatenates the files listed in
+``citeproc-test-runner/lib/sources.js`` (in that order), prepends the
+copyright header, and writes the two bundles. After editing anything
+under ``src``, re-run this script so that the committed bundles stay in
+sync with the source.
 
 -------------
 Running Tests
@@ -150,8 +170,10 @@ development and testing:
   The `standard locale files <https://github.com/citation-style-language/locales>`_ from the CSL project.
 
 ``tools``
-  An assortment of scripts that are used, or have been used at some point,
-  in the maintenance of ``citeproc-js``.
+   An assortment of scripts that are used, or have been used at some point,
+   in the maintenance of ``citeproc-js``. ``build-bundle.js`` rebuilds the
+   two processor bundles from the ``src`` tree (see `Building the
+   processor`_ above).
 
 ---------------------------
 
