@@ -1,7 +1,10 @@
 import { CSL } from './csl';
 
 // Source modules, imported in dependency order.
-import './xml/xmljson';
+import { XmlJSON, stripXmlProcessingInstruction, parseXml } from './xml/xmljson';
+CSL.XmlJSON = XmlJSON;
+CSL.stripXmlProcessingInstruction = stripXmlProcessingInstruction;
+CSL.parseXml = parseXml;
 import './xml/xmldom';
 import './system';
 import './sort';

@@ -394,9 +394,7 @@ export class XmlJSON {
     }
 }
 
-CSL.XmlJSON = XmlJSON;
-
-CSL.stripXmlProcessingInstruction = function (xml: string): string {
+export function stripXmlProcessingInstruction(xml: string): string {
     if (!xml) {
         return xml;
     }
@@ -405,9 +403,9 @@ CSL.stripXmlProcessingInstruction = function (xml: string): string {
     xml = xml.replace(/^\s+/g, "");
     xml = xml.replace(/\s+$/g, "");
     return xml;
-};
+}
 
-CSL.parseXml = function (str: string): any {
+export function parseXml(str: string): any {
     const _obj = { children: [] as any[] };
     const _stack = [_obj.children];
 
