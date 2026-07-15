@@ -2705,10 +2705,9 @@ CSL.XmlDOM.prototype.flagDateMacros = function(myxml) {
 
 
 /*global CSL: true */
-
-CSL.setupXml = function(xmlObject) {
-    var dataObj = {};
-    var parser = null;
+CSL.setupXml = function (xmlObject) {
+    let dataObj = {};
+    let parser = null;
     if ("undefined" !== typeof xmlObject) {
         if ("string" === typeof xmlObject) {
             xmlObject = xmlObject.replace("^\uFEFF", "")
@@ -2716,22 +2715,27 @@ CSL.setupXml = function(xmlObject) {
             if (xmlObject.slice(0, 1) === "<") {
                 // Assume serialized XML
                 dataObj = CSL.parseXml(xmlObject);
-            } else {
+            }
+            else {
                 // Assume serialized JSON
                 dataObj = JSON.parse(xmlObject);
             }
             parser = new CSL.XmlJSON(dataObj);
-        } else if ("undefined" !== typeof xmlObject.getAttribute) {
+        }
+        else if ("undefined" !== typeof xmlObject.getAttribute) {
             // Assume DOM instance
             parser = new CSL.XmlDOM(xmlObject);
-        } else if ("undefined" !== typeof xmlObject.toXMLString) {
+        }
+        else if ("undefined" !== typeof xmlObject.toXMLString) {
             // Assume E4X object
             parser = new CSL.XmlE4X(xmlObject);
-        } else {
+        }
+        else {
             // Assume JS object
             parser = new CSL.XmlJSON(xmlObject);
         }
-    } else {
+    }
+    else {
         CSL.error("unable to parse XML input");
     }
     if (!parser) {
@@ -6387,12 +6391,11 @@ CSL.Output.Queue.adjust = function (punctInQuote) {
 };
 
 /*global CSL: true */
-
 CSL.Engine.Opt = function () {
     this.parallel = {
         enable: false,
     },
-    this.has_disambiguate = false;
+        this.has_disambiguate = false;
     this.mode = "html";
     this.dates = {};
     this.jurisdictions_seen = {};
@@ -6402,88 +6405,88 @@ CSL.Engine.Opt = function () {
     this["locale-translit"] = [];
     this["locale-translat"] = [];
     this.citeAffixes = {
-        persons:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        persons: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         },
-        institutions:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        institutions: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         },
-        titles:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        titles: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         },
-        journals:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        journals: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         },
-        publishers:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        publishers: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         },
-        places:{
-            "locale-orig":{
-                prefix:"",
-                suffix:""
+        places: {
+            "locale-orig": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translit":{
-                prefix:"",
-                suffix:""
+            "locale-translit": {
+                prefix: "",
+                suffix: ""
             },
-            "locale-translat":{
-                prefix:"",
-                suffix:""
+            "locale-translat": {
+                prefix: "",
+                suffix: ""
             }
         }
     };
@@ -6503,43 +6506,35 @@ CSL.Engine.Opt = function () {
     this["et-al-use-last"] = false;
     this["et-al-subsequent-min"] = false;
     this["et-al-subsequent-use-first"] = false;
-
     this["demote-non-dropping-particle"] = "display-and-sort";
     // default of true, because none of our consuming
     // applications so far store the various prefixes and 
     // suffixes we support in separate fields.
     this["parse-names"] = true;
     // this["auto-vietnamese-names"] = true;
-    
     /*
     Support Japanese katakana
     default "legacy-order": always セイメイ
-    activate "normal-order": メイ、セイ and セイ・メイ 
+    activate "normal-order": メイ、セイ and セイ・メイ
     */
     this["katakana-display"] = "normal-order";
-
     this.citation_number_slug = false;
     this.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00";
-
     this.nodenames = [];
-
     this.gender = {};
     this['cite-lang-prefs'] = {
-        persons:['orig'],
-        institutions:['orig'],
-        titles:['orig'],
-        journals:['orig'],
-        publishers:['orig'],
-        places:['orig'],
-        number:['orig']
+        persons: ['orig'],
+        institutions: ['orig'],
+        titles: ['orig'],
+        journals: ['orig'],
+        publishers: ['orig'],
+        places: ['orig'],
+        number: ['orig']
     };
-
     this.has_layout_locale = false;
     this.disable_duplicate_year_suppression = [];
     this.use_context_condition = false;
-
     this.jurisdiction_fallbacks = {};
-
     this.development_extensions = {};
     this.development_extensions.field_hack = true;
     this.development_extensions.allow_field_hack_date_override = true;
@@ -6572,7 +6567,6 @@ CSL.Engine.Opt = function () {
     this.development_extensions.legacy_institution_name_ordering = false;
     this.development_extensions.etal_min_etal_usefirst_hack = false;
 };
-
 CSL.Engine.Tmp = function () {
     //
     // scratch variable to display the total
@@ -6638,7 +6632,7 @@ CSL.Engine.Tmp = function () {
         variable_attempt: false,
         variable_success: false,
         output_tip: undefined,
-        label_form:  undefined,
+        label_form: undefined,
         parallel_first: undefined,
         parallel_last: undefined,
         parallel_delimiter_override: undefined,
@@ -6668,14 +6662,12 @@ CSL.Engine.Tmp = function () {
     //
     // token store stack.
     this.tokenstore_stack = new CSL.Stack();
-
     // for collapsing
     this.last_suffix_used = "";
     this.last_names_used = [];
     this.last_years_used = [];
     this.years_used = [];
     this.names_used = [];
-
     this.taintedItemIDs = {};
     this.taintedCitationIDs = {};
     //
@@ -6725,9 +6717,9 @@ CSL.Engine.Tmp = function () {
     // Used for conditional locale switching.
     this.cite_locales = [];
     this.cite_affixes = {
-        citation: false, 
+        citation: false,
         bibliography: false,
-        citation_sort: false, 
+        citation_sort: false,
         bibliography_sort: false
     };
     this.strip_periods = 0;
@@ -6749,8 +6741,6 @@ CSL.Engine.Tmp = function () {
     this.condition_lang_val_arr = [];
     this.condition_lang_counter_arr = [];
 };
-
-
 CSL.Engine.Fun = function (state) {
     //
     // matcher
@@ -6768,8 +6758,6 @@ CSL.Engine.Fun = function (state) {
     // utility to make the long ordinal form of a number, if possible
     this.long_ordinalizer = new CSL.Util.LongOrdinalizer();
 };
-
-
 CSL.Engine.Build = function () {
     // Alternate et-al term
     // Holds the localization key of the alternative term
@@ -6847,8 +6835,6 @@ CSL.Engine.Build = function () {
     this.render_seen = false;
     this.bibliography_key_pos = 0;
 };
-
-
 CSL.Engine.Configure = function () {
     //
     // the fail and succeed arrays are used for stack
@@ -6857,17 +6843,14 @@ CSL.Engine.Configure = function () {
     this.fail = [];
     this.succeed = [];
 };
-
-
 CSL.Engine.Citation = function (state) {
-     // Citation options area.
-     // Holds a mixture of persistent and ephemeral
-     // options and scratch data used during processing of
-     // a citation.</p>
+    // Citation options area.
+    // Holds a mixture of persistent and ephemeral
+    // options and scratch data used during processing of
+    // a citation.</p>
     this.opt = {
         inheritedAttributes: {}
     };
-
     this.tokens = [];
     // Placeholder function
     this.srt = new CSL.Registry.Comparifier(state, "citation_sort");
@@ -6882,7 +6865,6 @@ CSL.Engine.Citation = function (state) {
     this.opt["disambiguate-add-year-suffix"] = false;
     this.opt["givenname-disambiguation-rule"] = "by-cite";
     this.opt["near-note-distance"] = 5;
-
     this.opt.topdecor = [];
     this.opt.layout_decorations = [];
     this.opt.layout_prefix = "";
@@ -6894,16 +6876,12 @@ CSL.Engine.Citation = function (state) {
     this.opt.max_number_of_names = 0;
     this.root = "citation";
 };
-
-
 CSL.Engine.Bibliography = function () {
     this.opt = {
         inheritedAttributes: {}
     };
     this.tokens = [];
-
     this.opt.collapse = [];
-
     this.opt.topdecor = [];
     this.opt.layout_decorations = [];
     this.opt.layout_prefix = "";
@@ -6917,8 +6895,6 @@ CSL.Engine.Bibliography = function () {
     this.opt.max_number_of_names = 0;
     this.root = "bibliography";
 };
-
-
 CSL.Engine.BibliographySort = function () {
     this.tokens = [];
     this.opt = {};
@@ -6933,8 +6909,6 @@ CSL.Engine.BibliographySort = function () {
     this.keys = [];
     this.root = "bibliography";
 };
-
-
 CSL.Engine.CitationSort = function () {
     this.tokens = [];
     this.opt = {};
@@ -6943,16 +6917,14 @@ CSL.Engine.CitationSort = function () {
     this.opt.topdecor = [];
     this.root = "citation";
 };
-
 CSL.Engine.InText = function () {
-     // InText options area.
-     // Holds a mixture of persistent and ephemeral
-     // options and scratch data used during processing of
-     // a citation.</p>
+    // InText options area.
+    // Holds a mixture of persistent and ephemeral
+    // options and scratch data used during processing of
+    // a citation.</p>
     this.opt = {
         inheritedAttributes: {}
     };
-
     this.tokens = [];
     // Placeholder function
     //this.srt = new CSL.Registry.Comparifier(state, "citation_sort");
@@ -6967,7 +6939,6 @@ CSL.Engine.InText = function () {
     this.opt["disambiguate-add-year-suffix"] = false;
     this.opt["givenname-disambiguation-rule"] = "by-cite";
     this.opt["near-note-distance"] = 5;
-
     this.opt.topdecor = [];
     this.opt.layout_decorations = [];
     this.opt.layout_prefix = "";
@@ -17885,64 +17856,59 @@ CSL.Parallel.prototype.checkRepeats = function(params) {
 };
 
 /*global CSL: true */
-
-
 CSL.Util = {};
-
-CSL.Util.Match = function () {
-
-    this.any = function (token, state, tests) {
-        return function (Item, item) {
-            for (var i=0, ilen=tests.length; i < ilen; i += 1) {
-                var result = tests[i](Item, item);
-                if (result) {
+/**
+ * Matcher used by conditional (if/else-if) branching tags to combine the
+ * result of a set of test functions with ``any``/``all``/``none``/``nand``
+ * semantics.
+ */
+class Match {
+    constructor() {
+        // A bare <if> with no match attribute falls back to "all".
+        this["undefined"] = this.all;
+    }
+    any(token, state, tests) {
+        return (Item, item) => {
+            for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+                if (tests[i](Item, item)) {
                     return true;
                 }
             }
             return false;
         };
-    };
-
-    this.none = function (token, state, tests) {
-        return function (Item, item) {
-            for (var i=0,ilen=tests.length;i<ilen;i+=1) {
-                var result = tests[i](Item,item);
-                if (result) {
+    }
+    none(token, state, tests) {
+        return (Item, item) => {
+            for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+                if (!tests[i](Item, item)) {
                     return false;
                 }
             }
             return true;
         };
-    };
-
-    this.all = function (token, state, tests) {
-        return function (Item, item) {
-            for (var i=0,ilen=tests.length;i<ilen;i+=1) {
-                var result = tests[i](Item,item);
-                if (!result) {
+    }
+    all(token, state, tests) {
+        return (Item, item) => {
+            for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+                if (!tests[i](Item, item)) {
                     return false;
                 }
             }
             return true;
         };
-    };
-
-    this[undefined] = this.all;
-
-    this.nand = function (token, state, tests) {
-        return function (Item, item) {
-            for (var i=0,ilen=tests.length;i<ilen;i+=1) {
-                var result = tests[i](Item,item);
-                if (!result) {
+    }
+    nand(token, state, tests) {
+        return (Item, item) => {
+            for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+                if (!tests[i](Item, item)) {
                     return true;
                 }
             }
             return false;
         };
-    };
-
-};
-
+    }
+}
+CSL.Util.Match = Match;
 CSL.Util.encodeDoiForUrl = function (doi) {
     return doi.replace(/[\u0000-\u0020"#%<>?[\\\]^`{|}\u007F-\u009F]/g, encodeURIComponent);
 };
@@ -21896,22 +21862,15 @@ CSL.Util.FlipFlopper = function(state) {
 };
 
 /*global CSL: true */
-
 CSL.Output.Formatters = (function () {
-    var rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2010\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
-    var tagDoppel = new CSL.Doppeler(rexStr, function(str) {
+    const rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2010\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
+    const tagDoppel = new CSL.Doppeler(rexStr, function (str) {
         return str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3").replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?(\")[^>]*(>)/g, "$1 $2 $3;$4$5");
     });
-    var rexNameStr = "(?:[-\\s]*<\\/*(?:span\s+class=\"no(?:case|decor)\"|i|sc|b|sub|sup)>[-\\s]*|[-\\s]+)";
-    var nameDoppel = new CSL.Doppeler(rexNameStr);
-    
-    var wordDoppel = new CSL.Doppeler("(?:[\u00A0\u0020\u00A0\u2000-\u200B\u205F\u3000]+)");
-    
-    /**
-     * INTERNAL
-     */
-
-    var _tagParams = {
+    const rexNameStr = "(?:[-\\s]*<\\/*(?:span\s+class=\"no(?:case|decor)\"|i|sc|b|sub|sup)>[-\\s]*|[-\\s]+)";
+    const nameDoppel = new CSL.Doppeler(rexNameStr);
+    const wordDoppel = new CSL.Doppeler("(?:[\u00A0\u0020\u00A0\u2000-\u200B\u205F\u3000]+)");
+    const _tagParams = {
         "<span style=\"font-variant: small-caps;\">": "</span>",
         "<span class=\"nocase\">": "</span>",
         "<span class=\"nodecor\">": "</span>",
@@ -21919,41 +21878,24 @@ CSL.Output.Formatters = (function () {
         "<sub>": "</sub>",
         "<sup>": "</sup>"
     };
-
-    function _capitalise (word) {
-        // Weird stuff is (.) transpiled with regexpu
-        //   https://github.com/mathiasbynens/regexpu
-        var m = word.match(/(^\s*)((?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))(.*)/);
+    function _capitalise(word) {
+        const m = word.match(/(^\s*)((?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))(.*)/);
         // Do not uppercase lone Greek letters
-        // (No case transforms in Greek citations, but chars used in titles to science papers)
         if (m && !(m[2].match(/^[\u0370-\u03FF]$/) && !m[3])) {
             return m[1] + CSL.toLocaleUpperCase.call(this, m[2]) + m[3];
         }
         return word;
     }
-
     function _textcaseEngine(config, string) {
         if (!string) {
             return "";
         }
         config.doppel = tagDoppel.split(string);
-        var quoteParams = {
-            " \"": {
-                opener: " \'",
-                closer: "\""
-            },
-            " \'": {
-                opener: " \"",
-                closer: "\'"
-            },
-            "\u2018": {
-                opener: "\u2018",
-                closer: "\u2019"
-            },
-            "\u201C": {
-                opener: "\u201C",
-                closer: "\u201D"
-            },
+        const quoteParams = {
+            " \"": { opener: " \'", closer: "\"" },
+            " \'": { opener: " \"", closer: "\'" },
+            "\u2018": { opener: "\u2018", closer: "\u2019" },
+            "\u201C": { opener: "\u201C", closer: "\u201D" }
         };
         function tryOpen(tag, pos) {
             if (config.quoteState.length === 0 || tag === config.quoteState[config.quoteState.length - 1].opener) {
@@ -21963,8 +21905,9 @@ CSL.Output.Formatters = (function () {
                     pos: pos
                 });
                 return false;
-            } else {
-                var prevPos = config.quoteState[config.quoteState.length-1].pos;
+            }
+            else {
+                const prevPos = config.quoteState[config.quoteState.length - 1].pos;
                 config.quoteState.pop();
                 config.quoteState.push({
                     opener: quoteParams[tag].opener,
@@ -21977,68 +21920,62 @@ CSL.Output.Formatters = (function () {
         function tryClose(tag, pos) {
             if (config.quoteState.length > 0 && tag === config.quoteState[config.quoteState.length - 1].closer) {
                 config.quoteState.pop();
-            } else {
+            }
+            else {
                 return pos;
             }
+            return undefined;
         }
         function pushQuoteState(tag, pos) {
-            var isOpener = ["\u201C", "\u2018", " \"", " \'"].indexOf(tag) > -1 ? true : false;
+            const isOpener = ["\u201C", "\u2018", " \"", " \'"].indexOf(tag) > -1;
             if (isOpener) {
                 return tryOpen(tag, pos);
-            } else {
+            }
+            else {
                 return tryClose(tag, pos);
             }
         }
-        function quoteFix (tag, positions) {
-            var m = tag.match(/(^(?:\u2018|\u2019|\u201C|\u201D|\"|\')|(?: \"| \')$)/);
+        function quoteFix(tag, positions) {
+            const m = tag.match(/(^(?:\u2018|\u2019|\u201C|\u201D|\"|\')|(?: \"| \')$)/);
             if (m) {
                 return pushQuoteState(m[1], positions);
             }
+            return undefined;
         }
         // Run state machine
         if (config.doppel.strings.length && config.doppel.strings[0].trim()) {
             config.doppel.strings[0] = config.capitaliseWords(config.doppel.strings[0], 0, config.doppel.tags[0]);
         }
-
-    	for (var i=0,ilen=config.doppel.tags.length;i<ilen;i++) {
-            var tag = config.doppel.tags[i];
-            var str = config.doppel.strings[i+1];
-
+        for (let i = 0, ilen = config.doppel.tags.length; i < ilen; i += 1) {
+            const tag = config.doppel.tags[i];
+            const str = config.doppel.strings[i + 1];
             if (config.tagState !== null) {
-                // Evaluate tag state for current string
                 if (_tagParams[tag]) {
                     config.tagState.push(_tagParams[tag]);
-                } else if (config.tagState.length && tag === config.tagState[config.tagState.length - 1]) {
+                }
+                else if (config.tagState.length && tag === config.tagState[config.tagState.length - 1]) {
                     config.tagState.pop();
                 }
             }
-
             if (config.afterPunct !== null) {
-                // Evaluate punctuation state of current string
                 if (tag.match(/[\!\?\:]$/)) {
                     config.afterPunct = true;
                 }
             }
-
-            // Process if outside tag scope, else noop for upper-casing
             if (config.tagState.length === 0) {
-                config.doppel.strings[i+1] = config.capitaliseWords(str, i+1, config.doppel,config.doppel.tags[i+1]);
-                
-            } else if (config.doppel.strings[i+1].trim()) {
+                config.doppel.strings[i + 1] = config.capitaliseWords(str, i + 1, config.doppel, config.doppel.tags[i + 1]);
+            }
+            else if (config.doppel.strings[i + 1].trim()) {
                 config.lastWordPos = null;
             }
-            
             if (config.quoteState !== null) {
-                // Evaluate quote state of current string and fix chars that have flown
-                var quotePos = quoteFix(tag, i);
+                const quotePos = quoteFix(tag, i);
                 if (quotePos || quotePos === 0) {
-                    var origChar = config.doppel.origStrings[quotePos+1].slice(0, 1);
-                    config.doppel.strings[quotePos+1] = origChar + config.doppel.strings[quotePos+1].slice(1);
+                    const origChar = config.doppel.origStrings[quotePos + 1].slice(0, 1);
+                    config.doppel.strings[quotePos + 1] = origChar + config.doppel.strings[quotePos + 1].slice(1);
                     config.lastWordPos = null;
                 }
             }
-
-            // If there was a printable string, unset first-word and after-punctuation
             if (config.isFirst) {
                 if (str.trim()) {
                     config.isFirst = false;
@@ -22051,52 +21988,37 @@ CSL.Output.Formatters = (function () {
             }
         }
         if (config.quoteState) {
-            for (var i=0,ilen=config.quoteState.length;i<ilen;i++) {
-                var quotePos = config.quoteState[i].pos;
-                // Test for quotePos avoids a crashing error:
-                //   https://github.com/citation-style-language/test-suite/blob/master/processor-tests/humans/flipflop_OrphanQuote.txt
-                if (typeof quotePos !== 'undefined') {
-                    var origChar = config.doppel.origStrings[quotePos+1].slice(0, 1);
-                    config.doppel.strings[quotePos+1] = origChar + config.doppel.strings[quotePos+1].slice(1);
+            for (let i = 0, ilen = config.quoteState.length; i < ilen; i += 1) {
+                const quotePos = config.quoteState[i].pos;
+                if (typeof quotePos !== "undefined") {
+                    const origChar = config.doppel.origStrings[quotePos + 1].slice(0, 1);
+                    config.doppel.strings[quotePos + 1] = origChar + config.doppel.strings[quotePos + 1].slice(1);
                 }
             }
         }
-        // Specially capitalize the last word if necessary (invert stop-word list)
         if (config.lastWordPos) {
-            var lastWords = wordDoppel.split(config.doppel.strings[config.lastWordPos.strings]);
-            var lastWord = lastWords.strings[config.lastWordPos.words];
+            const lastWords = wordDoppel.split(config.doppel.strings[config.lastWordPos.strings]);
+            let lastWord = lastWords.strings[config.lastWordPos.words];
             if (lastWord.length > 1 && CSL.toLocaleLowerCase.call(this, lastWord).match(config.skipWordsRex)) {
                 lastWord = _capitalise.call(this, lastWord);
                 lastWords.strings[config.lastWordPos.words] = lastWord;
             }
             config.doppel.strings[config.lastWordPos.strings] = wordDoppel.join(lastWords);
         }
-
-        // Recombine the string
         return tagDoppel.join(config.doppel);
     }
-
-    /**
-     * PUBLIC
-     */
-
-    /**
-     * A noop that just delivers the string.
-     */
-    function passthrough (state, str) {
+    /** A noop that just delivers the string. */
+    function passthrough(state, str) {
         return str;
     }
-
-    /**
-     * Force all letters in the string to lowercase, skipping nocase spans
-     */
+    /** Force all letters in the string to lowercase, skipping nocase spans */
     function lowercase(state, string) {
-        var config = {
+        const config = {
             quoteState: null,
-            capitaliseWords: function(str) {
-                var words = str.split(" ");
-                for (var i=0,ilen=words.length;i<ilen;i++) {
-                    var word = words[i];
+            capitaliseWords: function (str) {
+                const words = str.split(" ");
+                for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+                    const word = words[i];
                     if (word) {
                         words[i] = CSL.toLocaleLowerCase.call(state, word);
                     }
@@ -22110,26 +22032,15 @@ CSL.Output.Formatters = (function () {
         };
         return _textcaseEngine.call(state, config, string);
     }
-
-    /**
-     * Force all letters in the string to uppercase.
-     */
+    /** Force all letters in the string to uppercase. */
     function uppercase(state, string) {
-        var config = {
+        const config = {
             quoteState: null,
-            capitaliseWords: function(str) {
-                var words = str.split(" ");
-                for (var i=0,ilen=words.length;i<ilen;i++) {
-                    var word = words[i];
+            capitaliseWords: function (str) {
+                const words = str.split(" ");
+                for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+                    const word = words[i];
                     if (word) {
-                        // Okay.
-                        // So we need to pick up an array of locales from state.tmp.
-                        // This function is invoked in the context of queue.js, so
-                        // the item is not available here. Three levels to be included
-                        // in the array:
-                        // 1. Field language tag, if any
-                        // 2. Item language tag, if any
-                        // 3. Value of state.opt.lang
                         words[i] = CSL.toLocaleUpperCase.call(state, word);
                     }
                 }
@@ -22142,23 +22053,20 @@ CSL.Output.Formatters = (function () {
         };
         return _textcaseEngine.call(state, config, string);
     }
-
-    /**
-     * Similar to <b>capitalize_first</b>, but force the
-     * subsequent characters to lowercase.
-     */
+    /** Similar to capitalize_first, but force the subsequent characters to lowercase. */
     function sentence(state, string) {
-        var config = {
+        const config = {
             quoteState: [],
-            capitaliseWords: function(str) {
-                var words = str.split(" ");
-                for (var i=0,ilen=words.length;i<ilen;i++) {
-                    var word = words[i];
+            capitaliseWords: function (str) {
+                const words = str.split(" ");
+                for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+                    const word = words[i];
                     if (word) {
                         if (config.isFirst) {
                             words[i] = _capitalise.call(state, word);
                             config.isFirst = false;
-                        } else {
+                        }
+                        else {
                             words[i] = CSL.toLocaleLowerCase.call(state, word);
                         }
                     }
@@ -22172,34 +22080,32 @@ CSL.Output.Formatters = (function () {
         };
         return _textcaseEngine.call(state, config, string);
     }
-
     function title(state, string) {
-        var config = {
+        const config = {
             quoteState: [],
-            capitaliseWords: function(str, i, followingTag) {
+            capitaliseWords: function (str, i, followingTag) {
                 if (str.trim()) {
-                    var wordle = wordDoppel.split(str);
-                    var words = wordle.strings;
-                    for (var j=0,jlen=words.length;j<jlen;j++) {
-                        var word = words[j];
+                    const wordle = wordDoppel.split(str);
+                    const words = wordle.strings;
+                    for (let j = 0, jlen = words.length; j < jlen; j += 1) {
+                        const word = words[j];
                         if (!word) {
                             continue;
                         }
-                        let lcase = CSL.toLocaleLowerCase.call(state, word);
+                        const lcase = CSL.toLocaleLowerCase.call(state, word);
                         let capitalize = false;
                         if (word.length > 1 && !lcase.match(config.skipWordsRex)) {
-                            // Capitalize every word that is not a stop-word
-                            capitalize = true;
-                        } else if (j === (words.length - 1) && followingTag === "-") {
-                            capitalize = true;
-                        } else if (config.isFirst) {
-                            // Capitalize first word, even if a stop-word
-                            capitalize = true;
-                        } else if (config.afterPunct) {
-                            // Capitalize after punctuation
                             capitalize = true;
                         }
-                        // Don't capitalize if word already contains capitalization
+                        else if (j === (words.length - 1) && followingTag === "-") {
+                            capitalize = true;
+                        }
+                        else if (config.isFirst) {
+                            capitalize = true;
+                        }
+                        else if (config.afterPunct) {
+                            capitalize = true;
+                        }
                         if (capitalize && word === lcase) {
                             words[j] = _capitalise.call(state, word);
                         }
@@ -22221,23 +22127,17 @@ CSL.Output.Formatters = (function () {
         };
         return _textcaseEngine.call(state, config, string);
     }
-    
-    
-    /**
-     * Force capitalization of the first letter in the string, leave
-     * the rest of the characters untouched.
-     */
+    /** Force capitalization of the first letter in the string, leave the rest untouched. */
     function capitalizeFirst(state, string) {
-        var config = {
+        const config = {
             quoteState: [],
-            capitaliseWords: function(str) {
-                var wordle = wordDoppel.split(str);
-                var words = wordle.strings;
-                for (var i=0,ilen=words.length;i<ilen;i++) {
-                    var word = words[i];
+            capitaliseWords: function (str) {
+                const wordle = wordDoppel.split(str);
+                const words = wordle.strings;
+                for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+                    const word = words[i];
                     if (word) {
                         if (config.isFirst) {
-                            // Don't capitalize if word already contains capitalization
                             if (word === CSL.toLocaleLowerCase.call(state, word)) {
                                 words[i] = _capitalise.call(state, word);
                             }
@@ -22255,23 +22155,16 @@ CSL.Output.Formatters = (function () {
         };
         return _textcaseEngine.call(state, config, string);
     }
-
-    /**
-     * Force the first letter of each space-delimited
-     * word in the string to uppercase, and leave the remainder
-     * of the string untouched.  Single characters are forced
-     * to uppercase.
-     */
-    function capitalizeAll (state, string) {
-        var config = {
+    /** Force the first letter of each space-delimited word to uppercase. */
+    function capitalizeAll(state, string) {
+        const config = {
             quoteState: [],
-            capitaliseWords: function(str) {
-                var wordle = wordDoppel.split(str);
-                var words = wordle.strings;
-                for (var i=0,ilen=words.length;i<ilen;i++) {
-                    var word = words[i];
+            capitaliseWords: function (str) {
+                const wordle = wordDoppel.split(str);
+                const words = wordle.strings;
+                for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+                    const word = words[i];
                     if (word) {
-                        // Don't capitalize if word already contains capitalization
                         if (word === CSL.toLocaleLowerCase.call(state, word)) {
                             words[i] = _capitalise.call(state, word);
                         }
@@ -22299,31 +22192,17 @@ CSL.Output.Formatters = (function () {
 }());
 
 /*global CSL: true */
-
-
 /**
  * Output specifications.
  * @class
  */
-CSL.Output.Formats = function () {};
-
+class OutputFormats {
+}
 /**
  * HTML output format specification.
- * <p>The headline says it all.  The source code for this
- * object can be used as a template for producing other
- * output modes.</p>
  */
-CSL.Output.Formats.prototype.html = {
-    //
-    // text_escape: Format-specific function for escaping text destined
-    // for output.  Takes the text to be escaped as sole argument.  Function
-    // will be run only once across each portion of text to be escaped, it
-    // need not be idempotent.
-    //
+OutputFormats.prototype.html = {
     "text_escape": function (text) {
-        // Numeric entities, in case the output is processed as
-        // xml in an environment in which HTML named entities are
-        // not declared.
         if (!text) {
             text = "";
         }
@@ -22331,11 +22210,9 @@ CSL.Output.Formats.prototype.html = {
             .replace(/</g, "&#60;")
             .replace(/>/g, "&#62;")
             .replace(/\s\s/g, "\u00A0 ")
-            .replace(CSL.SUPERSCRIPTS_REGEXP,
-                     function(aChar) {
-                         // return "&#60;sup&#62;" + CSL.SUPERSCRIPTS[aChar] + "&#60;/sup&#62;";
-                         return "<sup>" + CSL.SUPERSCRIPTS[aChar] + "</sup>";
-                     });
+            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar) {
+            return "<sup>" + CSL.SUPERSCRIPTS[aChar] + "</sup>";
+        });
     },
     "bibstart": "<div class=\"csl-bib-body\">\n",
     "bibend": "</div>",
@@ -22363,35 +22240,16 @@ CSL.Output.Formats.prototype.html = {
     },
     "@quotes/inner": function (state, str) {
         if ("undefined" === typeof str) {
-            //
-            // Mostly right by being wrong (for apostrophes)
-            //
             return "\u2019";
         }
         return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
     },
     "@quotes/false": false,
-    //"@bibliography/body": function (state,str){
-    //    return "<div class=\"csl-bib-body\">\n"+str+"</div>";
-    //},
     "@cite/entry": function (state, str) {
         return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
-	},
+    },
     "@bibliography/entry": function (state, str) {
-        // Test for this.item_id to add decorations to
-        // bibliography output of individual entries.
-        //
-        // Full item content can be obtained from
-        // state.registry.registry[id].ref, using
-        // CSL variable keys.
-        //
-        // Example:
-        //
-        //   print(state.registry.registry[this.item_id].ref["title"]);
-        //
-        // At present, for parallel citations, only the
-        // id of the master item is supplied on this.item_id.
-        var insert = "";
+        let insert = "";
         if (state.sys.embedBibliographyEntry) {
             insert = state.sys.embedBibliographyEntry(this.item_id) + "\n";
         }
@@ -22410,26 +22268,29 @@ CSL.Output.Formats.prototype.html = {
         return "<div class=\"csl-indent\">" + str + "</div>\n  ";
     },
     "@showid/true": function (state, str, cslid) {
-        if (!state.tmp.just_looking && ! state.tmp.suppress_decorations) {
+        if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
             if (cslid) {
                 return "<span class=\"" + state.opt.nodenames[cslid] + "\" cslid=\"" + cslid + "\">" + str + "</span>";
-            } else if (this.params && "string" === typeof str) {
-                var prePunct = "";
+            }
+            else if (this.params && "string" === typeof str) {
+                let prePunct = "";
                 if (str) {
-                    var m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                    const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
                     prePunct = m[1];
                     str = m[2];
                 }
-                var postPunct = "";
+                let postPunct = "";
                 if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                     postPunct = str.slice(-1);
-                    str = str.slice(0,-1);
+                    str = str.slice(0, -1);
                 }
                 return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
-            } else {
+            }
+            else {
                 return str;
             }
-        } else {
+        }
+        else {
             return str;
         }
     },
@@ -22437,27 +22298,15 @@ CSL.Output.Formats.prototype.html = {
         return "<a href=\"" + str + "\">" + str + "</a>";
     },
     "@DOI/true": function (state, str) {
-        var doiurl = str;
+        let doiurl = str;
         if (!str.match(/^https?:\/\//)) {
             doiurl = "https://doi.org/" + CSL.Util.encodeDoiForUrl(str);
         }
         return "<a href=\"" + doiurl + "\">" + str + "</a>";
     }
 };
-
-/**
- * Plain text output specification.
- *
- * (Code contributed by Simon Kornblith, Center for History and New Media,
- * George Mason University.)
- */
-CSL.Output.Formats.prototype.text = {
-    //
-    // text_escape: Format-specific function for escaping text destined
-    // for output.  Takes the text to be escaped as sole argument.  Function
-    // will be run only once across each portion of text to be escaped, it
-    // need not be idempotent.
-    //
+/** Plain text output specification. */
+OutputFormats.prototype.text = {
     "text_escape": function (text) {
         if (!text) {
             text = "";
@@ -22490,25 +22339,19 @@ CSL.Output.Formats.prototype.text = {
     },
     "@quotes/inner": function (state, str) {
         if ("undefined" === typeof str) {
-            //
-            // Mostly right by being wrong (for apostrophes)
-            //
             return "\u2019";
         }
         return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
     },
     "@quotes/false": false,
-    //"@bibliography/body": function (state,str){
-    //    return "<div class=\"csl-bib-body\">\n"+str+"</div>";
-    //},
     "@cite/entry": function (state, str) {
-		return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
-	},
+        return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+    },
     "@bibliography/entry": function (state, str) {
-        return str+"\n";
+        return str + "\n";
     },
     "@display/block": function (state, str) {
-        return "\n"+str;
+        return "\n" + str;
     },
     "@display/left-margin": function (state, str) {
         return str + " ";
@@ -22517,7 +22360,7 @@ CSL.Output.Formats.prototype.text = {
         return str;
     },
     "@display/indent": function (state, str) {
-        return "\n    "+str;
+        return "\n    " + str;
     },
     "@showid/true": function (state, str) {
         return str;
@@ -22529,48 +22372,34 @@ CSL.Output.Formats.prototype.text = {
         return str;
     }
 };
-
-/**
- * Plain text output specification.
- *
- * (Code contributed by Simon Kornblith, Center for History and New Media,
- * George Mason University.)
- */
-CSL.Output.Formats.prototype.rtf = {
-    //
-    // text_escape: Format-specific function for escaping text destined
-    // for output.  Takes the text to be escaped as sole argument.  Function
-    // will be run only once across each portion of text to be escaped, it
-    // need not be idempotent.
-    //
+/** RTF output specification. */
+OutputFormats.prototype.rtf = {
     "text_escape": function (text) {
         if (!text) {
             text = "";
         }
         return text
-        .replace(/([\\{}])/g, "\\$1")
-        .replace(CSL.SUPERSCRIPTS_REGEXP,
-                 function(aChar) {
-                     return "\\super " + CSL.SUPERSCRIPTS[aChar] + "\\nosupersub{}";
-                 })
-        .replace(/[\u007F-\uFFFF]/g,
-                 function(aChar) { return "\\uc0\\u"+aChar.charCodeAt(0).toString()+"{}"; })
-        .split("\t").join("\\tab{}");
+            .replace(/([\\{}])/g, "\\$1")
+            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar) {
+            return "\\super " + CSL.SUPERSCRIPTS[aChar] + "\\nosupersub{}";
+        })
+            .replace(/[\u007F-\uFFFF]/g, function (aChar) { return "\\uc0\\u" + aChar.charCodeAt(0).toString() + "{}"; })
+            .split("\t").join("\\tab{}");
     },
     "@passthrough/true": CSL.Output.Formatters.passthrough,
-    "@font-style/italic":"{\\i{}%%STRING%%}",
-    "@font-style/normal":"{\\i0{}%%STRING%%}",
-    "@font-style/oblique":"{\\i{}%%STRING%%}",
-    "@font-variant/small-caps":"{\\scaps %%STRING%%}",
-    "@font-variant/normal":"{\\scaps0{}%%STRING%%}",
-    "@font-weight/bold":"{\\b{}%%STRING%%}",
-    "@font-weight/normal":"{\\b0{}%%STRING%%}",
-    "@font-weight/light":false,
-    "@text-decoration/none":false,
-    "@text-decoration/underline":"{\\ul{}%%STRING%%}",
-    "@vertical-align/baseline":false,
-    "@vertical-align/sup":"\\super %%STRING%%\\nosupersub{}",
-    "@vertical-align/sub":"\\sub %%STRING%%\\nosupersub{}",
+    "@font-style/italic": "{\\i{}%%STRING%%}",
+    "@font-style/normal": "{\\i0{}%%STRING%%}",
+    "@font-style/oblique": "{\\i{}%%STRING%%}",
+    "@font-variant/small-caps": "{\\scaps %%STRING%%}",
+    "@font-variant/normal": "{\\scaps0{}%%STRING%%}",
+    "@font-weight/bold": "{\\b{}%%STRING%%}",
+    "@font-weight/normal": "{\\b0{}%%STRING%%}",
+    "@font-weight/light": false,
+    "@text-decoration/none": false,
+    "@text-decoration/underline": "{\\ul{}%%STRING%%}",
+    "@vertical-align/baseline": false,
+    "@vertical-align/sup": "\\super %%STRING%%\\nosupersub{}",
+    "@vertical-align/sub": "\\sub %%STRING%%\\nosupersub{}",
     "@strip-periods/true": CSL.Output.Formatters.passthrough,
     "@strip-periods/false": CSL.Output.Formatters.passthrough,
     "@quotes/true": function (state, str) {
@@ -22586,41 +22415,40 @@ CSL.Output.Formats.prototype.rtf = {
         return CSL.Output.Formats.rtf.text_escape(state.getTerm("open-inner-quote")) + str + CSL.Output.Formats.rtf.text_escape(state.getTerm("close-inner-quote"));
     },
     "@quotes/false": false,
-    "bibstart":"{\\rtf ",
-    "bibend":"}",
+    "bibstart": "{\\rtf ",
+    "bibend": "}",
     "@display/block": "\\line{}%%STRING%%\\line\r\n",
     "@cite/entry": function (state, str) {
-        // If wrapCitationEntry does not exist, cite/entry 
-        // is not applied.
-		return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
-	},
-    "@bibliography/entry": function(state,str){
+        return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+    },
+    "@bibliography/entry": function (state, str) {
         return str;
     },
-    "@display/left-margin": function(state,str){
-        return str+"\\tab ";
+    "@display/left-margin": function (state, str) {
+        return str + "\\tab ";
     },
     "@display/right-inline": function (state, str) {
-        return str+"\r\n";
+        return str + "\r\n";
     },
     "@display/indent": function (state, str) {
-        return "\n\\tab "+str+"\\line\r\n";
+        return "\n\\tab " + str + "\\line\r\n";
     },
     "@showid/true": function (state, str) {
-        if (!state.tmp.just_looking && ! state.tmp.suppress_decorations) {
-            var prePunct = "";
+        if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
+            let prePunct = "";
             if (str) {
-                var m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }
-            var postPunct = "";
+            let postPunct = "";
             if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
-                str = str.slice(0,-1);
+                str = str.slice(0, -1);
             }
             return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
-        } else {
+        }
+        else {
             return str;
         }
     },
@@ -22631,41 +22459,22 @@ CSL.Output.Formats.prototype.rtf = {
         return str;
     }
 };
-
-/*
-
-    This does not seem to work in Zotero plugins. For some reason the scope of the link does not
-    close when interpreted by the LibreOffice. Perhaps this creates a field within a field,
-    and that is not allowed?
-
-    "@URL/true": function (state, str) {
-        return "\\field{\\*\\fldinst{HYPERLINK \"" + str + "\"}}{\\fldrslt{"+ str +"}}";
-    },
-    "@DOI/true": function (state, str) {
-        return "\\field{\\*\\fldinst{HYPERLINK \"https://doi.org/" + str + "\"}}{\\fldrslt{"+ str +"}}";
-    }
-*/
-
-/**
- * AsciiDoc output specification.
- *
- * See http://asciidoc.org/ or https://asciidoctor.org/
- */
-CSL.Output.Formats.prototype.asciidoc = {
+/** AsciiDoc output specification. */
+OutputFormats.prototype.asciidoc = {
     "text_escape": function (text) {
         if (!text) {
             text = "";
         }
-        return text.replace("*", "pass:[*]", "g")
-            .replace("_", "pass:[_]", "g")
-            .replace("#", "pass:[#]", "g")
-            .replace("^", "pass:[^]", "g")
-            .replace("~", "pass:[~]", "g")
-            .replace("[[", "pass:[[[]", "g")
-            .replace("  ", "&#160; ", "g")
-            .replace(CSL.SUPERSCRIPTS_REGEXP, function(aChar) {
-                return "^" + CSL.SUPERSCRIPTS[aChar] + "^";
-            });
+        return text.replace("*", "pass:[*]")
+            .replace("_", "pass:[_]")
+            .replace("#", "pass:[#]")
+            .replace("^", "pass:[^]")
+            .replace("~", "pass:[~]")
+            .replace("[[", "pass:[[[]")
+            .replace("  ", "&#160; ")
+            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar) {
+            return "^" + CSL.SUPERSCRIPTS[aChar] + "^";
+        });
     },
     "bibstart": "",
     "bibend": "",
@@ -22699,7 +22508,6 @@ CSL.Output.Formats.prototype.asciidoc = {
     },
     "@quotes/false": false,
     "@cite/entry": function (state, str) {
-        // if wrapCitationEntry does not exist, cite/entry is not applied
         return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
     },
     "@bibliography/entry": function (state, str) {
@@ -22719,42 +22527,36 @@ CSL.Output.Formats.prototype.asciidoc = {
     },
     "@showid/true": function (state, str) {
         if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
-            var prePunct = "";
+            let prePunct = "";
             if (str) {
-                var m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }
-            var postPunct = "";
+            let postPunct = "";
             if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
-                str = str.slice(0,-1);
+                str = str.slice(0, -1);
             }
             return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
-        } else {
+        }
+        else {
             return str;
         }
     },
     "@URL/true": function (state, str) {
-        // AsciiDoc renders URLs automatically as links
         return str;
     },
     "@DOI/true": function (state, str) {
-        var doiurl = str;
+        let doiurl = str;
         if (!str.match(/^https?:\/\//)) {
             doiurl = "https://doi.org/" + CSL.Util.encodeDoiForUrl(str);
         }
         return doiurl + "[" + str + "]";
     }
 };
-
-/**
- * Output specification for XSL-FO (Extensible Stylesheet
- * Language - Formatting Objects)
- *
- * See https://www.w3.org/TR/xsl11/#fo-section
- */
-CSL.Output.Formats.prototype.fo = {
+/** XSL-FO output specification. */
+OutputFormats.prototype.fo = {
     "text_escape": function (text) {
         if (!text) {
             text = "";
@@ -22762,10 +22564,10 @@ CSL.Output.Formats.prototype.fo = {
         return text.replace(/&/g, "&#38;")
             .replace(/</g, "&#60;")
             .replace(/>/g, "&#62;")
-            .replace("  ", "&#160; ", "g")
-            .replace(CSL.SUPERSCRIPTS_REGEXP, function(aChar) {
-                return "<fo:inline vertical-align=\"super\">" + CSL.SUPERSCRIPTS[aChar] + "</fo:inline>";
-            });
+            .replace("  ", "&#160; ")
+            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar) {
+            return "<fo:inline vertical-align=\"super\">" + CSL.SUPERSCRIPTS[aChar] + "</fo:inline>";
+        });
     },
     "bibstart": "",
     "bibend": "",
@@ -22802,12 +22604,12 @@ CSL.Output.Formats.prototype.fo = {
         return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
     },
     "@bibliography/entry": function (state, str) {
-        var indent = "";
+        let indent = "";
         if (state.bibliography && state.bibliography.opt && state.bibliography.opt.hangingindent) {
-            var hi = state.bibliography.opt.hangingindent;
-            indent = " start-indent=\"" + hi +"em\" text-indent=\"-" + hi + "em\"";
+            const hi = state.bibliography.opt.hangingindent;
+            indent = " start-indent=\"" + hi + "em\" text-indent=\"-" + hi + "em\"";
         }
-        var insert = "";
+        let insert = "";
         if (state.sys.embedBibliographyEntry) {
             insert = state.sys.embedBibliographyEntry(this.item_id) + "\n";
         }
@@ -22818,17 +22620,17 @@ CSL.Output.Formats.prototype.fo = {
     },
     "@display/left-margin": function (state, str) {
         return "\n  <fo:table table-layout=\"fixed\" width=\"100%\">\n    " +
-                "<fo:table-column column-number=\"1\" column-width=\"$$$__COLUMN_WIDTH_1__$$$\"/>\n    " +
-                "<fo:table-column column-number=\"2\" column-width=\"proportional-column-width(1)\"/>\n    " +
-                "<fo:table-body>\n      " +
-                    "<fo:table-row>\n        " +
-                        "<fo:table-cell>\n          " +
-                            "<fo:block>" + str + "</fo:block>\n        " +
-                        "</fo:table-cell>\n        ";
+            "<fo:table-column column-number=\"1\" column-width=\"$$$__COLUMN_WIDTH_1__$$$\"/>\n    " +
+            "<fo:table-column column-number=\"2\" column-width=\"proportional-column-width(1)\"/>\n    " +
+            "<fo:table-body>\n      " +
+            "<fo:table-row>\n        " +
+            "<fo:table-cell>\n          " +
+            "<fo:block>" + str + "</fo:block>\n        " +
+            "</fo:table-cell>\n        ";
     },
     "@display/right-inline": function (state, str) {
         return "<fo:table-cell>\n          " +
-                "<fo:block>" + str + "</fo:block>\n        " +
+            "<fo:block>" + str + "</fo:block>\n        " +
             "</fo:table-cell>\n      " +
             "</fo:table-row>\n    " +
             "</fo:table-body>\n  " +
@@ -22839,19 +22641,20 @@ CSL.Output.Formats.prototype.fo = {
     },
     "@showid/true": function (state, str) {
         if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
-            var prePunct = "";
+            let prePunct = "";
             if (str) {
-                var m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }
-            var postPunct = "";
+            let postPunct = "";
             if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
-                str = str.slice(0,-1);
+                str = str.slice(0, -1);
             }
             return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
-        } else {
+        }
+        else {
             return str;
         }
     },
@@ -22859,20 +22662,15 @@ CSL.Output.Formats.prototype.fo = {
         return "<fo:basic-link external-destination=\"url('" + str + "')\">" + str + "</fo:basic-link>";
     },
     "@DOI/true": function (state, str) {
-        var doiurl = str;
+        let doiurl = str;
         if (!str.match(/^https?:\/\//)) {
             doiurl = "https://doi.org/" + str;
         }
         return "<fo:basic-link external-destination=\"url('" + doiurl + "')\">" + str + "</fo:basic-link>";
     }
 };
-
-/**
- * LaTeX .bbl output.
- *
- * (Code contributed by Egon Willighagen, based on the prototype.text code.)
- */
-CSL.Output.Formats.prototype.latex = {
+/** LaTeX .bbl output. */
+OutputFormats.prototype.latex = {
     "text_escape": function (text) {
         if (!text) {
             text = "";
@@ -22905,25 +22703,19 @@ CSL.Output.Formats.prototype.latex = {
     },
     "@quotes/inner": function (state, str) {
         if ("undefined" === typeof str) {
-            //
-            // Mostly right by being wrong (for apostrophes)
-            //
             return "\u2019";
         }
         return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
     },
     "@quotes/false": false,
-    //"@bibliography/body": function (state,str){
-    //    return "<div class=\"csl-bib-body\">\n"+str+"</div>";
-    //},
     "@cite/entry": function (state, str) {
-		return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
-	},
+        return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+    },
     "@bibliography/entry": function (state, str) {
         return "\\bibitem{" + state.sys.embedBibliographyEntry(this.item_id) + "}\n";
     },
     "@display/block": function (state, str) {
-        return "\n"+str;
+        return "\n" + str;
     },
     "@display/left-margin": function (state, str) {
         return str;
@@ -22932,7 +22724,7 @@ CSL.Output.Formats.prototype.latex = {
         return str;
     },
     "@display/indent": function (state, str) {
-        return "\n    "+str;
+        return "\n    " + str;
     },
     "@showid/true": function (state, str, cslid) {
         return str;
@@ -22944,8 +22736,7 @@ CSL.Output.Formats.prototype.latex = {
         return str;
     }
 };
-
-CSL.Output.Formats = new CSL.Output.Formats();
+CSL.Output.Formats = new OutputFormats();
 
 /*global CSL: true */
 

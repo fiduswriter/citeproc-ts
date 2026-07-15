@@ -1,8 +1,8 @@
 /*global CSL: true */
 
-CSL.setupXml = function(xmlObject) {
-    var dataObj = {};
-    var parser = null;
+CSL.setupXml = function (xmlObject: any): any {
+    let dataObj: any = {};
+    let parser: any = null;
     if ("undefined" !== typeof xmlObject) {
         if ("string" === typeof xmlObject) {
             xmlObject = xmlObject.replace("^\uFEFF", "")
