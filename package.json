@@ -7,7 +7,7 @@
         ".": "./citeproc.mjs"
     },
     "bin": {
-        "cslrun": "./test-runner/dist/runtests.js"
+        "cslrun": "test-runner/dist/runtests.js"
     },
     "repository": {
         "type": "git",
