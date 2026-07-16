@@ -5,7 +5,6 @@
  * Outputs:
  *   citeproc.mjs          – ES module (Node.js: primary via "main" / "exports")
  *   citeproc.js           – ES module (browser: <script type="module">, same as .mjs)
- *   citeproc_commonjs.js  – CommonJS (internal: test-runner only, NOT published)
  */
 'use strict';
 
@@ -62,19 +61,7 @@ async function build() {
     // 2. Copy as citeproc.js for browser <script type="module"> use (demo pages)
     fs.copyFileSync(esmFile, path.join(ROOT, 'citeproc.js'));
 
-    // 3. CommonJS – internal use by the test-runner only
-    await esbuild.build({
-        entryPoints: [ENTRY],
-        bundle: true,
-        platform: 'node',
-        format: 'cjs',
-        target: 'node14',
-        outfile: path.join(ROOT, 'citeproc_commonjs.js'),
-        banner: { js: LICENSE_HEADER },
-        logLevel: 'info'
-    });
-
-    process.stdout.write('Built citeproc.mjs + citeproc.js + citeproc_commonjs.js\n');
+    process.stdout.write('Built citeproc.mjs + citeproc.js\n');
 }
 
 build().catch((err) => {

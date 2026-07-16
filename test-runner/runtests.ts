@@ -334,7 +334,8 @@ function Bundle(noStrip?) {
         console.log("Using processor from package");
         return;
     }
-    var bundlePath = path.join(config.path.src, "..", "citeproc_commonjs.js");
+    var bundlePath = path.join(config.path.src, "..", "citeproc.mjs");
+    // If the prebuilt bundle already exists (built by esbuild), skip the old-style concatenation
     if (fs.existsSync(bundlePath)) {
         return;
     }
@@ -348,7 +349,7 @@ function Bundle(noStrip?) {
     license = "/*\n" + license + "\n*/\n";
 
     fs.writeFileSync(path.join(config.path.src, "..", "citeproc.js"), license + ret);
-    fs.writeFileSync(path.join(config.path.src, "..", "citeproc_commonjs.js"), license + ret + "\nmodule.exports = CSL");
+    fs.writeFileSync(path.join(config.path.src, "..", "citeproc.mjs"), license + ret + "\nexport default CSL");
 }
 
 function validateCSLWithSchema(schema, test) {

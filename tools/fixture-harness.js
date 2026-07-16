@@ -1,15 +1,11 @@
 #!/usr/bin/env node
 // Regression net for the citeproc refactor. Runs the standard CSL fixture
-// suite through the bundled citeproc (citeproc_commonjs.js) using the
+// suite through the bundled citeproc (citeproc.mjs) using the
 // test-runner's canonical fixture parser, and compares to RESULT.
-//
-// Requires the test-runner to be compiled next to source:
-//   (cd test-runner && npx tsc -p tsconfig.json)   # after removing outDir
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const CSL = require(path.join(__dirname, '..', 'citeproc_commonjs.js'));
-const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'lib', 'fixture-parser'));
+const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'dist', 'lib', 'fixture-parser.js'));
 
 const ROOT = path.join(__dirname, '..');
 const FIX_DIR = path.join(ROOT, 'fixtures', 'std', 'processor-tests', 'humans');
@@ -25,13 +21,12 @@ function loadLocale(localeTag) {
         LOCALE_CACHE[localeTag] = data;
         return data;
     }
-    // Fallback: try en-US
     if (localeTag !== 'en-US') return loadLocale('en-US');
     return '';
 }
 const DEFAULT_LOCALE = loadLocale('en-US');
 
-function runFixture(name) {
+async function runFixture(name, CSL) {
     let test;
     try {
         test = parseFixture({}, name, path.join(FIX_DIR, name + '.txt'));
@@ -67,7 +62,6 @@ function runFixture(name) {
                 const outs = test['CITATION-ITEMS'].map((cluster) => engine.makeCitationCluster(cluster));
                 actual = outs.join('\n');
             } else if (test.CITATIONS) {
-                // Replicate the test-runner doc-update flow.
                 let doc = [];
                 for (const c of test.CITATIONS) {
                     const [info, result] = engine.processCitationCluster(c[0], c[1], c[2]);
@@ -113,25 +107,31 @@ function runFixture(name) {
     }
 }
 
-const filter = process.argv[2] || null;
-const verbose = process.argv.includes('-v');
-const files = fs.readdirSync(FIX_DIR).filter((f) => f.endsWith('.txt')).sort();
-let total = 0, passed = 0, failed = 0, errored = 0, skipped = 0;
-const fails = [];
-for (const f of files) {
-    if (filter && !f.includes(filter)) continue;
-    const r = runFixture(f.replace(/\.txt$/, ''));
-    if (r === null) { skipped++; continue; }
-    total++;
-    if (r.pass) passed++;
-    else if (r.error) { errored++; fails.push(r); }
-    else { failed++; fails.push(r); }
-}
-console.log(`ran=${total} passed=${passed} failed=${failed} errored=${errored} skipped=${skipped}`);
-if (verbose) {
-    for (const r of fails.slice(0, 40)) {
-        console.log('--- ' + r.name + (r.error ? ' ERROR' : ' FAIL'));
-        if (r.error) console.log('  ' + r.error);
-        else { console.log('  actual:   ' + JSON.stringify(r.actual)); console.log('  expected: ' + JSON.stringify(r.expected)); }
+async function main() {
+    const CSL = (await import(path.join(ROOT, 'citeproc.mjs'))).default;
+
+    const filter = process.argv[2] || null;
+    const verbose = process.argv.includes('-v');
+    const files = fs.readdirSync(FIX_DIR).filter((f) => f.endsWith('.txt')).sort();
+    let total = 0, passed = 0, failed = 0, errored = 0, skipped = 0;
+    const fails = [];
+    for (const f of files) {
+        if (filter && !f.includes(filter)) continue;
+        const r = await runFixture(f.replace(/\.txt$/, ''), CSL);
+        if (r === null) { skipped++; continue; }
+        total++;
+        if (r.pass) passed++;
+        else if (r.error) { errored++; fails.push(r); }
+        else { failed++; fails.push(r); }
+    }
+    console.log(`ran=${total} passed=${passed} failed=${failed} errored=${errored} skipped=${skipped}`);
+    if (verbose) {
+        for (const r of fails.slice(0, 40)) {
+            console.log('--- ' + r.name + (r.error ? ' ERROR' : ' FAIL'));
+            if (r.error) console.log('  ' + r.error);
+            else { console.log('  actual:   ' + JSON.stringify(r.actual)); console.log('  expected: ' + JSON.stringify(r.expected)); }
+        }
     }
 }
+
+main().catch(err => { console.error(err); process.exit(1); });

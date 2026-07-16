@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const CSL = require(path.join(__dirname, '..', 'citeproc_commonjs.js'));
-const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'lib', 'fixture-parser'));
+const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'dist', 'lib', 'fixture-parser.js'));
 
 const ROOT = path.join(__dirname, '..');
 const FIX_DIR = path.join(ROOT, 'fixtures', 'std', 'processor-tests', 'humans');
 const LOCALE_FILE = path.join(ROOT, 'locale', 'locales-en-US.xml');
 const LOCALE = fs.readFileSync(LOCALE_FILE, 'utf8').replace(/\s*<\?[^>]*\?>\s*\n/g, '');
 
-function runFixture(name) {
+function runFixture(name, CSL) {
     let test;
     try { test = parseFixture({}, name, path.join(FIX_DIR, name + '.txt'));
     } catch (e) { return null; }
@@ -75,27 +74,33 @@ function runFixture(name) {
     }
 }
 
-const files = fs.readdirSync(FIX_DIR).filter(f => f.endsWith('.txt')).sort();
-const errors = {};
-let total = 0, passed = 0, failed = 0, errored = 0, skipped = 0;
-for (const f of files) {
-    const r = runFixture(f.replace(/\.txt$/, ''));
-    if (r === null) { skipped++; continue; }
-    total++;
-    if (r.pass) passed++;
-    else if (r.error) {
-        errored++;
-        const key = r.error.match(/^[^:()]+/)?.[0] || r.error.slice(0, 60);
-        if (!errors[key]) errors[key] = [];
-        errors[key].push({ name: r.name, msg: r.error });
-    } else { failed++; }
+async function main() {
+    const CSL = (await import(path.join(ROOT, 'citeproc.mjs'))).default;
+
+    const files = fs.readdirSync(FIX_DIR).filter(f => f.endsWith('.txt')).sort();
+    const errors = {};
+    let total = 0, passed = 0, failed = 0, errored = 0, skipped = 0;
+    for (const f of files) {
+        const r = runFixture(f.replace(/\.txt$/, ''), CSL);
+        if (r === null) { skipped++; continue; }
+        total++;
+        if (r.pass) passed++;
+        else if (r.error) {
+            errored++;
+            const key = r.error.match(/^[^:()]+/)?.[0] || r.error.slice(0, 60);
+            if (!errors[key]) errors[key] = [];
+            errors[key].push({ name: r.name, msg: r.error });
+        } else { failed++; }
+    }
+
+    console.log(`ran=${total} passed=${passed} failed=${failed} errored=${errored} skipped=${skipped}`);
+    console.log('\n=== Error categories ===');
+    const sorted = Object.entries(errors).sort((a, b) => b[1].length - a[1].length);
+    for (const [cat, entries] of sorted) {
+        console.log(`\n[${entries.length}x] ${cat}`);
+        for (const e of entries.slice(0, 8)) console.log('    ' + e.name + ': ' + e.msg);
+        if (entries.length > 8) console.log('    ... and ' + (entries.length - 8) + ' more');
+    }
 }
 
-console.log(`ran=${total} passed=${passed} failed=${failed} errored=${errored} skipped=${skipped}`);
-console.log('\n=== Error categories ===');
-const sorted = Object.entries(errors).sort((a, b) => b[1].length - a[1].length);
-for (const [cat, entries] of sorted) {
-    console.log(`\n[${entries.length}x] ${cat}`);
-    for (const e of entries.slice(0, 8)) console.log('    ' + e.name + ': ' + e.msg);
-    if (entries.length > 8) console.log('    ... and ' + (entries.length - 8) + ' more');
-}
+main().catch(err => { console.error(err); process.exit(1); });

@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const CSL = require(path.join(__dirname, '..', 'citeproc_commonjs.js'));
-const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'lib', 'fixture-parser'));
+const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'dist', 'lib', 'fixture-parser.js'));
 
 const ROOT = path.join(__dirname, '..');
 const FIX_DIR = path.join(ROOT, 'fixtures', 'std', 'processor-tests', 'humans');
 const LOCALE = fs.readFileSync(path.join(ROOT, 'locale', 'locales-en-US.xml'), 'utf8').replace(/\s*<\?[^>]*\?>\s*\n/g, '');
 
-function runFixture(name) {
+function runFixture(name, CSL) {
     let test;
     try { test = parseFixture({}, name, path.join(FIX_DIR, name + '.txt')); } catch (e) { return null; }
     if (!test.CSL || !test.RESULT) return null;
@@ -69,37 +68,40 @@ function runFixture(name) {
     }
 }
 
-const files = fs.readdirSync(FIX_DIR).filter(f => f.endsWith('.txt')).sort();
-const fails = [];
-for (const f of files) {
-    const r = runFixture(f.replace(/\.txt$/, ''));
-    if (r && !r.pass && !r.error) {
-        // Find first differing position
-        let diffPos = 0;
-        while (diffPos < r.actual.length && diffPos < r.expected.length && r.actual[diffPos] === r.expected[diffPos]) diffPos++;
-        const ctxA = r.actual.slice(Math.max(0, diffPos - 20), diffPos + 80);
-        const ctxE = r.expected.slice(Math.max(0, diffPos - 20), diffPos + 80);
-        fails.push({ ...r, diffPos, ctxA, ctxE });
+async function main() {
+    const CSL = (await import(path.join(ROOT, 'citeproc.mjs'))).default;
+
+    const files = fs.readdirSync(FIX_DIR).filter(f => f.endsWith('.txt')).sort();
+    const fails = [];
+    for (const f of files) {
+        const r = runFixture(f.replace(/\.txt$/, ''), CSL);
+        if (r && !r.pass && !r.error) {
+            let diffPos = 0;
+            while (diffPos < r.actual.length && diffPos < r.expected.length && r.actual[diffPos] === r.expected[diffPos]) diffPos++;
+            const ctxA = r.actual.slice(Math.max(0, diffPos - 20), diffPos + 80);
+            const ctxE = r.expected.slice(Math.max(0, diffPos - 20), diffPos + 80);
+            fails.push({ ...r, diffPos, ctxA, ctxE });
+        }
+    }
+
+    console.log(`Total failures: ${fails.length}`);
+    const modes = {};
+    for (const f of fails) {
+        if (!modes[f.mode]) modes[f.mode] = [];
+        modes[f.mode].push(f);
+    }
+    for (const [mode, list] of Object.entries(modes)) {
+        console.log(`\n${mode}: ${list.length} failures`);
+    }
+
+    for (const f of fails.slice(0, 20)) {
+        console.log(`\n--- ${f.name} (${f.mode}) diff at ${f.diffPos} ---`);
+        if (f.actual.includes('CSL STYLE ERROR')) {
+            console.log('  [STYLE ERROR — item data not found]');
+        }
+        console.log('  actual:   ' + JSON.stringify(f.ctxA));
+        console.log('  expected: ' + JSON.stringify(f.ctxE));
     }
 }
 
-// Categorize failures
-console.log(`Total failures: ${fails.length}`);
-const modes = {};
-for (const f of fails) {
-    if (!modes[f.mode]) modes[f.mode] = [];
-    modes[f.mode].push(f);
-}
-for (const [mode, list] of Object.entries(modes)) {
-    console.log(`\n${mode}: ${list.length} failures`);
-}
-
-// Show first 20 with context
-for (const f of fails.slice(0, 20)) {
-    console.log(`\n--- ${f.name} (${f.mode}) diff at ${f.diffPos} ---`);
-    if (f.actual.includes('CSL STYLE ERROR')) {
-        console.log('  [STYLE ERROR — item data not found]');
-    }
-    console.log('  actual:   ' + JSON.stringify(f.ctxA));
-    console.log('  expected: ' + JSON.stringify(f.ctxE));
-}
+main().catch(err => { console.error(err); process.exit(1); });

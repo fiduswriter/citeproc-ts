@@ -1,14 +1,15 @@
 {
   "name": "citeproc",
   "version": "%%NPM_VERSION%%",
-  "description": "The citeproc-js citation formatting module, in CommonJS format. This version is based on citeproc-js %%CITEPROC_VERSION%%.",
-  "main": "citeproc_commonjs.js",
+  "description": "The citeproc-js citation formatting module. This version is based on citeproc-js %%CITEPROC_VERSION%%.",
+  "main": "citeproc.mjs",
   "repository": {
     "type" : "git",
     "url" : "https://github.com/juris-m/citeproc-js.git"
   },
   "files": [
-    "citeproc_commonjs.js"
+    "citeproc.mjs",
+    "citeproc.js"
   ],
   "author": "Michael McMillan <email@michaelmcmillan.net> (http://michaelmcmillan.net/)",
   "contributors": [
