@@ -17,17 +17,17 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
-var STYLE_URL = "https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-shortened-notes-bibliography.csl";
-var CACHED_STYLE_PATH = path.join(os.tmpdir(), "citeproc-mem-test-chicago-shortened-notes-bibliography.csl");
-var FALLBACK_STYLE_PATH = path.join(ROOT, "docs", "chicago-fullnote-bibliography.csl");
+let STYLE_URL = "https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-shortened-notes-bibliography.csl";
+let CACHED_STYLE_PATH = path.join(os.tmpdir(), "citeproc-mem-test-chicago-shortened-notes-bibliography.csl");
+let FALLBACK_STYLE_PATH = path.join(ROOT, "docs", "chicago-fullnote-bibliography.csl");
 
 async function main() {
-    var CSL = (await import(path.join(ROOT, "citeproc.mjs"))).default;
+    let CSL = (await import(path.join(ROOT, "citeproc.mjs"))).default;
 
-    var localeXml = fs.readFileSync(path.join(ROOT, "locale", "locales-en-US.xml"), "utf8");
+    let localeXml = fs.readFileSync(path.join(ROOT, "locale", "locales-en-US.xml"), "utf8");
 
-    var stylePath = process.argv[2];
-    var styleXml;
+    let stylePath = process.argv[2];
+    let styleXml;
     if (stylePath) {
         styleXml = fs.readFileSync(stylePath, "utf8");
     }
@@ -50,7 +50,7 @@ async function main() {
     }
     console.log("Style: " + stylePath);
 
-    var sys = {
+    let sys = {
         retrieveLocale: function (lang) {
             if (lang === "en-US") return localeXml;
             try {
@@ -78,22 +78,22 @@ async function main() {
         return Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 10) / 10;
     }
 
-    var warmup = new CSL.Engine(sys, styleXml, "en-US");
+    let warmup = new CSL.Engine(sys, styleXml, "en-US");
     warmup = null;
     gc();
 
-    var RUNS = 5;
+    let RUNS = 5;
 
     console.log("Creating " + RUNS + " CSL.Engine instances...\n");
 
-    var baseline = heapMB();
+    let baseline = heapMB();
     console.log("Baseline heap: " + baseline + " MB");
 
-    var engines = [];
-    for (var i = 0; i < RUNS; i++) {
-        var before = heapMB();
+    let engines = [];
+    for (let i = 0; i < RUNS; i++) {
+        let before = heapMB();
         engines.push(new CSL.Engine(sys, styleXml, "en-US"));
-        var after = heapMB();
+        let after = heapMB();
         console.log("Engine " + (i + 1) + ": " + before + " -> " + after + " MB (delta=" + (after - before).toFixed(1) + " MB)");
     }
 

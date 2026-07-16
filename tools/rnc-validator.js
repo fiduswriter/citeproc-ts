@@ -18,9 +18,9 @@ function isIdentPart(c) { return /[a-zA-Z0-9_\-\.\:\/\#]/.test(c); }
 function isSpace(c) { return /\s/.test(c); }
 
 function tokenize(src) {
-    var tokens = [];
-    var pos = 0;
-    var len = src.length;
+    let tokens = [];
+    let pos = 0;
+    let len = src.length;
 
     function skipWs() {
         while (pos < len && isSpace(src[pos])) pos++;
@@ -30,7 +30,7 @@ function tokenize(src) {
     }
     function skipAnnotation() {
         // Skip [ ... ] with proper nesting
-        var depth = 1;
+        let depth = 1;
         pos++; // skip opening [
         while (pos < len && depth > 0) {
             if (src[pos] === '[') depth++;
@@ -52,9 +52,9 @@ function tokenize(src) {
 
         // Multi-line doc strings: \( ... \)
         if (src.slice(pos, pos + 2) === '\\(') {
-            var escStart = pos;
+            let escStart = pos;
             pos += 2;
-            var escVal = '';
+            let escVal = '';
             while (pos < len && src[pos] !== '\\') { escVal += src[pos]; pos++; }
             if (src.slice(pos, pos + 2) === '\\)') pos += 2;
             tokens.push({type:'STRING',value:escVal,pos:escStart});
@@ -64,7 +64,7 @@ function tokenize(src) {
         // String literals: " ... "
         if (src[pos] === '"') {
             pos++; // skip opening "
-            var strVal = '';
+            let strVal = '';
             while (pos < len && src[pos] !== '"') { strVal += src[pos]; pos++; }
             pos++; // skip closing "
             tokens.push({type:'STRING',value:strVal,pos:pos - strVal.length - 2});
@@ -73,10 +73,10 @@ function tokenize(src) {
 
         // Names / keywords
         if (isIdentStart(src[pos])) {
-            var identStart = pos;
-            var ident = '';
+            let identStart = pos;
+            let ident = '';
             while (pos < len && isIdentPart(src[pos])) { ident += src[pos]; pos++; }
-            var kw = KEYWORDS[ident];
+            let kw = KEYWORDS[ident];
             if (kw !== undefined) {
                 tokens.push({type:kw, value:ident, pos:identStart});
             } else {
@@ -86,11 +86,11 @@ function tokenize(src) {
         }
 
         // Two-char symbols first (|=, &=)
-        var ch2 = src.slice(pos, pos + 2);
+        let ch2 = src.slice(pos, pos + 2);
         if (SYMBOLS[ch2]) { tokens.push({type:SYMBOLS[ch2], value:ch2, pos:pos}); pos += 2; continue; }
 
         // Single-char symbols
-        var ch = src[pos];
+        let ch = src[pos];
         if (SYMBOLS[ch]) { tokens.push({type:SYMBOLS[ch], value:ch, pos:pos}); pos++; continue; }
 
         throw new Error('Unexpected character at position ' + pos + ': ' + JSON.stringify(src.slice(pos, pos+20)));
@@ -99,14 +99,14 @@ function tokenize(src) {
     return tokens;
 }
 
-var KEYWORDS = {
+let KEYWORDS = {
     'element': 'ELEMENT', 'attribute': 'ATTRIBUTE', 'text': 'TEXT_KW',
     'string': 'STRING_KW', 'list': 'LIST', 'include': 'INCLUDE',
     'div': 'DIV', 'namespace': 'NAMESPACE', 'default': 'DEFAULT',
     'notAllowed': 'NOTALLOWED', 'empty': 'EMPTY', 'start': 'START'
 };
 
-var SYMBOLS = {
+let SYMBOLS = {
     '=': 'EQ', '|=': 'COMBINE_CHOICE', '&=': 'COMBINE_INTERLEAVE',
     '|': 'CHOICE', '&': 'INTERLEAVE', ',': 'COMMA',
     '?': 'OPTIONAL', '*': 'STAR', '+': 'PLUS',
@@ -125,44 +125,44 @@ Parser.prototype.peek = function() { return this.tokens[this.pos]; };
 Parser.prototype.next = function() { return this.tokens[this.pos++]; };
 
 Parser.prototype.expect = function(type) {
-    var t = this.next();
+    let t = this.next();
     if (t.type !== type) throw new Error('Expected ' + type + ' but got ' + t.type + ' (' + t.value + ') at ' + t.pos);
     return t;
 };
 
 // grammar := (namespace_decl | include | definition)*
 Parser.prototype.parseGrammar = function() {
-    var grammar = { definitions: {}, includes: [], start: null, namespaces: {} };
+    let grammar = { definitions: {}, includes: [], start: null, namespaces: {} };
     while (this.peek().type !== 'EOF') {
-        var t = this.peek();
+        let t = this.peek();
         if (t.type === 'NAMESPACE') {
             this.next();
-            var prefix = this.expect('NAME').value;
+            let prefix = this.expect('NAME').value;
             this.expect('EQ');
-            var uri = this.expect('STRING').value;
+            let uri = this.expect('STRING').value;
             grammar.namespaces[prefix] = uri;
         } else if (t.type === 'DEFAULT') {
             this.next();
             this.expect('NAMESPACE');
-            var def = this.next();
+            let def = this.next();
             if (def.type === 'EQ' || def.type === 'NAME') {
                 // default namespace = "uri"  or  default namespace ns = "uri"
                 if (def.type === 'NAME' && def.value !== '=') {
                     this.expect('EQ');
                 }
-                var uri2 = this.expect('STRING').value;
+                let uri2 = this.expect('STRING').value;
                 grammar.namespaces[''] = uri2;
             } else {
                 throw new Error('Unexpected token after "default": ' + def.type);
             }
         } else if (t.type === 'INCLUDE') {
             this.next();
-            var filePath = this.expect('STRING').value;
-            var overrides = {};
+            let filePath = this.expect('STRING').value;
+            let overrides = {};
             if (this.peek().type === 'LBRACE') {
                 this.expect('LBRACE');
                 while (this.peek().type !== 'RBRACE' && this.peek().type !== 'EOF') {
-                    var def = this.parseDefinition();
+                    let def = this.parseDefinition();
                     if (def) overrides[def.name] = def.pattern;
                 }
                 this.expect('RBRACE');
@@ -177,7 +177,7 @@ Parser.prototype.parseGrammar = function() {
                     this.expect('EQ');
                     grammar.start = this.parsePattern();
                 } else {
-                    var def2 = this.parseDefinition();
+                    let def2 = this.parseDefinition();
                     if (def2) grammar.definitions[def2.name] = def2.pattern;
                 }
             }
@@ -189,13 +189,13 @@ Parser.prototype.parseGrammar = function() {
         } else if (t.type === 'NAME') {
             // Could be a definition or metadata (Schematron/dc/bibo namespaced annotation)
             // Check if next token is a definition operator
-            var saved = this.pos;
+            let saved = this.pos;
             this.next(); // consume the NAME
-            var next = this.peek();
+            let next = this.peek();
             if (next.type === 'EQ' || next.type === 'COMBINE_CHOICE' || next.type === 'COMBINE_INTERLEAVE') {
                 // Actually a definition - rewind and parse as definition
                 this.pos = saved;
-                var def3 = this.parseDefinition();
+                let def3 = this.parseDefinition();
                 if (def3) grammar.definitions[def3.name] = def3.pattern;
             }
             // Otherwise it was metadata (the annotation block [ ... ] was already skipped by the tokenizer)
@@ -211,12 +211,12 @@ Parser.prototype.parseGrammar = function() {
 
 // definition := name ("=" | "|=" | "&=") pattern
 Parser.prototype.parseDefinition = function() {
-    var name = this.expect('NAME').value;
-    var op = this.next();
+    let name = this.expect('NAME').value;
+    let op = this.next();
     if (op.type !== 'EQ' && op.type !== 'COMBINE_CHOICE' && op.type !== 'COMBINE_INTERLEAVE') {
         throw new Error('Expected = or |= or &= after name "' + name + '" but got ' + op.type);
     }
-    var pattern = this.parsePattern();
+    let pattern = this.parsePattern();
     return { name: name, op: op.type, pattern: pattern };
 };
 
@@ -227,10 +227,10 @@ Parser.prototype.parsePattern = function() {
 
 // choice_pattern := interleave_pattern ("|" interleave_pattern)*
 Parser.prototype.parseChoice = function() {
-    var left = this.parseInterleave();
+    let left = this.parseInterleave();
     while (this.peek().type === 'CHOICE') {
         this.next();
-        var right = this.parseInterleave();
+        let right = this.parseInterleave();
         left = { type: 'CHOICE', left: left, right: right };
     }
     return left;
@@ -238,10 +238,10 @@ Parser.prototype.parseChoice = function() {
 
 // interleave_pattern := sequence_pattern ("&" sequence_pattern)*
 Parser.prototype.parseInterleave = function() {
-    var left = this.parseSequence();
+    let left = this.parseSequence();
     while (this.peek().type === 'INTERLEAVE') {
         this.next();
-        var right = this.parseSequence();
+        let right = this.parseSequence();
         left = { type: 'INTERLEAVE', left: left, right: right };
     }
     return left;
@@ -249,10 +249,10 @@ Parser.prototype.parseInterleave = function() {
 
 // sequence_pattern := suffix_pattern ("," suffix_pattern)*
 Parser.prototype.parseSequence = function() {
-    var left = this.parseSuffix();
+    let left = this.parseSuffix();
     while (this.peek().type === 'COMMA') {
         this.next();
-        var right = this.parseSuffix();
+        let right = this.parseSuffix();
         left = { type: 'SEQ', left: left, right: right };
     }
     return left;
@@ -260,7 +260,7 @@ Parser.prototype.parseSequence = function() {
 
 // suffix_pattern := primary ("?" | "*" | "+")?
 Parser.prototype.parseSuffix = function() {
-    var node = this.parsePrimary();
+    let node = this.parsePrimary();
     if (this.peek().type === 'OPTIONAL') { this.next(); node = { type: 'OPTIONAL', child: node }; }
     else if (this.peek().type === 'STAR') { this.next(); node = { type: 'STAR', child: node }; }
     else if (this.peek().type === 'PLUS') { this.next(); node = { type: 'PLUS', child: node }; }
@@ -270,30 +270,30 @@ Parser.prototype.parseSuffix = function() {
 // primary := "(" pattern ")" | "element" QName "{" pattern "}" | "attribute" QName "{" pattern "}"
 //          | "string" STRING | "list" "{" pattern "}" | "text" | "empty" | "notAllowed" | div | NAME
 Parser.prototype.parsePrimary = function() {
-    var t = this.peek();
+    let t = this.peek();
     if (t.type === 'LPAREN') {
         this.next();
-        var p = this.parsePattern();
+        let p = this.parsePattern();
         this.expect('RPAREN');
         return p;
     } else if (t.type === 'ELEMENT') {
         this.next();
-        var name = this.parseQName();
+        let name = this.parseQName();
         this.expect('LBRACE');
-        var child = this.parsePattern();
+        let child = this.parsePattern();
         this.expect('RBRACE');
         return sanitizePattern({ type: 'ELEMENT', name: name, child: child });
     } else if (t.type === 'ATTRIBUTE') {
         this.next();
-        var name = this.parseQName();
+        let name = this.parseQName();
         this.expect('LBRACE');
-        var child = this.parsePattern();
+        let child = this.parsePattern();
         this.expect('RBRACE');
         return sanitizePattern({ type: 'ATTRIBUTE', name: name, child: child });
     } else if (t.type === 'STRING_KW') {
         // "string" STRING - literal string content: string "value"
         this.next();
-        var val = this.expect('STRING').value;
+        let val = this.expect('STRING').value;
         return { type: 'STRING', value: val };
     } else if (t.type === 'STRING') {
         // Bare string literal: "value" (shorthand for string "value")
@@ -302,7 +302,7 @@ Parser.prototype.parsePrimary = function() {
     } else if (t.type === 'LIST') {
         this.next();
         this.expect('LBRACE');
-        var child = this.parsePattern();
+        let child = this.parsePattern();
         this.expect('RBRACE');
         return { type: 'LIST', child: child };
     } else if (t.type === 'TEXT_KW') {
@@ -316,13 +316,13 @@ Parser.prototype.parsePrimary = function() {
         return { type: 'NOTALLOWED' };
     } else if (t.type === 'NAME') {
         this.next();
-        var ref = { type: 'REF', name: t.value };
+        let ref = { type: 'REF', name: t.value };
         // Handle type parameters: xsd:string { pattern = "..." }
         if (this.peek().type === 'LBRACE') {
             this.next(); // skip {
-            var depth = 1;
+            let depth = 1;
             while (depth > 0 && this.pos < this.tokens.length) {
-                var tt = this.next();
+                let tt = this.next();
                 if (tt.type === 'LBRACE') depth++;
                 else if (tt.type === 'RBRACE') depth--;
             }
@@ -334,16 +334,16 @@ Parser.prototype.parsePrimary = function() {
 };
 
 Parser.prototype.parseQName = function() {
-    var t = this.peek();
+    let t = this.peek();
     if (t.type === 'NAME') {
-        var val = this.next().value;
+        let val = this.next().value;
         if (this.peek().type === 'NAME' && this.peek().value === ':') {
             // Handle "cs : style" (with spaces)
             this.next();
-            var name2 = this.expect('NAME').value;
+            let name2 = this.expect('NAME').value;
             return val + ':' + name2;
         }
-        var parts = val.split(':');
+        let parts = val.split(':');
         if (parts.length === 2) {
             return { ns: parts[0], local: parts[1] };
         }
@@ -356,13 +356,13 @@ function sanitizePattern(node) {
     if (!node) return node;
     // Normalize binary SEQ into children array
     if (node.type === 'SEQ' && !node.children && node.left && node.right) {
-        var seqChildren = [];
+        let seqChildren = [];
         (function collect(n) {
             if (n.type === 'SEQ' && !n.children && n.left && n.right) {
                 collect(n.left);
                 collect(n.right);
             } else if (n.type === 'SEQ' && n.children) {
-                for (var i = 0; i < n.children.length; i++) collect(n.children[i]);
+                for (let i = 0; i < n.children.length; i++) collect(n.children[i]);
             } else {
                 seqChildren.push(n);
             }
@@ -370,17 +370,17 @@ function sanitizePattern(node) {
         node = { type: 'SEQ', children: seqChildren };
     }
     // Recursively normalize sub-patterns
-    var childKey = node.child || (node.children ? 'children' : null) || node.left || node.right;
+    let childKey = node.child || (node.children ? 'children' : null) || node.left || node.right;
     if (!childKey) return node;
     if (node.child) { node.child = sanitizePattern(node.child); }
-    if (node.children) { for (var i = 0; i < node.children.length; i++) node.children[i] = sanitizePattern(node.children[i]); }
+    if (node.children) { for (let i = 0; i < node.children.length; i++) node.children[i] = sanitizePattern(node.children[i]); }
     if (node.left) { node.left = sanitizePattern(node.left); }
     if (node.right) { node.right = sanitizePattern(node.right); }
     return node;
 }
 
 function sanitizeGrammar(grammar) {
-    for (var key in grammar.definitions) {
+    for (let key in grammar.definitions) {
         grammar.definitions[key] = sanitizePattern(grammar.definitions[key]);
     }
     if (grammar.start) {
@@ -394,12 +394,12 @@ function sanitizeGrammar(grammar) {
 // ---------------------------------------------------------------------------
 function resolveIncludes(grammar, baseDir, visited) {
     visited = visited || new Set();
-    var resolvedDefs = Object.assign({}, grammar.definitions);
-    var resolved = { definitions: resolvedDefs, start: grammar.start, namespaces: Object.assign({}, grammar.namespaces) };
+    let resolvedDefs = Object.assign({}, grammar.definitions);
+    let resolved = { definitions: resolvedDefs, start: grammar.start, namespaces: Object.assign({}, grammar.namespaces) };
 
-    for (var inc of grammar.includes) {
-        var incPath = path.resolve(baseDir, inc.file);
-        var absPath = incPath;
+    for (let inc of grammar.includes) {
+        let incPath = path.resolve(baseDir, inc.file);
+        let absPath = incPath;
         // Try .rnc extension if not specified
         if (!fs.existsSync(absPath) && !path.extname(absPath)) {
             absPath = incPath + '.rnc';
@@ -411,14 +411,14 @@ function resolveIncludes(grammar, baseDir, visited) {
         if (visited.has(absPath)) continue;
         visited.add(absPath);
 
-        var src = fs.readFileSync(absPath, 'utf8');
-        var tokens = tokenize(src);
-        var parser = new Parser(tokens);
-        var incGrammar = parser.parseGrammar();
+        let src = fs.readFileSync(absPath, 'utf8');
+        let tokens = tokenize(src);
+        let parser = new Parser(tokens);
+        let incGrammar = parser.parseGrammar();
         incGrammar = resolveIncludes(incGrammar, path.dirname(absPath), visited);
 
         // Merge definitions from included grammar
-        for (var key in incGrammar.definitions) {
+        for (let key in incGrammar.definitions) {
             if (inc.overrides[key]) {
                 resolved.definitions[key] = inc.overrides[key];
             } else if (!resolved.definitions[key]) {
@@ -426,11 +426,11 @@ function resolveIncludes(grammar, baseDir, visited) {
             }
         }
         // Apply overrides that weren't in the included grammar
-        for (var key in inc.overrides) {
+        for (let key in inc.overrides) {
             resolved.definitions[key] = inc.overrides[key];
         }
         // Merge namespaces
-        for (var ns in incGrammar.namespaces) {
+        for (let ns in incGrammar.namespaces) {
             if (!resolved.namespaces[ns]) resolved.namespaces[ns] = incGrammar.namespaces[ns];
         }
     }
@@ -455,7 +455,7 @@ Validator.prototype.resolve = function(name) {
 
 Validator.prototype.validate = function(xmlStr) {
     this.errors = [];
-    var doc = parseXmlSimple(xmlStr);
+    let doc = parseXmlSimple(xmlStr);
     if (!doc || !doc.root) {
         this.errors.push('Failed to parse XML');
         return false;
@@ -471,10 +471,10 @@ Validator.prototype.validate = function(xmlStr) {
 };
 
 Validator.prototype.matchAny = function(node, path) {
-    for (var key in this.grammar.definitions) {
-        var def = this.grammar.definitions[key];
+    for (let key in this.grammar.definitions) {
+        let def = this.grammar.definitions[key];
         if (def.type === 'ELEMENT' || (def.type === 'REF' && this.resolve(def.name)?.type === 'ELEMENT')) {
-            var savedErrors = this.errors.length;
+            let savedErrors = this.errors.length;
             this.matchPattern(def, node, path.concat(key));
             if (this.errors.length === savedErrors) return true;
             this.errors = this.errors.slice(0, savedErrors);
@@ -487,10 +487,10 @@ Validator.prototype.matchAny = function(node, path) {
 Validator.prototype.matchPattern = function(pattern, node, path) {
     if (!pattern) return true;
 
-    var ptype = pattern.type;
+    let ptype = pattern.type;
 
     if (ptype === 'REF') {
-        var def = this.resolve(pattern.name);
+        let def = this.resolve(pattern.name);
         if (!def) {
             this.errors.push(path.join('/') + ': Undefined pattern reference "' + pattern.name + '"');
             return false;
@@ -499,24 +499,24 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
     }
 
     if (ptype === 'CHOICE') {
-        var savedErrors = this.errors.length;
+        let savedErrors = this.errors.length;
         if (this.matchPattern(pattern.left, node, path)) return true;
         this.errors = this.errors.slice(0, savedErrors);
         return this.matchPattern(pattern.right, node, path);
     }
 
     if (ptype === 'SEQ') {
-        var seqChildren = [];
-        var me = this;
+        let seqChildren = [];
+        let me = this;
         (function flattenSeq(p) {
             if (!p) return;
             if (p.type === 'SEQ' && p.children) {
-                for (var ci = 0; ci < p.children.length; ci++) flattenSeq(p.children[ci]);
+                for (let ci = 0; ci < p.children.length; ci++) flattenSeq(p.children[ci]);
             } else if (p.type === 'SEQ' && p.left && p.right) {
                 flattenSeq(p.left);
                 flattenSeq(p.right);
             } else if (p.type === 'REF') {
-                var def = me.resolve(p.name);
+                let def = me.resolve(p.name);
                 if (def) flattenSeq(def);
                 else seqChildren.push(p);
             } else {
@@ -524,12 +524,12 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
             }
         })(pattern);
 
-        var elemChildren = (node.children || []).filter(function(c) { return c.type === 'element'; });
-        var consumed = new Set();
-        var interleaveIndex = -1;
+        let elemChildren = (node.children || []).filter(function(c) { return c.type === 'element'; });
+        let consumed = new Set();
+        let interleaveIndex = -1;
 
         // Find the interleave pattern position and process pre-interleave children
-        for (var i = 0; i < seqChildren.length; i++) {
+        for (let i = 0; i < seqChildren.length; i++) {
             if (me.isInterleavePattern(seqChildren[i])) {
                 interleaveIndex = i;
                 break;
@@ -537,16 +537,16 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
         }
 
         // First pass: match element patterns in order (before interleave)
-        var ei = 0;
-        for (var i = 0; i < (interleaveIndex > -1 ? interleaveIndex : seqChildren.length); i++) {
-            var childPat = seqChildren[i];
+        let ei = 0;
+        for (let i = 0; i < (interleaveIndex > -1 ? interleaveIndex : seqChildren.length); i++) {
+            let childPat = seqChildren[i];
             if (me.isAttributePattern(childPat)) continue;
 
             // Find a matching unconsumed child
-            var found = false;
-            for (var j = 0; j < elemChildren.length; j++) {
+            let found = false;
+            for (let j = 0; j < elemChildren.length; j++) {
                 if (consumed.has(j)) continue;
-                var savedErrors = me.errors.length;
+                let savedErrors = me.errors.length;
                 if (me.matchPattern(childPat, elemChildren[j], path.concat('[' + j + ']'))) {
                     consumed.add(j);
                     found = true;
@@ -564,14 +564,14 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
         // Second pass: interleave patterns match against remaining unconsumed children
         if (interleaveIndex > -1) {
             // Build a temporary node with only unconsumed children
-            var savedChildren = node.children;
+            let savedChildren = node.children;
             node.children = (node.children || []).filter(function(c) {
                 if (c.type !== 'element') return true;
-                var idx = elemChildren.indexOf(c);
+                let idx = elemChildren.indexOf(c);
                 return idx === -1 || !consumed.has(idx);
             });
-            var interPat = seqChildren[interleaveIndex];
-            var interOk = me.matchPattern(interPat, node, path);
+            let interPat = seqChildren[interleaveIndex];
+            let interOk = me.matchPattern(interPat, node, path);
             node.children = savedChildren;
             if (!interOk) return false;
         }
@@ -580,11 +580,11 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
     }
 
     if (ptype === 'INTERLEAVE') {
-        var allChildren = (node.children || []).filter(function(c) { return c.type === 'element'; });
-        var remaining = allChildren.slice();
+        let allChildren = (node.children || []).filter(function(c) { return c.type === 'element'; });
+        let remaining = allChildren.slice();
 
         // Flatten nested interleave into list of alternatives
-        var interAlts = [];
+        let interAlts = [];
         (function flattenInter(p) {
             if (!p) return;
             if (p.type === 'INTERLEAVE') {
@@ -596,8 +596,8 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
         })(pattern);
 
         // For each alternative, try to match against remaining children
-        for (var ai = 0; ai < interAlts.length; ai++) {
-            var alt = interAlts[ai];
+        for (let ai = 0; ai < interAlts.length; ai++) {
+            let alt = interAlts[ai];
             if (!matchSubPatterns(this, alt, remaining, path)) return false;
         }
         // Remove matched children from node.children
@@ -610,10 +610,10 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
     }
 
     if (ptype === 'ELEMENT') {
-        var nodeNs = node.ns ? '' + node.ns : '';
-        var patNs = pattern.name.ns ? '' + pattern.name.ns : '';
+        let nodeNs = node.ns ? '' + node.ns : '';
+        let patNs = pattern.name.ns ? '' + pattern.name.ns : '';
         if (nodeNs !== patNs) {
-            var resolvedNs = this.grammar.namespaces[pattern.name.ns] || patNs;
+            let resolvedNs = this.grammar.namespaces[pattern.name.ns] || patNs;
             if (nodeNs !== resolvedNs) {
                 this.errors.push(path.join('/') + ': Namespace mismatch for <' + node.local + '>: expected "' + resolvedNs + '" got "' + nodeNs + '"');
                 return false;
@@ -626,22 +626,22 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
         // Validate attributes
         this.validateAttributes(pattern.child, node, path);
         // Recursively validate child elements: collect valid child element names and check each XML child
-        var validChildNames = this.collectValidChildElements(pattern.child);
+        let validChildNames = this.collectValidChildElements(pattern.child);
         if (node.children) {
-            for (var ci = 0; ci < node.children.length; ci++) {
-                var child = node.children[ci];
+            for (let ci = 0; ci < node.children.length; ci++) {
+                let child = node.children[ci];
                 if (child.type !== 'element') continue;
-                var childKey = (child.ns ? child.ns + ':' : '') + child.local;
-                var childNsResolved = child.ns || '';
+                let childKey = (child.ns ? child.ns + ':' : '') + child.local;
+                let childNsResolved = child.ns || '';
                 // Resolve namespace prefix
-                for (var nsk in this.grammar.namespaces) {
+                for (let nsk in this.grammar.namespaces) {
                     if (this.grammar.namespaces[nsk] === childNsResolved) { childKey = nsk + ':' + child.local; break; }
                 }
                 if (this.grammar.definitions[childKey] || this.grammar.definitions[child.local]) {
                     // Child element has a known definition, validate it
-                    var childDef = this.grammar.definitions[childKey] || this.grammar.definitions[child.local];
+                    let childDef = this.grammar.definitions[childKey] || this.grammar.definitions[child.local];
                     if (childDef.type === 'ELEMENT') {
-                        var savedErrors = this.errors.length;
+                        let savedErrors = this.errors.length;
                         if (!this.matchPattern(childDef, child, path.concat(childKey))) {
                             this.errors = this.errors.slice(0, savedErrors);
                         }
@@ -665,12 +665,12 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
     }
 
     if (ptype === 'STRING') {
-        var textContent = (node.children || []).filter(function(c) { return c.type === 'text'; }).map(function(c) { return c.text; }).join('');
+        let textContent = (node.children || []).filter(function(c) { return c.type === 'text'; }).map(function(c) { return c.text; }).join('');
         return textContent.trim() === pattern.value;
     }
 
     if (ptype === 'OPTIONAL') {
-        var savedErrors = this.errors.length;
+        let savedErrors = this.errors.length;
         if (this.matchPattern(pattern.child, node, path)) return true;
         this.errors = this.errors.slice(0, savedErrors);
         return true;
@@ -703,7 +703,7 @@ Validator.prototype.matchPattern = function(pattern, node, path) {
 
 Validator.prototype.isAttributePattern = function(pattern) {
     if (!pattern) return false;
-    var p = pattern;
+    let p = pattern;
     if (p.type === 'REF') p = this.resolve(p.name);
     if (!p) return false;
     if (p.type === 'ATTRIBUTE') return true;
@@ -714,7 +714,7 @@ Validator.prototype.isAttributePattern = function(pattern) {
 
 Validator.prototype.isInterleavePattern = function(pattern) {
     if (!pattern) return false;
-    var p = pattern;
+    let p = pattern;
     if (p.type === 'REF') p = this.resolve(p.name);
     if (!p) return false;
     if (p.type === 'INTERLEAVE') return true;
@@ -723,17 +723,17 @@ Validator.prototype.isInterleavePattern = function(pattern) {
 };
 
 Validator.prototype.collectValidChildElements = function(pattern) {
-    var names = {};
-    var me = this;
+    let names = {};
+    let me = this;
     (function walk(p) {
         if (!p) return;
         if (p.type === 'ELEMENT') {
-            var key = (p.name.ns ? p.name.ns + ':' : '') + p.name.local;
+            let key = (p.name.ns ? p.name.ns + ':' : '') + p.name.local;
             names[key] = true;
         } else if (p.type === 'REF') {
             walk(me.resolve(p.name));
         } else if (p.type === 'SEQ' && p.children) {
-            for (var i = 0; i < p.children.length; i++) walk(p.children[i]);
+            for (let i = 0; i < p.children.length; i++) walk(p.children[i]);
         } else if (p.type === 'SEQ' && p.left) {
             walk(p.left); walk(p.right);
         } else if (p.type === 'CHOICE') {
@@ -751,7 +751,7 @@ Validator.prototype.matchElementName = function(pattern, local, ns) {
     if (!pattern) return false;
     if (pattern.type === 'REF') return this.matchElementName(this.resolve(pattern.name), local, ns);
     if (pattern.type === 'ELEMENT') {
-        var pNs = pattern.name.ns || '';
+        let pNs = pattern.name.ns || '';
         if (pNs && this.grammar.namespaces[pNs]) pNs = this.grammar.namespaces[pNs];
         return pattern.name.local === local && (!pNs || pNs === (ns || ''));
     }
@@ -775,22 +775,22 @@ Validator.prototype.matchTextPattern = function(pattern, text, path) {
 };
 
 Validator.prototype.validateAttributes = function(pattern, node, path) {
-    var attrPatterns = extractAttrPatterns(pattern, this);
-    var attrs = node.attrs || {};
+    let attrPatterns = extractAttrPatterns(pattern, this);
+    let attrs = node.attrs || {};
 
     // Check each attribute definition
-    for (var i = 0; i < attrPatterns.length; i++) {
-        var ap = attrPatterns[i].pattern;
-        var isOptional = attrPatterns[i].optional;
-        var attrLocal = ap.name.local;
-        var attrNs = ap.name.ns ? this.grammar.namespaces[ap.name.ns] || ap.name.ns : '';
+    for (let i = 0; i < attrPatterns.length; i++) {
+        let ap = attrPatterns[i].pattern;
+        let isOptional = attrPatterns[i].optional;
+        let attrLocal = ap.name.local;
+        let attrNs = ap.name.ns ? this.grammar.namespaces[ap.name.ns] || ap.name.ns : '';
         // Find the attribute in the node's attributes
-        var foundKey = null;
-        for (var key in attrs) {
-            var keyLocal = key;
-            var keyNs = '';
+        let foundKey = null;
+        for (let key in attrs) {
+            let keyLocal = key;
+            let keyNs = '';
             if (key.includes(':')) {
-                var parts = key.split(':');
+                let parts = key.split(':');
                 keyNs = parts[0];
                 keyLocal = parts[1];
                 if (this.grammar.namespaces[keyNs]) keyNs = this.grammar.namespaces[keyNs];
@@ -802,7 +802,7 @@ Validator.prototype.validateAttributes = function(pattern, node, path) {
         }
         if (foundKey) {
             // Validate attribute value
-            var val = attrs[foundKey];
+            let val = attrs[foundKey];
             if (!this.validateAttrValue(ap.child, val, path, attrLocal)) {
                 this.errors.push(path.join('/') + ': Invalid value "' + val + '" for attribute @' + attrLocal);
             }
@@ -814,10 +814,10 @@ Validator.prototype.validateAttributes = function(pattern, node, path) {
 
 Validator.prototype.validateAttrValue = function(pattern, value, path, attrName) {
     if (!pattern) return true;
-    var ptype = pattern.type;
+    let ptype = pattern.type;
 
     if (ptype === 'REF') {
-        var def = this.resolve(pattern.name);
+        let def = this.resolve(pattern.name);
         if (!def) return true;
         return this.validateAttrValue(def, value, path, attrName);
     }
@@ -832,7 +832,7 @@ Validator.prototype.validateAttrValue = function(pattern, value, path, attrName)
     }
     if (ptype === 'SEQ') {
         // For sequences of text/strings, check each part
-        for (var i = 0; i < pattern.children.length; i++) {
+        for (let i = 0; i < pattern.children.length; i++) {
             if (!this.validateAttrValue(pattern.children[i], value, path, attrName)) return false;
         }
         return true;
@@ -840,14 +840,14 @@ Validator.prototype.validateAttrValue = function(pattern, value, path, attrName)
     // Pattern references resolve to text/string types for attributes
     if (ptype === 'LIST') {
         // CSL list attributes: whitespace-separated values
-        var vals = value.trim().split(/\s+/);
-        for (var i = 0; i < vals.length; i++) {
+        let vals = value.trim().split(/\s+/);
+        for (let i = 0; i < vals.length; i++) {
             if (!this.validateAttrValue(pattern.child, vals[i], path, attrName)) return false;
         }
         return true;
     }
     // XSD types: xsd:boolean, xsd:integer, xsd:language, xsd:anyURI, xsd:NMTOKEN, xsd:string, xsd:nonNegativeInteger, xsd:dateTime
-    var m = attrName.match(/^xsd:(.+)$/);
+    let m = attrName.match(/^xsd:(.+)$/);
     if (m) {
         return validateXsdType(m[1], value);
     }
@@ -858,7 +858,7 @@ Validator.prototype.validateAttrValue = function(pattern, value, path, attrName)
 // Check if a pattern is nullable (can match empty)
 function isNullablePattern(pattern, validator) {
     if (!pattern) return true;
-    var ptype = pattern.type;
+    let ptype = pattern.type;
     if (ptype === 'OPTIONAL' || ptype === 'STAR' || ptype === 'EMPTY' || ptype === 'XSD') return true;
     if (ptype === 'REF') return isNullablePattern(validator.resolve(pattern.name), validator);
     if (ptype === 'CHOICE') return isNullablePattern(pattern.left, validator) || isNullablePattern(pattern.right, validator);
@@ -867,7 +867,7 @@ function isNullablePattern(pattern, validator) {
 }
 
 function extractAttrPatterns(pattern, validator) {
-    var attrs = [];
+    let attrs = [];
     function walk(p, optional) {
         if (!p) return;
         if (p.type === 'ATTRIBUTE') { attrs.push({ pattern: p, optional: optional }); return; }
@@ -888,8 +888,8 @@ function matchSubPatterns(validator, pattern, remaining, path) {
     if (pattern.type === 'STAR' || pattern.type === 'OPTIONAL' || pattern.type === 'XSD') return true;
     if (pattern.type === 'ELEMENT') {
         // Find and remove a matching element from remaining
-        for (var i = 0; i < remaining.length; i++) {
-            var r = remaining[i];
+        for (let i = 0; i < remaining.length; i++) {
+            let r = remaining[i];
             if (validator.matchPattern(pattern, r, path)) {
                 remaining.splice(i, 1);
                 return true;
@@ -898,7 +898,7 @@ function matchSubPatterns(validator, pattern, remaining, path) {
         return isNullablePattern(pattern, validator);
     }
     if (pattern.type === 'CHOICE') {
-        var copy = remaining.slice();
+        let copy = remaining.slice();
         if (matchSubPatterns(validator, pattern.left, remaining, path)) return true;
         // Restore and try right
         remaining.length = 0;
@@ -906,7 +906,7 @@ function matchSubPatterns(validator, pattern, remaining, path) {
         return matchSubPatterns(validator, pattern.right, remaining, path);
     }
     if (pattern.type === 'SEQ') {
-        for (var i = 0; i < pattern.children.length; i++) {
+        for (let i = 0; i < pattern.children.length; i++) {
             if (!matchSubPatterns(validator, pattern.children[i], remaining, path)) return false;
         }
         return true;
@@ -937,16 +937,16 @@ function parseXmlSimple(xmlStr) {
     xmlStr = xmlStr.replace(/<\?[^>]*\?>/g, '').trim();
     if (!xmlStr) return null;
 
-    var pos = 0;
-    var nsStack = []; // Stack of namespace mappings [{ prefix: uri, ... }]
+    let pos = 0;
+    let nsStack = []; // Stack of namespace mappings [{ prefix: uri, ... }]
 
     function skipWs() {
         while (pos < xmlStr.length && /\s/.test(xmlStr[pos])) pos++;
     }
 
     function addNs(attrs) {
-        var nsMap = {};
-        for (var key in attrs) {
+        let nsMap = {};
+        for (let key in attrs) {
             if (key === 'xmlns') {
                 nsMap[''] = attrs[key];
             } else if (key.startsWith('xmlns:')) {
@@ -954,8 +954,8 @@ function parseXmlSimple(xmlStr) {
             }
         }
         if (nsStack.length > 0) {
-            var parentNs = nsStack[nsStack.length - 1];
-            for (var k in parentNs) {
+            let parentNs = nsStack[nsStack.length - 1];
+            for (let k in parentNs) {
                 if (!(k in nsMap)) nsMap[k] = parentNs[k];
             }
         }
@@ -973,62 +973,62 @@ function parseXmlSimple(xmlStr) {
         if (pos >= xmlStr.length || xmlStr[pos] !== '<') return null;
         if (xmlStr.slice(pos, pos + 2) === '</') return null;
         if (xmlStr.slice(pos, pos + 4) === '<!--') {
-            var end = xmlStr.indexOf('-->', pos);
+            let end = xmlStr.indexOf('-->', pos);
             if (end === -1) end = xmlStr.length;
             pos = end + 3;
             return parseNode();
         }
         pos++; // skip <
         skipWs();
-        var nameEnd = pos;
+        let nameEnd = pos;
         while (nameEnd < xmlStr.length && !/\s|\/|>/.test(xmlStr[nameEnd])) nameEnd++;
-        var tagName = xmlStr.slice(pos, nameEnd);
+        let tagName = xmlStr.slice(pos, nameEnd);
         pos = nameEnd;
-        var ns = '', local = tagName;
-        var colonIdx = tagName.indexOf(':');
+        let ns = '', local = tagName;
+        let colonIdx = tagName.indexOf(':');
         if (colonIdx > -1) {
             ns = tagName.slice(0, colonIdx);
             local = tagName.slice(colonIdx + 1);
         }
-        var attrs = {};
+        let attrs = {};
         while (pos < xmlStr.length) {
             skipWs();
             if (xmlStr[pos] === '/' || xmlStr[pos] === '>') break;
-            var attrStart = pos;
+            let attrStart = pos;
             while (pos < xmlStr.length && !/\s|=|>/.test(xmlStr[pos])) pos++;
-            var attrName = xmlStr.slice(attrStart, pos);
+            let attrName = xmlStr.slice(attrStart, pos);
             skipWs();
             if (xmlStr[pos] !== '=') break;
             pos++;
             skipWs();
-            var quote = xmlStr[pos];
+            let quote = xmlStr[pos];
             if (quote !== '"' && quote !== "'") break;
             pos++;
-            var valStart = pos;
+            let valStart = pos;
             while (pos < xmlStr.length && xmlStr[pos] !== quote) pos++;
-            var attrVal = xmlStr.slice(valStart, pos);
+            let attrVal = xmlStr.slice(valStart, pos);
             pos++;
             attrs[attrName] = attrVal;
         }
         skipWs();
-        var selfClosing = false;
+        let selfClosing = false;
         if (xmlStr[pos] === '/') { selfClosing = true; pos++; }
         if (xmlStr[pos] === '>') pos++;
 
         // Push namespace context
-        var nsMap = addNs(attrs);
+        let nsMap = addNs(attrs);
         // Resolve element namespace
         if (!ns && nsMap['']) ns = nsMap[''];
         else if (ns && nsMap[ns]) ns = nsMap[ns];
 
-        var children = [];
+        let children = [];
         if (!selfClosing) {
             while (pos < xmlStr.length) {
                 skipWs();
-                var textStart = pos;
+                let textStart = pos;
                 while (pos < xmlStr.length && xmlStr[pos] !== '<') pos++;
                 if (pos > textStart) {
-                    var text = xmlStr.slice(textStart, pos).replace(/\s+/g, ' ').trim();
+                    let text = xmlStr.slice(textStart, pos).replace(/\s+/g, ' ').trim();
                     if (text) children.push({ type: 'text', text: text });
                 }
                 if (pos >= xmlStr.length) break;
@@ -1038,7 +1038,7 @@ function parseXmlSimple(xmlStr) {
                     if (xmlStr[pos] === '>') pos++;
                     break;
                 }
-                var child = parseNode();
+                let child = parseNode();
                 if (child) children.push(child);
                 else break;
             }
@@ -1048,7 +1048,7 @@ function parseXmlSimple(xmlStr) {
         return { type: 'element', ns: ns, local: local, attrs: attrs, children: children };
     }
 
-    var root = parseNode();
+    let root = parseNode();
     return { root: root };
 }
 
@@ -1056,20 +1056,20 @@ function parseXmlSimple(xmlStr) {
 // Public API
 // ---------------------------------------------------------------------------
 function loadSchema(schemaPath) {
-    var absPath = path.resolve(schemaPath);
-    var src = fs.readFileSync(absPath, 'utf8');
-    var tokens = tokenize(src);
-    var parser = new Parser(tokens);
-    var grammar = parser.parseGrammar();
+    let absPath = path.resolve(schemaPath);
+    let src = fs.readFileSync(absPath, 'utf8');
+    let tokens = tokenize(src);
+    let parser = new Parser(tokens);
+    let grammar = parser.parseGrammar();
     grammar = resolveIncludes(grammar, path.dirname(absPath));
     grammar = sanitizeGrammar(grammar);
     return grammar;
 }
 
 function validateCSL(cslXml, schemaPath) {
-    var grammar = loadSchema(schemaPath);
-    var validator = new Validator(grammar);
-    var valid = validator.validate(cslXml);
+    let grammar = loadSchema(schemaPath);
+    let validator = new Validator(grammar);
+    let valid = validator.validate(cslXml);
     return { valid: valid, errors: validator.errors };
 }
 
@@ -1077,20 +1077,20 @@ export { validateCSL, loadSchema, tokenize, Parser, Validator, parseXmlSimple };
 
 // CLI mode
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1])) {
-    var args = process.argv.slice(2);
-    var schemaPath = args[0];
-    var xmlPath = args[1];
+    let args = process.argv.slice(2);
+    let schemaPath = args[0];
+    let xmlPath = args[1];
     if (!schemaPath || !xmlPath) {
         console.log('Usage: node tools/rnc-validator.js <schema.rnc> <file.xml>');
         process.exit(1);
     }
-    var xml = fs.readFileSync(xmlPath, 'utf8');
-    var result = validateCSL(xml, schemaPath);
+    let xml = fs.readFileSync(xmlPath, 'utf8');
+    let result = validateCSL(xml, schemaPath);
     if (result.valid) {
         console.log('XML is valid.');
         process.exit(0);
     } else {
-        for (var e of result.errors) console.log('ERROR: ' + e);
+        for (let e of result.errors) console.log('ERROR: ' + e);
         process.exit(1);
     }
 }

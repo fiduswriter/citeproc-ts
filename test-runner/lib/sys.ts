@@ -37,7 +37,7 @@ export async function createSys(config: any) {
     }
 
     Sys.prototype.print = function(txt) {
-        var name = this.test.NAME;
+        let name = this.test.NAME;
         this.logger_queue.push("[" + name + "] " + txt);
     }
 
@@ -51,12 +51,12 @@ export async function createSys(config: any) {
     }
 
     Sys.prototype.retrieveItem = function(id){
-        var ret = this._cache[id];
+        let ret = this._cache[id];
         return ret;
     };
 
     Sys.prototype.retrieveLocale = function(lang){
-        var ret = null;
+        let ret = null;
         try {
             ret = fs.readFileSync(path.join(this.config.path.locale, "locales-"+lang+".xml")).toString();
             ret = ret.replace(/\s*<\?[^>]*\?>\s*\n/g, "");
@@ -67,7 +67,7 @@ export async function createSys(config: any) {
     };
 
     Sys.prototype.retrieveStyleModule = function(jurisdiction, preference) {
-        var ret = null;
+        let ret = null;
         if (this.test.submode.nojuris) {
             return ret;
         }
@@ -75,7 +75,7 @@ export async function createSys(config: any) {
         if (preference) {
             idList.push(preference);
         }
-        var id = idList.join("-");
+        let id = idList.join("-");
         id = id.replace(/\:/g, "+");
         try {
             ret = fs.readFileSync(path.join(this.config.path.modules, "juris-" + id + ".csl")).toString();
@@ -87,18 +87,19 @@ export async function createSys(config: any) {
         if (!this._acache[jurisdiction]) {
             this._acache[jurisdiction] = new CSL.AbbreviationSegments();
         }
-        var jurisdictions = ["default"];
+        let jurisdictions = ["default"];
         if (jurisdiction !== "default") {
-            var lst = jurisdiction.split(":");
+            let lst = jurisdiction.split(":");
             for (let i=1,ilen=lst.length+1; i<ilen; i++) {
                 jurisdiction = lst.slice(0,i).join(":");
                 jurisdictions.push(jurisdiction);
             }
         }
         jurisdictions.reverse();
-        var haveHit = false;
+        let haveHit = false;
+        let myjurisdiction: any;
         for (let i = 0, ilen = jurisdictions.length; i < ilen; i += 1) {
-            var myjurisdiction = jurisdictions[i];
+            myjurisdiction = jurisdictions[i];
             if (!obj[myjurisdiction]) {
                 obj[myjurisdiction] = new CSL.AbbreviationSegments();
             }
@@ -114,20 +115,20 @@ export async function createSys(config: any) {
     Sys.prototype.preloadAbbreviationSets = function(myconfig) {
         if (!myconfig.path.jurisAbbrevPath) return;
         for (let itemID in this._cache) {
-            var item = this._cache[itemID];
-            var jurisdiction = item.jurisdiction;
+            let item = this._cache[itemID];
+            let jurisdiction = item.jurisdiction;
             if (!jurisdiction) continue;
 
-            var country = jurisdiction.replace(/:.*$/, "");
-            var language = item.language ? item.language : "default";
+            let country = jurisdiction.replace(/:.*$/, "");
+            let language = item.language ? item.language : "default";
             if (!this._abbrevsLoadedFor[country]) {
                 this._abbrevsLoadedFor[country] = {};
             }
 
             if (this._abbrevsLoadedFor[country]) continue;
-            var jurisAbbrevFilePath = path.join(myconfig.path.jurisAbbrevPath, "auto-" + country + ".json");
+            let jurisAbbrevFilePath = path.join(myconfig.path.jurisAbbrevPath, "auto-" + country + ".json");
             if (fs.existsSync(jurisAbbrevFilePath)) {
-                var abbrevs = JSON.parse(fs.readFileSync(jurisAbbrevFilePath)).xdata;
+                let abbrevs = JSON.parse(fs.readFileSync(jurisAbbrevFilePath)).xdata;
                 this._acache = Object.assign(this._acache, abbrevs);
             }
             this._abbrevsLoadedFor[country] = true;
@@ -135,18 +136,18 @@ export async function createSys(config: any) {
     }
 
     Sys.prototype.updateDoc = function() {
-        var data, result;
+        let data, result;
         for (let i=0,ilen=this.test.CITATIONS.length;i<ilen;i++) {
-            var citation = this.test.CITATIONS[i];
+            let citation = this.test.CITATIONS[i];
             [data, result] = this.style.processCitationCluster(citation[0], citation[1], citation[2]);
             for (let j=this.doc.length-1; j>-1; j--) {
-                var citationID = this.doc[j].citationID;
+                let citationID = this.doc[j].citationID;
                 if (!this.style.registry.citationreg.citationById[citationID]) {
                     this.doc = this.doc.slice(0, j).concat(this.doc.slice(j + 1));
                 }
             }
-            var prePost = citation[1].concat(citation[2]);
-            var posMap = {};
+            let prePost = citation[1].concat(citation[2]);
+            let posMap = {};
             for (let j=0,jlen=prePost.length;j<jlen;j++) {
                 posMap[prePost[j][0]] = j;
             }
@@ -163,9 +164,9 @@ export async function createSys(config: any) {
                 this.doc[j].prefix = "..";
             }
             for (let j in result) {
-                var insert = result[j];
+                let insert = result[j];
                 for (let k in this.doc) {
-                    var cite = this.doc[k];
+                    let cite = this.doc[k];
                     if (cite.citationID === insert[2]) {
                         this.doc[k] = {
                             prefix: ">>",
@@ -178,7 +179,7 @@ export async function createSys(config: any) {
                 }
             }
             for (let j in result) {
-                var insert = result[j];
+                let insert = result[j];
                 if (!insert) {
                     continue;
                 }
@@ -209,7 +210,7 @@ export async function createSys(config: any) {
     };
 
     Sys.prototype.run = function(){
-        var len, pos, ret, id_set;
+        let len, pos, ret, id_set;
         ret = [];
         function variableWrapper(params, prePunct, str, postPunct) {
             if (params.variableNames[0] === 'title'
@@ -232,9 +233,9 @@ export async function createSys(config: any) {
         if (this.test.OPTIONS && this.test.OPTIONS.variableWrapper) {
             this.variableWrapper = variableWrapper;
         }
-        var lang_bases_needed = {};
+        let lang_bases_needed = {};
         for (let lang in CSL.LANGS) {
-            var lang_base = lang.split("-")[0];
+            let lang_base = lang.split("-")[0];
             lang_bases_needed[lang_base] = true;
         }
         for (let lang_base in lang_bases_needed) {
@@ -242,8 +243,8 @@ export async function createSys(config: any) {
                 throw "ERROR: missing in CSL.LANG_BASES: " + lang_base;
             }
         }
-        var testCSL = this.test.CSL;
-        var me = this;
+        let testCSL = this.test.CSL;
+        let me = this;
         CSL.debug = function(str) {
             me.print(str);
         }
@@ -254,7 +255,7 @@ export async function createSys(config: any) {
         if (!this.test.MODE) {
             this.test.MODE = "all";
         }
-        var mode = this.test.MODE.split("-");
+        let mode = this.test.MODE.split("-");
         this.test.submode = {};
         for (let i=1,ilen=mode.length;i<ilen;i++) {
             this.test.submode[mode[i]] = true;
@@ -282,7 +283,7 @@ export async function createSys(config: any) {
             }
             this.style.opt.development_extensions[opt] = this.test.OPTIONS[opt];
         }
-        var langParams = {
+        let langParams = {
             persons:["translit"],
             institutions:["translit"],
             titles:["translit", "translat"],
@@ -290,7 +291,7 @@ export async function createSys(config: any) {
             publishers:["translat"],
             places:["translat"]
         };
-        var langs = {};
+        let langs = {};
         if (this.test.LANGPARAMS) {
             for (let key in this.test.LANGPARAMS) {
                 if (key === "langs") {
@@ -312,15 +313,15 @@ export async function createSys(config: any) {
             this.style.setLangPrefsForCiteAffixes(this.test.MULTIAFFIX);
         }
         if (this.test.ABBREVIATIONS) {
-            var abbrevs = {};
+            let abbrevs = {};
             for (let jurisd in this.test.ABBREVIATIONS) {
                 abbrevs[jurisd] = {};
                 for (let segment in this.test.ABBREVIATIONS[jurisd]) {
                     abbrevs[jurisd][segment] = {};
                     for (let key in this.test.ABBREVIATIONS[jurisd][segment]) {
-                        var isJurisdiction = jurisd === "default" && segment === "place" && key.toUpperCase() === key;
-                        var isCourt = ["institution-entire", "institution-part"].indexOf(segment) > -1 && segment.toLowerCase() === segment;
-                        var normkey: string;
+                        let isJurisdiction = jurisd === "default" && segment === "place" && key.toUpperCase() === key;
+                        let isCourt = ["institution-entire", "institution-part"].indexOf(segment) > -1 && segment.toLowerCase() === segment;
+                        let normkey: string;
                         if (!isJurisdiction && !isCourt) {
                             normkey = this.normalizeAbbrevsKey("title", key);
                         } else {
@@ -334,16 +335,16 @@ export async function createSys(config: any) {
         }
         if (this.test.BIBENTRIES){
             for (let i=0,ilen=this.test.BIBENTRIES.length;i<ilen;i++) {
-                var id_set = this.test.BIBENTRIES[i];
+                let id_set = this.test.BIBENTRIES[i];
                 this.style.updateItems(id_set, this.test.submode["nosort"]);
             }
         } else if (!this.test.CITATIONS) {
             this.style.updateItems(this._ids, this.test.submode["nosort"]);
         }
+        let citation: any = [];
         if (!this.test["CITATION-ITEMS"] && !this.test.CITATIONS){
-            var citation = [];
             for (let i=0,ilen=this.style.registry.reflist.length;i<ilen;i++) {
-                var item = this.style.registry.reflist[i];
+                let item = this.style.registry.reflist[i];
                 citation.push({"id":item.id});
             }
             this.test["CITATION-ITEMS"] = [citation];
@@ -371,8 +372,8 @@ export async function createSys(config: any) {
         }
 
         if (this.test.MODE === "all") {
-            var res = [];
-            var item = citation[0];
+            let res = [];
+            let item = citation[0];
             res.push("FIRST\n  " + this.style.makeCitationCluster(citation));
             item.locator = "123";
             res.push("FIRST w/LOCATOR\n  " + this.style.makeCitationCluster(citation));
@@ -407,13 +408,13 @@ export async function createSys(config: any) {
             }
             delete this.test["CITATION-ITEMS"];
             if (this.config.styleCapabilities.bibliography) {
-                var bibres = this.style.makeBibliography();
+                let bibres = this.style.makeBibliography();
                 res.push("BIBLIOGRAPHY")
                 res.push(bibres[0]["bibstart"] + bibres[1].join("") + bibres[0]["bibend"]);
             }
             ret = res.join("\n");
         } else {
-            var citations = [];
+            let citations = [];
             if (this.test["CITATION-ITEMS"]){
                 for (let i=0,ilen=this.test["CITATION-ITEMS"].length;i<ilen;i++) {
                     citation = this.test["CITATION-ITEMS"][i];
@@ -434,16 +435,16 @@ export async function createSys(config: any) {
             ret = citations.join("\n");
             if (this.test.MODE == "bibliography" && !this.test.submode["header"]){
                 if (this.test.BIBSECTION){
-                    var ret = this.style.makeBibliography(this.test.BIBSECTION);
+                    ret = this.style.makeBibliography(this.test.BIBSECTION);
                 } else {
-                    var ret = this.style.makeBibliography();
+                    ret = this.style.makeBibliography();
                 }
                 ret = ret[0]["bibstart"] + ret[1].join("") + ret[0]["bibend"];
             } else if (this.test.MODE == "bibliography" && this.test.submode["header"]){
-                var obj = this.style.makeBibliography()[0];
-                var lst = [];
+                let obj = this.style.makeBibliography()[0];
+                let lst = [];
                 for (let key in obj) {
-                    var keyval = [];
+                    let keyval = [];
                     keyval.push(key);
                     keyval.push(obj[key]);
                     lst.push(keyval);

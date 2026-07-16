@@ -29,19 +29,19 @@ const Sys = await createSys(config);
 const reporters = getReporters(config);
 const { version } = JSON.parse(fs.readFileSync(path.join(scriptDir, "package.json"), "utf8"));
 
-var rncValidator = null;
+let rncValidator = null;
 async function getRNCValidator() {
     if (!rncValidator) {
-        var projectRoot = config.path.src ? path.join(config.path.src, "..") : config.path.cwd;
+        let projectRoot = config.path.src ? path.join(config.path.src, "..") : config.path.cwd;
         const mod = await import(path.join(projectRoot, "tools", "rnc-validator.js"));
         rncValidator = mod.validateCSL;
     }
     return rncValidator;
 }
 
-var ksTimeout;
-var cdTimeout;
-var skipNames = {};
+let ksTimeout;
+let cdTimeout;
+let skipNames = {};
 
 const groupIdMap = {
     final: 2319948,
@@ -86,7 +86,7 @@ function Stripper(fn, noStrip) {
         if (this.noStrip) {
             this.arr.push(line);
         } else {
-            var m = null;
+            let m = null;
             if (this.skipStarRex.test(line)) {
                 return;
             } else if (this.openRex.test(line)) {
@@ -160,7 +160,7 @@ function checkSanity() {
 }
 
 function setLocalPathToStyleTestPath() {
-    var styleTestsPth = null;
+    let styleTestsPth = null;
     if (!fs.existsSync(config.path.styletests)) {
         throw new Error("The configured style tests directory must exist: " + config.path.styletests);
     }
@@ -177,7 +177,7 @@ function setLocalPathToStyleTestPath() {
 }
 
 function setWatchFiles(options) {
-    var arr = options.watch;
+    let arr = options.watch;
     if ("string" === typeof arr) {
         arr = [arr];
     }
@@ -200,14 +200,15 @@ function checkOverlap(tn) {
 }
 
 function checkSingle() {
-    var tn = options.single.replace(/.txt~?\r?$/, "");
-    var fn = tn + ".txt";
+    let tn = options.single.replace(/.txt~?\r?$/, "");
+    let fn = tn + ".txt";
     if (fn.split("_").length !== 2) {
         throw new Error("Single test fixture must be specified as [group]_[name]");
     }
-    var lpth = path.join(config.path.local, fn);
+    let lpth = path.join(config.path.local, fn);
+    let spth: any;
     if (config.path.std) {
-        var spth = path.join(config.path.std, fn);
+        spth = path.join(config.path.std, fn);
     }
     if (!fs.existsSync(lpth) && (options.style || !fs.existsSync(spth))) {
         console.log("Looked for " + lpth);
@@ -226,13 +227,13 @@ function checkSingle() {
 }
 
 function checkGroup() {
-    var fail = true;
-    var rex = new RegExp("^" + options.group + "_.*\.txt\\r?$");
+    let fail = true;
+    let rex = new RegExp("^" + options.group + "_.*\.txt\\r?$");
     for (let line of fs.readdirSync(config.path.local)) {
         if (rex.test(line)) {
             fail = false;
-            var lpth = path.join(config.path.local, line);
-            var tn = line.replace(/.txt\r?$/, "");
+            let lpth = path.join(config.path.local, line);
+            let tn = line.replace(/.txt\r?$/, "");
             if (!skipNames[tn]) {
                 config.testData[tn] = parseFixture(options, tn, lpth);
             }
@@ -242,8 +243,8 @@ function checkGroup() {
         for (let line of fs.readdirSync(config.path.std)) {
             if (rex.test(line)) {
                 fail = false;
-                var spth = path.join(config.path.std, line);
-                var tn = line.replace(/.txt\r?$/, "");
+                let spth = path.join(config.path.std, line);
+                let tn = line.replace(/.txt\r?$/, "");
                 if (!skipNames[tn]) {
                     if (fs.existsSync(spth)) {
                         checkOverlap(tn);
@@ -260,11 +261,11 @@ function checkGroup() {
 }
 
 function checkAll() {
-    var rex = new RegExp("^.*_.*\.txt\\r?$");
+    let rex = new RegExp("^.*_.*\.txt\\r?$");
     for (let line of fs.readdirSync(config.path.local)) {
         if (rex.test(line)) {
-            var lpth = path.join(config.path.local, line);
-            var tn = line.replace(/.txt\r?$/, "");
+            let lpth = path.join(config.path.local, line);
+            let tn = line.replace(/.txt\r?$/, "");
             if (!skipNames[tn]) {
                 config.testData[tn] = parseFixture(options, tn, lpth);
             }
@@ -273,8 +274,8 @@ function checkAll() {
     if (!options.style) {
         for (let line of fs.readdirSync(config.path.std)) {
             if (rex.test(line)) {
-                var spth = path.join(config.path.std, line);
-                var tn = line.replace(/.txt\r?$/, "");
+                let spth = path.join(config.path.std, line);
+                let tn = line.replace(/.txt\r?$/, "");
                 if (!skipNames[tn]) {
                     if (fs.existsSync(spth)) {
                         checkOverlap(tn);
@@ -287,10 +288,10 @@ function checkAll() {
 }
 
 function setGroupList() {
-    var rex = new RegExp("^([^_]+)_.*\.txt\\r?$");
+    let rex = new RegExp("^([^_]+)_.*\.txt\\r?$");
     for (let line of fs.readdirSync(config.path.local)) {
         if (rex.test(line)) {
-            var m = rex.exec(line);
+            let m = rex.exec(line);
             if (!config.testData[m[1]]) {
                 config.testData[m[1]] = [];
             }
@@ -299,7 +300,7 @@ function setGroupList() {
     }
     for (let line of fs.readdirSync(config.path.std)) {
         if (rex.test(line)) {
-            var m = rex.exec(line);
+            let m = rex.exec(line);
             if (!config.testData[m[1]]) {
                 config.testData[m[1]] = [];
             }
@@ -332,18 +333,18 @@ function Bundle(noStrip?) {
         console.log("Using processor from package");
         return;
     }
-    var bundlePath = path.join(config.path.src, "..", "citeproc.mjs");
+    let bundlePath = path.join(config.path.src, "..", "citeproc.mjs");
     // If the prebuilt bundle already exists (built by esbuild), skip the old-style concatenation
     if (fs.existsSync(bundlePath)) {
         return;
     }
     console.log("Rebundling processor");
-    var ret = "";
+    let ret = "";
     for (let fn of sources) {
-        var txt = fs.readFileSync(path.join(config.path.src, fn + ".js")).toString();
+        let txt = fs.readFileSync(path.join(config.path.src, fn + ".js")).toString();
         ret += txt + "\n";
     }
-    var license = fs.readFileSync(path.join(config.path.src, "..", "LICENSE")).toString().trim();
+    let license = fs.readFileSync(path.join(config.path.src, "..", "LICENSE")).toString().trim();
     license = "/*\n" + license + "\n*/\n";
 
     fs.writeFileSync(path.join(config.path.src, "..", "citeproc.js"), license + ret);
@@ -351,13 +352,13 @@ function Bundle(noStrip?) {
 }
 
 async function validateCSLWithSchema(schema, test) {
-    var validator = await getRNCValidator();
+    let validator = await getRNCValidator();
     return validator(test.CSL, schema);
 }
 
 function runValidationAsync(validationCount, validationGoal, schema, test) {
-    var jingPromise = new Promise<void>(async (resolve, reject) => {
-        var result;
+    let jingPromise = new Promise<void>(async (resolve, reject) => {
+        let result;
         try {
             result = await validateCSLWithSchema(schema, test);
         } catch (e) {
@@ -366,8 +367,8 @@ function runValidationAsync(validationCount, validationGoal, schema, test) {
         }
         validationCount++;
         if (!result.valid) {
-            var txt = result.errors.join('\n');
-            var lines = txt.split(/(?:\r\n|\n)/);
+            let txt = result.errors.join('\n');
+            let lines = txt.split(/(?:\r\n|\n)/);
             for (let line of lines) {
                 console.log(line);
             }
@@ -401,8 +402,8 @@ function runValidationAsync(validationCount, validationGoal, schema, test) {
 
 
 async function runValidationsAsync() {
-    var validationCount = 0;
-    var validationGoal = Object.keys(config.testData).length;
+    let validationCount = 0;
+    let validationGoal = Object.keys(config.testData).length;
     let startPos: any = 0;
     if (options.w) {
         console.log("Watching: " + options.watch[0]);
@@ -424,11 +425,11 @@ async function runValidationsAsync() {
             validationCount++;
             continue;
         }
-        var test = config.testData[key];
-        var schema = config.path.cslschema;
-        var lineList = test.CSL.split(/(?:\r\n|\n)/);
-        var inStyle = false;
-        var m = null;
+        let test = config.testData[key];
+        let schema = config.path.cslschema;
+        let lineList = test.CSL.split(/(?:\r\n|\n)/);
+        let inStyle = false;
+        let m = null;
         for (let line of lineList) {
             if (line.indexOf("<style") > -1) {
                 inStyle = true;
@@ -458,7 +459,7 @@ async function runValidationsAsync() {
 
 
 function runFixturesAsync() {
-    var fixturesPromise = new Promise<void>((resolve, reject) => {
+    let fixturesPromise = new Promise<void>((resolve, reject) => {
         console.log("Testing CSL.");
         if (options.r) {
             if (reporters[options.r]) {
@@ -476,7 +477,7 @@ function runFixturesAsync() {
                 options.r = "landing";
             }
         }
-        var args = [];
+        let args = [];
         if (options.b) {
             args.push("--no-color");
         } else {
@@ -488,32 +489,32 @@ function runFixturesAsync() {
             args.push("--bail");
         }
         args.push(path.join(config.path.fixturedir, "fixtures.mjs"));
-        var mochaPath = config.path.mocha || "mocha";
-        var mocha = spawn(mochaPath, args, {
+        let mochaPath = config.path.mocha || "mocha";
+        let mocha = spawn(mochaPath, args, {
             shell: process.platform == 'win32'
         });
         mocha.on("error", function(err) {
-            var error = new Error("Failure running \"mocha.\" If the command \"mocha\" is not found,\ninstall it globally with:\n\n    npm install -g mocha");
+            let error = new Error("Failure running \"mocha.\" If the command \"mocha\" is not found,\ninstall it globally with:\n\n    npm install -g mocha");
             errors.errorHandler(error);
         });
         mocha.stdout.on('data', (data) => {
-            var lines = data.toString();
+            let lines = data.toString();
             process.stdout.write(lines);
             if (options.w && options.k) {
-                var m = lines.match(/.*AssertionError:\s*([^\n]+)\.txt/m);
+                let m = lines.match(/.*AssertionError:\s*([^\n]+)\.txt/m);
                 if (m) {
                     console.log("Adopt this output as correct test RESULT? (y/n)");
                     process.stdin.once('data', function (key) {
                         if (!ksTimeout) {
                             ksTimeout = setTimeout(function() { ksTimeout=null }, 100)
-                            var fn = path.basename(m[1]);
-                            var test = config.testData[fn];
+                            let fn = path.basename(m[1]);
+                            let test = config.testData[fn];
                             if (key == "y" || key == "Y") {
-                                var sys = new Sys(config, test, []);
+                                let sys = new Sys(config, test, []);
                                 sys.preloadAbbreviationSets(config);
-                                var result = sys.run();
-                                var input = JSON.stringify(test.INPUT, null, 2);
-                                var txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
+                                let result = sys.run();
+                                let input = JSON.stringify(test.INPUT, null, 2);
+                                let txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
                                 let mode: any = [test.MODE];
                                 for (let submode in test.submode) {
                                     mode.push(submode);
@@ -531,8 +532,8 @@ function runFixturesAsync() {
                                     if (key.toUpperCase() !== key) {
                                         continue;
                                     }
-                                    var testKey = typeof test[key] == "object" ? JSON.stringify(test[key], null, 2) : test[key];
-                                    var block = "\n\n>>===== " + key + " =====>>\n" + testKey.trim() + "\n<<===== " + key + " =====<<\n";
+                                    let testKey = typeof test[key] == "object" ? JSON.stringify(test[key], null, 2) : test[key];
+                                    let block = "\n\n>>===== " + key + " =====>>\n" + testKey.trim() + "\n<<===== " + key + " =====<<\n";
                                     txt += block;
                                 }
                                 fs.writeFileSync(path.join(config.path.styletests, options.S, fn + ".txt"), txt);
@@ -564,7 +565,7 @@ function runFixturesAsync() {
 }
 
 function buildTests() {
-    var fixtures = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateJS.js")).toString();
+    let fixtures = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateJS.js")).toString();
     if (Object.keys(config.testData).length === 0) {
         errors.setupGuidance("No tests to run.");
     }
@@ -602,7 +603,7 @@ async function bundleValidateTest(continueAfter?) {
         if (options.once || options.validationonly) {
             process.exit();
         }
-        var watcher = chokidar.watch(options.watch[0]);
+        let watcher = chokidar.watch(options.watch[0]);
         watcher.on("change", (event, filename) => {
             if (!cdTimeout) {
                 cdTimeout = setTimeout(function() { cdTimeout=null }, 200)
@@ -639,16 +640,17 @@ async function bundleValidateTest(continueAfter?) {
     try {
         checkSanity();
         if (options.validate) {
-            var filenames = null;
+            let filenames = null;
             if (options.validate === "all") {
                 filenames = fs.readdirSync(config.path.modules).filter(o => o.match(/\.csl$/) ? o : false);
             } else {
-                var m = options.validate.match(/^juris-([^-]+)(?:-[^.]+)*\.csl$/);
+                let m = options.validate.match(/^juris-([^-]+)(?:-[^.]+)*\.csl$/);
+                let rex: RegExp;
                 if (m) {
-                    var rex = new RegExp(options.validate.replace(/\./g, "\\."));
+                    rex = new RegExp(options.validate.replace(/\./g, "\\."));
                 } else {
-                    var country = options.validate;
-                    var rex = new RegExp(`^juris-${country}.*\.csl$`);
+                    let country = options.validate;
+                    rex = new RegExp(`^juris-${country}.*\.csl$`);
                 }
                 filenames = fs.readdirSync(config.path.modules).filter(o => o.match(rex) ? o : false);
             }
@@ -657,19 +659,19 @@ async function bundleValidateTest(continueAfter?) {
                 process.exit();
             }
             if (filenames) {
-                var goal = filenames.length;
-                var count = 0;
+                let goal = filenames.length;
+                let count = 0;
                 console.log(`Validating modules in ${config.path.modules}`);
                 for (let fn of filenames) {
                     if (options.validate !== "all") {
                         console.log(fn);
                     }
-                    var filePath = path.join(config.path.modules, fn);
-                    var csl = fs.readFileSync(filePath).toString();
+                    let filePath = path.join(config.path.modules, fn);
+                    let csl = fs.readFileSync(filePath).toString();
                     if (csl.match(/^<\?.*\?>/)) {
                         csl = csl.split("\n").slice(1).join("\n");
                     }
-                    var res = await runValidationAsync(count, goal, config.path.cslmschema, {CSL:csl, NAME:fn});
+                    let res = await runValidationAsync(count, goal, config.path.cslmschema, {CSL:csl, NAME:fn});
                     count++;
                 }
                 process.exit();
@@ -702,7 +704,7 @@ async function bundleValidateTest(continueAfter?) {
             config.groupID = options.U;
         }
         if (options.watch && !options.style) {
-            var txt = fs.readFileSync(options.watch[0]).toString();
+            let txt = fs.readFileSync(options.watch[0]).toString();
             config.styleCapabilities = styleCapabilities(txt);
             options.style = config.styleCapabilities.styleName;
             options.S = config.styleCapabilities.styleName;
@@ -713,9 +715,9 @@ async function bundleValidateTest(continueAfter?) {
 
         if (options.U) {
             console.log(config.groupID)
-            var json = await fetchURL("https://api.zotero.org/groups/" + config.groupID + "/collections/top?limit=100");
-            var obj = JSON.parse(json.buf.toString());
-            var collectionKey = obj.filter(o => (o.data.name === options.S))
+            let json = await fetchURL("https://api.zotero.org/groups/" + config.groupID + "/collections/top?limit=100");
+            let obj = JSON.parse(json.buf.toString());
+            let collectionKey = obj.filter(o => (o.data.name === options.S))
                 .map(o => o.data.key);
             if (!collectionKey || !collectionKey[0]) {
                 errors.setupGuidance("No collection found for style \"" + options.S + "\" in library of test items.");
@@ -726,36 +728,36 @@ async function bundleValidateTest(continueAfter?) {
             while (url) {
                 json = await fetchURL(url);
                 obj = obj.concat(JSON.parse(json.buf.toString()));
-                var m = json.res.responseHeaders.link.match(/<(https:\/\/[^>]+)>;\s+rel=\"next\"/);
+                let m = json.res.responseHeaders.link.match(/<(https:\/\/[^>]+)>;\s+rel=\"next\"/);
                 if (m) {
                     url = m[1];
                 } else {
                     url = false;
                 }
             }
-            var styleTestDir = path.join(config.path.styletests, options.S);
-            var doneKeys = {};
-            var doneNums = {};
-            var rex = new RegExp("^.*_.*\.txt\\r?$");
+            let styleTestDir = path.join(config.path.styletests, options.S);
+            let doneKeys = {};
+            let doneNums = {};
+            let rex = new RegExp("^.*_.*\.txt\\r?$");
             for (let fileName of fs.readdirSync(styleTestDir)) {
                 if (!rex.test(fileName)) continue;
-                var fixture = parseFixture(options, fileName, path.join(styleTestDir, fileName));
+                let fixture = parseFixture(options, fileName, path.join(styleTestDir, fileName));
                 for (let key of fixture.KEYS) {
                     doneKeys[key] = true;
                 }
-                var m = fileName.match(/[^0-9]*([0-9]+)/);
+                let m = fileName.match(/[^0-9]*([0-9]+)/);
                 if (m) {
                     doneNums[parseInt(m[1], 10)] = true;
                 }
             }
-            var max = 0;
-            var doneNumsLst = Object.keys(doneNums);
+            let max = 0;
+            let doneNumsLst = Object.keys(doneNums);
             if (doneNumsLst.length > 0) {
-                var max = Object.keys(doneNums).map(o => parseInt(o)).reduce(function(a, b) {
+                let max = Object.keys(doneNums).map(o => parseInt(o)).reduce(function(a, b) {
                     return Math.max(a, b);
                 });
             }
-            var newNums = [];
+            let newNums = [];
             for (let i=1,ilen=(max + obj.length + 1); i<ilen; i++) {
                 if (!doneNums[i]) {
                     newNums.push(i);
@@ -765,15 +767,15 @@ async function bundleValidateTest(continueAfter?) {
                 }
             }
             newNums.reverse();
-            var arr = [];
+            let arr = [];
 
             for (let o of obj) {
-                var key = o.data.key;
+                let key = o.data.key;
                 if (doneKeys[key]) {
                     continue;
                 }
                 delete o.data.key;
-                var description = o.data.abstractNote;
+                let description = o.data.abstractNote;
                 if (description) {
                     description = description.slice(0, 50).replace(/\n+/g, " ");
                 }
@@ -781,8 +783,8 @@ async function bundleValidateTest(continueAfter?) {
                 delete o.data.version;
                 delete o.data.dateAdded;
                 delete o.data.dateModified;
-                var cslData = zoteroToCSL(o.data);
-                var cslItem = zoteroToCSLM(o, cslData);
+                let cslData = zoteroToCSL(o.data);
+                let cslItem = zoteroToCSLM(o, cslData);
                 arr.push({
                     key: key,
                     item: cslItem,
@@ -791,16 +793,16 @@ async function bundleValidateTest(continueAfter?) {
             }
             for (let i in arr) {
                 arr[i].id = "ITEM-1";
-                var item = JSON.stringify([arr[i]], null, 2);
-                var txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
+                let item = JSON.stringify([arr[i]], null, 2);
+                let txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
                 txt = txt.replace("%%MODE%%", "all");
                 txt = txt.replace("%%KEYS%%", JSON.stringify([arr[i].key], null, 2));
                 txt = txt.replace("%%INPUT%%", JSON.stringify([arr[i].item], null, 2));
-                var pos = "" + newNums.pop();
+                let pos = "" + newNums.pop();
                 while (pos.length < 3) {
                     pos = "0" + pos;
                 }
-                var fileStub = "style_test" + pos;
+                let fileStub = "style_test" + pos;
                 if (arr[i].description) {
                     txt = txt.replace("%%DESCRIPTION%%", arr[i].description);
                 } else {
@@ -817,7 +819,7 @@ async function bundleValidateTest(continueAfter?) {
         } else if (options.single || options.group || options.all) {
             await bundleValidateTest().catch(err => errors.errorHandler(err));
         } else if (options.l) {
-            var ret = Object.keys(config.testData);
+            let ret = Object.keys(config.testData);
             ret.sort();
             for (let key of ret) {
                 console.log(key + " (" + config.testData[key].length + ")");

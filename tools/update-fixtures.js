@@ -16,34 +16,34 @@ async function main() {
     const { parseFixture } = await import(path.join(ROOT, 'test-runner', 'dist', 'lib', 'fixture-parser.js'));
 
     function updateFixture(fixtureName) {
-        var filePath = path.join(FIXTURES_DIR, fixtureName + '.txt');
+        let filePath = path.join(FIXTURES_DIR, fixtureName + '.txt');
         if (!fs.existsSync(filePath)) {
             console.log('NOT FOUND:', fixtureName);
             return;
         }
 
-        var test = parseFixture({}, fixtureName, filePath);
+        let test = parseFixture({}, fixtureName, filePath);
         if (!test) {
             console.log('PARSE FAILED:', fixtureName);
             return;
         }
 
         try {
-            var sys = new Sys(config, test, []);
+            let sys = new Sys(config, test, []);
             sys.preloadAbbreviationSets(config);
-            var actual = sys.run();
+            let actual = sys.run();
 
             if (actual === test.RESULT) {
                 console.log('ALREADY MATCHES:', fixtureName);
                 return;
             }
 
-            var rawContent = fs.readFileSync(filePath, 'utf8');
-            var resultRegex = /(>>={2,5} RESULT ={2,5}>>\n)([\s\S]*?)(\n<<={2,5} RESULT ={2,5}<<)/;
+            let rawContent = fs.readFileSync(filePath, 'utf8');
+            let resultRegex = /(>>={2,5} RESULT ={2,5}>>\n)([\s\S]*?)(\n<<={2,5} RESULT ={2,5}<<)/;
             if (!resultRegex.test(rawContent)) {
                 resultRegex = /(>>=+ RESULT =+>>\r?\n)([\s\S]*?)(\r?\n<<=+ RESULT =+<<)/;
             }
-            var updated = rawContent.replace(resultRegex, '$1' + actual + '$3');
+            let updated = rawContent.replace(resultRegex, '$1' + actual + '$3');
 
             if (updated === rawContent) {
                 console.log('NO RESULT SECTION:', fixtureName);
@@ -57,13 +57,13 @@ async function main() {
         }
     }
 
-    var args = process.argv.slice(2);
+    let args = process.argv.slice(2);
     if (args.length === 0) {
         console.log('Usage: node tools/update-fixtures.js <fixtureName> [<fixtureName> ...]');
         process.exit(1);
     }
 
-    for (var i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i++) {
         updateFixture(args[i]);
     }
 }

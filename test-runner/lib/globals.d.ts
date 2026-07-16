@@ -8,10 +8,10 @@
  */
 
 // Node.js runtime globals (available in both CJS and ESM)
-declare var process: any;
-declare var console: any;
-declare var Buffer: any;
-declare var global: any;
+declare let process: any;
+declare let console: any;
+declare let Buffer: any;
+declare let global: any;
 declare function setTimeout(callback: any, ms?: number, ...args: any[]): any;
 declare function clearTimeout(handle?: any): void;
 declare function setInterval(callback: any, ms?: number, ...args: any[]): any;

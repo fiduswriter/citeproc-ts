@@ -3,13 +3,13 @@ import path from "path";
 import { getAbbrevPath } from "citeproc-abbrevs";
 
 export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
-    var styleID = styleEngine.opt.styleID;
-    var obj = styleEngine.transform.abbrevs;
-    var suppressedJurisdictions = styleEngine.opt.suppressedJurisdictions;
-    var jurisdiction, category, rawvals;
-    var isMlzStyle = styleEngine.opt.version.slice(0, 4) === '1.1m';
+    let styleID = styleEngine.opt.styleID;
+    let obj = styleEngine.transform.abbrevs;
+    let suppressedJurisdictions = styleEngine.opt.suppressedJurisdictions;
+    let jurisdiction, category, rawvals;
+    let isMlzStyle = styleEngine.opt.version.slice(0, 4) === '1.1m';
 
-    var abbrevPath = null;
+    let abbrevPath = null;
     if (styleEngine.sys && styleEngine.sys.config && styleEngine.sys.config.path && styleEngine.sys.config.path.abbrevs && fs.existsSync(styleEngine.sys.config.path.abbrevs)) {
         abbrevPath = styleEngine.sys.config.path.abbrevs;
     } else {
@@ -77,7 +77,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
 
     let rawItemFunction: any = {
         "nickname": (item) => {
-            var ret = [];
+            let ret = [];
             for (let varname in CSL.CREATORS) {
                 if (item[varname]) {
                     for (let i=0,ilen=item[varname].length;i<ilen;i++) {
@@ -99,10 +99,10 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
         }
     };
 
-    var _registerEntries = (val, jurisdictions, category, passed_field?, domain?) => {
-        var humanVal = null;
+    let _registerEntries = (val, jurisdictions, category, passed_field?, domain?) => {
+        let humanVal = null;
         if (passed_field) {
-            var topCode = jurisdictions.join(":");
+            let topCode = jurisdictions.join(":");
             val = styleEngine.sys.normalizeAbbrevsKey(passed_field, val);
         }
         for (let i=jurisdictions.length;i>0;i--) {
@@ -110,24 +110,24 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
             _setCacheEntry(styleID, obj, jurisdiction, category, val, false, domain);
         }
         if (category === "hereinafter") {
-            var item = styleEngine.sys.retrieveItem(val);
+            let item = styleEngine.sys.retrieveItem(val);
         }
         _setCacheEntry(styleID, obj, "default", category, val, false, domain);
     };
 
     let _checkAbbrevsForJurisdiction = (styleID, country) => {
-        var ret = {};
-        for (var i=0,ilen=citation.citationItems.length;i<ilen;i++) {
-            var id = citation.citationItems[i].id;
-            var item = styleEngine.sys.retrieveItem(id);
-            for (var fn of fs.readdirSync(abbrevPath)) {
-                var rex = new RegExp(`^auto-${country}(?:-([^.]+))*.json$`);
-                var m = rex.exec(fn);
+        let ret = {};
+        for (let i=0,ilen=citation.citationItems.length;i<ilen;i++) {
+            let id = citation.citationItems[i].id;
+            let item = styleEngine.sys.retrieveItem(id);
+            for (let fn of fs.readdirSync(abbrevPath)) {
+                let rex = new RegExp(`^auto-${country}(?:-([^.]+))*.json$`);
+                let m = rex.exec(fn);
                 if (!m) continue;
-                var domain = m[1];
-                var obj = JSON.parse(fs.readFileSync(path.join(abbrevPath, fn)).toString());
-                var jurisd;
-                var abbrevs: any;
+                let domain = m[1];
+                let obj = JSON.parse(fs.readFileSync(path.join(abbrevPath, fn)).toString());
+                let jurisd;
+                let abbrevs: any;
                 if (domain) {
                     ret[domain] = true;
                     abbrevs = {};
@@ -139,12 +139,12 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                     abbrevs = {};
                     for (let jurisd in obj.xdata) {
                         abbrevs[jurisd] = {};
-                        for (var seg in obj.xdata[jurisd]) {
+                        for (let seg in obj.xdata[jurisd]) {
                             abbrevs[jurisd][seg] = {};
-                            for (var key in obj.xdata[jurisd][seg]) {
-                                var newkey = key;
-                                var isJurisdiction = jurisd === "default" && seg === "place" && key.toUpperCase() === key;
-                                var isCourt = ["institution-entire", "institution-part"].indexOf(seg) > -1 && seg.toLowerCase() === seg;
+                            for (let key in obj.xdata[jurisd][seg]) {
+                                let newkey = key;
+                                let isJurisdiction = jurisd === "default" && seg === "place" && key.toUpperCase() === key;
+                                let isCourt = ["institution-entire", "institution-part"].indexOf(seg) > -1 && seg.toLowerCase() === seg;
                                 if (!isJurisdiction && !isCourt) {
                                     newkey = styleEngine.sys.normalizeAbbrevsKey("container-title", key);
                                 }
@@ -159,17 +159,17 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
         return Object.keys(ret);
     };
 
-    var _setCacheEntry = (styleID, obj, jurisdiction, category, rawval, humanRawVal, domain) => {
+    let _setCacheEntry = (styleID, obj, jurisdiction, category, rawval, humanRawVal, domain) => {
         if (!rawval) return;
 
         rawval = "" + rawval;
-        var ids = [rawval];
+        let ids = [rawval];
 
-        for (var i=0,ilen=ids.length; i<ilen; i++) {
-            var id = ids[i];
+        for (let i=0,ilen=ids.length; i<ilen; i++) {
+            let id = ids[i];
             if (id) {
-                var jurisd = jurisdiction;
-                var itemJurisd = domain ? jurisd + "@" + domain : jurisd;
+                let jurisd = jurisdiction;
+                let itemJurisd = domain ? jurisd + "@" + domain : jurisd;
 
                 if (!obj[itemJurisd]) {
                     obj[itemJurisd] = new CSL.AbbreviationSegments();
@@ -178,7 +178,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                     obj[itemJurisd][category] = {};
                 }
 
-                var abbrev = false;
+                let abbrev = false;
                 if (acache[itemJurisd]) {
                     if (acache[itemJurisd][category]) {
                         if (acache[itemJurisd][category][rawval]) {
@@ -195,16 +195,16 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
         }
     };
 
-    for (var i=0,ilen=citation.citationItems.length;i<ilen;i++) {
-        var id = citation.citationItems[i].id;
-        var item = styleEngine.sys.retrieveItem(id);
-        var jurisdictions: any;
+    for (let i=0,ilen=citation.citationItems.length;i<ilen;i++) {
+        let id = citation.citationItems[i].id;
+        let item = styleEngine.sys.retrieveItem(id);
+        let jurisdictions: any;
         if (item.jurisdiction) {
             jurisdictions = item.jurisdiction.split(":");
             if (!styleEngine.opt.availableAbbrevDomains) {
                 styleEngine.opt.availableAbbrevDomains = {};
             }
-            var jurs = item.jurisdiction.split(":");
+            let jurs = item.jurisdiction.split(":");
             if (!styleEngine.opt.availableAbbrevDomains[jurs[0]]) {
                 if (abbrevPath) {
                     styleEngine.opt.availableAbbrevDomains[jurs[0]] = _checkAbbrevsForJurisdiction(styleID, jurs[0]);
@@ -214,7 +214,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
             jurisdictions = [];
         }
         if (item.language) {
-            var lst = item.language.toLowerCase().split("<");
+            let lst = item.language.toLowerCase().split("<");
             if (lst.length > 0) {
                 item["language-name"] = lst[0];
             }
@@ -223,7 +223,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
             }
         }
 
-        var domain = CSL.getAbbrevsDomain(styleEngine, jurisdictions[0], item.language);
+        let domain = CSL.getAbbrevsDomain(styleEngine, jurisdictions[0], item.language);
 
         for (let field of Object.keys(item)) {
             category = CSL.FIELD_CATEGORY_REMAP[field];
@@ -246,7 +246,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                     return [val, "institution-part", field];
                 }));
             } else if (field === "authority") {
-                var spoofItem: any;
+                let spoofItem: any;
                 if ("string" === typeof item[field]) {
                     spoofItem = { authority: [{ literal: item[field] }] };
                 } else {
@@ -260,10 +260,10 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                 }));
             }
             if (!rawvals) continue;
-            for (var j=0,jlen=rawvals.length;j<jlen;j++) {
-                var val = rawvals[j][0];
-                var cat = rawvals[j][1];
-                var passed_field = rawvals[j][2];
+            for (let j=0,jlen=rawvals.length;j<jlen;j++) {
+                let val = rawvals[j][0];
+                let cat = rawvals[j][1];
+                let passed_field = rawvals[j][2];
                 _registerEntries(val, jurisdictions, cat, passed_field, domain);
             }
         }
@@ -272,7 +272,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
             rawvals = rawItemFunction[functionType](item);
             if (!rawvals) continue;
             for (let i=0,ilen=rawvals.length;i<ilen;i++) {
-                var val = rawvals[i];
+                let val = rawvals[i];
                 _registerEntries(val, [], functionType);
             }
         }

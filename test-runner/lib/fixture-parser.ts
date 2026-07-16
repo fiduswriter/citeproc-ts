@@ -19,7 +19,7 @@ function Parser(options, tn, fpth) {
     this.openRex = new RegExp("^.*>>===*\\s(" + Object.keys(sections).join("|") + ")\\s.*=>>.*");
     this.closeRex = new RegExp("^.*<<===*\\s(" + Object.keys(sections).join("|") + ")\\s.*=<<.*");
     this.dumpObj = function() {
-        for (var key in this.obj) {
+        for (let key in this.obj) {
             this.obj[key] = this.obj[key].join("\n");
             if (sections[key].type === "json") {
                 try {
@@ -38,21 +38,21 @@ function Parser(options, tn, fpth) {
                 }
             }
         }
-        for (var key of Object.keys(sections)
+        for (let key of Object.keys(sections)
                  .filter(key => sections[key][this.testtype] === REQ || sections[key][this.testtype] === OPT)) {
             if (this.options.watch && key === "CSL") {
-                var inStyle = false;
+                let inStyle = false;
                 this.obj[key] = fs.readFileSync(this.options.watch[0]).toString();
-                var cslList = this.obj[key].split(/(?:\r\n|\n)/);
-                for (var i in cslList) {
-                    var line = cslList[i];
+                let cslList = this.obj[key].split(/(?:\r\n|\n)/);
+                for (let i in cslList) {
+                    let line = cslList[i];
                     if (line.indexOf("<style") > -1) {
                         inStyle = true;
                     }
                     if (inStyle) {
-                        var m = line.match(/default-locale=[\"\']([^\"\']+)[\"\']/);
+                        let m = line.match(/default-locale=[\"\']([^\"\']+)[\"\']/);
                         if (m && m[1].indexOf("-x-") === -1) {
-                            var defaultLocale = m[1] + "-x-sort-en";
+                            let defaultLocale = m[1] + "-x-sort-en";
                             cslList[i] = cslList[i].replace(/default-locale=[\"\']([^\"\']+)[\"\']/, "default-locale=\"" + defaultLocale + "\"");
                             this.obj.CSL = cslList.join("\n");
                         }
@@ -70,7 +70,7 @@ function Parser(options, tn, fpth) {
         return this.obj;
     };
     this.checkLine = function (line) {
-        var m = null;
+        let m = null;
         if (this.openRex.test(line)) {
             m = this.openRex.exec(line);
             if (this.state) {
@@ -104,11 +104,11 @@ function Parser(options, tn, fpth) {
 }
 
 export function parseFixture(options, tn, fpth) {
-    var raw = fs.readFileSync(fpth).toString();
-    var parser = new Parser(options, tn, fpth);
-    for (var line of raw.split(/(?:\r\n|\n)/)) {
+    let raw = fs.readFileSync(fpth).toString();
+    let parser = new Parser(options, tn, fpth);
+    for (let line of raw.split(/(?:\r\n|\n)/)) {
         parser.checkLine(line);
     }
-    var ret = parser.dumpObj();
+    let ret = parser.dumpObj();
     return ret;
 }

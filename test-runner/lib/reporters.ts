@@ -33,12 +33,12 @@ const reporters: Record<string, { path?: string; npmname?: string; location?: st
 function lookForReporter(config, nickName) {
     const locationPath = reporters[nickName].location!.join(path.sep);
     const filename = path.dirname(new URL(import.meta.url).pathname);
-    var locations = [
+    let locations = [
         path.join(filename, "..", "..", locationPath),
         path.join(filename, "..", "node_modules", locationPath),
         path.join(config.path.cwd, "node_modules", locationPath)
     ]
-    for (var loc of locations) {
+    for (let loc of locations) {
         if (fs.existsSync(loc + ".js")) {
             reporters[nickName].path = loc
         }

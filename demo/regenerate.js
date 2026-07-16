@@ -5,9 +5,9 @@ const getopts = require("getopts");
 
 /* Global vars */
 
-var seenIDs = {};
+let seenIDs = {};
 
-var citationTemplate = [
+let citationTemplate = [
     {
         citationID: null,
         citationItems: [],
@@ -25,9 +25,9 @@ function errorHandler(e) {
 }
 
 function diskItemsToItemsAndRawCitations(options) {
-    var rawCitations = [];
-    var items = JSON.parse(fs.readFileSync(options.f));
-    for (var item of items) {
+    let rawCitations = [];
+    let items = JSON.parse(fs.readFileSync(options.f));
+    for (let item of items) {
         item.id = randomize("a0", 10);
         citation = JSON.parse(JSON.stringify(citationTemplate));
         citation[0].citationID = randomize("A0", 10);
@@ -46,13 +46,13 @@ function diskItemsToItemsAndRawCitations(options) {
 
 function readExistingCitations(idx) {
     // idx is a number between 1 and 7
-    var citations = JSON.parse(fs.readFileSync("citations-" + idx + ".json").toString());
+    let citations = JSON.parse(fs.readFileSync("citations-" + idx + ".json").toString());
     return citations;
 }
 
 function readExistingItems(idx) {
     // idx is a number between 1 and 7
-    var items = JSON.parse(fs.readFileSync("items-" + idx + ".json").toString());
+    let items = JSON.parse(fs.readFileSync("items-" + idx + ".json").toString());
     return items;
 }
 
@@ -63,8 +63,8 @@ function itemsAndRawCitationsToDiskCitationsAndItems(options, items, citations, 
     if (citationsPre.length) {
         console.log("citationsPre: " + citationsPre.length + ", lastNote: " + citationsPre.slice(-1)[0][1] + ", now note: " + (citationsPre.length + 0 + 1));
     }
-    for (var i=0, ilen=citations.length; i<ilen; i++) {
-        var citation = citations[i];
+    for (let i=0, ilen=citations.length; i<ilen; i++) {
+        let citation = citations[i];
         if (seenIDs[citation[0].citationID]) {
             console.log("  Already seen: " +citation[0].citationID + " at " + i + ", assigning new ID");
             citation[0].citationID = randomize("A0", 10);
@@ -83,18 +83,18 @@ function itemsAndRawCitationsToDiskCitationsAndItems(options, items, citations, 
 }
 
 function composeAllCitations(options) {
-    var citationsPre = [];
-    for (var i=1, ilen=8; i<ilen; i++) {
+    let citationsPre = [];
+    for (let i=1, ilen=8; i<ilen; i++) {
         if (options.n == i) {
-            var res = diskItemsToItemsAndRawCitations(options);
+            let res = diskItemsToItemsAndRawCitations(options);
             citationsPre = itemsAndRawCitationsToDiskCitationsAndItems(options, res.items, res.rawCitations, citationsPre);
         } else if (!fs.existsSync("citations-" + i + ".json") || !fs.existsSync("items-" + i + ".json")) {
             fs.writeFileSync("citations-" + i + ".json", "[]");
             fs.writeFileSync("items-" + i + ".json", "[]");
             console.log("Wrote empty files citations-" + i + ".json and items-" + i + ".json");
         } else {
-            var citations = readExistingCitations(i);
-            var items = readExistingItems(i);
+            let citations = readExistingCitations(i);
+            let items = readExistingItems(i);
             citationsPre = itemsAndRawCitationsToDiskCitationsAndItems({n:i}, items, citations, citationsPre);
         }
     }

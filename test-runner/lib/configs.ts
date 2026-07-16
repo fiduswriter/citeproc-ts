@@ -28,7 +28,7 @@ const defaultConfig =
 
 function makeAbsolute(basePath, config) {
     if (config && "object" === typeof config.path && "undefined" === typeof config.path.length) {
-        for (var key in config.path) {
+        for (let key in config.path) {
             if (config.path[key]) {
                 if (!path.isAbsolute(config.path[key])) {
                     config.path[key] = path.join(basePath, config.path[key]);
@@ -36,19 +36,20 @@ function makeAbsolute(basePath, config) {
             }
         }
     } else {
-        var error = new Error("Corrupt file (fix, remove, or revert): " + path.join(basePath, "cslrun.yaml"));
+        let error = new Error("Corrupt file (fix, remove, or revert): " + path.join(basePath, "cslrun.yaml"));
         throw error;
     }
 }
 
 function readConfig(dirName, hiddenFile?: boolean) {
-    var prefix = "";
+    let prefix = "";
     if (hiddenFile) {
         prefix = ".";
     }
+    let cfg: any;
     try {
-        var yamlSrc = fs.readFileSync(path.join(dirName, prefix + "cslrun.yaml")).toString();
-        var cfg = yaml.parse(yamlSrc);
+        let yamlSrc = fs.readFileSync(path.join(dirName, prefix + "cslrun.yaml")).toString();
+        cfg = yaml.parse(yamlSrc);
     } catch (err) {
         throw new Error("Unable to parse config file: " + path.join(dirName, prefix + "cslrun.yaml"));
     }
@@ -64,16 +65,16 @@ export function getConfig(scriptDir: string) {
         }
         config = readConfig(homeDir, true);
         config.path.configdir = homeDir;
-        var pth = cwd;
+        let pth = cwd;
         while (path.basename(pth)) {
             if (fs.existsSync(path.join(pth, "cslrun.yaml"))) {
                 if (pth === homeDir) {
                     throw new Error("Found cslrun.yaml configuration file (without a dot) in home directory " + homeDir + "\n\nIn the home directory ONLY, use .cslrun.yaml instead (with a dot---and it should already exist).\n");
                     break;
                 }
-                var extraConfig = readConfig(pth);
+                let extraConfig = readConfig(pth);
                 makeAbsolute(pth, extraConfig);
-                for (var key in extraConfig.path) {
+                for (let key in extraConfig.path) {
                     config.path[key] = extraConfig.path[key];
                 }
                 config.path.configdir = pth;

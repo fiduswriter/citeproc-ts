@@ -32,11 +32,10 @@
         "test": "node test-runner/dist/runtests.js -a -N",
         "test:all": "node test-runner/dist/runtests.js -a",
         "typecheck": "tsc --noEmit -p tsconfig.json",
+        "lint": "eslint src/ test-runner/lib/ test-runner/runtests.ts tools/ demo/",
         "deploy-pages": "bash tools/deploy-pages.sh"
     },
     "devDependencies": {
-        "esbuild": "^0.28.1",
-        "typescript": "^5.9.3",
         "chai": "^4.5.0",
         "chokidar": "^2.1.8",
         "citeproc-abbrevs": "^1.1.62",
@@ -44,11 +43,14 @@
         "citeproc-juris-modules": "^1.0.44",
         "citeproc-locales": ">=1.0.2",
         "cross-clear": "^1.0.0",
+        "esbuild": "^0.28.1",
         "fetch-promise": "^1.0.2",
         "getopts": "^2.3.0",
         "mocha": "^10.8.0",
         "normalize-newline": "^3.0.0",
         "tmp": "^0.0.33",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.64.0",
         "yaml": "^1.10.3",
         "zotero-to-csl": ">=1.2.0",
         "zotero2jurismcsl": "^0.0.12"
