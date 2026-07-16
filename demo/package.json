@@ -1,18 +1,13 @@
 {
-  "name": "demo",
-  "version": "1.0.0",
-  "description": "The code in this folder can be used to spin up a local `citeproc-js` demo page.  It is mainly intended as a sample of running code for developers working with the processor.",
-  "main": "demo.js",
+  "name": "citeproc-ts-demo",
+  "version": "0.1.0",
+  "description": "Interactive browser demo of the citeproc-ts Citation Style Language processor",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server .. -p 8080 -c-1"
   },
-  "author": "",
+  "keywords": ["CSL", "citeproc", "citation"],
   "license": "ISC",
-  "devDependencies": {
-    "ecstatic": "^4.1.4",
-    "getopts": "^2.2.5",
-    "randomize": "0.0.4"
-  },
   "dependencies": {
     "http-server": "^0.12.3"
   }

@@ -1,28 +1,23 @@
-# `citeproc-js` Demo Page
+# citeproc-ts Demo
 
-The code in this folder can be used to spin up a local `citeproc-js`
-demo page.  It is mainly intended as a sample of running code for
-developers working with the processor.
+A live demo of the CSL processor rendering citations and bibliographies in the browser.
 
-The demo.html page must be served from an HTTP server.  (Because it uses AJAX
-requests, it won't work if you open it in your browser from the filesystem.)
-So, either put this citeproc-js repository in a directory served by, for example,
-Apache, or you can use Node.js with the included tiny server script,
-node-server.js.
+## Running
 
-To start the server, clone this repo to your local machine, open a terminal,
-enter this `./demo` subdirectory, and run the following command:
+Build the processor first from the project root:
 
-    node ./node-server.js
+```bash
+npm run build
+```
 
-Point a browser at the address reported by the server, and the
-demo page should appear.
+Then serve this directory:
 
-See the demo.js file for more information about how it works.
+```bash
+cd demo
+npm install
+npx http-server . -p 8080
+```
 
-----
-Hope this helps. If you run into any snags, feel free to give me a shout.
+Open `http://localhost:8080/demo.html` in your browser.
 
-Frank Bennett
-Nagoya
-Japan
+Alternatively, any static file server (Python, Apache, etc.) will work — just serve from the project root so that `../citeproc.js` resolves to the built bundle.

@@ -1,0 +1,37 @@
+name: Deploy demo to Codeberg Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Prepare Pages content
+        run: |
+          mkdir -p _pages
+          cp citeproc.js _pages/
+          cp -r demo/* _pages/
+          sed -i 's|src="../citeproc.js"|src="./citeproc.js"|' _pages/demo.html
+
+      - name: Deploy to Pages branch
+        run: |
+          cd _pages
+          git init
+          git config user.name "CI"
+          git config user.email "ci@codeberg.org"
+          git add -A
+          git commit -m "Deploy demo [skip ci]"
+          git push -f "https://${{ secrets.PAGES_TOKEN }}@codeberg.org/${{ github.repository }}.git" main:pages

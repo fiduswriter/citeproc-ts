@@ -1,22 +1,23 @@
 {
-    "name": "citeproc",
-    "version": "2.4.63",
-    "description": "The citeproc-js citation formatting module, in CommonJS format. This version is based on citeproc-js 1.4.63",
+    "name": "citeproc-ts",
+    "version": "0.1.0-dev",
+    "description": "The citeproc-js citation formatting module ported to TypeScript",
     "main": "citeproc_commonjs.js",
     "bin": {
         "cslrun": "./test-runner/dist/runtests.js"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/juris-m/citeproc-js.git"
+        "url": "https://codeberg.org/fiduswriter/citeproc-ts"
     },
     "files": [
         "citeproc_commonjs.js",
         "test-runner/dist/",
         "tools/rnc-validator.js"
     ],
-    "author": "Michael McMillan <email@michaelmcmillan.net> (http://michaelmcmillan.net/)",
+    "author": "Johannes Wilm <johannes@fiduswriter.org>",
     "contributors": [
+        "Michael McMillan <email@michaelmcmillan.net> (http://michaelmcmillan.net/)",
         "Frank Bennett <biercenator@gmail.com> (https://juris-m.github.io)"
     ],
     "license": "(CPAL-1.0 OR AGPL-3.0-or-later)",
@@ -26,7 +27,8 @@
         "pretest": "npm run build && npm run build:runner",
         "test": "node test-runner/dist/runtests.js -a -N",
         "test:all": "node test-runner/dist/runtests.js -a",
-        "typecheck": "tsc --noEmit -p tsconfig.json"
+        "typecheck": "tsc --noEmit -p tsconfig.json",
+        "deploy-pages": "bash tools/deploy-pages.sh"
     },
     "devDependencies": {
         "esbuild": "^0.28.1",

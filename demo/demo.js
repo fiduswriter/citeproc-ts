@@ -1,107 +1,111 @@
-// demo.js
-// for citeproc-js CSL citation formatter
+// demo.js — citeproc-ts CSL citation formatter
+// Original citeproc-js by Michael McMillan & Frank Bennett
 
-var styleID = "chicago-notes-bibliography";
+(async function () {
+    const STYLE_ID = "chicago-notes-bibliography";
 
-// Get the citations that we are supposed to render, in the CSL-json format
-var xhr = new XMLHttpRequest();
+    // ---- Load all data files ----
+    const [citations, itemsById, styleText] = await Promise.all([
+        loadCitations(),
+        loadItems(),
+        fetchText(STYLE_ID + ".csl"),
+    ]);
 
-var itemsArray = [];
-var citations = [];
-for (var i=1,ilen=8;i<ilen;i++) {
-    xhr.open('GET', 'citations-' + i + '.json', false);
-    xhr.send(null);
-    citations = citations.concat(JSON.parse(xhr.responseText));
+    // ---- Pre-load locale (engine needs synchronous access) ----
+    const localeCache = {};
+    localeCache["en-US"] = await fetchText("locales-en-US.xml");
 
-    xhr.open('GET', 'items-' + i + '.json', false);
-    xhr.send(null);
-    itemsArray = itemsArray.concat(JSON.parse(xhr.responseText));
-}
+    // ---- Engine setup ----
+    const citeprocSys = {
+        retrieveLocale(lang) {
+            return localeCache[lang] || false;
+        },
+        retrieveItem(id) {
+            return itemsById[id];
+        },
+    };
 
-var items = {};
-for (item of itemsArray) {
-    items[item.id] = item;
-}
+    const startTime = performance.now();
+    const engine = new CSL.Engine(citeprocSys, styleText);
+    const endTime = performance.now();
+    console.log("Initialized CSL.Engine in " + (endTime - startTime).toFixed(1) + " ms");
 
-xhr.open('GET', styleID + '.csl', false);
-xhr.send(null);
-var style = xhr.responseText;
+    // ---- Enable button, clear loading indicators ----
+    const btn = document.getElementById("start-btn");
+    btn.disabled = false;
+    btn.textContent = "Render Citations";
+    document.getElementById("cite-div").innerHTML = "";
+    document.getElementById("bib-div").innerHTML = "";
+    btn.addEventListener("click", async function () {
+        btn.disabled = true;
+        btn.textContent = "Rendering…";
+        const t0 = performance.now();
+        await runCitations(0, engine, citations);
+        const t1 = performance.now();
+        document.getElementById("time-badge").textContent = (t1 - t0).toFixed(0) + " ms";
+        document.getElementById("time-badge").hidden = false;
+        document.getElementById("bib-div").innerHTML = engine.makeBibliography()[1].join("\n");
+        btn.textContent = "Done ✓";
+    });
 
-// Initialize a system object, which contains two methods needed by the
-// engine.
-citeprocSys = {
-    // Given a language tag in RFC-4646 form, this method retrieves the
-    // locale definition file.  This method must return a valid *serialized*
-    // CSL locale. (In other words, an blob of XML as an unparsed string.  The
-    // processor will fail on a native XML object or buffer).
-    retrieveLocale: function (lang){
-        xhr.open('GET', 'locales-' + lang + '.xml', false);
-        xhr.send(null);
-        return xhr.responseText;
-    },
-
-    // Given an identifier, this retrieves one citation item.  This method
-    // must return a valid CSL-JSON object.
-    retrieveItem: function(id){
-        return items[id];
+    // ---- Helpers ----
+    async function fetchText(url) {
+        const r = await fetch(url);
+        if (!r.ok) throw new Error("Failed to load " + url + ": " + r.status);
+        return r.text();
     }
-};
 
-// Given the identifier of a CSL style, this function instantiates a CSL.Engine
-// object that can render citations in that style.
-function getProcessor() {
-    // Instantiate and return the engine
-    var citeproc = new CSL.Engine(citeprocSys, style);
-    return citeproc;
-};
+    async function fetchJSON(url) {
+        const r = await fetch(url);
+        if (!r.ok) throw new Error("Failed to load " + url + ": " + r.status);
+        return r.json();
+    }
 
-var startTime = performance.now();
-var citeproc = getProcessor();
-var endTime = performance.now();
-console.log(`Initialized CSL.Engine in ${endTime - startTime} ms`);
-
-function runOneStep(idx) {
-    var citeDiv = document.getElementById('cite-div');
-    var citationParams = citations[idx];
-    var citationStrings = citeproc.processCitationCluster(citationParams[0], citationParams[1], [])[1];
-    for (var citeInfo of citationStrings) {
-        // Prepare node
-        var newNode = document.createElement("div");
-        newNode.setAttribute("id", "n" + citeInfo[2]);
-        newNode.innerHTML = citeInfo[1];
-        // Try for old node
-        var oldNode = document.getElementById("node-" + citeInfo[2]);
-        if (oldNode) {
-            citeDiv.replaceChild(newNode, oldNode);
-        } else {
-            citeDiv.appendChild(newNode);
+    async function loadCitations() {
+        const all = [];
+        for (let i = 1; i < 8; i++) {
+            const batch = await fetchJSON("citations-" + i + ".json");
+            all.push(...batch);
         }
-        newNode.scrollIntoView();
+        return all;
     }
-    runRenderBib(idx+1);
-}
 
-// This runs at document ready, and renders the bibliography
-function renderBib() {
-    t0 = performance.now();
-    runRenderBib(0);
-}
-function runRenderBib(idx) {
-    if (idx === citations.length) {
-        var t1 = performance.now();
-        var timeDiv = document.getElementById("time-div");
-        var timeSpan = document.getElementById("time-span");
-        timeSpan.innerHTML = (t1 - t0) + " milliseconds";
-        timeDiv.hidden = false;
-        delete citations;
-        delete style;
-        // Bib
-        var bibDiv = document.getElementById('bib-div');
-        var bibResult = citeproc.makeBibliography();
-        bibDiv.innerHTML = bibResult[1].join('\n');
-    } else {
-        setTimeout(function() {
-            runOneStep(idx);
-        }, 0)
+    async function loadItems() {
+        const byId = {};
+        for (let i = 1; i < 8; i++) {
+            const batch = await fetchJSON("items-" + i + ".json");
+            for (const item of batch) {
+                byId[item.id] = item;
+            }
+        }
+        return byId;
     }
-}
+
+    function runCitations(idx, engine, citations) {
+        return new Promise((resolve) => {
+            function step(i) {
+                if (i >= citations.length) return resolve();
+                const citeDiv = document.getElementById("cite-div");
+                const [citation, pre, post] = citations[i];
+                const [, citeStrings] = engine.processCitationCluster(citation, pre, post);
+                for (const [, html, id] of citeStrings) {
+                    const newNode = document.createElement("div");
+                    newNode.id = "node-" + id;
+                    newNode.innerHTML = html;
+                    const old = document.getElementById("node-" + id);
+                    old ? citeDiv.replaceChild(newNode, old) : citeDiv.appendChild(newNode);
+                    newNode.scrollIntoView({ behavior: "smooth" });
+                }
+                setTimeout(() => step(i + 1), 0);
+            }
+            step(idx);
+        });
+    }
+})().catch(err => {
+    const msg = err && err.message ? err.message : String(err);
+    const el = document.getElementById("cite-div");
+    if (el) el.innerHTML = '<p style="color:red;font-family:monospace">Error: ' + msg + "</p>";
+    const btn = document.getElementById("start-btn");
+    if (btn) { btn.disabled = false; btn.textContent = "Retry"; }
+    console.error(err);
+});
