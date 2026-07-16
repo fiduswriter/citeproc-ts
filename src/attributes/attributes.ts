@@ -1379,9 +1379,7 @@ Attributes["@reverse-order"] = function (state, arg) {
 };
 
 Attributes["@near-note-distance"] = function (state, arg) {
-    if (arg && arg.match(/^[.0-9]+$/)) {
-        state.opt["near-note-distance"] = parseInt(arg, 10);
-    }
+    state[this.name].opt["near-note-distance"] = parseInt(arg, 10);
 };
 
 Attributes["@substring"] = function (state, arg) {

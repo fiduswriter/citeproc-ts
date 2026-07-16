@@ -195,20 +195,22 @@ export const Node_key = {
             if (state.sys.normalizeUnicode) {
                 keystring = state.sys.normalizeUnicode(keystring);
             }
-            keystring = keystring ? (keystring.split(" ").join(state.opt.sort_sep) + state.opt.sort_sep) : "";
-            //SNIP-START
-            if (debug) {
-                CSL.debug("keystring: " + keystring + " " + typeof keystring);
+            if (keystring) {
+                if (Array.isArray(keystring)) {
+                    keystring = keystring.map(function(v) {
+                        if (v && typeof v === 'object' && typeof v.blobs === 'string') return v.blobs;
+                        return '' + v;
+                    }).join('');
+                }
+                keystring = keystring.split(" ").join(state.opt.sort_sep) + state.opt.sort_sep;
+            } else {
+                keystring = "";
             }
-            //print("keystring: (" + keystring + ") " + typeof keystring + " " + state.tmp.area);
-            //SNIP-END
-            //state.sys.print("keystring: (" + keystring + ") " + typeof keystring + " " + state.tmp.area);
             if ("" === keystring) {
                 keystring = undefined;
             }
             if ("string" !== typeof keystring) {
                 keystring = undefined;
-                //state.tmp.empty_date = false;
             }
             state[state[state.tmp.area].root + "_sort"].keys.push(keystring);
             state.tmp.value = [];
