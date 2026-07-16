@@ -860,7 +860,21 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         this.tmp.citation_id = "" + citation.citationID;
 
         obj = [];
-        obj.push(citationsPre.length);
+        let noteOrderedIndex = citationsPre.length;
+        if (citation.properties.noteIndex) {
+            noteOrderedIndex = 0;
+            for (let i = 0, ilen = citationsPre.length; i < ilen; i += 1) {
+                if (citationsPre[i][1] <= citation.properties.noteIndex) {
+                    noteOrderedIndex += 1;
+                }
+            }
+            for (let i = 0, ilen = citationsPost.length; i < ilen; i += 1) {
+                if (citationsPost[i][1] <= citation.properties.noteIndex) {
+                    noteOrderedIndex += 1;
+                }
+            }
+        }
+        obj.push(noteOrderedIndex);
         obj.push(this.process_CitationCluster.call(this, sortedItems, citation));
         obj.push(citation.citationID);
         ret.push(obj);
