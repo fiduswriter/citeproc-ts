@@ -8,7 +8,7 @@ import { ROMANESQUE_REGEXP } from '../constants/regex';
 //    Special: Convert all sandwiched single-quote markup to apostrophe
 // 2. Second pass: tags
 
-export function Util_FlipFlopper(state) {
+export function Util_FlipFlopper(state: CslState) {
     
     /**
      * INTERNAL
@@ -378,7 +378,7 @@ export function Util_FlipFlopper(state) {
                 this.latest = this.stack[this.stack.length-1];
                 if (decor) {
                     if ("string" === typeof this.latest.blobs) {
-                        const child = new (CSL.Blob as any)();
+                        const child = new CSL.Blob();
                         child.blobs = this.latest.blobs;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs = [child];
@@ -427,7 +427,7 @@ export function Util_FlipFlopper(state) {
                     }
                 } else {
                     if (str) {
-                        const child = new (CSL.Blob as any)();
+                        const child = new CSL.Blob();
                         child.blobs = str;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs.push(child);

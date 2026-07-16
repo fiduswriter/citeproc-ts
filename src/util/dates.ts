@@ -4,7 +4,7 @@ export const Util_Dates: {
     year: Record<string, (state: CslState, num: number | string | boolean, end?: boolean) => string>;
     month: Record<string, (state: CslState, num: number | string, gender?: string | boolean, forceDefaultLocale?: boolean) => string | number>;
     day: Record<string, (state: CslState, num: number | string, gender?: string) => string>;
-    normalizeMonth: (num: number | string, useSeason?: boolean) => number | { stub: string; num: number };
+    normalizeMonth: (num: number | string, useSeason?: boolean) => any;
 } = {} as any;
 
 Util_Dates.year = {};
@@ -134,7 +134,7 @@ Util_Dates.normalizeMonth = function (num: number | string, useSeason?: boolean)
 Util_Dates.month = {};
 
 Util_Dates.month.numeric = function (state: CslState, num: number | string): number | string {
-    let num2 = Util_Dates.normalizeMonth(num);
+    let num2: number | string = Util_Dates.normalizeMonth(num) as number;
     if (!num2) {
         num2 = "";
     }
@@ -142,46 +142,46 @@ Util_Dates.month.numeric = function (state: CslState, num: number | string): num
 };
 
 Util_Dates.month["numeric-leading-zeros"] = function (state: CslState, num: number | string): string {
-    let num2 = Util_Dates.normalizeMonth(num);
+    let num2: number | string = Util_Dates.normalizeMonth(num) as number;
     if (!num2) {
         num2 = "";
     } else {
         num2 = "" + num2;
-        while (num2.length < 2) {
+        while ((num2 as string).length < 2) {
             num2 = "0" + num2;
         }
     }
-    return num2;
+    return num2 as string;
 };
 
-Util_Dates.month["long"] = function (state: CslState, num: number | string, gender?: any, forceDefaultLocale?: boolean): string {
-    const res = Util_Dates.normalizeMonth(num, true);
-    let num2 = res.num;
+Util_Dates.month["long"] = function (state: CslState, num: number | string, gender?: string | boolean, forceDefaultLocale?: boolean): string {
+    const res = Util_Dates.normalizeMonth(num, true) as { stub: string; num: number };
+    let num2: number | string = res.num;
     if (!num2) {
         num2 = "";
     } else {
         num2 = "" + num2;
-        while (num2.length < 2) {
+        while ((num2 as string).length < 2) {
             num2 = "0" + num2;
         }
         num2 = state.getTerm(res.stub + num2, "long", 0, 0, false, forceDefaultLocale);
     }
-    return num2;
+    return num2 as string;
 };
 
-Util_Dates.month["short"] = function (state: CslState, num: number | string, gender?: any, forceDefaultLocale?: boolean): string {
-    const res = Util_Dates.normalizeMonth(num, true);
-    let num2 = res.num;
+Util_Dates.month["short"] = function (state: CslState, num: number | string, gender?: string | boolean, forceDefaultLocale?: boolean): string {
+    const res = Util_Dates.normalizeMonth(num, true) as { stub: string; num: number };
+    let num2: number | string = res.num;
     if (!num2) {
         num2 = "";
     } else {
         num2 = "" + num2;
-        while (num2.length < 2) {
+        while ((num2 as string).length < 2) {
             num2 = "0" + num2;
         }
         num2 = state.getTerm(res.stub + num2, "short", 0, 0, false, forceDefaultLocale);
     }
-    return num2;
+    return num2 as string;
 };
 
 Util_Dates.day = {};

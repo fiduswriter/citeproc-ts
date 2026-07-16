@@ -3,10 +3,41 @@ import { CSL } from '../../csl';
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
+import { Blob } from '../../obj/blob';
 export class NameOutput {
     [key: string]: any;
 
-    constructor(state: any, Item: any, item?: any) {
+    debug!: boolean;
+    state!: CslState;
+    Item!: CslItem;
+    item?: any;
+    nameset_base!: number;
+    etal_spec!: any;
+    _first_creator_variable!: boolean | string;
+    _please_chop!: boolean;
+    names!: any;
+    variables!: string[];
+    name!: any;
+    family?: any;
+    given?: any;
+    family_decor?: any;
+    given_decor?: any;
+    institution!: any;
+    label?: Record<string, any>;
+    labelVariable!: string;
+    requireMatch?: string;
+    variables_offset!: string[];
+    freeters!: Record<string, any[]>;
+    institutions!: Record<string, any[]>;
+    persons!: Record<string, any[][]>;
+    freeters_count!: Record<string, number>;
+    institutions_count!: Record<string, number>;
+    persons_count!: Record<string, number[]>;
+    names_count!: number;
+    common_term?: string;
+    variable_offset!: Record<string, number>;
+
+    constructor(state: CslState, Item: CslItem, item?: any) {
         this.debug = false;
         this.state = state;
         //SNIP-START
@@ -22,7 +53,7 @@ export class NameOutput {
         this._please_chop = false;
     }
 
-    init(names: any) {
+    init(names: CslNode) {
         this.requireMatch = names.requireMatch;
         if (this.state.tmp.term_predecessor) {
             this.state.tmp.subsequent_author_substitute_ok = false;
@@ -82,7 +113,7 @@ export class NameOutput {
         }
     };
 
-    reinit(names: any, labelVariable: any) {
+    reinit(names: CslNode, labelVariable: string) {
         this.requireMatch = names.requireMatch;
         this.labelVariable = labelVariable;
 
@@ -424,7 +455,7 @@ export class NameOutput {
         //SNIP-END
     };
 
-    _applyLabels(blob: any, v: any) {
+    _applyLabels(blob: any, v: string) {
         let txt;
         if (!this.label || !this.label[this.labelVariable]) {
             return blob;
@@ -468,7 +499,7 @@ export class NameOutput {
         return blob;
     };
 
-    _buildLabel(term: any, plural: any, position: any, v: any) {
+    _buildLabel(term: string, plural: number, position: string, v: string) {
         if (this.common_term) {
             term = this.common_term;
         }
@@ -536,7 +567,7 @@ export class NameOutput {
                     // XXXXX A little more precision would be nice.
                     // This will clobber variable="author editor" as well as variable="author".
 
-                    if (this.variables.indexOf(this._first_creator_variable) > -1 && this.item && this.item["suppress-author"] && this.Item.type !== "legal_case") {
+                    if (this.variables.indexOf(this._first_creator_variable as string) > -1 && this.item && this.item["suppress-author"] && this.Item.type !== "legal_case") {
                         this.state.tmp.name_node.top.blobs.pop();
                         this.state.tmp.name_node.children = [];
                         // If popped, avoid side-effects on character counting: we're only interested
@@ -648,7 +679,7 @@ export class NameOutput {
         }
     };
 
-    _renderInstitutionName(v: any, name: any, slot: any, j: any) {
+    _renderInstitutionName(v: string, name: any, slot: { primary: string; secondary?: string | boolean; tertiary?: string | boolean }, j: number) {
         let secondary, tertiary, long_style, short_style, institution, institution_short, institution_long;
         let res = this.getName(name, slot.primary, true);
         let primary = res.name;
@@ -741,7 +772,7 @@ export class NameOutput {
         return blob;
     };
 
-    _composeOneInstitutionPart(names: any, slot: any, style: any, v?: any) {
+    _composeOneInstitutionPart(names: any[], slot: { primary: string; secondary?: string | boolean; tertiary?: string | boolean }, style: any, v?: string) {
         let primary = false, secondary = false, tertiary = false, primary_tok, secondary_tok, tertiary_tok;
         if (names[0]) {
             primary_tok = CSL.Util.cloneToken(style);
@@ -776,8 +807,8 @@ export class NameOutput {
 
             secondary_tok = CSL.Util.cloneToken(style);
             if (slot.secondary) {
-                secondary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.secondary].prefix;
-                secondary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.secondary].suffix;
+                secondary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.secondary as string].prefix;
+                secondary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.secondary as string].suffix;
                 // Add a space if empty
                 if (!secondary_tok.strings.prefix) {
                     secondary_tok.strings.prefix = " ";
@@ -792,8 +823,8 @@ export class NameOutput {
 
             tertiary_tok = CSL.Util.cloneToken(style);
             if (slot.tertiary) {
-                tertiary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.tertiary].prefix;
-                tertiary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.tertiary].suffix;
+                tertiary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.tertiary as string].prefix;
+                tertiary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.tertiary as string].suffix;
                 // Add a space if empty
                 if (!tertiary_tok.strings.prefix) {
                     tertiary_tok.strings.prefix = " ";
@@ -815,7 +846,7 @@ export class NameOutput {
         return institutionblob;
     };
 
-    _renderOneInstitutionPart(blobs: any, style: any) {
+    _renderOneInstitutionPart(blobs: any[], style: any) {
         for (let i = 0, ilen = blobs.length; i < ilen; i += 1) {
             if (blobs[i]) {
                 let str = blobs[i];
@@ -849,9 +880,9 @@ export class NameOutput {
         return this._join(blobs, this.institution.strings["part-separator"]);
     };
 
-    _renderNames(v: any, values: any, pos: any, j?: any) {
+    _renderNames(v: string, values: any[], pos: number, j?: number): any {
         //
-        let ret = false;
+        let ret: any = false;
         if (values.length) {
             const names = [];
             for (let i = 0, ilen = values.length; i < ilen; i += 1) {
@@ -911,7 +942,7 @@ export class NameOutput {
     };
 
 
-    _renderPersonalName(v: any, name: any, slot: any, pos: any, i: any, j: any) {
+    _renderPersonalName(v: string, name: any, slot: { primary: string; secondary?: string | boolean; tertiary?: string | boolean }, pos: number, i: number, j?: number) {
         // XXXX FROM HERE (persons)
 
         let res = this.getName(name, slot.primary, true);
@@ -940,8 +971,8 @@ export class NameOutput {
 
             let secondary_tok = new CSL.Token();
             if (slot.secondary) {
-                secondary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.secondary].prefix;
-                secondary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.secondary].suffix;
+                secondary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.secondary as string].prefix;
+                secondary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.secondary as string].suffix;
                 // Add a space if empty
                 if (!secondary_tok.strings.prefix) {
                     secondary_tok.strings.prefix = " ";
@@ -951,8 +982,8 @@ export class NameOutput {
 
             let tertiary_tok = new CSL.Token();
             if (slot.tertiary) {
-                tertiary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.tertiary].prefix;
-                tertiary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.tertiary].suffix;
+                tertiary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.tertiary as string].prefix;
+                tertiary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.tertiary as string].suffix;
                 // Add a space if empty
                 if (!tertiary_tok.strings.prefix) {
                     tertiary_tok.strings.prefix = " ";
@@ -970,7 +1001,7 @@ export class NameOutput {
     };
 
     /** Japanese */
-    _isJapanese(name: any) 
+    _isJapanese(name: CslName) 
     {
         /**
         0: Not japanese
@@ -989,7 +1020,7 @@ export class NameOutput {
         return ret;
     }
 
-    _isKatakana(name: any) {
+    _isKatakana(name: CslName) {
         // 0 =　katakana + kanji || hiragana => Normal Japanese
         // 1 = katakana or katakana + initial.
         let ret = 0;
@@ -1014,7 +1045,7 @@ export class NameOutput {
 
     /***/
 
-    _isRomanesque(name: any) {
+    _isRomanesque(name: CslName) {
         // 0 = entirely non-romanesque
         // 1 = mixed content
         // 2 = pure romanesque
@@ -1044,7 +1075,7 @@ export class NameOutput {
     /**
     It would be great if this function was renamed something like _renderCJK(language, name, non_dropping_particle, given, family, sort_sep) in the future. Japanese should work as long as family and given are provided.
     */
-    _renderJapaneseName(japanese: any, katakana: any, family: any, given: any, i: any, j: any, sort_sep: any) {
+    _renderJapaneseName(japanese: number, katakana: number, family: any, given: any, i: number, j: number | undefined, sort_sep: string) {
         let blob;
         /**
         katakana-display
@@ -1100,7 +1131,7 @@ export class NameOutput {
         return blob;
     }
 
-    _renderOnePersonalName(value: any, pos: any, i: any, j: any) {
+    _renderOnePersonalName(value: any, pos: number, i: number, j?: number) {
         let name = value;
         let dropping_particle = this._droppingParticle(name, pos, j);
         let family = this._familyName(name);

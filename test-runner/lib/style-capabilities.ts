@@ -1,8 +1,10 @@
+/// <reference path="./types.d.ts" />
+
 import path from "path";
 import { options } from "./options.js";
 
-export function styleCapabilities(txt: string) {
-    const styleCap: Record<string, any> = {
+export function styleCapabilities(txt: string): StyleCapabilitySet {
+    const styleCap: StyleCapabilitySet = {
         styleID: null,
         styleName: null,
         bibliography: false,

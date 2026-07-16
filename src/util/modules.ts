@@ -79,7 +79,7 @@ export function retrieveAllStyleModules(this: CslState, jurisdictionList: string
             if (this.opt.jurisdictions_seen[jurisdiction]) {
                 continue;
             }
-            const res = this.sys.retrieveStyleModule(jurisdiction, preference);
+            const res = (this.sys as any).retrieveStyleModule(jurisdiction, preference);
             if ((!res && !preference) || res) {
                 this.opt.jurisdictions_seen[jurisdiction] = true;
             }

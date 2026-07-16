@@ -2,7 +2,7 @@ import { CSL } from '../../csl';
 import { Blob } from '../../obj/blob';
 import { Token } from '../../obj/token';
 
-export function _purgeEmptyBlobs(this: any, blobs: Blob[]): Blob[] {
+export function _purgeEmptyBlobs(this: any, blobs: any[]): any[] {
     for (let i = blobs.length - 1; i > -1; i -= 1) {
         if (!blobs[i] || blobs[i].length === 0 || !blobs[i].blobs.length) {
             blobs = blobs.slice(0, i).concat(blobs.slice(i + 1));
@@ -11,7 +11,7 @@ export function _purgeEmptyBlobs(this: any, blobs: Blob[]): Blob[] {
     return blobs;
 }
 
-export function joinPersons(this: any, blobs: Blob[], pos: number, j?: number, tokenname?: string): Blob | false {
+export function joinPersons(this: any, blobs: any[], pos: number, j?: number, tokenname?: string): any {
     let ret: any;
     blobs = this._purgeEmptyBlobs(blobs);
     if (!tokenname) {
@@ -42,7 +42,7 @@ export function joinPersons(this: any, blobs: Blob[], pos: number, j?: number, t
 }
 
 
-export function joinInstitutionSets(this: any, blobs: Blob[], pos: number): Blob | false {
+export function joinInstitutionSets(this: any, blobs: any[], pos: number): any {
     let ret: any;
     blobs = this._purgeEmptyBlobs(blobs);
     if (this.etal_spec[pos].institutions === 1) {
@@ -56,20 +56,20 @@ export function joinInstitutionSets(this: any, blobs: Blob[], pos: number): Blob
 }
 
 
-export function joinPersonsAndInstitutions(this: any, blobs: Blob[]): Blob | false {
+export function joinPersonsAndInstitutions(this: any, blobs: any[]): any {
     blobs = this._purgeEmptyBlobs(blobs);
     let ret = this._join(blobs, this.state.tmp.name_delimiter);
     ret.isInstitution = true;
     return ret;
 }
 
-export function joinFreetersAndInstitutionSets(this: any, blobs: Blob[]): Blob | false {
+export function joinFreetersAndInstitutionSets(this: any, blobs: any[]): any {
     blobs = this._purgeEmptyBlobs(blobs);
     let ret = this._join(blobs, "[never here]", this["with"].single, this["with"].multiple);
     return ret;
 }
 
-export function _getAfterInvertedName(this: any, blobs: Blob[], delimiter: string, finalJoin: Blob | false): Blob | false {
+export function _getAfterInvertedName(this: any, blobs: any[], delimiter: string, finalJoin: any): any {
     if (finalJoin && blobs.length > 1) {
         if (this.state.inheritOpt(this.name, "delimiter-precedes-last") === "after-inverted-name") {
             const prevBlob = blobs[blobs.length - 2];
@@ -81,7 +81,7 @@ export function _getAfterInvertedName(this: any, blobs: Blob[], delimiter: strin
     return finalJoin;
 }
 
-export function _getAndJoin(this: any, blobs: Blob[], delimiter: string): Blob | false {
+export function _getAndJoin(this: any, blobs: any[], delimiter: string): any {
     let finalJoin = false;
     if (blobs.length > 1) {
         let singleOrMultiple = "single";
@@ -99,7 +99,7 @@ export function _getAndJoin(this: any, blobs: Blob[], delimiter: string): Blob |
     return finalJoin;
 }
 
-export function _joinEtAl(this: any, blobs: Blob[]): Blob | false {
+export function _joinEtAl(this: any, blobs: any[]): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     const blob = this._join(blobs, delimiter);
 
@@ -116,7 +116,7 @@ export function _joinEtAl(this: any, blobs: Blob[]): Blob | false {
 }
 
 
-export function _joinEllipsis(this: any, blobs: Blob[]): Blob | false {
+export function _joinEllipsis(this: any, blobs: any[]): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     let finalJoin = false;
     if (blobs.length > 1) {
@@ -131,14 +131,14 @@ export function _joinEllipsis(this: any, blobs: Blob[]): Blob | false {
     return this._join(blobs, delimiter, finalJoin);
 }
 
-export function _joinAnd(this: any, blobs: Blob[]): Blob | false {
+export function _joinAnd(this: any, blobs: any[]): any {
     const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
     const finalJoin = this._getAndJoin(blobs, delimiter);
     return this._join(blobs, delimiter, finalJoin);
 }
 
 
-export function _join(this: any, blobs: Blob[], delimiter: string, finalJoin?: Blob | false): Blob | false {
+export function _join(this: any, blobs: any[], delimiter: string, finalJoin?: any): any {
     let i: number, ilen: number;
     if (!blobs) {
         return false;
@@ -180,7 +180,7 @@ export function _join(this: any, blobs: Blob[], delimiter: string, finalJoin?: B
 }
 
 
-export function _getToken(this: any, tokenname: string): Token {
+export function _getToken(this: any, tokenname: string): any {
     const token = this[tokenname];
     if (tokenname === "institution") {
         const newtoken = new CSL.Token();

@@ -3,7 +3,7 @@
 export const Util_PageRangeMangler: Record<string, Function> = {};
 
 Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string): Function {
-    let rangerex: RegExp, pos: number, len: number, stringify: Function, listify: Function, expand: Function, minimize: Function, minimize_internal: Function, chicago15: Function, chicago16: Function, lst: any, m: RegExpMatchArray | null, b: string[], e: string[], ret: any, begin: number, end: number, ret_func: Function;
+    let rangerex: RegExp, pos: number, len: number, stringify: Function, listify: Function, expand: Function, minimize: Function, minimize_internal: Function, chicago15: Function, chicago16: Function, lst: any, m: any, b: string[], e: any, ret: any, begin: number, end: number, ret_func: Function;
 
     const range_delimiter = state.getTerm(rangeType + "-range-delimiter");
 

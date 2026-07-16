@@ -1,11 +1,14 @@
+/// <reference path="../../src/types.d.ts" />
+/// <reference path="./types.d.ts" />
+
 import fs from "fs";
 import path from "path";
 import yaml from "yaml";
 import normalizeNewline from "normalize-newline";
 import { preloadAbbreviations } from "./preload.js";
 
-export async function createSys(config: any) {
-    let CSL: any;
+export async function createSys(config: TestRunnerConfig) {
+    let CSL: CSLNamespace;
     if (config.path.src && fs.existsSync(path.join(config.path.src, "..", "citeproc.mjs"))) {
         try {
             const mod = await import(path.join(config.path.src, "..", "citeproc.mjs"));
@@ -97,7 +100,7 @@ export async function createSys(config: any) {
         }
         jurisdictions.reverse();
         let haveHit = false;
-        let myjurisdiction: any;
+        let myjurisdiction: string;
         for (let i = 0, ilen = jurisdictions.length; i < ilen; i += 1) {
             myjurisdiction = jurisdictions[i];
             if (!obj[myjurisdiction]) {
@@ -341,7 +344,7 @@ export async function createSys(config: any) {
         } else if (!this.test.CITATIONS) {
             this.style.updateItems(this._ids, this.test.submode["nosort"]);
         }
-        let citation: any = [];
+        let citation: Record<string, any>[] = [];
         if (!this.test["CITATION-ITEMS"] && !this.test.CITATIONS){
             for (let i=0,ilen=this.style.registry.reflist.length;i<ilen;i++) {
                 let item = this.style.registry.reflist[i];

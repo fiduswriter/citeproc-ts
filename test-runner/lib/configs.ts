@@ -1,3 +1,5 @@
+/// <reference path="./types.d.ts" />
+
 import fs from "fs";
 import path from "path";
 import os from "os";
@@ -58,7 +60,7 @@ function readConfig(dirName, hiddenFile?: boolean) {
 }
 
 export function getConfig(scriptDir: string) {
-    let config: any;
+    let config: TestRunnerConfig;
     try {
         if (!fs.existsSync(path.join(homeDir, ".cslrun.yaml"))) {
             fs.writeFileSync(path.join(homeDir, ".cslrun.yaml"), defaultConfig);
@@ -107,7 +109,7 @@ export function getConfig(scriptDir: string) {
 
     if (!config.path.abbrevs || !fs.existsSync(config.path.abbrevs)
         || !fs.readdirSync(config.path.modules).length) {
-        config.path.abbrevs = citeprocAbbrevs;
+        config.path.abbrevs = citeprocAbbrevs.getAbbrevPath();
     }
 
     if (sourceRepoPaths.filter(k => config.path[k]).length < sourceRepoPaths.length) {

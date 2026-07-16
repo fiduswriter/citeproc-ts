@@ -176,7 +176,7 @@ interface CSLNamespace {
         [key: string]: any;
     };
     Output?: {
-        Formatters?: Record<string, Formatter>;
+        Formatters?: any;
         Queue?: any;
         DefaultFormatter?: any;
         Formats?: any;

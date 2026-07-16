@@ -2802,7 +2802,7 @@ var init_transform = __esm({
               ret = "tlh";
             }
           }
-          if (Item.multi && Item.multi && Item.multi.main && Item.multi.main[field]) {
+          if (Item.multi && Item.multi.main && Item.multi.main[field]) {
             ret = Item.multi.main[field];
           }
           if (!state.opt.development_extensions.strict_text_case_locales || state.opt.development_extensions.normalize_lang_keys_to_lowercase) {
@@ -3650,9 +3650,9 @@ var init_dateparser = __esm({
             for (let jKey in extendedSets) {
               for (let kKey in extendedSets[jKey]) {
                 abbrevLength = extendedSets[jKey][kKey];
-                jKey = parseInt(jKey, 10);
-                kKey = parseInt(kKey, 10);
-                this.monthAbbrevs[jKey][kKey] = this.monthSets[jKey][kKey].slice(0, abbrevLength);
+                const jKeyNum = parseInt(jKey, 10);
+                const kKeyNum = parseInt(kKey, 10);
+                this.monthAbbrevs[jKeyNum][kKeyNum] = this.monthSets[jKeyNum][kKeyNum].slice(0, abbrevLength);
               }
             }
           }
@@ -3892,7 +3892,7 @@ var init_dateparser = __esm({
                 number = element;
               }
               if (element.toLocaleLowerCase().match(/^bc/) && number) {
-                thedate["year" + suff] = "" + number * -1;
+                thedate["year" + suff] = "" + parseInt(number, 10) * -1;
                 number = "";
                 continue;
               }
@@ -4114,11 +4114,11 @@ var init_statute = __esm({
 function padding(num) {
   let m = num.match(/\s*(-{0,1}[0-9]+)/);
   if (m) {
-    num = parseInt(m[1], 10);
-    if (num < 0) {
-      num = 1e20 + num;
+    let n = parseInt(m[1], 10);
+    if (n < 0) {
+      n = 1e20 + n;
     }
-    num = "" + num;
+    num = "" + n;
     while (num.length < 20) {
       num = "0" + num;
     }
@@ -4799,7 +4799,7 @@ var init_number = __esm({
         this.state = state;
       }
       format(num, gender) {
-        if (num < 10) {
+        if (typeof num === "number" && num < 10) {
           num = "0" + num;
         }
         let ret = CSL.Engine.getField(
@@ -4843,7 +4843,7 @@ var init_number = __esm({
       }
       format(num, gender) {
         let str;
-        num = parseInt(num, 10);
+        num = parseInt("" + num, 10);
         str = "" + num;
         let suffix = "";
         const trygenders = [];
@@ -4852,17 +4852,17 @@ var init_number = __esm({
         }
         trygenders.push("neuter");
         if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
-          suffix = this.state.getTerm("ordinal", false, 0, gender);
+          suffix = this.state.getTerm("ordinal", void 0, 0, gender);
           let trygender;
           for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
             trygender = trygenders[i];
             const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
             if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
-              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender], false, 0, gender);
+              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender], void 0, 0, gender);
             } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
-              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender], false, 0, gender);
+              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender], void 0, 0, gender);
             } else if (ordinfo["last-digit"][str.slice(str.length - 1)] && ordinfo["last-digit"][str.slice(str.length - 1)][trygender]) {
-              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender], false, 0, gender);
+              suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender], void 0, 0, gender);
             }
             if (suffix) {
               break;
@@ -4872,17 +4872,18 @@ var init_number = __esm({
           if (!gender) {
             gender = void 0;
           }
+          const genderKey = gender;
           this.state.fun.ordinalizer.init();
           if (num / 10 % 10 === 1 || num > 10 && num < 20) {
-            suffix = this.suffixes[this.state.opt.lang][gender][3];
+            suffix = this.suffixes[this.state.opt.lang][genderKey][3];
           } else if (num % 10 === 1 && num % 100 !== 11) {
-            suffix = this.suffixes[this.state.opt.lang][gender][0];
+            suffix = this.suffixes[this.state.opt.lang][genderKey][0];
           } else if (num % 10 === 2 && num % 100 !== 12) {
-            suffix = this.suffixes[this.state.opt.lang][gender][1];
+            suffix = this.suffixes[this.state.opt.lang][genderKey][1];
           } else if (num % 10 === 3 && num % 100 !== 13) {
-            suffix = this.suffixes[this.state.opt.lang][gender][2];
+            suffix = this.suffixes[this.state.opt.lang][genderKey][2];
           } else {
-            suffix = this.suffixes[this.state.opt.lang][gender][3];
+            suffix = this.suffixes[this.state.opt.lang][genderKey][3];
           }
         }
         str = str += suffix;
@@ -6459,7 +6460,8 @@ var init_processor = __esm({
         if (!match) {
           return {
             tags: [],
-            strings: [str]
+            strings: [str],
+            origStrings: [str]
           };
         }
         const split = str.split(splitRex);
@@ -11076,7 +11078,7 @@ var init_key = __esm({
                   let num = false;
                   num = Item[variable];
                   if (num) {
-                    num = CSL.Util.padding(num);
+                    num = CSL.Util.padding("" + num);
                   }
                   state2.output.append(num, this);
                 };
@@ -11469,7 +11471,7 @@ var init_alternative = __esm({
               if (state2.opt.multi_layout) {
                 for (let i in state2.opt.multi_layout) {
                   const locale_list = state2.opt.multi_layout[i];
-                  let gotlang = false;
+                  let gotlang = "";
                   for (let j in locale_list) {
                     const tryspec = locale_list[j];
                     if (langspec.best === tryspec.best || langspec.base === tryspec.base || langspec.bare === tryspec.bare) {
@@ -11592,6 +11594,35 @@ var init_output = __esm({
     init_regex();
     NameOutput = class {
       constructor(state, Item, item) {
+        __publicField(this, "debug");
+        __publicField(this, "state");
+        __publicField(this, "Item");
+        __publicField(this, "item");
+        __publicField(this, "nameset_base");
+        __publicField(this, "etal_spec");
+        __publicField(this, "_first_creator_variable");
+        __publicField(this, "_please_chop");
+        __publicField(this, "names");
+        __publicField(this, "variables");
+        __publicField(this, "name");
+        __publicField(this, "family");
+        __publicField(this, "given");
+        __publicField(this, "family_decor");
+        __publicField(this, "given_decor");
+        __publicField(this, "institution");
+        __publicField(this, "label");
+        __publicField(this, "labelVariable");
+        __publicField(this, "requireMatch");
+        __publicField(this, "variables_offset");
+        __publicField(this, "freeters");
+        __publicField(this, "institutions");
+        __publicField(this, "persons");
+        __publicField(this, "freeters_count");
+        __publicField(this, "institutions_count");
+        __publicField(this, "persons_count");
+        __publicField(this, "names_count");
+        __publicField(this, "common_term");
+        __publicField(this, "variable_offset");
         this.debug = false;
         this.state = state;
         if (this.debug) {
@@ -14321,8 +14352,10 @@ var init_names = __esm({
               with_default_prefix = " ";
               with_suffix = " ";
             }
-            const thewith = {};
-            thewith.single = new CSL.Blob(mywith);
+            const thewith = {
+              single: new CSL.Blob(mywith),
+              multiple: new CSL.Blob(mywith)
+            };
             thewith.single.strings.suffix = with_suffix;
             thewith.multiple = new CSL.Blob(mywith);
             thewith.multiple.strings.suffix = with_suffix;
@@ -14826,7 +14859,7 @@ var init_text = __esm({
                                 } else {
                                   prefix = "https://doi.org/";
                                 }
-                                clonetoken.strings.prefix = this.strings.prefix.slice(0, clonetoken.strings.prefix.length - 16);
+                                clonetoken.strings.prefix = this.strings.prefix.slice(0, this.strings.prefix.length - 16);
                               }
                               if (!value.match(/^https?:\/\//)) {
                                 value = CSL.Util.encodeDoiForUrl(value);
@@ -15684,8 +15717,8 @@ var init_attributes = __esm({
           res = false;
           let langspec2 = false;
           if (Item.language) {
-            lang = Item.language;
-            langspec2 = CSL.localeResolve(lang, state.opt["default-locale"][0]);
+            const lang2 = Item.language;
+            langspec2 = CSL.localeResolve(lang2, state.opt["default-locale"][0]);
             if (langspec2.best === state.opt["default-locale"][0]) {
               langspec2 = false;
             }
@@ -17176,13 +17209,13 @@ var init_dates = __esm({
           num = 0;
         }
       }
-      end = end ? "_end" : "";
-      let month = state.tmp.date_object["month" + end];
+      const endSuffix = end ? "_end" : "";
+      let month = state.tmp.date_object["month" + endSuffix];
       month = month ? "" + month : "1";
       while (month.length < 2) {
         month = "0" + month;
       }
-      let day = state.tmp.date_object["day" + end];
+      let day = state.tmp.date_object["day" + endSuffix];
       day = day ? "" + day : "1";
       while (day.length < 2) {
         day = "0" + day;
@@ -17214,7 +17247,7 @@ var init_dates = __esm({
         if (state.transform.abbrevs["default"]["number"][normalizedKey]) {
           label = state.transform.abbrevs["default"]["number"][normalizedKey];
         }
-        year = label + (num - offset);
+        year = label + (Number(num) - offset);
       }
       return year;
     };
@@ -17246,11 +17279,12 @@ var init_dates = __esm({
       if (!num) {
         num = 0;
       }
-      num = "" + num;
-      if (!num.match(/^[0-9]+$/)) {
+      const numStr = "" + num;
+      if (!numStr.match(/^[0-9]+$/)) {
         num = 0;
+      } else {
+        num = parseInt(numStr, 10);
       }
-      num = parseInt(num, 10);
       if (useSeason) {
         const res = { stub: "month-", num };
         if (res.num < 1 || res.num > 24) {

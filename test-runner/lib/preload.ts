@@ -1,8 +1,11 @@
+/// <reference path="../../src/types.d.ts" />
+/// <reference path="./types.d.ts" />
+
 import fs from "fs";
 import path from "path";
 import { getAbbrevPath } from "citeproc-abbrevs";
 
-export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
+export function preloadAbbreviations(CSL: CSLNamespace, styleEngine: any, citation: Record<string, any>, acache: Record<string, any>) {
     let styleID = styleEngine.opt.styleID;
     let obj = styleEngine.transform.abbrevs;
     let suppressedJurisdictions = styleEngine.opt.suppressedJurisdictions;
@@ -20,7 +23,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
         }
     }
 
-    let rawFieldFunction: any = {
+    let rawFieldFunction: Record<string, (item: Record<string, any>, varname: string) => any[]> = {
         "container-title": (item, varname) => {
             return item[varname] ? [item[varname]] : [];
         },
@@ -75,7 +78,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
         }
     };
 
-    let rawItemFunction: any = {
+    let rawItemFunction: Record<string, (item: Record<string, any>) => any> = {
         "nickname": (item) => {
             let ret = [];
             for (let varname in CSL.CREATORS) {
@@ -127,7 +130,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                 let domain = m[1];
                 let obj = JSON.parse(fs.readFileSync(path.join(abbrevPath, fn)).toString());
                 let jurisd;
-                let abbrevs: any;
+                let abbrevs: Record<string, any>;
                 if (domain) {
                     ret[domain] = true;
                     abbrevs = {};
@@ -198,7 +201,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
     for (let i=0,ilen=citation.citationItems.length;i<ilen;i++) {
         let id = citation.citationItems[i].id;
         let item = styleEngine.sys.retrieveItem(id);
-        let jurisdictions: any;
+        let jurisdictions: string[];
         if (item.jurisdiction) {
             jurisdictions = item.jurisdiction.split(":");
             if (!styleEngine.opt.availableAbbrevDomains) {
@@ -246,7 +249,7 @@ export function preloadAbbreviations(CSL, styleEngine, citation, acache) {
                     return [val, "institution-part", field];
                 }));
             } else if (field === "authority") {
-                let spoofItem: any;
+                let spoofItem: Record<string, any>;
                 if ("string" === typeof item[field]) {
                     spoofItem = { authority: [{ literal: item[field] }] };
                 } else {

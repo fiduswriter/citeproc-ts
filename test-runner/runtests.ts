@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/// <reference path="./lib/types.d.ts" />
+
 import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
@@ -161,7 +163,7 @@ function checkSanity() {
 
 function setLocalPathToStyleTestPath() {
     let styleTestsPth = null;
-    if (!fs.existsSync(config.path.styletests)) {
+    if (!config.path.styletests || !fs.existsSync(config.path.styletests)) {
         throw new Error("The configured style tests directory must exist: " + config.path.styletests);
     }
     try {
@@ -206,11 +208,11 @@ function checkSingle() {
         throw new Error("Single test fixture must be specified as [group]_[name]");
     }
     let lpth = path.join(config.path.local, fn);
-    let spth: any;
+    let spth: string | undefined;
     if (config.path.std) {
         spth = path.join(config.path.std, fn);
     }
-    if (!fs.existsSync(lpth) && (options.style || !fs.existsSync(spth))) {
+    if (!fs.existsSync(lpth) && (options.style || (spth && !fs.existsSync(spth)))) {
         console.log("Looked for " + lpth);
         console.log("Looked for " + spth);
         throw new Error("Test fixture \"" + options.single + "\" not found.");
@@ -218,7 +220,7 @@ function checkSingle() {
     if (fs.existsSync(lpth)) {
         config.testData[tn] = parseFixture(options, tn, lpth);
     }
-    if (!options.style) {
+    if (!options.style && spth) {
         if (fs.existsSync(spth)) {
             checkOverlap(tn);
             config.testData[tn] = parseFixture(options, tn, spth);
@@ -404,7 +406,7 @@ function runValidationAsync(validationCount, validationGoal, schema, test) {
 async function runValidationsAsync() {
     let validationCount = 0;
     let validationGoal = Object.keys(config.testData).length;
-    let startPos: any = 0;
+    let startPos: number = 0;
     if (options.w) {
         console.log("Watching: " + options.watch[0]);
         console.log("Validating CSL.");
@@ -414,7 +416,7 @@ async function runValidationsAsync() {
     if (!options.w && !options.l && !options.U) {
         if (options.a && fs.existsSync(path.join(config.path.configdir, ".cslValidationPos"))) {
             startPos = fs.readFileSync(path.join(config.path.configdir, ".cslValidationPos")).toString();
-            startPos = parseInt(startPos, 10);
+            startPos = parseInt(startPos.toString(), 10);
         } else {
             fs.writeFileSync(path.join(config.path.configdir, ".cslValidationPos"), "0");
         }
@@ -515,11 +517,11 @@ function runFixturesAsync() {
                                 let result = sys.run();
                                 let input = JSON.stringify(test.INPUT, null, 2);
                                 let txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
-                                let mode: any = [test.MODE];
+                                let modeArr: string[] = [test.MODE];
                                 for (let submode in test.submode) {
-                                    mode.push(submode);
+                                    modeArr.push(submode);
                                 }
-                                mode = mode.join("-");
+                                let mode = modeArr.join("-");
                                 txt = txt.replace("%%MODE%%", mode);
                                 txt = txt.replace("%%KEYS%%", JSON.stringify(test.KEYS, null, 2));
                                 txt = txt.replace("%%DESCRIPTION%%", test.DESCRIPTION);
@@ -573,7 +575,7 @@ function buildTests() {
     fixtures = fixtures.replace("%%CHAI_PATH%%", JSON.stringify(config.path.chai));
     fixtures = fixtures.replace("%%RUNPREP_PATH%%", JSON.stringify(path.join(config.path.scriptdir, "lib", "sys.js")));
     fixtures = normalizeNewline(fixtures);
-    if (!fs.existsSync(config.path.fixturedir)) {
+    if (config.path.fixturedir && !fs.existsSync(config.path.fixturedir)) {
         fs.mkdirSync(config.path.fixturedir);
     }
     fs.writeFileSync(path.join(config.path.fixturedir, "fixtures.mjs"), fixtures);
@@ -724,7 +726,7 @@ async function bundleValidateTest(continueAfter?) {
             }
             collectionKey = collectionKey[0];
             obj = [];
-            let url: any = "https://api.zotero.org/groups/" + config.groupID + "/collections/" + collectionKey + "/items/top?limit=100";
+            let url: string | false = "https://api.zotero.org/groups/" + config.groupID + "/collections/" + collectionKey + "/items/top?limit=100";
             while (url) {
                 json = await fetchURL(url);
                 obj = obj.concat(JSON.parse(json.buf.toString()));

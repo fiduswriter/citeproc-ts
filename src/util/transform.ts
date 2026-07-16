@@ -82,7 +82,7 @@ export class Transform {
             return value;
         }
         
-        function abbreviate(state: CslState, tok: Token, Item: CslItem, altvar: string | boolean, basevalue: string, family_var: string, use_field: boolean): string {
+        function abbreviate(state: CslState, tok: Token, Item: CslItem, altvar: any, basevalue: string, family_var: string, use_field: boolean): string {
             let value = "";
             const myabbrev_family = FIELD_CATEGORY_REMAP[family_var];
             let preferredJurisdiction;
@@ -163,8 +163,8 @@ export class Transform {
                     ret = "tlh";
                 }
             }
-            if (Item.multi && Item.multi && Item.multi.main && Item.multi.main[field]) {
-                ret = Item.multi.main[field];
+            if (Item.multi && (Item.multi as any).main && (Item.multi as any).main[field]) {
+                ret = (Item.multi as any).main[field];
             }
             if (!state.opt.development_extensions.strict_text_case_locales
                 || state.opt.development_extensions.normalize_lang_keys_to_lowercase) {

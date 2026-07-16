@@ -105,7 +105,8 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: (str: string
         if (!match) {
             return {
                 tags: [],
-                strings: [str]
+                strings: [str],
+                origStrings: [str]
             };
         }
         const split = str.split(splitRex);

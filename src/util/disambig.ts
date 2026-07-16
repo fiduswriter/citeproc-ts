@@ -1,8 +1,6 @@
 /*global CSL: true */
 
-import { AmbigConfig } from '../obj/ambigconfig';
-
-export function ambigConfigDiff(a: AmbigConfig, b: AmbigConfig): number {
+export function ambigConfigDiff(a: any, b: any): number {
     let pos: number, len: number, ppos: number, llen: number;
     if (a.names.length !== b.names.length) {
         return 1;
@@ -28,7 +26,7 @@ export function ambigConfigDiff(a: AmbigConfig, b: AmbigConfig): number {
     return 0;
 };
 
-export function cloneAmbigConfig(config: AmbigConfig, oldconfig?: AmbigConfig): AmbigConfig {
+export function cloneAmbigConfig(config: any, oldconfig?: any): any {
     let i: number, ilen: number, j: number, jlen: number, param: any;
     let ret: any = {};
     ret.names = [];
@@ -59,7 +57,7 @@ export function cloneAmbigConfig(config: AmbigConfig, oldconfig?: AmbigConfig): 
 /**
  * Return current base configuration for disambiguation
  */
-export function getAmbigConfig(this: CslState): AmbigConfig {
+export function getAmbigConfig(this: any): any {
     let config: any, ret: any;
     config = this.tmp.disambig_request;
     if (!config) {
