@@ -4,9 +4,7 @@
  * Shared data shapes (CSL-JSON input and the processor runtime).
  *
  * These interfaces describe the stable public data that flows through the
- * processor.  They are the foundation of the TypeScript migration: as more
- * modules are ported, their parameter and return types are expressed in
- * terms of these names instead of ``any``.
+ * processor.
  */
 
 interface CslName {
@@ -74,8 +72,8 @@ type TextCaseConfig = {
 
 /**
  * The per-render ``state`` object threaded through the engine.  Only the
- * most heavily used members are pinned down here; everything else falls
- * through the index signature until the modules that own it are migrated.
+ * most heavily used members are pinned down here; the rest fall through
+ * the index signature.
  */
 interface CslState {
     sys: Sys;
