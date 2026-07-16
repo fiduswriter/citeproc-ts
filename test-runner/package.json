@@ -7,5 +7,5 @@
         "Johannes Wilm"
     ],
     "license": "MIT",
-    "type": "commonjs"
+    "type": "module"
 }

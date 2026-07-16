@@ -1,6 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-var reporters = {
+import fs from "fs";
+import path from "path";
+
+const reporters: Record<string, { path?: string; npmname?: string; location?: string[] }> = {
     "landing": {
         path: "landing"
     },
@@ -28,11 +29,13 @@ var reporters = {
         location: ["nyanplusreporter", "src", "nyanPlus"]
     }
 };
+
 function lookForReporter(config, nickName) {
-    const locationPath = reporters[nickName].location.join(path.sep);
+    const locationPath = reporters[nickName].location!.join(path.sep);
+    const filename = path.dirname(new URL(import.meta.url).pathname);
     var locations = [
-        path.join(__dirname, "..", "..", locationPath),
-        path.join(__dirname, "..", "node_modules", locationPath),
+        path.join(filename, "..", "..", locationPath),
+        path.join(filename, "..", "node_modules", locationPath),
         path.join(config.path.cwd, "node_modules", locationPath)
     ]
     for (var loc of locations) {
@@ -41,13 +44,9 @@ function lookForReporter(config, nickName) {
         }
     }
 }
-function getReporters(config) {
+
+export function getReporters(config) {
     lookForReporter(config, "spectrum");
     lookForReporter(config, "nyan");
     return reporters;
 }
-module.exports = {
-    get: getReporters
-}
-
-export {};

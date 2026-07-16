@@ -1,5 +1,6 @@
-const { REQ, OPT, SKP } = require("./flags");
-const sections = {
+import { REQ, OPT, SKP } from "./flags.js";
+
+const sections: Record<string, { processor: number; style: number; type: string }> = {
     CSL: {
         processor: REQ,
         style: REQ,
@@ -91,6 +92,5 @@ const sections = {
         type: "json"
     }
 };
-module.exports = sections;
 
-export {};
+export default sections;

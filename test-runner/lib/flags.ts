@@ -1,7 +1,3 @@
-module.exports = {
-    REQ: 1,
-    OPT: 2,
-    SKP: 3
-};
-
-export {};
+export const REQ = 1;
+export const OPT = 2;
+export const SKP = 3;

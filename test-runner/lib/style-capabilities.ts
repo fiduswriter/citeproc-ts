@@ -1,11 +1,12 @@
-const path = require("path");
-const options = require("./options").options;
-function styleCapabilities(txt) {
-    const styleCap: any = {
+import path from "path";
+import { options } from "./options.js";
+
+export function styleCapabilities(txt: string) {
+    const styleCap: Record<string, any> = {
         styleID: null,
         styleName: null,
         bibliography: false,
-        jurisdictionPreference: [],
+        jurisdictionPreference: [] as string[],
         defaultLocale: "en",
         log: []
     };
@@ -40,8 +41,8 @@ function styleCapabilities(txt) {
     if (jprefStart > -1) {
         var jprefOpenQuote = txt.slice(jprefStart+1).indexOf("\"")+1;
         var jprefCloseQuote = txt.slice(jprefStart+jprefOpenQuote+1).indexOf("\"")+1;
-        var jprefs = txt.slice(jprefStart+jprefOpenQuote+1, jprefStart+jprefOpenQuote+jprefCloseQuote);
-        jprefs = jprefs.split(/\s+/);
+        var jprefsRaw = txt.slice(jprefStart+jprefOpenQuote+1, jprefStart+jprefOpenQuote+jprefCloseQuote);
+        var jprefs = jprefsRaw.split(/\s+/);
         styleCap.jurisdictionPreference = jprefs;
     }
     var localePrefStart = txt.indexOf("default-locale");
@@ -49,13 +50,7 @@ function styleCapabilities(txt) {
         var localePrefOpenQuote = txt.slice(localePrefStart+1).indexOf("\"")+1;
         var localePrefCloseQuote = txt.slice(localePrefStart+localePrefOpenQuote+1).indexOf("\"")+1;
         var localePref = txt.slice(localePrefStart+localePrefOpenQuote+1, localePrefStart+localePrefOpenQuote+localePrefCloseQuote);
-        // styleCap.log = localePref;
         styleCap.defaultLocale = localePref;
     }
     return styleCap;
 }
-module.exports = {
-    styleCapabilities
-}
-
-export {};

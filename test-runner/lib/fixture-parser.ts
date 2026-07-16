@@ -1,6 +1,6 @@
-const fs = require("fs");
-const sections = require("./sections");
-const { REQ, OPT, SKP } = require("./flags");
+import fs from "fs";
+import sections from "./sections.js";
+import { REQ, OPT, SKP } from "./flags.js";
 
 function Parser(options, tn, fpth) {
     this.options = options;
@@ -38,7 +38,6 @@ function Parser(options, tn, fpth) {
                 }
             }
         }
-        //console.log(JSON.stringify(sections, null, 2));
         for (var key of Object.keys(sections)
                  .filter(key => sections[key][this.testtype] === REQ || sections[key][this.testtype] === OPT)) {
             if (this.options.watch && key === "CSL") {
@@ -87,7 +86,6 @@ function Parser(options, tn, fpth) {
                 throw new Error("Expected closing tag \"" + this.section + "\" but found \"" + m[1] + "\"");
             }
             this.state = "closing";
-            // for empty results
             if (this.section === "RESULT" && !this.obj[this.section]) {
                 this.obj[this.section] = [""];
             }
@@ -105,7 +103,7 @@ function Parser(options, tn, fpth) {
     };
 }
 
-function parseFixture(options, tn, fpth) {
+export function parseFixture(options, tn, fpth) {
     var raw = fs.readFileSync(fpth).toString();
     var parser = new Parser(options, tn, fpth);
     for (var line of raw.split(/(?:\r\n|\n)/)) {
@@ -114,9 +112,3 @@ function parseFixture(options, tn, fpth) {
     var ret = parser.dumpObj();
     return ret;
 }
-
-module.exports = {
-    parseFixture: parseFixture
-}
-
-export {};

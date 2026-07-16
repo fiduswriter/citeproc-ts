@@ -1,6 +1,3 @@
-/*
- * Errors
- */
 function errorHandler(err) {
     console.log("\nError: " + err.message + "\n");
     console.log(err);
@@ -17,10 +14,9 @@ function setupGuidance(txt) {
     console.log("#     https://www.npmjs.com/package/citeproc-test-runner");
     process.exit(1);
 }
-module.exports = {
-    errorHandler: errorHandler,
-    errorHandlerNonFatal: errorHandlerNonFatal,
-    setupGuidance: setupGuidance
-}
 
-export {};
+export {
+    errorHandler,
+    errorHandlerNonFatal,
+    setupGuidance
+}

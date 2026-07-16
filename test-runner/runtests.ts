@@ -1,36 +1,45 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn } = require("child_process");
-const tmp = require("tmp");
-const clear = require("cross-clear");
-const chokidar = require("chokidar");
-const normalizeNewline = require("normalize-newline");
-const fetchURL = require("fetch-promise");
-const zoteroToCSLM = require('zotero2jurismcsl').convert;
-const zoteroToCSL = require('zotero-to-csl');
+import fs from "fs";
+import path from "path";
+import { spawn } from "child_process";
+import tmp from "tmp";
+import clear from "cross-clear";
+import chokidar from "chokidar";
+import normalizeNewline from "normalize-newline";
+import fetchURL from "fetch-promise";
+import zoteroToCSLM from 'zotero2jurismcsl';
+import zoteroToCSL from 'zotero-to-csl';
+import { getAbbrevPath } from "citeproc-abbrevs";
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-var getAbbrevPath = require("citeproc-abbrevs").getAbbrevPath;
+const _require = createRequire(import.meta.url);
 
-const config = require("./lib/configs");
+import { getConfig } from "./lib/configs.js";
+import { getReporters } from "./lib/reporters.js";
+import { parseFixture } from "./lib/fixture-parser.js";
+import sources from "./lib/sources.js";
+import { options, formatUsage } from "./lib/options.js";
+import * as errors from "./lib/errors.js";
+import { styleCapabilities } from "./lib/style-capabilities.js";
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const config = getConfig(scriptDir);
+
+const { createSys } = await import(path.join(config.path.scriptdir, "lib", "sys.js"));
+const Sys = await createSys(config);
+const reporters = getReporters(config);
+const { version } = JSON.parse(fs.readFileSync(path.join(scriptDir, "package.json"), "utf8"));
+
 var rncValidator = null;
 function getRNCValidator() {
     if (!rncValidator) {
         var projectRoot = config.path.src ? path.join(config.path.src, "..") : config.path.cwd;
-        rncValidator = require(path.join(projectRoot, "tools", "rnc-validator.js")).validateCSL;
+        rncValidator = _require(path.join(projectRoot, "tools", "rnc-validator.js")).validateCSL;
     }
     return rncValidator;
 }
-const reporters = require("./lib/reporters").get(config);
-const parseFixture = require("./lib/fixture-parser").parseFixture;
-const sources = require("./lib/sources");
-const options = require("./lib/options").options;
-const usage = require("./lib/options").usage;
-const errors = require("./lib/errors");
-const Sys = require(path.join(config.path.scriptdir, "lib", "sys.js"));
-const { styleCapabilities } = require("./lib/style-capabilities");
-const {version} = require("./package.json");
 
 var ksTimeout;
 var cdTimeout;
@@ -48,18 +57,14 @@ if (process.stdin.setRawMode) {
   process.stdin.setRawMode(true);
 }
 process.stdin.resume();
-// The console needs to run in binary mode, to give the fancy reporters
-// control over the terminal
-//process.stdin.setEncoding( 'utf8' );
 process.stdin.on('data', function( key ){
-    // ctrl-c ( end of text )
     if ( key.toString("hex") === "03" ) {
         console.log("\n");
         process.exit();
     }
 });
 
-/* 
+/*
  * Functions
  */
 function Stripper(fn, noStrip) {
@@ -114,7 +119,7 @@ function Stripper(fn, noStrip) {
 
 function checkSanity() {
     if (options.h) {
-        console.log(usage);
+        console.log(formatUsage(config.mode));
         process.exit();
     }
     if (options.version) {
@@ -137,7 +142,7 @@ function checkSanity() {
             throw new Error("Only one of -s, -g, -a, or -l may be invoked.");
         }
         if (["s", "g", "a", "l"].filter(o => options[o]).length === 0) {
-            console.log(usage);
+            console.log(formatUsage(config.mode));
             throw new Error("Use one of -s, -g, -a, or -l.");
         }
     }
@@ -253,7 +258,7 @@ function checkGroup() {
     if (fail) {
         throw new Error("No fixtures found for group \"" + options.group + "\".");
     }
-    
+
 }
 
 function checkAll() {
@@ -305,7 +310,6 @@ function setGroupList() {
     }
 }
 
-// Is this initialization needed?
 config.testData = {};
 
 function fetchTestData() {
@@ -331,25 +335,13 @@ function Bundle(noStrip?) {
         return;
     }
     var bundlePath = path.join(config.path.src, "..", "citeproc_commonjs.js");
-    // If the prebuilt bundle already exists (built by esbuild), skip the old-style concatenation
     if (fs.existsSync(bundlePath)) {
         return;
     }
     console.log("Rebundling processor");
-    // The markup of the code is weird, so we do weird things to strip
-    // comments.
-    // The noStrip option is not yet used, but will dump the processor
-    // with comments and skipped blocks intact when set to a value.
     var ret = "";
     for (let fn of sources) {
         var txt = fs.readFileSync(path.join(config.path.src, fn + ".js")).toString();
-        /*
-        var stripper = new Stripper(fn, noStrip);
-        for (let line of txt.split(/(?:\r\n|\n)/)) {
-            stripper.checkLine(line);
-        }
-        ret += stripper.dumpArr() + "\n";
-        */
         ret += txt + "\n";
     }
     var license = fs.readFileSync(path.join(config.path.src, "..", "LICENSE")).toString().trim();
@@ -411,7 +403,6 @@ function runJingAsync(validationCount, validationGoal, schema, test) {
 
 async function runValidationsAsync() {
     var validationCount = 0;
-    //console.log(config.testData)
     var validationGoal = Object.keys(config.testData).length;
     let startPos: any = 0;
     if (options.w) {
@@ -438,7 +429,7 @@ async function runValidationsAsync() {
         var schema = config.path.cslschema;
         var lineList = test.CSL.split(/(?:\r\n|\n)/);
         var inStyle = false;
-        var m = null;  // for version match
+        var m = null;
         for (let line of lineList) {
             if (line.indexOf("<style") > -1) {
                 inStyle = true;
@@ -461,8 +452,6 @@ async function runValidationsAsync() {
         process.stdout.write("+");
         validationCount++;
         if (options.watch) {
-            // If in watch mode, all validations will be of the
-            // same CSL, so break after launching the first.
             break;
         }
     }
@@ -499,7 +488,7 @@ function runFixturesAsync() {
         if (options.k) {
             args.push("--bail");
         }
-        args.push(path.join(config.path.fixturedir, "fixtures.js"));
+        args.push(path.join(config.path.fixturedir, "fixtures.mjs"));
         var mochaPath = config.path.mocha || "mocha";
         var mocha = spawn(mochaPath, args, {
             shell: process.platform == 'win32'
@@ -517,24 +506,20 @@ function runFixturesAsync() {
                     console.log("Adopt this output as correct test RESULT? (y/n)");
                     process.stdin.once('data', function (key) {
                         if (!ksTimeout) {
-                            ksTimeout = setTimeout(function() { ksTimeout=null }, 100) // block for 0.1 second to avoid stutter
-                            
+                            ksTimeout = setTimeout(function() { ksTimeout=null }, 100)
                             var fn = path.basename(m[1]);
                             var test = config.testData[fn];
-                            
                             if (key == "y" || key == "Y") {
                                 var sys = new Sys(config, test, []);
                                 sys.preloadAbbreviationSets(config);
                                 var result = sys.run();
                                 var input = JSON.stringify(test.INPUT, null, 2);
                                 var txt = fs.readFileSync(path.join(config.path.scriptdir, "lib", "templateTXT.txt")).toString();
-                                
                                 let mode: any = [test.MODE];
                                 for (let submode in test.submode) {
                                     mode.push(submode);
                                 }
                                 mode = mode.join("-");
-                                
                                 txt = txt.replace("%%MODE%%", mode);
                                 txt = txt.replace("%%KEYS%%", JSON.stringify(test.KEYS, null, 2));
                                 txt = txt.replace("%%DESCRIPTION%%", test.DESCRIPTION);
@@ -551,17 +536,12 @@ function runFixturesAsync() {
                                     var block = "\n\n>>===== " + key + " =====>>\n" + testKey.trim() + "\n<<===== " + key + " =====<<\n";
                                     txt += block;
                                 }
-                                
                                 fs.writeFileSync(path.join(config.path.styletests, options.S, fn + ".txt"), txt);
-                                // XXXZ Arg forces removal of this fixture
-                                // Should this be promisified?
                                 bundleValidateTest(fn).catch(err => errors.errorHandler(err));
                                 resolve();
                             }
                             if (key == "n" || key == "N") {
                                 skipNames[test.NAME] = true;
-                                // XXXZ Arg forces removal of this fixture
-                                // Should this be promisified?
                                 bundleValidateTest(fn).catch(err => errors.errorHandler(err));
                                 resolve();
                             }
@@ -590,29 +570,26 @@ function buildTests() {
         errors.setupGuidance("No tests to run.");
     }
     fixtures = fixtures.replace("%%CONFIG%%", JSON.stringify(config, null, 2));
+    fixtures = fixtures.replace("%%CHAI_PATH%%", JSON.stringify(config.path.chai));
     fixtures = fixtures.replace("%%RUNPREP_PATH%%", JSON.stringify(path.join(config.path.scriptdir, "lib", "sys.js")));
     fixtures = normalizeNewline(fixtures);
     if (!fs.existsSync(config.path.fixturedir)) {
         fs.mkdirSync(config.path.fixturedir);
     }
-    fs.writeFileSync(path.join(config.path.fixturedir, "fixtures.js"), fixtures);
+    fs.writeFileSync(path.join(config.path.fixturedir, "fixtures.mjs"), fixtures);
 }
 
 async function bundleValidateTest(continueAfter?) {
-    // Remove test if continuing
     if (continueAfter) {
         for (let key of Object.keys(config.testData)) {
             delete config.testData[key];
             if (key === continueAfter) break;
         }
     }
-    // Bundle, load, and run tests if -s, -g, or -a
-    // Bundle the processor code.
     if (options.watch && !options.once) {
         clear();
     }
     Bundle();
-    // Build and run tests
     if (options.watch) {
         if (!continueAfter) {
             fetchTestData();
@@ -629,7 +606,7 @@ async function bundleValidateTest(continueAfter?) {
         var watcher = chokidar.watch(options.watch[0]);
         watcher.on("change", (event, filename) => {
             if (!cdTimeout) {
-                cdTimeout = setTimeout(function() { cdTimeout=null }, 200) // block for 0.1 second to avoid stutter
+                cdTimeout = setTimeout(function() { cdTimeout=null }, 200)
                 clear();
                 Bundle();
                 fetchTestData();
@@ -693,7 +670,6 @@ async function bundleValidateTest(continueAfter?) {
                     if (csl.match(/^<\?.*\?>/)) {
                         csl = csl.split("\n").slice(1).join("\n");
                     }
-                    // console.log(csl)
                     var res = await runJingAsync(count, goal, config.path.cslmschema, {CSL:csl, NAME:fn});
                     count++;
                 }
@@ -713,7 +689,6 @@ async function bundleValidateTest(continueAfter?) {
         if (options.list) {
             setGroupList();
         }
-        // -i and -s cannot be used together
         if (options.items && options.submissions) {
             errors.setupGuidance("The -i and -s options cannot be used together");
         }
@@ -727,8 +702,6 @@ async function bundleValidateTest(continueAfter?) {
         } else if (options.U) {
             config.groupID = options.U;
         }
-        // If we are using -w and -S is not set, sniff out the style name and set it on
-        // options, so legacy code will do its thing.
         if (options.watch && !options.style) {
             var txt = fs.readFileSync(options.watch[0]).toString();
             config.styleCapabilities = styleCapabilities(txt);
@@ -738,14 +711,9 @@ async function bundleValidateTest(continueAfter?) {
         if (options.style) {
             setLocalPathToStyleTestPath();
         }
-        
-        if (options.U) {
 
-            // Contact server, analyze return, check current fixtures,
-            // update with any missing fixtures. Big one.
-            // (1) Get collections from API
+        if (options.U) {
             console.log(config.groupID)
-            // Need to page if more than 100 items
             var json = await fetchURL("https://api.zotero.org/groups/" + config.groupID + "/collections/top?limit=100");
             var obj = JSON.parse(json.buf.toString());
             var collectionKey = obj.filter(o => (o.data.name === options.S))
@@ -759,7 +727,6 @@ async function bundleValidateTest(continueAfter?) {
             while (url) {
                 json = await fetchURL(url);
                 obj = obj.concat(JSON.parse(json.buf.toString()));
-                // console.log(json.res.responseHeaders.link);
                 var m = json.res.responseHeaders.link.match(/<(https:\/\/[^>]+)>;\s+rel=\"next\"/);
                 if (m) {
                     url = m[1];
@@ -767,8 +734,6 @@ async function bundleValidateTest(continueAfter?) {
                     url = false;
                 }
             }
-            // Need to read off the keys of the existing tests before building the data array.
-            // Can get the highest test number, or the holes in existing numbers, while we're at it.
             var styleTestDir = path.join(config.path.styletests, options.S);
             var doneKeys = {};
             var doneNums = {};
@@ -790,7 +755,7 @@ async function bundleValidateTest(continueAfter?) {
                 var max = Object.keys(doneNums).map(o => parseInt(o)).reduce(function(a, b) {
                     return Math.max(a, b);
                 });
-            } 
+            }
             var newNums = [];
             for (let i=1,ilen=(max + obj.length + 1); i<ilen; i++) {
                 if (!doneNums[i]) {
@@ -825,7 +790,6 @@ async function bundleValidateTest(continueAfter?) {
                     description: description
                 });
             }
-            // Templates get some big changes here.
             for (let i in arr) {
                 arr[i].id = "ITEM-1";
                 var item = JSON.stringify([arr[i]], null, 2);
@@ -833,8 +797,6 @@ async function bundleValidateTest(continueAfter?) {
                 txt = txt.replace("%%MODE%%", "all");
                 txt = txt.replace("%%KEYS%%", JSON.stringify([arr[i].key], null, 2));
                 txt = txt.replace("%%INPUT%%", JSON.stringify([arr[i].item], null, 2));
-                // Can we do something just a little more elegant with file naming?
-                
                 var pos = "" + newNums.pop();
                 while (pos.length < 3) {
                     pos = "0" + pos;
@@ -854,9 +816,8 @@ async function bundleValidateTest(continueAfter?) {
             }
             process.exit(0);
         } else if (options.single || options.group || options.all) {
-            bundleValidateTest().catch(err => errors.errorHandler(err));
+            await bundleValidateTest().catch(err => errors.errorHandler(err));
         } else if (options.l) {
-            // Otherwise we've collected a list of group names.
             var ret = Object.keys(config.testData);
             ret.sort();
             for (let key of ret) {
@@ -868,5 +829,3 @@ async function bundleValidateTest(continueAfter?) {
         errors.errorHandler(err);
     }
 })();
-
-export {};

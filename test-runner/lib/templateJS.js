@@ -1,7 +1,8 @@
-var path = require("path");
 var config = %%CONFIG%%
-var assert = require(config.path.chai).assert;
-var Sys = require(%%RUNPREP_PATH%%);
+const chai = await import(%%CHAI_PATH%%);
+const { createSys } = await import(%%RUNPREP_PATH%%);
+const Sys = await createSys(config);
+const assert = chai.assert;
 var logger_queue = [];
 
 describe('Integration tests', function() {

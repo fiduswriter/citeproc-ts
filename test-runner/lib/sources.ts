@@ -91,6 +91,4 @@ const sources = [
     "util_modules",
     "util_name_particles"
 ];
-module.exports = sources;
-
-export {};
+export default sources;
