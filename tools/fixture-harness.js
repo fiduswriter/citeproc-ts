@@ -13,8 +13,23 @@ const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'lib'
 
 const ROOT = path.join(__dirname, '..');
 const FIX_DIR = path.join(ROOT, 'fixtures', 'std', 'processor-tests', 'humans');
-const LOCALE_FILE = path.join(ROOT, 'locale', 'locales-en-US.xml');
-const LOCALE = fs.readFileSync(LOCALE_FILE, 'utf8').replace(/\s*<\?[^>]*\?>\s*\n/g, '');
+const LOCALE_CACHE = {};
+function loadLocale(localeTag) {
+    if (LOCALE_CACHE[localeTag]) return LOCALE_CACHE[localeTag];
+    const localeFile = path.join(ROOT, 'locale', 'locales-' + localeTag + '.xml');
+    let data;
+    try { data = fs.readFileSync(localeFile, 'utf8'); }
+    catch (e) { data = null; }
+    if (data) {
+        data = data.replace(/\s*<\?[^>]*\?>\s*\n/g, '');
+        LOCALE_CACHE[localeTag] = data;
+        return data;
+    }
+    // Fallback: try en-US
+    if (localeTag !== 'en-US') return loadLocale('en-US');
+    return '';
+}
+const DEFAULT_LOCALE = loadLocale('en-US');
 
 function runFixture(name) {
     let test;
@@ -29,7 +44,7 @@ function runFixture(name) {
     if (!items) return null;
     const byId = {};
     for (const it of items) byId['' + it.id] = it;
-    const sys = { retrieveLocale: () => LOCALE, retrieveItem: (id) => byId['' + id] };
+    const sys = { retrieveLocale: (localeTag) => loadLocale(localeTag || 'en-US'), retrieveItem: (id) => byId['' + id] };
     let engine;
     try {
         engine = new CSL.Engine(sys, test.CSL);
