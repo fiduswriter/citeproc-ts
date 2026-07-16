@@ -1,16 +1,16 @@
 import { CSL } from '../csl';
 
 export class PublisherOutput {
-    state: any;
+    state: CslState;
     group_tok: any;
     varlist: string[];
-    and_blob: any;
-    ["publisher-list"]: any;
-    ["publisher-place-list"]: any;
+    and_blob: Record<string, any>;
+    ["publisher-list"]: any[];
+    ["publisher-place-list"]: any[];
     ["publisher-token"]: any;
     ["publisher-place-token"]: any;
 
-    constructor(state: any, group_tok: any) {
+    constructor(state: CslState, group_tok: any) {
         this.state = state;
         this.group_tok = group_tok;
         this.varlist = [];
@@ -83,7 +83,7 @@ export class PublisherOutput {
         this.state.output.append(publishers, "literal");
     }
 
-    _purgeEmptyBlobs(blobs: any): any {
+    _purgeEmptyBlobs(blobs: any[]): any[] {
         for (let i = blobs.length - 1; i > -1; i -= 1) {
             if (!blobs[i] || blobs[i].length === 0 || !blobs[i].blobs.length) {
                 blobs = blobs.slice(0, i).concat(blobs.slice(i + 1));
@@ -92,7 +92,7 @@ export class PublisherOutput {
         return blobs;
     }
 
-    _join(blobs: any, delimiter: any, finalJoin?: any, ..._extra: any[]): any {
+    _join(blobs: any[], delimiter: string, finalJoin?: any, ..._extra: any[]): any {
         let i: number, ilen: number;
         if (!blobs) {
             return false;
@@ -132,7 +132,7 @@ export class PublisherOutput {
         return this.state.output.pop();
     }
 
-    _getToken(tokenname: any): any {
+    _getToken(tokenname: string): any {
         const token = this[tokenname];
         if (tokenname === "institution") {
             const newtoken = new CSL.Token();

@@ -1,22 +1,22 @@
 import { CSL } from '../csl';
 
 export class Disambiguation {
-    state: any;
+    state: CslState;
     sys: any;
     registry: any;
     ambigcites: any;
     debug: boolean;
-    akey: any;
-    modes: any[];
+    akey: string;
+    modes: string[];
     modeindex: number;
-    lists: any[];
+    lists: [any, any[]][];
     base: any;
     betterbase: any;
-    Item: any;
-    ItemCite: any;
+    Item: CslItem;
+    ItemCite: string;
     scanlist: any[];
-    partners: any[];
-    nonpartners: any[];
+    partners: CslItem[];
+    nonpartners: CslItem[];
     clashes: number[];
     gnameset: number;
     gname: number;
@@ -24,10 +24,10 @@ export class Disambiguation {
     givensMax: any;
     namesMax: any;
     namesetsMax: any;
-    maxNamesByItemId: any;
+    maxNamesByItemId: Record<string, any>;
     listpos: number;
 
-    constructor(state) {
+    constructor(state: CslState) {
         this.state = state;
         this.sys = this.state.sys;
         this.registry = state.registry.registry;
@@ -36,7 +36,7 @@ export class Disambiguation {
         this.debug = false;
     }
 
-    run(akey) {
+    run(akey: string): void {
         if (!this.modes.length) {
             return;
         }
@@ -49,8 +49,8 @@ export class Disambiguation {
         }
     }
 
-    runDisambig() {
-        let ismax;
+    runDisambig(): void {
+        let ismax: boolean;
         if (this.debug) {
             this.state.sys.print("[C] === runDisambig() ===");
         }
@@ -84,8 +84,8 @@ export class Disambiguation {
         }
     }
 
-    scanItems(list) {
-        let pos, len, otherItem;
+    scanItems(list: [any, CslItem[]]): void {
+        let pos: number, len: number, otherItem: CslItem;
         if (this.debug) {
             this.state.sys.print("[2] === scanItems() ===");
         }
@@ -126,7 +126,7 @@ export class Disambiguation {
         this.clashes[1] = clashes;
     }
 
-    evalScan(maxed) {
+    evalScan(maxed: boolean): void {
         this[this.modes[this.modeindex]](maxed);
         if (maxed) {
             if (this.modeindex < this.modes.length - 1) {
@@ -137,8 +137,8 @@ export class Disambiguation {
         }
     }
 
-    disNames(ismax?) {
-        let i, ilen;
+    disNames(ismax?: boolean): void {
+        let i: number, ilen: number;
 
         if (this.debug) {
             this.state.sys.print("[3] == disNames() ==");
@@ -199,7 +199,7 @@ export class Disambiguation {
         }
     }
 
-    disExtraText() {
+    disExtraText(): void {
         if (this.debug) {
             this.state.sys.print("[3] === disExtraText ==");
         }
@@ -243,8 +243,8 @@ export class Disambiguation {
         }
     }
 
-    disYears() {
-        let pos, len, tokens, token;
+    disYears(): void {
+        let pos: number, len: number, tokens: CslItem[], token: any;
         if (this.debug) {
             this.state.sys.print("[3] === disYears ==");
         }
@@ -274,7 +274,7 @@ export class Disambiguation {
         this.lists[this.listpos] = [this.betterbase, []];
     }
 
-    incrementDisambig() {
+    incrementDisambig(): boolean {
         if (this.debug) {
             this.state.sys.print("\n[1] === incrementDisambig() ===");
         }
@@ -353,8 +353,8 @@ export class Disambiguation {
         return maxed;
     }
 
-    initVars(akey) {
-        let i, ilen, myIds, myItemBundles, myItems;
+    initVars(akey: string): boolean {
+        let i: number, ilen: number, myIds: string[], myItemBundles: any[], myItems: CslItem[];
         if (this.debug) {
             this.state.sys.print("[B] === initVars() ===");
         }
@@ -430,7 +430,7 @@ export class Disambiguation {
         return true;
     }
 
-    padBase(base) {
+    padBase(base: any): void {
         for (let i = 0, ilen = base.names.length; i < ilen; i += 1) {
             if (!base.givens[i]) {
                 base.givens[i] = [];
@@ -443,8 +443,8 @@ export class Disambiguation {
         }
     }
 
-    configModes() {
-        let dagopt, gdropt;
+    configModes(): void {
+        let dagopt: any, gdropt: any;
         this.modes = [];
         dagopt = this.state.opt["disambiguate-add-givenname"];
         gdropt = this.state.citation.opt["givenname-disambiguation-rule"];
@@ -469,7 +469,7 @@ export class Disambiguation {
         }
     }
 
-    getCiteData(Item, base?) {
+    getCiteData(Item: CslItem, base?: any): void {
         if (!this.maxNamesByItemId[Item.id]) {
             CSL.getAmbiguousCite.call(this.state, Item, base);
             base = CSL.getAmbigConfig.call(this.state);
@@ -503,7 +503,7 @@ export class Disambiguation {
         }
     }
 
-    captureStepToBase() {
+    captureStepToBase(): void {
         if (this.state.citation.opt["givenname-disambiguation-rule"] === "by-cite"
             && this.base.givens && this.base.givens.length) {
             if ("undefined" !== typeof this.base.givens[this.gnameset][this.gname]) {

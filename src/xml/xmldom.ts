@@ -10,7 +10,7 @@ export class XmlDOM {
     institutionpart: any;
     ns: string;
 
-    constructor(dataObj) {
+    constructor(dataObj: any) {
         this.dataObj = dataObj;
         this.parser = new DOMParser();
 
@@ -23,7 +23,7 @@ export class XmlDOM {
         this.ns = "http://purl.org/net/xbiblio/csl";
     }
 
-    hasAttributes(node) {
+    hasAttributes(node: any) {
         let ret;
         if (node.attributes && node.attributes.length) {
             ret = true;
@@ -37,7 +37,7 @@ export class XmlDOM {
         return doc.importNode(srcElement, true);
     }
 
-    clean(xml) {
+    clean(xml: string): string {
         xml = xml.replace(/<\?[^?]+\?>/g, "");
         xml = xml.replace(/<![^>]+>/g, "");
         xml = xml.replace(/^\s+/, "");
@@ -46,7 +46,7 @@ export class XmlDOM {
         return xml;
     }
 
-    getStyleId(myxml, styleName) {
+    getStyleId(myxml: any, styleName?: string): string {
         let text = "";
         let tagName = "id";
         if (styleName) {
@@ -116,7 +116,7 @@ export class XmlDOM {
         return ret;
     }
 
-    getAttributeValue(myxml,name,namespace) {
+    getAttributeValue(myxml: any, name: string, namespace?: string): string {
         let ret = "";
         if (namespace) {
             name = namespace+":"+name;
@@ -127,7 +127,7 @@ export class XmlDOM {
         return ret;
     }
 
-    getNodeValue(myxml,name) {
+    getNodeValue(myxml: any, name?: string): any {
         let ret = null;
         if (name){
             const vals = myxml.getElementsByTagName(name);
@@ -144,7 +144,7 @@ export class XmlDOM {
         return ret;
     }
 
-    setAttributeOnNodeIdentifiedByNameAttribute(myxml,nodename,partname,attrname,val) {
+    setAttributeOnNodeIdentifiedByNameAttribute(myxml: any, nodename: string, partname: string, attrname: string, val: string): void {
         let pos, len, xml, nodes, node;
         if (attrname.slice(0,1) === '@'){
             attrname = attrname.slice(1);
@@ -159,7 +159,7 @@ export class XmlDOM {
         }
     }
 
-    deleteNodeByNameAttribute(myxml,val) {
+    deleteNodeByNameAttribute(myxml: any, val: string): void {
         let pos, len, node, nodes;
         nodes = myxml.childNodes;
         for (let pos = 0, len = nodes.length; pos < len; pos += 1) {
@@ -173,11 +173,11 @@ export class XmlDOM {
         }
     }
 
-    deleteAttribute(myxml,attr) {
+    deleteAttribute(myxml: any, attr: string): void {
         myxml.removeAttribute(attr);
     }
 
-    setAttribute(myxml,attr,val) {
+    setAttribute(myxml: any, attr: string, val: string): boolean {
         if (!myxml.ownerDocument) {
             myxml = myxml.firstChild;
         }
@@ -192,7 +192,7 @@ export class XmlDOM {
         return cloned_node;
     }
 
-    getNodesByName(myxml,name,nameattrval) {
+    getNodesByName(myxml: any, name: string, nameattrval?: string): any[] {
         let ret, nodes, node, pos, len;
         ret = [];
         nodes = myxml.getElementsByTagName(name);
@@ -206,14 +206,14 @@ export class XmlDOM {
         return ret;
     }
 
-    nodeNameIs(myxml,name) {
+    nodeNameIs(myxml: any, name: string): boolean {
         if (name == myxml.nodeName) {
             return true;
         }
         return false;
     }
 
-    makeXml(myxml) {
+    makeXml(myxml?: string): any {
         let ret, topnode;
         if (!myxml) {
             myxml = "<docco><bogus/></docco>";

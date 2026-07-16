@@ -15,19 +15,42 @@ interface CslName {
     suffix?: string;
     "comma-suffix"?: number | boolean;
     "static-order"?: string;
-    [key: string]: any;
+    literal?: string;
+    "parse-names"?: boolean;
+    isInstitution?: boolean;
+    "reverse-ordering"?: boolean;
+    "static-ordering"?: boolean;
+    "comma-dropping-particle"?: string;
+    multi?: { main?: string; _keys?: Record<string, Record<string, string>> };
+    language?: string;
+    [key: string]: unknown;
 }
 
 interface CslDate {
     "date-parts"?: number[][];
     season?: string | number;
     literal?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 interface CslItem {
     id: string;
     type: string;
+    language?: string;
+    jurisdiction?: string;
+    authority?: string | CslName[];
+    "legislation_id"?: string;
+    "container_id"?: string;
+    "citation-label"?: string;
+    "citation-number"?: string;
+    "year-suffix"?: string;
+    "first-reference-note-number"?: number;
+    multi?: { _keys?: Record<string, Record<string, string>> };
+    note?: string;
+    locator?: string;
+    label?: string;
+    title?: string;
+    "title-short"?: string;
     [key: string]: any;
 }
 
@@ -37,12 +60,17 @@ interface CslItem {
  * members read by the migrated leaf builders are pinned down; everything else
  * falls through the index signature until the owning modules are migrated.
  */
+type Decoration = [string, string, string?];
+
 interface CslNode {
-    tokentype?: any;
+    tokentype?: number;
     name?: string;
     match?: string;
-    strings?: { [key: string]: any };
+    strings?: Record<string, string | number | undefined>;
     tests?: any[];
+    decorations?: Decoration[];
+    variables?: string[];
+    variables_real?: string[];
     execs?: Array<(state: CslState, Item?: CslItem, item?: any) => void>;
     [key: string]: any;
 }
@@ -51,6 +79,13 @@ interface CslNode {
 interface Sys {
     retrieveLocale(lang: string): string | boolean;
     retrieveItem(id: string): CslItem;
+    getAbbreviation?(styleID: string, abbrevs: any, jurisdiction: string, category: string, orig: string): string;
+    getHumanForm?(key: string, plural: boolean, article: boolean): string;
+    retrieveStyleModule?(jurisdiction: string): string;
+    variableWrapper?(citation: any, ...args: any[]): any;
+    normalizeAbbrevsKey?(category: string, value: string): string;
+    AbbreviationSegments?: new () => any;
+    print?(str: string): void;
     [key: string]: any;
 }
 
@@ -60,10 +95,10 @@ type Formatter = (state: CslState, str: string) => string;
 type TextCaseConfig = {
     quoteState?: any;
     capitaliseWords: (str: string, ...rest: any[]) => string;
-    skipWordsRex: any;
+    skipWordsRex?: any;
     tagState: any[];
-    afterPunct: any;
-    isFirst: any;
+    afterPunct?: any;
+    isFirst?: any;
     lastWordPos?: any;
     doppel?: any;
     origStrings?: any;
@@ -77,13 +112,20 @@ type TextCaseConfig = {
  */
 interface CslState {
     sys: Sys;
-    opt: { lang: string; nodenames: any[]; [key: string]: any };
+    opt: { lang: string; nodenames: string[]; [key: string]: any };
     locale: { [lang: string]: any };
     tmp: { [key: string]: any };
     registry: any;
     mode: string;
+    output?: any;
+    parallel?: any;
+    transform?: any;
+    citeproc?: any;
+    publisherOutput?: any;
+    juris?: any;
+    debug?: boolean;
     fresh?(clear?: boolean): void;
-    getTerm(term: string, form?: string, plural?: number | boolean, gender?: number | boolean, mode?: number | boolean, forceDefaultLocale?: boolean): any;
+    getTerm(term: string, form?: string, plural?: number | boolean, gender?: number | boolean, mode?: number | boolean, forceDefaultLocale?: boolean): string;
     [key: string]: any;
 }
 
@@ -93,23 +135,51 @@ interface CslState {
  * compiling (those references resolve to ``any``).
  */
 interface CSLNamespace {
-    // --- migrated modules (typed) ---
-    // These are optional because ``load.ts`` opens the ``CSL`` object before
-    // the modules that populate these members have run.
-    Stack?: any;
-    Token?: any;
-    Blob?: any;
-    NumericBlob?: any;
-    AmbigConfig?: any;
+    Stack?: typeof import('../stack').Stack;
+    Token?: typeof import('../obj/token').Token;
+    Blob?: typeof import('../obj/blob').Blob;
+    NumericBlob?: typeof import('../obj/number').NumericBlob;
+    AmbigConfig?: typeof import('../obj/ambigconfig').AmbigConfig;
+    XmlJSON?: typeof import('../xml/xmljson').XmlJSON;
+    Engine?: any;
+    NameOutput?: any;
+    PublisherOutput?: any;
+    Node?: any;
+    Attributes?: any;
+    Registry?: any;
+    Transform?: any;
+    Parallel?: any;
+    NameReg?: any;
+    CitationReg?: any;
+    Disambiguation?: any;
+    DateParser?: any;
+    ParticleList?: any;
     getSortCompare?: (default_locale?: string) => (a: string, b: string) => number;
     Util?: {
         cloneToken?(token: any): any;
         encodeDoiForUrl?(doi: string): string;
         Match?: any;
+        Names?: any;
+        Dates?: any;
+        Sort?: any;
+        padding?(num: string): string;
+        outputNumericField?(state: CslState, variable: string, id: string): void;
+        LongOrdinalizer?: any;
+        Ordinalizer?: any;
+        Romanizer?: any;
+        Suffixator?: any;
+        PageRangeMangler?: any;
+        FlipFlopper?: any;
+        substituteStart?(state: CslState, target: any[]): void;
+        substituteEnd?(state: CslState, target: any[]): void;
+        fixDateNode?: any;
         [key: string]: any;
     };
     Output?: {
         Formatters?: Record<string, Formatter>;
+        Queue?: any;
+        DefaultFormatter?: any;
+        Formats?: any;
         [key: string]: any;
     };
 
@@ -127,7 +197,7 @@ declare const CSL: CSLNamespace;
  * Ambient globals referenced by environment shims and not provided by the
  * configured lib (``ES2018``).
  */
-declare const console: { log(...args: any[]): void; [key: string]: any };
-declare let DOMParser: any;
-declare const Zotero: any;
-declare const Components: any;
+declare const console: { log(...args: any[]): void; warn?(...args: any[]): void; error?(...args: any[]): void; [key: string]: any };
+declare let DOMParser: { new(): any };
+declare const Zotero: { [key: string]: any };
+declare const Components: { [key: string]: any };

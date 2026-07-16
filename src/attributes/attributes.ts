@@ -3,11 +3,11 @@ import { CSL } from '../csl';
 import { DATE_VARIABLES, DESCENDING, GIVENNAME_DISAMBIGUATION_RULES, LITERAL, NUMERIC_VARIABLES, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_MAP, POSITION_SUBSEQUENT, START } from '../constants/core';
 export const Attributes: { [key: string]: Function } = {};
 
-Attributes["@disambiguate"] = function (state, arg) {
+Attributes["@disambiguate"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     if (arg === "true") {
         state.opt.has_disambiguate = true;
-        let func = function (Item) {
+        let func = function (Item: CslItem) {
             if (state.tmp.area === "bibliography") {
                 if (state.tmp.disambiguate_count < state.registry.registry[Item.id].disambig.disambiguate) {
                     state.tmp.disambiguate_count += 1;
@@ -25,7 +25,7 @@ Attributes["@disambiguate"] = function (state, arg) {
         };
         this.tests.push(func);
     } else if (arg === "check-ambiguity-and-backreference") {
-        let func = function (Item) {
+        let func = function (Item: CslItem) {
             if (state.registry.registry[Item.id].disambig.disambiguate && state.registry.registry[Item.id]["citation-count"] > 1) {
                 return true;
             }
@@ -35,12 +35,12 @@ Attributes["@disambiguate"] = function (state, arg) {
     }
 };
 
-Attributes["@is-numeric"] = function (state, arg) {
+Attributes["@is-numeric"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const variables = arg.split(/\s+/);
-    const maketest = function(variable) {
-        return function (Item, item) {
-            let myitem = Item;
+    const maketest = function(variable: string) {
+        return function (Item: CslItem, item: any) {
+            let myitem: any = Item;
             if (item && ["locator","locator-extra"].indexOf(variable) > -1) {
                 myitem = item;
             }
@@ -68,11 +68,11 @@ Attributes["@is-numeric"] = function (state, arg) {
 };
 
 
-Attributes["@is-uncertain-date"] = function (state, arg) {
+Attributes["@is-uncertain-date"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const variables = arg.split(/\s+/);
-    const maketest = function (myvariable) {
-        return function(Item) {
+    const maketest = function (myvariable: string) {
+        return function(Item: CslItem) {
             if (Item[myvariable] && Item[myvariable].circa) {
                 return true;
             } else {
@@ -86,17 +86,17 @@ Attributes["@is-uncertain-date"] = function (state, arg) {
 };
 
 
-Attributes["@locator"] = function (state, arg) {
+Attributes["@locator"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    let trylabels = arg.replace("sub verbo", "sub-verbo");
+    let trylabels: string | string[] = arg.replace("sub verbo", "sub-verbo");
     trylabels = trylabels.split(/\s+/);
-    const maketest = function (trylabel) {
+    const maketest = function (trylabel: string) {
         if (trylabel === "article") {
             trylabel = "article-locator";
         } else if (trylabel === "title") {
             trylabel = "title-locator";
         }
-        return function(Item, item) {
+        return function(Item: CslItem, item: any) {
             let label;
             state.processNumber(false, item, "locator");
             label = state.tmp.shadow_numbers.locator.label;
@@ -116,25 +116,25 @@ Attributes["@locator"] = function (state, arg) {
 };
 
 
-Attributes["@position"] = function (state, arg) {
+Attributes["@position"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     let tryposition;
     state.opt.update_mode = POSITION;
     const trypositions = arg.split(/\s+/);
-    const testSubsequentNear = function (Item, item) {
+    const testSubsequentNear = function (Item: CslItem, item: any) {
         if (item && POSITION_MAP[item.position] >= POSITION_MAP[POSITION_SUBSEQUENT] && item["near-note"]) {
             return true;
         }
         return false;
     };
-    const testSubsequentNotNear = function (Item, item) {
+    const testSubsequentNotNear = function (Item: CslItem, item: any) {
         if (item && POSITION_MAP[item.position] == POSITION_MAP[POSITION_SUBSEQUENT] && !item["near-note"]) {
             return true;
         }
         return false;
     };
-    const maketest = function(tryposition) {
-        return function (Item, item) {
+    const maketest = function(tryposition: number) {
+        return function (Item: CslItem, item: any) {
             if (state.tmp.area === "bibliography") {
                 return false;
             }
@@ -154,7 +154,7 @@ Attributes["@position"] = function (state, arg) {
         };
     };
     for (let i=0,ilen=trypositions.length;i<ilen;i+=1) {
-        let tryposition = trypositions[i];
+        let tryposition: string | number = trypositions[i];
         if (tryposition === "first") {
             tryposition = POSITION_FIRST;
         } else if (tryposition === "container-subsequent") {
@@ -171,16 +171,16 @@ Attributes["@position"] = function (state, arg) {
         } else if ("far-note" === tryposition) {
             this.tests.push(testSubsequentNotNear);
         } else {
-            this.tests.push(maketest(tryposition));
+            this.tests.push(maketest(tryposition as number));
         }
     }
 };
 
-Attributes["@type"] = function (state, arg) {
+Attributes["@type"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const types = arg.split(/\s+/);
-    const maketest = function (mytype) {
-        return function(Item) {
+    const maketest = function (mytype: string) {
+        return function(Item: CslItem) {
             let ret = (Item.type === mytype);
             if (ret) {
                 return true;
@@ -196,7 +196,7 @@ Attributes["@type"] = function (state, arg) {
     this.tests.push(state.fun.match.any(this, state, tests));
 };
 
-Attributes["@variable"] = function (state, arg) {
+Attributes["@variable"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     let func;
     this.variables = arg.split(/\s+/);
@@ -205,7 +205,7 @@ Attributes["@variable"] = function (state, arg) {
     if ("label" === this.name && this.variables[0]) {
         this.strings.term = this.variables[0];
     } else if (["names", "date", "text", "number"].indexOf(this.name) > -1) {
-        func = function (state, Item, item) {
+        func = function (state: CslState, Item: CslItem, item: any) {
             for (let i = this.variables.length - 1; i > -1; i += -1) {
                 this.variables.pop();
             }
@@ -221,7 +221,7 @@ Attributes["@variable"] = function (state, arg) {
         };
         this.execs.push(func);
 
-        func = function (state, Item, item) {
+        func = function (state: CslState, Item: CslItem, item: any) {
             let output = false;
             for (let i=0,ilen=this.variables.length;i<ilen;i++) {
                 let variable = this.variables[i];
@@ -357,8 +357,8 @@ Attributes["@variable"] = function (state, arg) {
         };
         this.execs.push(func);
     } else if (["if",  "else-if", "condition"].indexOf(this.name) > -1) {
-        const maketest = function (variable) {
-            return function(Item,item){
+        const maketest = function (variable: string) {
+            return function(Item: CslItem, item: any){
                 let myitem = Item;
                 if (item && ["locator", "locator-extra", "first-reference-note-number", "first-container-reference-note-number", "locator-date"].indexOf(variable) > -1) {
                     myitem = item;
@@ -388,12 +388,12 @@ Attributes["@variable"] = function (state, arg) {
 };
 
 
-Attributes["@page"] = function (state, arg) {
+Attributes["@page"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    let trylabels = arg.replace("sub verbo", "sub-verbo");
+    let trylabels: string | string[] = arg.replace("sub verbo", "sub-verbo");
     trylabels = trylabels.split(/\s+/);
-    const maketest = function (trylabel) {
-        return function(Item) {
+    const maketest = function (trylabel: string) {
+        return function(Item: CslItem) {
             let label;
             state.processNumber(false, Item, "page", Item.type);
             if (!state.tmp.shadow_numbers.page.label) {
@@ -421,11 +421,11 @@ Attributes["@page"] = function (state, arg) {
 };
 
 
-Attributes["@number"] = function (state, arg) {
+Attributes["@number"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     let trylabels = arg.split(/\s+/);
     const maketest = function(trylabel) {
-        return function (Item) {
+        return function (Item: CslItem) {
             let label;
             state.processNumber(false, Item, "number", Item.type);
             if (!state.tmp.shadow_numbers.number.label) {
@@ -445,12 +445,12 @@ Attributes["@number"] = function (state, arg) {
     }
 };
 
-Attributes["@jurisdiction"] = function (state, arg) {
+Attributes["@jurisdiction"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const tryjurisdictions = arg.split(/\s+/);
     
-    const maketests = function (tryjurisdictions) {
-        return function(Item) {
+    const maketests = function (tryjurisdictions: string[]) {
+        return function(Item: CslItem) {
             if (!Item.jurisdiction) {
                 return false;
             }
@@ -466,12 +466,12 @@ Attributes["@jurisdiction"] = function (state, arg) {
     this.tests.push(maketests(tryjurisdictions));
 };
 
-Attributes["@country"] = function (state, arg) {
+Attributes["@country"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const trycountries = arg.split(/\s+/);
     
-    const maketests = function (trycountries) {
-        return function(Item) {
+    const maketests = function (trycountries: string[]) {
+        return function(Item: CslItem) {
             if (!Item.country) {
                 return false;
             }
@@ -487,9 +487,9 @@ Attributes["@country"] = function (state, arg) {
     this.tests.push(maketests(trycountries));
 };
 
-Attributes["@context"] = function (state, arg) {
+Attributes["@context"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    let func = function () {
+    let func = function (): boolean {
         if (["bibliography", "citation"].indexOf(arg) > -1) {
 		    const area = state.tmp.area.slice(0, arg.length);
 		    if (area === arg) {
@@ -503,11 +503,11 @@ Attributes["@context"] = function (state, arg) {
     this.tests.push(func);
 };
 
-Attributes["@has-year-only"] = function (state, arg) {
+Attributes["@has-year-only"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const trydates = arg.split(/\s+/);
-    const maketest = function (trydate) {
-        return function(Item) {
+    const maketest = function (trydate: string) {
+        return function(Item: CslItem) {
             const date = Item[trydate];
             if (!date || date.month || date.season) {
                 return false;
@@ -521,11 +521,11 @@ Attributes["@has-year-only"] = function (state, arg) {
     }
 };
 
-Attributes["@has-to-month-or-season"] = function (state, arg) {
+Attributes["@has-to-month-or-season"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const trydates = arg.split(/\s+/);
-    const maketest = function (trydate) {
-        return function(Item) {
+    const maketest = function (trydate: string) {
+        return function(Item: CslItem) {
             const date = Item[trydate];
             if (!date || (!date.month && !date.season) || date.day) {
                 return false;
@@ -539,11 +539,11 @@ Attributes["@has-to-month-or-season"] = function (state, arg) {
     }
 };
 
-Attributes["@has-day"] = function (state, arg) {
+Attributes["@has-day"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     const trydates = arg.split(/\s+/);
-    const maketest = function (trydate) {
-        return function(Item) {
+    const maketest = function (trydate: string) {
+        return function(Item: CslItem) {
             const date = Item[trydate];
             if (!date || !date.day) {
                 return false;
@@ -557,9 +557,9 @@ Attributes["@has-day"] = function (state, arg) {
     }
 };
 
-Attributes["@is-plural"] = function (state, arg) {
+Attributes["@is-plural"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    let func = function (Item) {
+    let func = function (Item: CslItem) {
         const nameList = Item[arg];
         if (nameList && nameList.length) {
             let persons = 0;
@@ -588,9 +588,9 @@ Attributes["@is-plural"] = function (state, arg) {
     this.tests.push(func);
 };
 
-Attributes["@is-multiple"] = function (state, arg) {
+Attributes["@is-multiple"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    let func = function (Item) {
+    let func = function (Item: CslItem) {
         const val = ("" + Item[arg]);
         let lst = val.split(/(?:,\s|\s(?:tot\sen\smet|līdz|oraz|and|bis|έως|και|och|až|do|en|et|in|ir|ja|og|sa|to|un|und|és|și|i|u|y|à|e|a|и|-|–)\s|—|\&)/);
         if (lst.length > 1) {
@@ -601,7 +601,7 @@ Attributes["@is-multiple"] = function (state, arg) {
     this.tests.push(func);
 };
 
-Attributes["@locale"] = function (state, arg) {
+Attributes["@locale"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     let ret, langspec, lang, lst, i, ilen;
     const locale_default = state.opt["default-locale"][0];
@@ -653,14 +653,14 @@ Attributes["@locale"] = function (state, arg) {
         }
         const locale_list = lst.slice();
 
-        const maketest = function (locale_list, locale_default,locale_bares) {
-            return function (Item) {
+        const maketest = function (locale_list: any[], locale_default: string, locale_bares: string[]) {
+            return function (Item: CslItem) {
                 let res;
                 ret = [];
                 res = false;
                 let langspec: any = false;
 
-                let lang;
+                let lang: string;
                 if (!Item.language) {
                     lang = locale_default;
                 } else {
@@ -689,7 +689,7 @@ Attributes["@locale"] = function (state, arg) {
     }
 };
 
-Attributes["@alternative-node-internal"] = function (state) {
+Attributes["@alternative-node-internal"] = function (state: CslState) {
     if (!this.tests) {this.tests = []; };
     const maketest = function (me: any) {
         return function() {
@@ -700,7 +700,7 @@ Attributes["@alternative-node-internal"] = function (state) {
     this.tests.push(maketest(me));
 };
 
-Attributes["@locale-internal"] = function (state, arg) {
+Attributes["@locale-internal"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
     let langspec, lang, lst, i, ilen;
         lst = arg.split(/\s+/);
@@ -721,15 +721,15 @@ Attributes["@locale-internal"] = function (state, arg) {
         this.locale = lst[0].best;
         this.locale_list = lst.slice();
         
-        const maketest = function (me) {
-            return function (Item) {
+        const maketest = function (me: any) {
+            return function (Item: CslItem) {
                 let ret, res;
                 ret = [];
                 res = false;
                 let langspec: any = false;
                 if (Item.language) {
-                    lang = Item.language;
-                    langspec = CSL.localeResolve(lang, state.opt["default-locale"][0]);
+                    const lang2 = Item.language;
+                    langspec = CSL.localeResolve(lang2, state.opt["default-locale"][0]);
                     if (langspec.best === state.opt["default-locale"][0]) {
                         langspec = false;
                     }
@@ -761,11 +761,11 @@ Attributes["@locale-internal"] = function (state, arg) {
 };
 
 
-Attributes["@court-class"] = function (state, arg) {
+Attributes["@court-class"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
 	const tryclasses = arg.split(/\s+/);
-    const maketest = function (tryclass) {
-        return function(Item) {
+    const maketest = function (tryclass: string) {
+        return function(Item: CslItem) {
             const cls = CSL.GET_COURT_CLASS(state, Item);
             if (cls === tryclass) {
                 return true;
@@ -779,11 +779,11 @@ Attributes["@court-class"] = function (state, arg) {
     }
 };
 
-Attributes["@container-multiple"] = function (state, arg) {
+Attributes["@container-multiple"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
 	const retval = "true" === arg ? true : false;
-    const maketest = function (retval) {
-        return function(Item) {
+    const maketest = function (retval: boolean) {
+        return function(Item: CslItem) {
             if (!state.tmp.container_item_count[Item.container_id]) {
                 return !retval;
             } else if (state.tmp.container_item_count[Item.container_id] > 1) {
@@ -795,11 +795,11 @@ Attributes["@container-multiple"] = function (state, arg) {
     this.tests.push(maketest(retval));
 };
 
-Attributes["@container-subsequent"] = function (state, arg) {
+Attributes["@container-subsequent"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
 	const retval = "true" === arg ? true : false;
-    const maketest = function (retval) {
-        return function(Item) {
+    const maketest = function (retval: boolean) {
+        return function(Item: CslItem) {
             if (state.tmp.container_item_pos[Item.container_id] > 1) {
                 return retval;
             }
@@ -809,10 +809,10 @@ Attributes["@container-subsequent"] = function (state, arg) {
     this.tests.push(maketest(retval));
 };
 
-Attributes["@has-subunit"] = function (state, arg) {
+Attributes["@has-subunit"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    const maketest = function(namevar) {
-        return function (Item) {
+    const maketest = function(namevar: string) {
+        return function (Item: CslItem) {
             let subunit_count = 0;
             for (let i in Item[namevar]) {
                 const name = Item[namevar][i];
@@ -830,10 +830,10 @@ Attributes["@has-subunit"] = function (state, arg) {
     this.tests.push(maketest(arg));
 }
 
-Attributes["@cite-form"] = function (state, arg) {
+Attributes["@cite-form"] = function (state: CslState, arg: string) {
     if (!this.tests) {this.tests = []; };
-    const maketest = function(citeForm) {
-        return function (Item) {
+    const maketest = function(citeForm: string) {
+        return function (Item: CslItem) {
             if (Item["cite-form"] === citeForm) {
                 return true;
             }
@@ -843,17 +843,17 @@ Attributes["@cite-form"] = function (state, arg) {
     this.tests.push(maketest(arg));
 }
 
-Attributes["@disable-duplicate-year-suppression"] = function (state, arg) {
+Attributes["@disable-duplicate-year-suppression"] = function (state: CslState, arg: string) {
 	state.opt.disable_duplicate_year_suppression = arg.split(/\s+/);
 }
 
-Attributes["@consolidate-containers"] = function (state, arg) {
+Attributes["@consolidate-containers"] = function (state: CslState, arg: string) {
     Attributes["@track-containers"](state, arg);
     const args = arg.split(/\s+/);
     state.bibliography.opt.consolidate_containers = args;
 }
 
-Attributes["@track-containers"] = function (state, arg) {
+Attributes["@track-containers"] = function (state: CslState, arg: string) {
     const args = arg.split(/\s+/);
     if (!state.bibliography.opt.track_container_items) {
         state.bibliography.opt.track_container_items = [];
@@ -864,7 +864,7 @@ Attributes["@track-containers"] = function (state, arg) {
     state.bibliography.opt.track_container_items = state.bibliography.opt.track_container_items.concat(args);
 }
 
-Attributes["@parallel-first"] = function (state, arg) {
+Attributes["@parallel-first"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     const vars = arg.split(/\s+/);
     if (!state.opt.track_repeat) {
@@ -877,7 +877,7 @@ Attributes["@parallel-first"] = function (state, arg) {
         state.opt.track_repeat[v] = true;
     }
 };
-Attributes["@parallel-last"] = function (state, arg) {
+Attributes["@parallel-last"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     const vars = arg.split(/\s+/);
     if (!state.opt.track_repeat) {
@@ -890,7 +890,7 @@ Attributes["@parallel-last"] = function (state, arg) {
         state.opt.track_repeat[v] = true;
     }
 };
-Attributes["@parallel-last-to-first"] = function (state, arg) {
+Attributes["@parallel-last-to-first"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     const vars = arg.split(/\s+/);
     this.parallel_last_to_first = {};
@@ -898,15 +898,15 @@ Attributes["@parallel-last-to-first"] = function (state, arg) {
         this.parallel_last_to_first[vars[i]] = true;
     }
 };
-Attributes["@parallel-delimiter-override"] = function (state, arg) {
+Attributes["@parallel-delimiter-override"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     this.strings.set_parallel_delimiter_override = arg;
 };
-Attributes["@parallel-delimiter-override-on-suppress"] = function (state, arg) {
+Attributes["@parallel-delimiter-override-on-suppress"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     this.strings.set_parallel_delimiter_override_on_suppress = arg;
 };
-Attributes["@no-repeat"] = function (state, arg) {
+Attributes["@no-repeat"] = function (state: CslState, arg: string) {
     state.opt.parallel.enable = true;
     const vars = arg.split(/\s+/);
     if (!state.opt.track_repeat) {
@@ -920,85 +920,85 @@ Attributes["@no-repeat"] = function (state, arg) {
     }
 };
 
-Attributes["@require"] = function (state, arg) {
+Attributes["@require"] = function (state: CslState, arg: string) {
     state.opt.use_context_condition = true;
     this.strings.require = arg;
 };
 
-Attributes["@reject"] = function (state, arg) {
+Attributes["@reject"] = function (state: CslState, arg: string) {
     state.opt.use_context_condition = true;
     this.strings.reject = arg;
 };
 
-Attributes["@require-comma-on-symbol"] = function (state, arg) {
+Attributes["@require-comma-on-symbol"] = function (state: CslState, arg: string) {
     state.opt.require_comma_on_symbol = arg;
 }
 
-Attributes["@gender"] = function (state, arg) {
+Attributes["@gender"] = function (state: CslState, arg: string) {
     this.gender = arg;
 };
 
-Attributes["@cslid"] = function (state, arg) {
+Attributes["@cslid"] = function (state: CslState, arg: string) {
     this.cslid = parseInt(arg, 10);
 };
 
-Attributes["@capitalize-if-first"] = function (state, arg) {
+Attributes["@capitalize-if-first"] = function (state: CslState, arg: string) {
     this.strings.capitalize_if_first_override = arg;
 };
 
-Attributes["@label-capitalize-if-first"] = function (state, arg) {
+Attributes["@label-capitalize-if-first"] = function (state: CslState, arg: string) {
     this.strings.label_capitalize_if_first_override = arg;
 };
 
-Attributes["@label-form"] = function (state, arg) {
+Attributes["@label-form"] = function (state: CslState, arg: string) {
     this.strings.label_form_override = arg;
 };
 
-Attributes["@part-separator"] = function (state, arg) {
+Attributes["@part-separator"] = function (state: CslState, arg: string) {
     this.strings["part-separator"] = arg;
 };
 
-Attributes["@leading-noise-words"] = function (state, arg) {
+Attributes["@leading-noise-words"] = function (state: CslState, arg: string) {
     this["leading-noise-words"] = arg;
 };
 
-Attributes["@name-never-short"] = function (state, arg) {
+Attributes["@name-never-short"] = function (state: CslState, arg: string) {
     this["name-never-short"] = arg;
 };
 
-Attributes["@class"] = function (state, arg) {
+Attributes["@class"] = function (state: CslState, arg: string) {
     state.opt["class"] = arg;
 };
 
-Attributes["@version"] = function (state, arg) {
+Attributes["@version"] = function (state: CslState, arg: string) {
     state.opt.version = arg;
 };
 
-Attributes["@value"] = function (state, arg) {
+Attributes["@value"] = function (state: CslState, arg: string) {
     this.strings.value = arg;
 };
 
-Attributes["@name"] = function (state, arg) {
+Attributes["@name"] = function (state: CslState, arg: string) {
     this.strings.name = arg;
 };
 
-Attributes["@form"] = function (state, arg) {
+Attributes["@form"] = function (state: CslState, arg: string) {
     this.strings.form = arg;
 };
 
-Attributes["@date-parts"] = function (state, arg) {
+Attributes["@date-parts"] = function (state: CslState, arg: string) {
     this.strings["date-parts"] = arg;
 };
 
-Attributes["@range-delimiter"] = function (state, arg) {
+Attributes["@range-delimiter"] = function (state: CslState, arg: string) {
     this.strings["range-delimiter"] = arg;
 };
 
-Attributes["@macro"] = function (state, arg) {
+Attributes["@macro"] = function (state: CslState, arg: string) {
     this.postponed_macro = arg;
 };
 
-Attributes["@term"] = function (state, arg) {
+Attributes["@term"] = function (state: CslState, arg: string) {
     if (arg === "sub verbo") {
         this.strings.term = "sub-verbo";
     } else {
@@ -1008,7 +1008,7 @@ Attributes["@term"] = function (state, arg) {
 
 Attributes["@xmlns"] = function () {};
 
-Attributes["@lang"] = function (state, arg) {
+Attributes["@lang"] = function (state: CslState, arg: string) {
     if (arg) {
         state.build.lang = arg;
     }
@@ -1020,23 +1020,23 @@ Attributes["@macro-has-date"] = function () {
     this["macro-has-date"] = true;
 };
 
-Attributes["@suffix"] = function (state, arg) {
+Attributes["@suffix"] = function (state: CslState, arg: string) {
     this.strings.suffix = arg;
 };
 
-Attributes["@prefix"] = function (state, arg) {
+Attributes["@prefix"] = function (state: CslState, arg: string) {
     this.strings.prefix = arg;
 };
 
-Attributes["@delimiter"] = function (state, arg) {
+Attributes["@delimiter"] = function (state: CslState, arg: string) {
     this.strings.delimiter = arg;
 };
 
-Attributes["@match"] = function (state, arg) {
+Attributes["@match"] = function (state: CslState, arg: string) {
     this.match = arg;
 };
 
-Attributes["@names-min"] = function (state, arg) {
+Attributes["@names-min"] = function (state: CslState, arg: string) {
     const val = parseInt(arg, 10);
     if (state[state.build.area].opt.max_number_of_names < val) {
         state[state.build.area].opt.max_number_of_names = val;
@@ -1044,11 +1044,11 @@ Attributes["@names-min"] = function (state, arg) {
     this.strings["et-al-min"] = val;
 };
 
-Attributes["@names-use-first"] = function (state, arg) {
+Attributes["@names-use-first"] = function (state: CslState, arg: string) {
     this.strings["et-al-use-first"] = parseInt(arg, 10);
 };
 
-Attributes["@names-use-last"] = function (state, arg) {
+Attributes["@names-use-last"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         this.strings["et-al-use-last"] = true;
     } else {
@@ -1056,13 +1056,13 @@ Attributes["@names-use-last"] = function (state, arg) {
     }
 };
 
-Attributes["@sort"] = function (state, arg) {
+Attributes["@sort"] = function (state: CslState, arg: string) {
     if (arg === "descending") {
         this.strings.sort_direction = DESCENDING;
     }
 };
 
-Attributes["@plural"] = function (state, arg) {
+Attributes["@plural"] = function (state: CslState, arg: string) {
     if ("always" === arg || "true" === arg) {
         this.strings.plural = 1;
     } else if ("never" === arg || "false" === arg) {
@@ -1076,57 +1076,57 @@ Attributes["@has-publisher-and-publisher-place"] = function () {
     this.strings["has-publisher-and-publisher-place"] = true;
 };
 
-Attributes["@publisher-delimiter-precedes-last"] = function (state, arg) {
+Attributes["@publisher-delimiter-precedes-last"] = function (state: CslState, arg: string) {
     this.strings["publisher-delimiter-precedes-last"] = arg;
 };
 
-Attributes["@publisher-delimiter"] = function (state, arg) {
+Attributes["@publisher-delimiter"] = function (state: CslState, arg: string) {
     this.strings["publisher-delimiter"] = arg;
 };
 
-Attributes["@publisher-and"] = function (state, arg) {
+Attributes["@publisher-and"] = function (state: CslState, arg: string) {
     this.strings["publisher-and"] = arg;
 };
 
-Attributes["@givenname-disambiguation-rule"] = function (state, arg) {
+Attributes["@givenname-disambiguation-rule"] = function (state: CslState, arg: string) {
     if (GIVENNAME_DISAMBIGUATION_RULES.indexOf(arg) > -1) {
         state.citation.opt["givenname-disambiguation-rule"] = arg;
     }
 };
 
-Attributes["@collapse"] = function (state, arg) {
+Attributes["@collapse"] = function (state: CslState, arg: string) {
     if (arg) {
         state[this.name].opt.collapse = arg;
     }
 };
 
-Attributes["@cite-group-delimiter"] = function (state, arg) {
+Attributes["@cite-group-delimiter"] = function (state: CslState, arg: string) {
     if (arg) {
         state[state.tmp.area].opt.cite_group_delimiter = arg;
     }
 };
 
-Attributes["@names-delimiter"] = function (state, arg) {
+Attributes["@names-delimiter"] = function (state: CslState, arg: string) {
     state.setOpt(this, "names-delimiter", arg);
 };
 
-Attributes["@name-form"] = function (state, arg) {
+Attributes["@name-form"] = function (state: CslState, arg: string) {
     state.setOpt(this, "name-form", arg);
 };
 
-Attributes["@subgroup-delimiter"] = function (state, arg) {
+Attributes["@subgroup-delimiter"] = function (state: CslState, arg: string) {
     this.strings["subgroup-delimiter"] = arg;
 };
 
-Attributes["@subgroup-delimiter-precedes-last"] = function (state, arg) {
+Attributes["@subgroup-delimiter-precedes-last"] = function (state: CslState, arg: string) {
     this.strings["subgroup-delimiter-precedes-last"] = arg;
 };
 
-Attributes["@name-delimiter"] = function (state, arg) {
+Attributes["@name-delimiter"] = function (state: CslState, arg: string) {
     state.setOpt(this, "name-delimiter", arg);
 };
 
-Attributes["@et-al-min"] = function (state, arg) {
+Attributes["@et-al-min"] = function (state: CslState, arg: string) {
     const val = parseInt(arg, 10);
     if (state[state.build.area].opt.max_number_of_names < val) {
         state[state.build.area].opt.max_number_of_names = val;
@@ -1134,11 +1134,11 @@ Attributes["@et-al-min"] = function (state, arg) {
     state.setOpt(this, "et-al-min", val);
 };
 
-Attributes["@et-al-use-first"] = function (state, arg) {
+Attributes["@et-al-use-first"] = function (state: CslState, arg: string) {
     state.setOpt(this, "et-al-use-first", parseInt(arg, 10));
 };
 
-Attributes["@et-al-use-last"] = function (state, arg) {
+Attributes["@et-al-use-last"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         state.setOpt(this, "et-al-use-last", true);
     } else {
@@ -1146,7 +1146,7 @@ Attributes["@et-al-use-last"] = function (state, arg) {
     }
 };
 
-Attributes["@et-al-subsequent-min"] = function (state, arg) {
+Attributes["@et-al-subsequent-min"] = function (state: CslState, arg: string) {
     const val = parseInt(arg, 10);
     if (state[state.build.area].opt.max_number_of_names < val) {
         state[state.build.area].opt.max_number_of_names = val;
@@ -1154,45 +1154,45 @@ Attributes["@et-al-subsequent-min"] = function (state, arg) {
     state.setOpt(this, "et-al-subsequent-min", val);
 };
 
-Attributes["@et-al-subsequent-use-first"] = function (state, arg) {
+Attributes["@et-al-subsequent-use-first"] = function (state: CslState, arg: string) {
     state.setOpt(this, "et-al-subsequent-use-first", parseInt(arg, 10));
 };
 
-Attributes["@suppress-min"] = function (state, arg) {
+Attributes["@suppress-min"] = function (state: CslState, arg: string) {
     this.strings["suppress-min"] = parseInt(arg, 10);
 };
 
-Attributes["@suppress-max"] = function (state, arg) {
+Attributes["@suppress-max"] = function (state: CslState, arg: string) {
     this.strings["suppress-max"] = parseInt(arg, 10);
 };
 
-Attributes["@and"] = function (state, arg) {
+Attributes["@and"] = function (state: CslState, arg: string) {
     state.setOpt(this, "and", arg);
 };
 
-Attributes["@delimiter-precedes-last"] = function (state, arg) {
+Attributes["@delimiter-precedes-last"] = function (state: CslState, arg: string) {
     state.setOpt(this, "delimiter-precedes-last", arg);
 };
 
-Attributes["@delimiter-precedes-et-al"] = function (state, arg) {
+Attributes["@delimiter-precedes-et-al"] = function (state: CslState, arg: string) {
     state.setOpt(this, "delimiter-precedes-et-al", arg);
 };
 
-Attributes["@initialize-with"] = function (state, arg) {
+Attributes["@initialize-with"] = function (state: CslState, arg: string) {
     state.setOpt(this, "initialize-with", arg);
 };
 
-Attributes["@initialize"] = function (state, arg) {
+Attributes["@initialize"] = function (state: CslState, arg: string) {
     if (arg === "false") {
         state.setOpt(this, "initialize", false);
     }
 };
 
-Attributes["@name-as-reverse-order"] = function (state, arg) {
+Attributes["@name-as-reverse-order"] = function (state: CslState, arg: string) {
     this["name-as-reverse-order"] = arg;
 };
 
-Attributes["@name-as-sort-order"] = function (state, arg) {
+Attributes["@name-as-sort-order"] = function (state: CslState, arg: string) {
     if (this.name === "style-options") {
         this["name-as-sort-order"] = arg;
     } else {
@@ -1200,65 +1200,65 @@ Attributes["@name-as-sort-order"] = function (state, arg) {
     }
 };
 
-Attributes["@sort-separator"] = function (state, arg) {
+Attributes["@sort-separator"] = function (state: CslState, arg: string) {
     state.setOpt(this, "sort-separator", arg);
 };
 
-Attributes["@require-match"] = function (state, arg) {
+Attributes["@require-match"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         this.requireMatch = true;
     }
 };
 
-Attributes["@exclude-types"] = function (state, arg) {
+Attributes["@exclude-types"] = function (state: CslState, arg: string) {
     state.bibliography.opt.exclude_types = arg.split(/\s+/);
 };
 
-Attributes["@exclude-with-fields"] = function (state, arg) {
+Attributes["@exclude-with-fields"] = function (state: CslState, arg: string) {
     state.bibliography.opt.exclude_with_fields = arg.split(/\s+/);
 };
 
-Attributes["@year-suffix-delimiter"] = function (state, arg) {
+Attributes["@year-suffix-delimiter"] = function (state: CslState, arg: string) {
     state[this.name].opt["year-suffix-delimiter"] = arg;
 };
 
-Attributes["@after-collapse-delimiter"] = function (state, arg) {
+Attributes["@after-collapse-delimiter"] = function (state: CslState, arg: string) {
     state[this.name].opt["after-collapse-delimiter"] = arg;
 };
 
-Attributes["@subsequent-author-substitute"] = function (state, arg) {
+Attributes["@subsequent-author-substitute"] = function (state: CslState, arg: string) {
     state[this.name].opt["subsequent-author-substitute"] = arg;
 };
 
-Attributes["@subsequent-author-substitute-rule"] = function (state, arg) {
+Attributes["@subsequent-author-substitute-rule"] = function (state: CslState, arg: string) {
     state[this.name].opt["subsequent-author-substitute-rule"] = arg;
 };
 
-Attributes["@disambiguate-add-names"] = function (state, arg) {
+Attributes["@disambiguate-add-names"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         state.opt["disambiguate-add-names"] = true;
     }
 };
 
-Attributes["@disambiguate-add-givenname"] = function (state, arg) {
+Attributes["@disambiguate-add-givenname"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         state.opt["disambiguate-add-givenname"] = true;
     }
 };
 
-Attributes["@disambiguate-add-year-suffix"] = function (state, arg) {
+Attributes["@disambiguate-add-year-suffix"] = function (state: CslState, arg: string) {
     if (arg === "true" && state.opt.xclass !== "numeric") {
         state.opt["disambiguate-add-year-suffix"] = true;
     }
 };
 
-Attributes["@second-field-align"] = function (state, arg) {
+Attributes["@second-field-align"] = function (state: CslState, arg: string) {
     if (arg === "flush" || arg === "margin") {
         state[this.name].opt["second-field-align"] = arg;
     }
 };
 
-Attributes["@hanging-indent"] = function (state, arg) {
+Attributes["@hanging-indent"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         if (state.opt.development_extensions.hanging_indent_legacy_number) {
             state[this.name].opt.hangingindent = 2;
@@ -1268,15 +1268,15 @@ Attributes["@hanging-indent"] = function (state, arg) {
     }
 };
 
-Attributes["@line-spacing"] = function (state, arg) {
+Attributes["@line-spacing"] = function (state: CslState, arg: string) {
     if (arg && arg.match(/^[.0-9]+$/)) {
         state[this.name].opt["line-spacing"] = parseFloat(arg);
     }
 };
 
-Attributes["@default-locale"] = function (state, arg) {
+Attributes["@default-locale"] = function (state: CslState, arg: string) {
     if (this.name === "style") {
-        let lst: any, len: number, ret: any;
+        let lst: string[], len: number, ret: string[];
         const m = arg.match(/-x-(sort|translit|translat)-/g);
         if (m) {
             for (let pos2 = 0, len2 = m.length; pos2 < len2; pos2 += 1) {
@@ -1304,91 +1304,91 @@ Attributes["@default-locale"] = function (state, arg) {
     }
 };
 
-Attributes["@default-locale-sort"] = function (state, arg) {
+Attributes["@default-locale-sort"] = function (state: CslState, arg: string) {
     state.opt["default-locale-sort"] = arg;
 };
 
-Attributes["@demote-non-dropping-particle"] = function (state, arg) {
+Attributes["@demote-non-dropping-particle"] = function (state: CslState, arg: string) {
     state.opt["demote-non-dropping-particle"] = arg;
 };
 
-Attributes["@initialize-with-hyphen"] = function (state, arg) {
+Attributes["@initialize-with-hyphen"] = function (state: CslState, arg: string) {
     if (arg === "false") {
         state.opt["initialize-with-hyphen"] = false;
     }
 };
 
-Attributes["@katakana-display"] = function (state, arg) {
+Attributes["@katakana-display"] = function (state: CslState, arg: string) {
     state.opt["katakana-display"] = arg;
 };
 
-Attributes["@page-range-format"] = function (state, arg) {
+Attributes["@page-range-format"] = function (state: CslState, arg: string) {
     state.opt["page-range-format"] = arg;
 };
 
-Attributes["@institution-parts"] = function (state, arg) {
+Attributes["@institution-parts"] = function (state: CslState, arg: string) {
     this.strings["institution-parts"] = arg;
 };
 
-Attributes["@if-short"] = function (state, arg) {
+Attributes["@if-short"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         this.strings["if-short"] = true;
     }
 };
 
-Attributes["@substitute-use-first"] = function (state, arg) {
+Attributes["@substitute-use-first"] = function (state: CslState, arg: string) {
     this.strings["substitute-use-first"] = parseInt(arg, 10);
 };
 
-Attributes["@use-first"] = function (state, arg) {
+Attributes["@use-first"] = function (state: CslState, arg: string) {
     this.strings["use-first"] = parseInt(arg, 10);
 };
 
-Attributes["@use-last"] = function (state, arg) {
+Attributes["@use-last"] = function (state: CslState, arg: string) {
     this.strings["use-last"] = parseInt(arg, 10);
 };
 
-Attributes["@stop-first"] = function (state, arg) {
+Attributes["@stop-first"] = function (state: CslState, arg: string) {
     this.strings["stop-first"] = parseInt(arg, 10);
 };
 
-Attributes["@stop-last"] = function (state, arg) {
+Attributes["@stop-last"] = function (state: CslState, arg: string) {
     this.strings["stop-last"] = parseInt(arg, 10);
 };
 
-Attributes["@text-case"] = function (state, arg) {
+Attributes["@text-case"] = function (state: CslState, arg: string) {
     this.strings["text-case"] = arg;
 };
 
-Attributes["@entry-spacing"] = function (state, arg) {
+Attributes["@entry-spacing"] = function (state: CslState, arg: string) {
     if (arg && arg.match(/^[.0-9]+$/)) {
         state[this.name].opt["entry-spacing"] = parseFloat(arg);
     }
 };
 
-Attributes["@display"] = function (state, arg) {
+Attributes["@display"] = function (state: CslState, arg: string) {
     if (state.bibliography.tokens.length === 2) {
         state.opt.using_display = true;
     }
     this.strings.cls = arg;
 };
 
-Attributes["@reverse-order"] = function (state, arg) {
+Attributes["@reverse-order"] = function (state: CslState, arg: string) {
     if (arg === "true") {
         this.strings["reverse-order"] = true;
     }
 };
 
-Attributes["@near-note-distance"] = function (state, arg) {
+Attributes["@near-note-distance"] = function (state: CslState, arg: string) {
     state[this.name].opt["near-note-distance"] = parseInt(arg, 10);
 };
 
-Attributes["@substring"] = function (state, arg) {
+Attributes["@substring"] = function (state: CslState, arg: string) {
     if (arg && arg.match(/^[0-9]+$/)) {
         this.strings["substring"] = parseInt(arg, 10);
     }
 };
 
-Attributes["@year-range-format"] = function (state, arg) {
+Attributes["@year-range-format"] = function (state: CslState, arg: string) {
     state.opt["year-range-format"] = arg;
 };

@@ -29,7 +29,7 @@ export const Node_alternative = {
                     if (state.opt.multi_layout) {
                         for (let i in state.opt.multi_layout) {
                             const locale_list = state.opt.multi_layout[i];
-                            let gotlang: any = false;
+                            let gotlang: string = "";
                             for (let j in locale_list) {
                                 const tryspec = locale_list[j];
                                 if (langspec.best === tryspec.best || langspec.base === tryspec.base || langspec.bare === tryspec.bare) {

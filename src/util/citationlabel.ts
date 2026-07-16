@@ -83,8 +83,8 @@ export function getCitationLabel(this: any, Item: CslItem): string {
     return label;
 };
 
-export function getTrigraphParams(this: any): any[] {
-    const params: any[] = [];
+export function getTrigraphParams(this: any): { authors: number[]; year: number }[] {
+    const params: { authors: number[]; year: number }[] = [];
     const ilst = this.opt.trigraph.split(":");
     if (!this.opt.trigraph || this.opt.trigraph.slice(0, 1) !== "A") {
         error("Bad trigraph definition: " + this.opt.trigraph);

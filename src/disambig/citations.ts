@@ -1,6 +1,6 @@
 /*global CSL: true */
 
-export function CitationReg(state?: any) {
+export function CitationReg(state?: CslState) {
     this.citationById = {};
     this.citationByIndex = [];
 };

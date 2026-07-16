@@ -3,7 +3,7 @@ import { CSL } from '../csl';
 import { END, LITERAL, SINGLETON, START } from '../constants/core';
 export const Node_substitute = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
-        let func: any;
+        let func: (() => boolean) | ((state: CslState) => void);
         if (this.tokentype === START) {
             /* */
             // set conditional

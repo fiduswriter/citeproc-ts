@@ -3,14 +3,14 @@ import { CSL } from '../csl';
 
 import { LOOSE, LangPrefsMap, ROMAN_NUMERALS, SUFFIX_CHARS } from '../constants/core';
 import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
-export function padding(num: any): string {
+export function padding(num: string): string {
     let m = num.match(/\s*(-{0,1}[0-9]+)/);
     if (m) {
-        num = parseInt(m[1], 10);
-        if (num < 0) {
-            num = 99999999999999999999 + num;
+        let n = parseInt(m[1], 10);
+        if (n < 0) {
+            n = 99999999999999999999 + n;
         }
-        num = "" + num;
+        num = "" + n;
         while (num.length < 20) {
             num = "0" + num;
         }
@@ -19,14 +19,14 @@ export function padding(num: any): string {
 };
 
 export class LongOrdinalizer {
-    state: any;
+    state: CslState;
 
-    init(state: any) {
+    init(state: CslState) {
         this.state = state;
     }
 
-    format(num: any, gender: any) {
-        if (num < 10) {
+    format(num: string | number, gender?: string) {
+        if (typeof num === "number" && num < 10) {
             num = "0" + num;
         }
         let ret = CSL.Engine.getField(
@@ -46,10 +46,10 @@ export class LongOrdinalizer {
 }
 
 export class Ordinalizer {
-    state: any;
-    suffixes: any;
+    state: CslState;
+    suffixes: Record<string, Record<string | undefined, string[]>>;
 
-    constructor(state: any) {
+    constructor(state: CslState) {
         this.state = state;
         this.suffixes = {};
     }
@@ -58,10 +58,10 @@ export class Ordinalizer {
         if (!this.suffixes[this.state.opt.lang]) {
             this.suffixes[this.state.opt.lang] = {};
             for (let i = 0, ilen = 3; i < ilen; i += 1) {
-                let gender = [undefined, "masculine", "feminine"][i];
+                let gender: string | undefined = [undefined, "masculine", "feminine"][i];
                 this.suffixes[this.state.opt.lang][gender] = [];
                 for (let j = 1; j < 5; j += 1) {
-                    const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
+                    const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender as any);
                     if ("undefined" === typeof ordinal) {
                         delete this.suffixes[this.state.opt.lang][gender];
                         break;
@@ -72,9 +72,9 @@ export class Ordinalizer {
         }
     }
 
-    format(num: any, gender: any) {
+    format(num: string | number, gender?: string | number | boolean) {
         let str;
-        num = parseInt(num, 10);
+        num = parseInt("" + num, 10);
         str = "" + num;
         let suffix = "";
         const trygenders = [];
@@ -83,17 +83,17 @@ export class Ordinalizer {
         }
         trygenders.push("neuter");
         if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
-            suffix = this.state.getTerm("ordinal",false,0,gender);
+            suffix = this.state.getTerm("ordinal", undefined, 0, gender as number | boolean);
             let trygender;
             for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
                 trygender = trygenders[i];
                 const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
                 if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
-                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender],false,0,gender);
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender], undefined, 0, gender as number | boolean);
                 } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
-                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender],false,0,gender);
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender], undefined, 0, gender as number | boolean);
                 } else if (ordinfo["last-digit"][str.slice(str.length - 1)] && ordinfo["last-digit"][str.slice(str.length - 1)][trygender]) {
-                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender],false,0,gender);
+                    suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender], undefined, 0, gender as number | boolean);
                 }
                 if (suffix) {
                     break;
@@ -103,17 +103,18 @@ export class Ordinalizer {
             if (!gender) {
                 gender = undefined;
             }
+            const genderKey = gender as string | undefined;
             this.state.fun.ordinalizer.init();
             if ((num / 10) % 10 === 1 || (num > 10 && num < 20)) {
-                suffix = this.suffixes[this.state.opt.lang][gender][3];
+                suffix = this.suffixes[this.state.opt.lang][genderKey][3];
             } else if (num % 10 === 1 && num % 100 !== 11) {
-                suffix = this.suffixes[this.state.opt.lang][gender][0];
+                suffix = this.suffixes[this.state.opt.lang][genderKey][0];
             } else if (num % 10 === 2 && num % 100 !== 12) {
-                suffix = this.suffixes[this.state.opt.lang][gender][1];
+                suffix = this.suffixes[this.state.opt.lang][genderKey][1];
             } else if (num % 10 === 3 && num % 100 !== 13) {
-                suffix = this.suffixes[this.state.opt.lang][gender][2];
+                suffix = this.suffixes[this.state.opt.lang][genderKey][2];
             } else {
-                suffix = this.suffixes[this.state.opt.lang][gender][3];
+                suffix = this.suffixes[this.state.opt.lang][genderKey][3];
             }
         }
         str = str += suffix;
@@ -122,7 +123,7 @@ export class Ordinalizer {
 }
 
 export class Romanizer {
-    format(num: any) {
+    format(num: number) {
         let ret, pos, n, numstr, len;
         ret = "";
         if (num < 6000) {
@@ -143,14 +144,14 @@ export class Romanizer {
 export class Suffixator {
     slist: string[];
 
-    constructor(slist: any) {
+    constructor(slist?: string) {
         if (!slist) {
             slist = SUFFIX_CHARS;
         }
         this.slist = slist.split(",");
     }
 
-    format(N: any) {
+    format(N: number) {
         let X;
         N += 1;
         let key = "";
@@ -163,7 +164,7 @@ export class Suffixator {
     }
 }
 
-export function processNumber(node, ItemObject, variable) {
+export function processNumber(node: CslNode | false, ItemObject: Record<string, any>, variable: string) {
     let val;
 
     const me = this;
@@ -569,9 +570,9 @@ export function processNumber(node, ItemObject, variable) {
                 let val = values[i];
                 // Clone node, make styling parameters on each instance sane.
                 const newnode = CSL.Util.cloneToken(masterNode);
-                newnode.gender = node.gender;
+                newnode.gender = (node as CslNode).gender;
                 if (masterLabel === val.label) {
-                    newnode.formatter = node.formatter;
+                    newnode.formatter = (node as CslNode).formatter;
                 }
                 if (val.numeric) {
                     newnode.successor_prefix = val.successor_prefix;
@@ -895,7 +896,7 @@ export function processNumber(node, ItemObject, variable) {
     }
 };
 
-export function outputNumericField(state: any, varname: string, itemID: string): void {
+export function outputNumericField(state: CslState, varname: string, itemID: string): void {
 
     state.output.openLevel(state.tmp.shadow_numbers[varname].masterStyling);
     const masterStyling = state.tmp.shadow_numbers[varname].masterStyling;

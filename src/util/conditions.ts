@@ -75,20 +75,20 @@ CSL.Conditions.Configure = function (this: CslNode, state: CslState, pos: number
 };
 
 export class EngineCondition {
-    token: any;
-    state: any;
+    token: CslNode;
+    state: CslState;
 
-    constructor(state: CslState, token: any) {
+    constructor(state: CslState, token: CslNode) {
         this.token = token;
         this.state = state;
     }
 
-    addTest(test: any): void {
+    addTest(test: (Item: CslItem, item?: any) => boolean): void {
         this.token.tests ? {} : this.token.tests = [];
         this.token.tests.push(test);
     }
 
-    addMatch(match: any): void {
+    addMatch(match: string): void {
         this.token.match = match;
     }
 

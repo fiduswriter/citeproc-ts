@@ -5,7 +5,7 @@ export class Parallel {
         this.state = state;
     }
 
-    StartCitation(sortedItems: any, _out?: any): void {
+    StartCitation(sortedItems: any[], _out?: any): void {
         this.state.tmp.suppress_repeats = [];
         if (sortedItems.length < 2) {
             return;
@@ -107,7 +107,7 @@ export class Parallel {
         }
     }
 
-    checkRepeats(params: any): any {
+    checkRepeats(params: Record<string, any>): boolean {
         const idx = this.state.tmp.cite_index;
         if (this.state.tmp.suppress_repeats) {
             if (params.parallel_first && Object.keys(params.parallel_first).length > 0) {

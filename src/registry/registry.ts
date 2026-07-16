@@ -1,6 +1,7 @@
 import { CSL } from '../csl';
 import { NameReg } from '../disambig/names';
 import { CitationReg } from '../disambig/citations';
+import { AmbigConfig } from '../obj/ambigconfig';
 
 /*global CSL: true */
 
@@ -62,33 +63,50 @@ import { debug } from '../logger';
  * through the registry item.</p>
  * @class
  */
+interface RegistryItem {
+    id: string;
+    seq: number;
+    offset: number;
+    sortkeys: string[] | false;
+    ambig: string;
+    rendered: boolean;
+    disambig: any;
+    ref: CslItem;
+    newItem?: boolean;
+    "first-reference-note-number"?: number;
+    "first-container-reference-note-number"?: number;
+    siblings?: string[];
+    master?: boolean;
+    "citation-count"?: number;
+}
+
 export class Registry {
-    debug: any;
-    state: any;
-    registry: any;
-    reflist: any;
-    refhash: any;
+    debug: boolean;
+    state: CslState;
+    registry: Record<string, RegistryItem>;
+    reflist: RegistryItem[];
+    refhash: Record<string, boolean>;
     namereg: any;
     citationreg: any;
-    authorstrings: any;
-    masterMap: any;
-    mylist: any;
-    myhash: any;
-    deletes: any;
-    inserts: any;
-    uncited: any;
-    refreshes: any;
-    akeys: any;
-    oldseq: any;
-    return_data: any;
-    ambigcites: any;
-    ambigresets: any;
+    authorstrings: Record<string, string>;
+    masterMap: Record<string, any>;
+    mylist: string[];
+    myhash: Record<string, boolean>;
+    deletes: string[];
+    inserts: string[];
+    uncited: Record<string, boolean>;
+    refreshes: Record<string, boolean>;
+    akeys: Record<string, boolean>;
+    oldseq: Record<string, number>;
+    return_data: Record<string, any>;
+    ambigcites: Record<string, string[]>;
+    ambigresets: Record<string, number>;
     sorter: any;
-    touched: any;
-    ambigsTouched: any;
-    reflist_inserts: any;
+    touched: Record<string, boolean>;
+    ambigsTouched: Record<string, boolean>;
+    reflist_inserts: RegistryItem[];
 
-    constructor(state: any) {
+    constructor(state: CslState) {
         this.debug = false;
         this.state = state;
         this.registry = {};
@@ -196,7 +214,7 @@ export class Registry {
     // 19. (o) [renumber] Reset citation numbers on list items
     //
 
-    init(itemIDs: any, uncited_flag: any) {
+    init(itemIDs: string[], uncited_flag?: boolean) {
         let i, ilen;
         this.oldseq = {};
         //  1. Receive list as function argument, store as hash and as list.
@@ -246,7 +264,7 @@ export class Registry {
         this.ambigresets = {};
     }
 
-    dopurge(myhash: any) {
+    dopurge(myhash: Record<string, boolean>) {
         // Remove any uncited items not in myhash
         for (let i=this.mylist.length-1;i>-1;i+=-1) {
             // Might not want to be quite this restrictive.
@@ -261,7 +279,7 @@ export class Registry {
         this.dodeletes(this.myhash);
     }
 
-    dodeletes(myhash: any) {
+    dodeletes(myhash: string | Record<string, boolean>) {
         let otheritems, key, ambig, pos, len, items, kkey, mypos, id;
         if ("string" === typeof myhash) {
             let key = myhash;
@@ -369,7 +387,7 @@ export class Registry {
         // this.state.fun.decorate.items_delete( this.state.output[this.state.opt.mode].tmp, myhash );
     }
 
-    doinserts(mylist: any) {
+    doinserts(mylist: string | string[]) {
         let item, Item, akey, newitem, abase, i, ilen;
         if ("string" === typeof mylist) {
             mylist = [mylist];
@@ -469,7 +487,7 @@ export class Registry {
     };
     */
 
-    rebuildlist(nosort: any) {
+    rebuildlist(nosort?: boolean) {
         let len, pos, item, Item;
         //
         //  5. Create "new" list of hash pointers, in the order given in the argument
@@ -632,12 +650,12 @@ export class Registry {
         }
     }
 
-    _insertItem(element: any, array: any) {
+    _insertItem(element: RegistryItem, array: RegistryItem[]) {
         array.splice(this._locationOf(element, array) + 1, 0, element);
         return array;
     }
 
-    _locationOf(element: any, array: any, start?: any, end?: any) {
+    _locationOf(element: RegistryItem, array: RegistryItem[], start?: number, end?: number) {
         if (array.length === 0) {
             return -1;
         }
@@ -702,7 +720,7 @@ export class Registry {
      * <p>Disambiguation lists need to be sorted this way, to
      * obtain the correct year-suffix when that's used.</p>
      */
-    compareRegistryTokens(a: any, b: any) {
+    compareRegistryTokens(a: RegistryItem, b: RegistryItem) {
         if (a.seq > b.seq) {
             return 1;
         } else if (a.seq < b.seq) {
@@ -711,7 +729,7 @@ export class Registry {
         return 0;
     }
 
-    registerAmbigToken(akey: any, id: any, ambig_config: any) {
+    registerAmbigToken(akey: string, id: string, ambig_config: AmbigConfig) {
         //SNIP-START
         if (!this.registry[id]) {
             debug("Warning: unregistered item: itemID=("+id+"), akey=("+akey+")");
@@ -763,14 +781,14 @@ export class Registry {
  * <p>Nested, because keys are an array.</p>
  */
 export class Comparifier {
-    compareKeys: any;
-    compareCompositeKeys: any;
+    compareKeys: (a: RegistryItem, b: RegistryItem) => number;
+    compareCompositeKeys: (a: [any, RegistryItem], b: [any, RegistryItem]) => number;
 
-    constructor(state: any, keyset: any) {
-        let sort_directions: any, len: any, pos: any, compareKeys: any;
+    constructor(state: CslState, keyset: string) {
+        let sort_directions: number[][], len: number, pos: number, compareKeys: (a: RegistryItem, b: RegistryItem) => number;
         const sortCompare = CSL.getSortCompare.call(state, state.opt["default-locale-sort"]);
         sort_directions = state[keyset].opt.sort_directions;
-        this.compareKeys = function (a: any, b: any) {
+        this.compareKeys = function (a: RegistryItem, b: RegistryItem) {
             len = a.sortkeys ? a.sortkeys.length : 0;
             for (let pos = 0; pos < len; pos += 1) {
                 //
@@ -818,7 +836,7 @@ export class Comparifier {
  * Get the sort key of an item, without decorations
  * <p>This is used internally by the Registry.</p>
  */
-CSL.getSortKeys = function (Item: any, key_type: any) {
+CSL.getSortKeys = function (this: CslState, Item: CslItem, key_type: string) {
     let area, root, extension, strip_prepositions, len, pos;
     //SNIP-START
     if (false) {

@@ -1,11 +1,17 @@
 import { INSTITUTION_KEYS, NAME_ATTRIBUTES } from '../constants/core';
-export class XmlJSON {
-    dataObj: any;
-    institution: any;
-    jsonStringWalker: any;
-    static _nodesByNameCaches = new WeakMap();
+export interface XmlNode {
+    name: string;
+    attrs: Record<string, string>;
+    children: (XmlNode | string)[];
+}
 
-    constructor(dataObj: any) {
+export class XmlJSON {
+    dataObj: XmlNode;
+    institution: XmlNode;
+    jsonStringWalker: any;
+    static _nodesByNameCaches = new WeakMap<object, Map<string, XmlNode[]>>();
+
+    constructor(dataObj: XmlNode) {
         this.dataObj = dataObj;
         this.institution = {
             name: "institution",
@@ -20,11 +26,11 @@ export class XmlJSON {
         };
     }
 
-    clean(json: any): any {
+    clean(json: XmlNode): XmlNode {
         return json;
     }
 
-    getStyleId(myjson: any, styleName?: string): string {
+    getStyleId(myjson: XmlNode, styleName?: string): string {
         let tagName = 'id';
         if (styleName) {
             tagName = 'title';
@@ -32,11 +38,14 @@ export class XmlJSON {
         let ret = "";
         const children = myjson.children;
         for (let i = 0, ilen = children.length; i < ilen; i++) {
-            if (children[i].name === 'info') {
-                const grandkids = children[i].children;
+            const child = children[i];
+            if (typeof child !== "string" && child.name === 'info') {
+                const grandkids = child.children;
                 for (let j = 0, jlen = grandkids.length; j < jlen; j++) {
-                    if (grandkids[j].name === tagName) {
-                        ret = grandkids[j].children[0];
+                    const grandchild = grandkids[j];
+                    if (typeof grandchild !== "string" && grandchild.name === tagName) {
+                        const val = grandchild.children[0];
+                        ret = typeof val === "string" ? val : "";
                     }
                 }
             }
@@ -44,18 +53,18 @@ export class XmlJSON {
         return ret;
     }
 
-    children(myjson: any): any {
+    children(myjson: XmlNode): XmlNode[] | false {
         if (myjson && myjson.children.length) {
-            return myjson.children.slice();
+            return myjson.children.filter(c => typeof c !== "string") as XmlNode[];
         }
         return false;
     }
 
-    nodename(myjson: any): string | null {
+    nodename(myjson: XmlNode): string | null {
         return myjson ? myjson.name : null;
     }
 
-    attributes(myjson: any): Record<string, string> {
+    attributes(myjson: XmlNode): Record<string, string> {
         const ret: Record<string, string> = {};
         for (const attrname in myjson.attrs) {
             ret["@" + attrname] = myjson.attrs[attrname];
@@ -63,7 +72,7 @@ export class XmlJSON {
         return ret;
     }
 
-    content(myjson: any): string {
+    content(myjson: XmlNode): string {
         let ret = "";
         if (!myjson || !myjson.children) {
             return ret;
@@ -76,14 +85,14 @@ export class XmlJSON {
         return ret;
     }
 
-    numberofnodes(myjson: any): number {
+    numberofnodes(myjson: XmlNode[] | undefined): number {
         if (myjson && "number" == typeof myjson.length) {
             return myjson.length;
         }
         return 0;
     }
 
-    getAttributeValue(myjson: any, name: string, namespace?: string): string {
+    getAttributeValue(myjson: XmlNode, name: string, namespace?: string): string {
         let ret = "";
         if (namespace) {
             name = namespace + ":" + name;
@@ -100,13 +109,14 @@ export class XmlJSON {
         return ret;
     }
 
-    getNodeValue(myjson: any, name?: string): any {
-        let ret: any = "";
+    getNodeValue(myjson: XmlNode, name?: string): string | XmlNode {
+        let ret: string | XmlNode = "";
         if (name) {
             for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-                if (myjson.children[i].name === name) {
-                    if (myjson.children[i].children.length) {
-                        ret = myjson.children[i];
+                const child = myjson.children[i];
+                if (typeof child !== "string" && child.name === name) {
+                    if (child.children.length) {
+                        ret = child;
                     } else {
                         ret = "";
                     }
@@ -115,41 +125,43 @@ export class XmlJSON {
         } else if (myjson) {
             ret = myjson;
         }
-        if (ret && ret.children && ret.children.length == 1 && "string" === typeof ret.children[0]) {
+        if (typeof ret !== "string" && ret && ret.children && ret.children.length == 1 && "string" === typeof ret.children[0]) {
             ret = ret.children[0];
         }
         return ret;
     }
 
-    setAttributeOnNodeIdentifiedByNameAttribute(myjson: any, nodename: string, partname: string, attrname: string, val: any): void {
+    setAttributeOnNodeIdentifiedByNameAttribute(myjson: XmlNode, nodename: string, partname: string, attrname: string, val: string): void {
         if (attrname.slice(0, 1) === '@') {
             attrname = attrname.slice(1);
         }
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            if (myjson.children[i].name === nodename && myjson.children[i].attrs.name === partname) {
-                myjson.children[i].attrs[attrname] = val;
+            const child = myjson.children[i];
+            if (typeof child === "string") continue;
+            if (child.name === nodename && child.attrs.name === partname) {
+                child.attrs[attrname] = val;
             }
         }
     }
 
-    deleteNodeByNameAttribute(myjson: any, val: any): void {
+    deleteNodeByNameAttribute(myjson: XmlNode, val: string): void {
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
             if (!myjson.children[i] || "string" === typeof myjson.children[i]) {
                 continue;
             }
-            if (myjson.children[i].attrs.name == val) {
+            if ((myjson.children[i] as XmlNode).attrs.name == val) {
                 myjson.children = myjson.children.slice(0, i).concat(myjson.children.slice(i + 1));
             }
         }
     }
 
-    deleteAttribute(myjson: any, attrname: string): void {
+    deleteAttribute(myjson: XmlNode, attrname: string): void {
         if ("undefined" !== typeof myjson.attrs[attrname]) {
-            myjson.attrs.pop(attrname);
+            delete myjson.attrs[attrname];
         }
     }
 
-    setAttribute(myjson: any, attr: string, val: any): boolean {
+    setAttribute(myjson: XmlNode, attr: string, val: string): boolean {
         myjson.attrs[attr] = val;
         return false;
     }
@@ -182,17 +194,17 @@ export class XmlJSON {
         return clone;
     }
 
-    getNodesByName(myjson: any, name: string, nameattrval?: string): any[] {
+    getNodesByName(myjson: XmlNode, name: string, nameattrval?: string): XmlNode[] {
         if (!myjson || !myjson.children) {
             return [];
         }
 
-        const getCache = (myjson: any): Map<string, any[]> => {
+        const getCache = (myjson: XmlNode): Map<string, XmlNode[]> => {
             if (XmlJSON._nodesByNameCaches.has(myjson)) {
-                return XmlJSON._nodesByNameCaches.get(myjson);
+                return XmlJSON._nodesByNameCaches.get(myjson)!;
             }
 
-            const cache = new Map<string, any[]>();
+            const cache = new Map<string, XmlNode[]>();
             XmlJSON._nodesByNameCaches.set(myjson, cache);
 
             const nodeName = myjson.name;
@@ -221,30 +233,30 @@ export class XmlJSON {
             return [];
         }
         if (nameattrval) {
-            return nodes.filter((node: any) => node.attrs.name === nameattrval);
+            return nodes.filter((node: XmlNode) => node.attrs.name === nameattrval);
         }
         return Array.from(nodes);
     }
 
-    nodeNameIs(myjson: any, name: string): boolean {
+    nodeNameIs(myjson: XmlNode | undefined, name: string): boolean {
         if (typeof myjson === "undefined") {
             return false;
         }
         return name == myjson.name;
     }
 
-    makeXml(myjson: any): any {
+    makeXml(myjson: string | XmlNode): XmlNode | string {
         if ("string" === typeof myjson) {
             if (myjson.slice(0, 1) === "<") {
-                myjson = this.jsonStringWalker.walkToObject(myjson);
+                return this.jsonStringWalker.walkToObject(myjson);
             } else {
-                myjson = JSON.parse(myjson);
+                return JSON.parse(myjson);
             }
         }
         return myjson;
     }
 
-    insertChildNodeAfter(parent: any, node: any, _pos: any, datejson: any): any {
+    insertChildNodeAfter(parent: XmlNode, node: XmlNode, _pos: number, datejson: XmlNode): XmlNode {
         for (let i = 0, ilen = parent.children.length; i < ilen; i += 1) {
             if (node === parent.children[i]) {
                 parent.children = parent.children.slice(0, i).concat([datejson]).concat(parent.children.slice(i + 1));
@@ -254,14 +266,16 @@ export class XmlJSON {
         return parent;
     }
 
-    insertPublisherAndPlace(myjson: any): void {
+    insertPublisherAndPlace(myjson: XmlNode): void {
         if (myjson.name === "group") {
             let useme = true;
             let mustHaves = ["publisher", "publisher-place"];
             for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-                const haveVarname = mustHaves.indexOf(myjson.children[i].attrs.variable);
-                const isText = myjson.children[i].name === "text";
-                if (isText && haveVarname > -1 && !myjson.children[i].attrs.prefix && !myjson.children[i].attrs.suffix) {
+                const child = myjson.children[i];
+                if (typeof child === "string") continue;
+                const haveVarname = mustHaves.indexOf(child.attrs.variable);
+                const isText = child.name === "text";
+                if (isText && haveVarname > -1 && !child.attrs.prefix && !child.attrs.suffix) {
                     mustHaves = mustHaves.slice(0, haveVarname).concat(mustHaves.slice(haveVarname + 1));
                 } else {
                     useme = false;
@@ -269,12 +283,12 @@ export class XmlJSON {
                 }
             }
             if (useme && !mustHaves.length) {
-                myjson.attrs["has-publisher-and-publisher-place"] = true;
+                myjson.attrs["has-publisher-and-publisher-place"] = "true";
             }
         }
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
             if ("object" === typeof myjson.children[i]) {
-                this.insertPublisherAndPlace(myjson.children[i]);
+                this.insertPublisherAndPlace(myjson.children[i] as XmlNode);
             }
         }
     }
@@ -291,7 +305,7 @@ export class XmlJSON {
         return false;
     }
 
-    addMissingNameNodes(myjson: any, parents: string[]): void {
+    addMissingNameNodes(myjson: XmlNode, parents: string[]): void {
         if (!parents) {
             parents = [];
         }
@@ -299,45 +313,50 @@ export class XmlJSON {
             if (!this.isChildOfSubstitute(parents)) {
                 let addName = true;
                 for (let i = 0, ilen = myjson.children.length; i < ilen; i++) {
-                    if (myjson.children[i].name === "name") {
+                    const child = myjson.children[i];
+                    if (typeof child !== "string" && child.name === "name") {
                         addName = false;
                         break;
                     }
                 }
                 if (addName) {
-                    myjson.children = [{ name: "name", attrs: {}, children: [] }].concat(myjson.children);
+                    myjson.children = ([{ name: "name", attrs: {}, children: [] }] as (XmlNode | string)[]).concat(myjson.children);
                 }
             }
         }
         parents.push(myjson.name);
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
             if ("object" === typeof myjson.children[i]) {
-                this.addMissingNameNodes(myjson.children[i], parents);
+                this.addMissingNameNodes(myjson.children[i] as XmlNode, parents);
             }
         }
         parents.pop();
     }
 
-    addInstitutionNodes(myjson: any): void {
+    addInstitutionNodes(myjson: XmlNode): void {
         if (myjson.name === "names") {
             const attributes: Record<string, string> = {};
             let insertPos = -1;
             for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-                if (myjson.children[i].name == "name") {
-                    for (const key in myjson.children[i].attrs) {
-                        attributes[key] = myjson.children[i].attrs[key];
+                const child = myjson.children[i];
+                if (typeof child === "string") continue;
+                if (child.name == "name") {
+                    for (const key in child.attrs) {
+                        attributes[key] = child.attrs[key];
                     }
                     insertPos = i;
-                    for (let k = 0, klen = myjson.children[i].children.length; k < klen; k += 1) {
-                        if (myjson.children[i].children[k].attrs.name !== 'family') {
+                    for (let k = 0, klen = child.children.length; k < klen; k += 1) {
+                        const grandchild = child.children[k];
+                        if (typeof grandchild === "string") continue;
+                        if (grandchild.attrs.name !== 'family') {
                             continue;
                         }
-                        for (const key in myjson.children[i].children[k].attrs) {
-                            attributes[key] = myjson.children[i].children[k].attrs[key];
+                        for (const key in grandchild.attrs) {
+                            attributes[key] = grandchild.attrs[key];
                         }
                     }
                 }
-                if (myjson.children[i].name == "institution") {
+                if (child.name == "institution") {
                     insertPos = -1;
                     break;
                 }
@@ -363,21 +382,23 @@ export class XmlJSON {
             if ("string" === typeof myjson.children[i]) {
                 continue;
             }
-            this.addInstitutionNodes(myjson.children[i]);
+            this.addInstitutionNodes(myjson.children[i] as XmlNode);
         }
     }
 
-    flagDateMacros(myjson: any): void {
+    flagDateMacros(myjson: XmlNode): void {
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            if (myjson.children[i].name === "macro") {
-                if (this.inspectDateMacros(myjson.children[i])) {
-                    myjson.children[i].attrs["macro-has-date"] = "true";
+            const child = myjson.children[i];
+            if (typeof child === "string") continue;
+            if (child.name === "macro") {
+                if (this.inspectDateMacros(child)) {
+                    child.attrs["macro-has-date"] = "true";
                 }
             }
         }
     }
 
-    inspectDateMacros(myjson: any): boolean {
+    inspectDateMacros(myjson: XmlNode): boolean {
         if (!myjson || !myjson.children) {
             return false;
         }
@@ -385,7 +406,7 @@ export class XmlJSON {
             return true;
         }
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            if (this.inspectDateMacros(myjson.children[i])) {
+            if (this.inspectDateMacros(myjson.children[i] as XmlNode)) {
                 return true;
             }
         }
@@ -404,7 +425,7 @@ export function stripXmlProcessingInstruction(xml: string): string {
     return xml;
 }
 
-export function parseXml(str: string): any {
+export function parseXml(str: string): XmlNode {
     const _obj = { children: [] as any[] };
     const _stack = [_obj.children];
 

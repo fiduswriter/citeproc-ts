@@ -9,13 +9,16 @@
  * {@link CSL.Core.Configure} before it can be used to generate
  * citations.</p>
  */
+type Decoration = [string, string, string?];
+type TokenStrings = { delimiter?: string; prefix?: string; suffix?: string; form?: string; plural?: number; term?: string; value?: string; gender?: string; [key: string]: string | number | undefined };
+
 export class Token {
-    public name: any;
-    public strings: any;
-    public decorations: any[];
-    public variables: any[];
-    public execs: any[];
-    public tokentype: any;
+    public name: string | undefined;
+    public strings: TokenStrings;
+    public decorations: Decoration[];
+    public variables: string[];
+    public execs: ((state: any, Item?: any, item?: any) => void)[];
+    public tokentype: number | undefined;
     // Conditional branching fields (populated at runtime)
     public evaluator: any;
     public tests: any[];
@@ -25,9 +28,17 @@ export class Token {
     public next: any;
     public juris?: any;
     public dateparts?: any;
-    public postponed_macro?: any;
+    public postponed_macro?: string;
+    public range_prefix?: string;
+    public successor_prefix?: string;
+    public splice_prefix?: string;
+    public formatter?: any;
+    public gender?: string;
+    public default_locale?: string;
+    public requireMatch?: string;
+    public isJurisLocatorLabel?: boolean;
 
-    constructor(name?: any, tokentype?: any, conditional?: any) {
+    constructor(name?: string, tokentype?: number, conditional?: any) {
         /**
          * Name of the element.
          * <p>This corresponds to the element name of the
@@ -63,10 +74,10 @@ export class Token {
     }
 }
 
-export function Util_cloneToken(token: any): any {
-    let newtok: any, key: any, pos: number, len: number;
+export function Util_cloneToken(token: Token): Token {
+    let newtok: Token, key: string, pos: number, len: number;
     if ("string" === typeof token) {
-        return token;
+        return token as any;
     }
     newtok = new Token(token.name, token.tokentype);
     for (let key in token.strings) {
@@ -77,14 +88,12 @@ export function Util_cloneToken(token: any): any {
     if (token.decorations) {
         newtok.decorations = [];
         for (let pos = 0, len = token.decorations.length; pos < len; pos += 1) {
-            newtok.decorations.push(token.decorations[pos].slice());
+            newtok.decorations.push(token.decorations[pos].slice() as any);
         }
     }
     if (token.variables) {
         newtok.variables = token.variables.slice();
     }
-    // Probably overkill; this is only used for cloning formatting
-    // tokens.
     if (token.execs) {
         newtok.execs = token.execs.slice();
         if (token.tests) {

@@ -3,7 +3,7 @@ import { Suffixator } from '../util/number';
 
 import { SUFFIX_CHARS } from '../constants/core';
 export const Node_date_part = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, pos, len, first_date, value, value_end, real, have_collapsed, invoked, precondition, known_year, bc, ad, bc_end, ad_end, ready, curr, dcurr, number, num, formatter, item, blob;
         if (!this.strings.form) {
             this.strings.form = "long";
@@ -37,7 +37,7 @@ export const Node_date_part = {
             return val;
         }
 
-        func = function (state, Item) {
+        func = function (this: CslNode, state: CslState, Item: CslItem): void {
 
             if (!state.tmp.date_object) {
                 return;

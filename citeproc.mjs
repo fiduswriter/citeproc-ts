@@ -1883,11 +1883,14 @@ var init_xmljson = __esm({
         let ret = "";
         const children = myjson.children;
         for (let i = 0, ilen = children.length; i < ilen; i++) {
-          if (children[i].name === "info") {
-            const grandkids = children[i].children;
+          const child = children[i];
+          if (typeof child !== "string" && child.name === "info") {
+            const grandkids = child.children;
             for (let j = 0, jlen = grandkids.length; j < jlen; j++) {
-              if (grandkids[j].name === tagName) {
-                ret = grandkids[j].children[0];
+              const grandchild = grandkids[j];
+              if (typeof grandchild !== "string" && grandchild.name === tagName) {
+                const val = grandchild.children[0];
+                ret = typeof val === "string" ? val : "";
               }
             }
           }
@@ -1896,7 +1899,7 @@ var init_xmljson = __esm({
       }
       children(myjson) {
         if (myjson && myjson.children.length) {
-          return myjson.children.slice();
+          return myjson.children.filter((c) => typeof c !== "string");
         }
         return false;
       }
@@ -1948,9 +1951,10 @@ var init_xmljson = __esm({
         let ret = "";
         if (name) {
           for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            if (myjson.children[i].name === name) {
-              if (myjson.children[i].children.length) {
-                ret = myjson.children[i];
+            const child = myjson.children[i];
+            if (typeof child !== "string" && child.name === name) {
+              if (child.children.length) {
+                ret = child;
               } else {
                 ret = "";
               }
@@ -1959,7 +1963,7 @@ var init_xmljson = __esm({
         } else if (myjson) {
           ret = myjson;
         }
-        if (ret && ret.children && ret.children.length == 1 && "string" === typeof ret.children[0]) {
+        if (typeof ret !== "string" && ret && ret.children && ret.children.length == 1 && "string" === typeof ret.children[0]) {
           ret = ret.children[0];
         }
         return ret;
@@ -1969,8 +1973,10 @@ var init_xmljson = __esm({
           attrname = attrname.slice(1);
         }
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-          if (myjson.children[i].name === nodename && myjson.children[i].attrs.name === partname) {
-            myjson.children[i].attrs[attrname] = val;
+          const child = myjson.children[i];
+          if (typeof child === "string") continue;
+          if (child.name === nodename && child.attrs.name === partname) {
+            child.attrs[attrname] = val;
           }
         }
       }
@@ -1986,7 +1992,7 @@ var init_xmljson = __esm({
       }
       deleteAttribute(myjson, attrname) {
         if ("undefined" !== typeof myjson.attrs[attrname]) {
-          myjson.attrs.pop(attrname);
+          delete myjson.attrs[attrname];
         }
       }
       setAttribute(myjson, attr, val) {
@@ -2066,9 +2072,9 @@ var init_xmljson = __esm({
       makeXml(myjson) {
         if ("string" === typeof myjson) {
           if (myjson.slice(0, 1) === "<") {
-            myjson = this.jsonStringWalker.walkToObject(myjson);
+            return this.jsonStringWalker.walkToObject(myjson);
           } else {
-            myjson = JSON.parse(myjson);
+            return JSON.parse(myjson);
           }
         }
         return myjson;
@@ -2087,9 +2093,11 @@ var init_xmljson = __esm({
           let useme = true;
           let mustHaves = ["publisher", "publisher-place"];
           for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            const haveVarname = mustHaves.indexOf(myjson.children[i].attrs.variable);
-            const isText = myjson.children[i].name === "text";
-            if (isText && haveVarname > -1 && !myjson.children[i].attrs.prefix && !myjson.children[i].attrs.suffix) {
+            const child = myjson.children[i];
+            if (typeof child === "string") continue;
+            const haveVarname = mustHaves.indexOf(child.attrs.variable);
+            const isText = child.name === "text";
+            if (isText && haveVarname > -1 && !child.attrs.prefix && !child.attrs.suffix) {
               mustHaves = mustHaves.slice(0, haveVarname).concat(mustHaves.slice(haveVarname + 1));
             } else {
               useme = false;
@@ -2097,7 +2105,7 @@ var init_xmljson = __esm({
             }
           }
           if (useme && !mustHaves.length) {
-            myjson.attrs["has-publisher-and-publisher-place"] = true;
+            myjson.attrs["has-publisher-and-publisher-place"] = "true";
           }
         }
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
@@ -2125,7 +2133,8 @@ var init_xmljson = __esm({
           if (!this.isChildOfSubstitute(parents)) {
             let addName = true;
             for (let i = 0, ilen = myjson.children.length; i < ilen; i++) {
-              if (myjson.children[i].name === "name") {
+              const child = myjson.children[i];
+              if (typeof child !== "string" && child.name === "name") {
                 addName = false;
                 break;
               }
@@ -2148,21 +2157,25 @@ var init_xmljson = __esm({
           const attributes = {};
           let insertPos = -1;
           for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-            if (myjson.children[i].name == "name") {
-              for (const key in myjson.children[i].attrs) {
-                attributes[key] = myjson.children[i].attrs[key];
+            const child = myjson.children[i];
+            if (typeof child === "string") continue;
+            if (child.name == "name") {
+              for (const key in child.attrs) {
+                attributes[key] = child.attrs[key];
               }
               insertPos = i;
-              for (let k = 0, klen = myjson.children[i].children.length; k < klen; k += 1) {
-                if (myjson.children[i].children[k].attrs.name !== "family") {
+              for (let k = 0, klen = child.children.length; k < klen; k += 1) {
+                const grandchild = child.children[k];
+                if (typeof grandchild === "string") continue;
+                if (grandchild.attrs.name !== "family") {
                   continue;
                 }
-                for (const key in myjson.children[i].children[k].attrs) {
-                  attributes[key] = myjson.children[i].children[k].attrs[key];
+                for (const key in grandchild.attrs) {
+                  attributes[key] = grandchild.attrs[key];
                 }
               }
             }
-            if (myjson.children[i].name == "institution") {
+            if (child.name == "institution") {
               insertPos = -1;
               break;
             }
@@ -2193,9 +2206,11 @@ var init_xmljson = __esm({
       }
       flagDateMacros(myjson) {
         for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
-          if (myjson.children[i].name === "macro") {
-            if (this.inspectDateMacros(myjson.children[i])) {
-              myjson.children[i].attrs["macro-has-date"] = "true";
+          const child = myjson.children[i];
+          if (typeof child === "string") continue;
+          if (child.name === "macro") {
+            if (this.inspectDateMacros(child)) {
+              child.attrs["macro-has-date"] = "true";
             }
           }
         }
@@ -4924,6 +4939,49 @@ var init_state = __esm({
     init_core();
     Opt = class {
       constructor() {
+        __publicField(this, "parallel");
+        __publicField(this, "has_disambiguate");
+        __publicField(this, "mode");
+        __publicField(this, "dates");
+        __publicField(this, "jurisdictions_seen");
+        __publicField(this, "suppressedJurisdictions");
+        __publicField(this, "inheritedAttributes");
+        __publicField(this, "locale-sort");
+        __publicField(this, "locale-translit");
+        __publicField(this, "locale-translat");
+        __publicField(this, "citeAffixes");
+        __publicField(this, "default-locale");
+        __publicField(this, "update_mode");
+        __publicField(this, "bib_mode");
+        __publicField(this, "sort_citations");
+        __publicField(this, "et-al-min");
+        __publicField(this, "et-al-use-first");
+        __publicField(this, "et-al-use-last");
+        __publicField(this, "et-al-subsequent-min");
+        __publicField(this, "et-al-subsequent-use-first");
+        __publicField(this, "demote-non-dropping-particle");
+        __publicField(this, "parse-names");
+        __publicField(this, "katakana-display");
+        __publicField(this, "citation_number_slug");
+        __publicField(this, "trigraph");
+        __publicField(this, "nodenames");
+        __publicField(this, "gender");
+        __publicField(this, "cite-lang-prefs");
+        __publicField(this, "has_layout_locale");
+        __publicField(this, "disable_duplicate_year_suppression");
+        __publicField(this, "use_context_condition");
+        __publicField(this, "jurisdiction_fallbacks");
+        __publicField(this, "development_extensions");
+        __publicField(this, "xclass");
+        __publicField(this, "styleID");
+        __publicField(this, "availableAbbrevDomains");
+        __publicField(this, "require_comma_on_symbol");
+        __publicField(this, "default-locale-sort");
+        __publicField(this, "lang");
+        __publicField(this, "citation_number_sort");
+        __publicField(this, "grouped_sort");
+        __publicField(this, "use_parallel_delimiter");
+        __publicField(this, "area");
         this.parallel = {
           enable: false
         }, this.has_disambiguate = false;
@@ -5085,6 +5143,87 @@ var init_state = __esm({
     };
     Tmp = class {
       constructor() {
+        __publicField(this, "names_max");
+        __publicField(this, "names_base");
+        __publicField(this, "givens_base");
+        __publicField(this, "value");
+        __publicField(this, "namepart_decorations");
+        __publicField(this, "namepart_type");
+        __publicField(this, "area");
+        __publicField(this, "root");
+        __publicField(this, "extension");
+        __publicField(this, "can_substitute");
+        __publicField(this, "element_rendered_ok");
+        __publicField(this, "element_trace");
+        __publicField(this, "nameset_counter");
+        __publicField(this, "group_context");
+        __publicField(this, "term_predecessor");
+        __publicField(this, "in_cite_predecessor");
+        __publicField(this, "jump");
+        __publicField(this, "decorations");
+        __publicField(this, "tokenstore_stack");
+        __publicField(this, "last_suffix_used");
+        __publicField(this, "last_names_used");
+        __publicField(this, "last_years_used");
+        __publicField(this, "years_used");
+        __publicField(this, "names_used");
+        __publicField(this, "taintedItemIDs");
+        __publicField(this, "taintedCitationIDs");
+        __publicField(this, "initialize_with");
+        __publicField(this, "disambig_request");
+        __publicField(this, "name-as-sort-order");
+        __publicField(this, "suppress_decorations");
+        __publicField(this, "disambig_settings");
+        __publicField(this, "bib_sort_keys");
+        __publicField(this, "prefix");
+        __publicField(this, "suffix");
+        __publicField(this, "delimiter");
+        __publicField(this, "cite_locales");
+        __publicField(this, "cite_affixes");
+        __publicField(this, "strip_periods");
+        __publicField(this, "shadow_numbers");
+        __publicField(this, "authority_stop_last");
+        __publicField(this, "loadedItemIDs");
+        __publicField(this, "condition_counter");
+        __publicField(this, "condition_lang_val_arr");
+        __publicField(this, "condition_lang_counter_arr");
+        __publicField(this, "just_looking");
+        __publicField(this, "just_did_number");
+        __publicField(this, "first_name_string");
+        __publicField(this, "name_node");
+        __publicField(this, "done_vars");
+        __publicField(this, "last_primary_names_string");
+        __publicField(this, "have_collapsed");
+        __publicField(this, "use_cite_group_delimiter");
+        __publicField(this, "sort_key_flag");
+        __publicField(this, "label_blob");
+        __publicField(this, "etal_node");
+        __publicField(this, "etal_term");
+        __publicField(this, "rendered_name");
+        __publicField(this, "offset_characters");
+        __publicField(this, "count_offset_characters");
+        __publicField(this, "term_predecessor_name");
+        __publicField(this, "name_delimiter");
+        __publicField(this, "probably_rendered_something");
+        __publicField(this, "authorstring_request");
+        __publicField(this, "lang_array");
+        __publicField(this, "multi_layout");
+        __publicField(this, "publisher-list");
+        __publicField(this, "publisher-token");
+        __publicField(this, "publisher-place-token");
+        __publicField(this, "doing-macro-with-date");
+        __publicField(this, "citation_pos");
+        __publicField(this, "citation_note_index");
+        __publicField(this, "citation_id");
+        __publicField(this, "citation_errors");
+        __publicField(this, "splice_delimiter");
+        __publicField(this, "can_block_substitute");
+        __publicField(this, "subsequent_author_substitute_ok");
+        __publicField(this, "common_term_match_fail");
+        __publicField(this, "disambig_override");
+        __publicField(this, "abort_output");
+        __publicField(this, "abbrev_trimmer");
+        __publicField(this, "strip_periods_tag");
         this.names_max = new CSL.Stack();
         this.names_base = new CSL.Stack();
         this.givens_base = new CSL.Stack();
@@ -5150,6 +5289,14 @@ var init_state = __esm({
     };
     Fun = class {
       constructor(state) {
+        __publicField(this, "match");
+        __publicField(this, "suffixator");
+        __publicField(this, "romanizer");
+        __publicField(this, "ordinalizer");
+        __publicField(this, "long_ordinalizer");
+        __publicField(this, "dateparser");
+        __publicField(this, "flipflopper");
+        __publicField(this, "decorate");
         this.match = new CSL.Util.Match();
         this.suffixator = new Suffixator(SUFFIX_CHARS);
         this.romanizer = new Romanizer();
@@ -5159,6 +5306,29 @@ var init_state = __esm({
     };
     Build = class {
       constructor() {
+        __publicField(this, "alternate-term");
+        __publicField(this, "in_bibliography");
+        __publicField(this, "in_style");
+        __publicField(this, "skip");
+        __publicField(this, "postponed_macro");
+        __publicField(this, "layout_flag");
+        __publicField(this, "name");
+        __publicField(this, "names_variables");
+        __publicField(this, "name_label");
+        __publicField(this, "form");
+        __publicField(this, "term");
+        __publicField(this, "macro");
+        __publicField(this, "macro_stack");
+        __publicField(this, "text");
+        __publicField(this, "lang");
+        __publicField(this, "area");
+        __publicField(this, "root");
+        __publicField(this, "extension");
+        __publicField(this, "substitute_level");
+        __publicField(this, "names_level");
+        __publicField(this, "render_nesting_level");
+        __publicField(this, "render_seen");
+        __publicField(this, "bibliography_key_pos");
         this["alternate-term"] = false;
         this.in_bibliography = false;
         this.in_style = false;
@@ -6600,7 +6770,6 @@ var init_queue = __esm({
         __publicField(this, "current");
         __publicField(this, "last_char_rendered");
         __publicField(this, "checkNestedBrace");
-        __publicField(this, "adjust");
         this.levelname = ["top"];
         this.state = state;
         this.queue = [];
@@ -6921,7 +7090,7 @@ var init_queue = __esm({
         let span_split = 0;
         for (let i2 = 0, ilen2 = ret.length; i2 < ilen2; i2 += 1) {
           if ("string" === typeof ret[i2]) {
-            span_split = parseInt(i2, 10) + 1;
+            span_split = i2 + 1;
             if (i2 < ret.length - 1 && "object" === typeof ret[i2 + 1]) {
               if (blob_delimiter && !ret[i2 + 1].UGLY_DELIMITER_SUPPRESS_HACK) {
                 ret[i2] += txt_esc(blob_delimiter);
@@ -7126,17 +7295,18 @@ var init_queue = __esm({
         if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
           return;
         }
-        for (let i = parent.blobs.length - 1; i > -1; i--) {
-          _Queue.purgeEmptyBlobs(parent.blobs[i]);
-          const child = parent.blobs[i];
+        const parentBlobs = parent.blobs;
+        for (let i = parentBlobs.length - 1; i > -1; i--) {
+          _Queue.purgeEmptyBlobs(parentBlobs[i]);
+          const child = parentBlobs[i];
           if (!child || !child.blobs || !child.blobs.length) {
             const buf = [];
-            while (parent.blobs.length - 1 > i) {
-              buf.push(parent.blobs.pop());
+            while (parentBlobs.length - 1 > i) {
+              buf.push(parentBlobs.pop());
             }
-            parent.blobs.pop();
+            parentBlobs.pop();
             while (buf.length) {
-              parent.blobs.push(buf.pop());
+              parentBlobs.push(buf.pop());
             }
           }
         }
@@ -7222,7 +7392,7 @@ var init_queue = __esm({
         }
       }
       function blobIsNumber(blob) {
-        return "number" === typeof blob.num || blob.blobs && blob.blobs.length === 1 && "number" === typeof blob.blobs[0].num;
+        return "number" === typeof blob.num || blob.blobs.length === 1 && "number" === typeof blob.blobs[0].num;
       }
       function blobEndsInNumber(blob) {
         if ("number" === typeof blob.num) {
@@ -7231,7 +7401,8 @@ var init_queue = __esm({
         if (!blob.blobs || "object" !== typeof blob.blobs) {
           return false;
         }
-        if (blobEndsInNumber(blob.blobs[blob.blobs.length - 1])) {
+        const blobs = blob.blobs;
+        if (blobEndsInNumber(blobs[blobs.length - 1])) {
           return true;
         }
       }
@@ -7262,7 +7433,8 @@ var init_queue = __esm({
         if ("object" !== typeof blob.blobs) {
           return false;
         }
-        return blobHasDescendantQuotes(blob.blobs[blob.blobs.length - 1]);
+        const blobs = blob.blobs;
+        return blobHasDescendantQuotes(blobs[blobs.length - 1]);
       }
       function blobHasDescendantMergingPunctuation(parentChar, blob) {
         let childChar = blob.strings.suffix.slice(-1);
@@ -7276,7 +7448,8 @@ var init_queue = __esm({
         if ("object" !== typeof blob.blobs) {
           return false;
         }
-        if (blobHasDescendantMergingPunctuation(parentChar, blob.blobs[blob.blobs.length - 1])) {
+        const blobs = blob.blobs;
+        if (blobHasDescendantMergingPunctuation(parentChar, blobs[blobs.length - 1])) {
           return true;
         }
         return false;
@@ -16102,14 +16275,14 @@ var init_stack = __esm({
         __publicField(this, "mystack");
         __publicField(this, "tip");
         this.mystack = [];
-        if (literal || val) {
+        if (literal || val !== void 0) {
           this.mystack.push(val);
         }
         this.tip = this.mystack[0];
       }
       /** Push a value onto the stack. */
       push(val, literal) {
-        if (literal || val) {
+        if (literal || val !== void 0) {
           this.mystack.push(val);
         } else {
           this.mystack.push("");
@@ -16130,7 +16303,7 @@ var init_stack = __esm({
         if (this.mystack.length === 0) {
           error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
         }
-        if (literal || val) {
+        if (literal || val !== void 0) {
           this.mystack[this.mystack.length - 1] = val;
         } else {
           this.mystack[this.mystack.length - 1] = "";
@@ -16357,6 +16530,14 @@ var init_token = __esm({
         __publicField(this, "juris");
         __publicField(this, "dateparts");
         __publicField(this, "postponed_macro");
+        __publicField(this, "range_prefix");
+        __publicField(this, "successor_prefix");
+        __publicField(this, "splice_prefix");
+        __publicField(this, "formatter");
+        __publicField(this, "gender");
+        __publicField(this, "default_locale");
+        __publicField(this, "requireMatch");
+        __publicField(this, "isJurisLocatorLabel");
         this.name = name;
         this.strings = {};
         this.strings.delimiter = void 0;
@@ -16411,9 +16592,26 @@ var init_blob = __esm({
         __publicField(this, "decorations");
         __publicField(this, "blobs");
         __publicField(this, "alldecor");
+        __publicField(this, "num");
+        __publicField(this, "particle");
+        __publicField(this, "status");
+        __publicField(this, "formatter");
+        __publicField(this, "gender");
+        __publicField(this, "successor_prefix");
+        __publicField(this, "range_prefix");
+        __publicField(this, "splice_prefix");
+        __publicField(this, "punctuation_in_quote");
+        __publicField(this, "new_locale");
+        __publicField(this, "old_locale");
+        __publicField(this, "isInstitution");
+        __publicField(this, "suppress_splice_prefix");
+        __publicField(this, "UGLY_DELIMITER_SUPPRESS_HACK");
+        __publicField(this, "checkNext");
+        __publicField(this, "checkLast");
+        __publicField(this, "params");
         this.levelname = levelname;
         if (token) {
-          this.strings = { "prefix": "", "suffix": "" };
+          this.strings = { "prefix": "", "suffix": "", "delimiter": "" };
           for (const key in token.strings) {
             if (token.strings.hasOwnProperty(key)) {
               this.strings[key] = token.strings[key];
@@ -16430,10 +16628,7 @@ var init_blob = __esm({
             this.decorations.push(token.decorations[pos].slice());
           }
         } else {
-          this.strings = {};
-          this.strings.prefix = "";
-          this.strings.suffix = "";
-          this.strings.delimiter = "";
+          this.strings = { prefix: "", suffix: "", delimiter: "" };
           this.decorations = [];
         }
         if ("string" === typeof str) {
@@ -16479,6 +16674,8 @@ var init_number3 = __esm({
         __publicField(this, "splice_prefix");
         __publicField(this, "formatter");
         __publicField(this, "type");
+        __publicField(this, "UGLY_DELIMITER_SUPPRESS_HACK");
+        __publicField(this, "suppress_splice_prefix");
         this.id = id;
         this.alldecor = [];
         this.num = num;

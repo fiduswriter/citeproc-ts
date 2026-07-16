@@ -3,7 +3,7 @@ import { CSL } from '../csl';
 import { POSITION, SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 export const Node_name = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func;
         if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
             let oldTmpRoot;
@@ -33,7 +33,7 @@ export const Node_name = {
 
             state.tmp.root = oldTmpRoot;
 
-            func = function (state) {
+            func = function (this: CslNode, state: CslState): void {
                 // Et-al (onward processing in node_etal.js and node_names.js)
                 // XXXXX Why is this necessary? This is available on this.name, right?
                 state.tmp.etal_term = "et-al";

@@ -4,23 +4,23 @@ import { CSL } from '../csl';
 import { END, SEEN, SINGLETON, START, SUCCESSOR, SUPPRESS, TERMINAL_PUNCTUATION } from '../constants/core';
 import { ROMANESQUE_REGEXP } from '../constants/regex';
 import { error } from '../logger';
+import { Blob } from '../obj/blob';
 export class Queue {
-    public levelname: any;
-    public state: any;
-    public queue: any;
+    public levelname: string[];
+    public state: CslState;
+    public queue: Blob[];
     public empty: any;
     public formats: any;
     public current: any;
-    public last_char_rendered: any;
-    public checkNestedBrace?: any;
-    public adjust?: any;
+    public last_char_rendered: string;
+    public checkNestedBrace?: { update(str: string): string };
 
-    constructor(state: any) {
+    constructor(state: CslState) {
         this.levelname = ["top"];
         this.state = state;
         this.queue = [];
         this.empty = new CSL.Token("empty");
-        const tokenstore: any = {};
+        const tokenstore: Record<string, any> = {};
         tokenstore.empty = this.empty;
         this.formats = new CSL.Stack(tokenstore);
         this.current = new CSL.Stack(this.queue);
@@ -35,12 +35,12 @@ export class Queue {
         }
     }
 
-    getToken(name: any) {
+    getToken(name: string) {
         const ret = this.formats.value()[name];
         return ret;
     }
 
-    mergeTokenStrings(base: any, modifier: any) {
+    mergeTokenStrings(base: string, modifier: string) {
         let base_token, modifier_token, ret, key;
         base_token = this.formats.value()[base];
         modifier_token = this.formats.value()[modifier];
@@ -67,8 +67,8 @@ export class Queue {
         return ret;
     }
 
-    addToken(name: any, modifier: any, token: any) {
-        let newtok, attr;
+    addToken(name: string, modifier: string, token: any) {
+        let newtok: any, attr: string;
         newtok = new CSL.Token("output");
         if ("string" === typeof token) {
             token = this.formats.value()[token];
@@ -87,7 +87,7 @@ export class Queue {
         this.formats.value()[name] = newtok;
     }
 
-    pushFormats(tokenstore: any) {
+    pushFormats(tokenstore?: Record<string, any>) {
         if (!tokenstore) {
             tokenstore = {};
         }
@@ -99,8 +99,8 @@ export class Queue {
         this.formats.pop();
     }
 
-    startTag(name: any, token: any) {
-        const tokenstore: any = {};
+    startTag(name: string, token: any) {
+        const tokenstore: Record<string, any> = {};
         if (this.state.tmp["doing-macro-with-date"] && this.state.tmp.extension) {
             token = this.empty;
             name = "empty";
@@ -110,12 +110,12 @@ export class Queue {
         this.openLevel(name);
     }
 
-    endTag(name: any) {
+    endTag(name: string) {
         this.closeLevel(name);
         this.popFormats();
     }
 
-    openLevel(token: any) {
+    openLevel(token?: any) {
         let blob, curr;
         if ("object" === typeof token) {
             blob = new CSL.Blob(undefined, token);
@@ -135,7 +135,7 @@ export class Queue {
         this.current.push(blob);
     }
 
-    closeLevel(name: any) {
+    closeLevel(name?: string) {
         if (name && name !== this.current.value().levelname) {
             error("Level mismatch error:  wanted " + name + " but found " + this.current.value().levelname);
         }
@@ -145,7 +145,7 @@ export class Queue {
         }
     }
 
-    append(str: any, tokname?: any, notSerious?: any, ignorePredecessor?: any, noStripPeriods?: any) {
+    append(str: string | number | boolean | Blob | undefined, tokname?: string | any, notSerious?: boolean, ignorePredecessor?: boolean, noStripPeriods?: boolean): boolean {
         let token, blob, curr;
         let useblob = true;
         if (notSerious) {
@@ -257,8 +257,8 @@ export class Queue {
         return true;
     }
 
-    string(state: any, myblobs: any, blob: any) {
-        let i, ilen, j, jlen, b;
+    string(state: CslState, myblobs: any[], blob?: any): any[] {
+        let i: number, ilen: number, j: number, jlen: number, b: string;
         const txt_esc = CSL.getSafeEscape(this.state);
         const blobs = myblobs.slice();
         let ret: any[] = [];
@@ -361,7 +361,7 @@ export class Queue {
         let span_split = 0;
         for (let i = 0, ilen = ret.length; i < ilen; i += 1) {
             if ("string" === typeof ret[i]) {
-                span_split = (parseInt(i as any, 10) + 1);
+                span_split = (i + 1);
                 if (i < ret.length - 1  && "object" === typeof ret[i + 1]) {
                     if (blob_delimiter && !ret[i + 1].UGLY_DELIMITER_SUPPRESS_HACK) {
                         ret[i] += txt_esc(blob_delimiter);
@@ -451,7 +451,7 @@ export class Queue {
     }
 
     clearlevel() {
-        let blob, pos, len;
+        let blob: any, pos: number, len: number;
         blob = this.current.value();
         len = blob.blobs.length;
         for (let pos = 0; pos < len; pos += 1) {
@@ -459,7 +459,7 @@ export class Queue {
         }
     }
 
-    renderBlobs(blobs: any, delim: any, in_cite: any, parent: any) {
+    renderBlobs(blobs: any[], delim?: string, in_cite?: boolean, parent?: any): string | any {
         let state, ret, ret_last_char, use_delim, blob, pos, len, ppos, llen, str, params, txt_esc;
         txt_esc = CSL.getSafeEscape(this.state);
         if (!delim) {
@@ -570,39 +570,40 @@ export class Queue {
         return ret;
     }
 
-    static purgeEmptyBlobs(parent: any) {
-        if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+    static purgeEmptyBlobs(parent: Blob) {
+        if ("object" !== typeof parent || "object" !== typeof parent.blobs || !(parent.blobs as Blob[]).length) {
             return;
         }
-        for (let i=parent.blobs.length-1;i>-1;i--) {
-            Queue.purgeEmptyBlobs(parent.blobs[i]);
-            const child = parent.blobs[i];
-            if (!child || !child.blobs || !child.blobs.length) {
-                const buf = [];
-                while ((parent.blobs.length-1) > i) {
-                    buf.push(parent.blobs.pop());
+        const parentBlobs = parent.blobs as Blob[];
+        for (let i=parentBlobs.length-1;i>-1;i--) {
+            Queue.purgeEmptyBlobs(parentBlobs[i]);
+            const child = parentBlobs[i];
+            if (!child || !child.blobs || !(child.blobs as Blob[]).length) {
+                const buf: Blob[] = [];
+                while ((parentBlobs.length-1) > i) {
+                    buf.push(parentBlobs.pop()!);
                 }
-                parent.blobs.pop();
+                parentBlobs.pop();
                 while (buf.length) {
-                    parent.blobs.push(buf.pop());
+                    parentBlobs.push(buf.pop()!);
                 }
             }
         }
     }
 
-    static adjust = function(this: any, punctInQuote: any) {
-        const NO_SWAP_IN: any = {
+    static adjust = function(this: any, punctInQuote?: boolean) {
+        const NO_SWAP_IN: Record<string, boolean> = {
             ";": true,
             ":": true
         };
 
-        const NO_SWAP_OUT: any = {
+        const NO_SWAP_OUT: Record<string, boolean> = {
             ".": true,
             "!": true,
             "?": true
         };
 
-        const LtoR_MAP: any = {
+        const LtoR_MAP: Record<string, Record<string, string>> = {
             "!": {
                 ".": "!",
                 "?": "!?",
@@ -647,10 +648,10 @@ export class Queue {
             }
         };
 
-        const SWAP_IN: any = {};
-        const SWAP_OUT: any = {};
-        const PUNCT: any = {};
-        const PUNCT_OR_SPACE: any = {};
+        const SWAP_IN: Record<string, boolean> = {};
+        const SWAP_OUT: Record<string, boolean> = {};
+        const PUNCT: Record<string, boolean> = {};
+        const PUNCT_OR_SPACE: Record<string, boolean> = {};
         for (let key in LtoR_MAP) {
             PUNCT[key] = true;
             PUNCT_OR_SPACE[key] = true;
@@ -662,9 +663,9 @@ export class Queue {
             }
         }
         PUNCT_OR_SPACE[" "] = true;
-        PUNCT_OR_SPACE[" "] = true;
+        PUNCT_OR_SPACE["\u00a0"] = true;
 
-        const RtoL_MAP: any = {};
+        const RtoL_MAP: Record<string, Record<string, string>> = {};
         for (let key in LtoR_MAP) {
             for (let subkey in LtoR_MAP[key]) {
                 if (!RtoL_MAP[subkey]) {
@@ -674,23 +675,24 @@ export class Queue {
             }
         }
 
-        function blobIsNumber(blob: any) {
-            return ("number" === typeof blob.num || (blob.blobs && blob.blobs.length === 1 && "number" === typeof blob.blobs[0].num));
+        function blobIsNumber(blob: Blob): boolean {
+            return ("number" === typeof blob.num || ((blob.blobs as Blob[]).length === 1 && "number" === typeof (blob.blobs as Blob[])[0].num));
         }
 
-        function blobEndsInNumber(blob: any) {
+        function blobEndsInNumber(blob: Blob): boolean | undefined {
             if ("number" === typeof blob.num) {
                 return true;
             }
             if (!blob.blobs || "object" !== typeof blob.blobs) {
                 return false;
             }
-            if (blobEndsInNumber(blob.blobs[blob.blobs.length-1])) {
+            const blobs = blob.blobs as Blob[];
+            if (blobEndsInNumber(blobs[blobs.length-1])) {
                 return true;
             }
         }
         
-        function blobHasDecorations(blob: any, includeQuotes?: any) {
+        function blobHasDecorations(blob: Blob, includeQuotes?: boolean): boolean {
             let ret = false;
             const decorlist = ['@font-style','@font-variant','@font-weight','@text-decoration','@vertical-align'];
             if (includeQuotes) {
@@ -707,7 +709,7 @@ export class Queue {
             return ret;
         }
         
-        function blobHasDescendantQuotes(blob: any) {
+        function blobHasDescendantQuotes(blob: Blob): boolean {
             if (blob.decorations) {
                 for (let i=0,ilen=blob.decorations.length;i<ilen;i++) {
                     if (blob.decorations[i][0] === '@quotes' && blob.decorations[i][1] !== "false") {
@@ -718,13 +720,14 @@ export class Queue {
             if ("object" !== typeof blob.blobs) {
                 return false;
             }
-            return blobHasDescendantQuotes(blob.blobs[blob.blobs.length-1]);
+            const blobs = blob.blobs as Blob[];
+            return blobHasDescendantQuotes(blobs[blobs.length-1]);
         }
         
-        function blobHasDescendantMergingPunctuation(parentChar: any, blob: any) {
+        function blobHasDescendantMergingPunctuation(parentChar: string, blob: Blob): boolean {
             let childChar = blob.strings.suffix.slice(-1);
             if (!childChar && "string" === typeof blob.blobs) {
-                childChar = blob.blobs.slice(-1);
+                childChar = (blob.blobs as string).slice(-1);
             }
             const mergedChars = RtoL_MAP[parentChar][childChar];
             if (mergedChars && mergedChars.length === 1) {
@@ -733,13 +736,14 @@ export class Queue {
             if ("object" !== typeof blob.blobs) {
                 return false;
             }
-            if (blobHasDescendantMergingPunctuation(parentChar,blob.blobs[blob.blobs.length-1])) {
+            const blobs = blob.blobs as Blob[];
+            if (blobHasDescendantMergingPunctuation(parentChar, blobs[blobs.length-1])) {
                 return true;
             }
             return false;
         }
         
-        function matchLastChar(blob: any, chr: any) {
+        function matchLastChar(blob: Blob, chr: string): boolean {
             if (!PUNCT[chr]) {
                 return false;
             }
@@ -767,7 +771,7 @@ export class Queue {
             }
         }
         
-        function mergeChars(First: any, first: any, Second: any, second: any, merge_right?: any) {
+        function mergeChars(First: Blob, first: string, Second: Blob, second: string, merge_right?: boolean) {
             const FirstStrings = "blobs" === first ? First : First.strings;
             const SecondStrings = "blobs" === second ? Second: Second.strings;
             const firstChar = FirstStrings[first].slice(-1);
@@ -826,7 +830,7 @@ export class Queue {
             }
         }
 
-        function upward(parent: any) {
+        function upward(parent: Blob) {
             if (parent.blobs && "string" == typeof parent.blobs) {
                 if (PUNCT[parent.strings.suffix.slice(0,1)]
                     && parent.strings.suffix.slice(0,1) === parent.blobs.slice(-1)) {
@@ -872,8 +876,8 @@ export class Queue {
             }
         }
 
-        function leftward(parent: any) {
-            if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+        function leftward(parent: Blob) {
+            if ("object" !== typeof parent || "object" !== typeof parent.blobs || !(parent.blobs as Blob[]).length) {
                 return;
             }
 
@@ -900,7 +904,7 @@ export class Queue {
             }
         }
 
-        function downward(parent: any) {
+        function downward(parent: Blob) {
             if (parent.blobs && "string" == typeof parent.blobs) {
                 if (PUNCT[parent.strings.suffix.slice(0,1)]
                     && parent.strings.suffix.slice(0,1) === parent.blobs.slice(-1)) {
@@ -1006,7 +1010,7 @@ export class Queue {
             }
         }
 
-        function swapToTheLeft(child: any) {
+        function swapToTheLeft(child: Blob) {
             let childChar = child.strings.suffix.slice(0,1);
             if ("string" === typeof child.blobs) {
                 while (SWAP_IN[childChar]) {
@@ -1020,7 +1024,7 @@ export class Queue {
                 }
             }
         }
-        function swapToTheRight(child: any) {
+        function swapToTheRight(child: Blob) {
             if ("string" === typeof child.blobs) {
                 let childChar = child.blobs.slice(-1);
                 while (SWAP_OUT[childChar]) {
@@ -1036,8 +1040,8 @@ export class Queue {
             }
         }
 
-        function fix(parent: any) {
-            if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+        function fix(parent: Blob) {
+            if ("object" !== typeof parent || "object" !== typeof parent.blobs || !(parent.blobs as Blob[]).length) {
                 return;
             }
             let lastChar;

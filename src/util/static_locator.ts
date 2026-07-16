@@ -1,6 +1,6 @@
 import { STATUTE_SUBDIV_PLAIN_REGEX, STATUTE_SUBDIV_PLAIN_REGEX_FRONT } from '../constants/regex';
 import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
-export function remapSectionVariable(this: any, inputList: any): void {
+export function remapSectionVariable(this: CslState, inputList: [CslItem, Record<string, any>][]): void {
     for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
         const Item = inputList[i][0];
         const item = inputList[i][1];
@@ -54,7 +54,7 @@ export function remapSectionVariable(this: any, inputList: any): void {
 };
 
 
-export function setNumberLabels(this: any, Item: CslItem): void {
+export function setNumberLabels(this: CslState, Item: CslItem): void {
     if (Item.number
         && ["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1
         && this.opt.development_extensions.consolidate_legal_items

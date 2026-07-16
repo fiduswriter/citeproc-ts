@@ -239,12 +239,12 @@ export const ParticleList = (function () {
 }());
 
 export const parseParticles = (function () {
-    function splitParticles(nameValue: any, firstNameFlag?: any, caseOverride?: any): any {
+    function splitParticles(nameValue: string, firstNameFlag?: boolean, caseOverride?: boolean): [boolean | undefined, string, string[]] {
         let origNameValue = nameValue;
         nameValue = caseOverride ? nameValue.toLowerCase() : nameValue;
-        const particleList: any[] = [];
-        let rex: any;
-        let hasParticle: any;
+        const particleList: string[] = [];
+        let rex: RegExp;
+        let hasParticle: boolean | undefined | string;
         if (firstNameFlag) {
             nameValue = nameValue.split("").reverse().join("");
             rex = PARTICLE_GIVEN_REGEXP;
@@ -289,7 +289,7 @@ export const parseParticles = (function () {
         }
         return [hasParticle, nameValue, particleList];
     }
-    function trimLast(str: any): any {
+    function trimLast(str: string): string {
         const lastChar = str.slice(-1);
         str = str.trim();
         if (lastChar === " " && ["\'", "\u2019"].indexOf(str.slice(-1)) > -1) {
@@ -297,7 +297,7 @@ export const parseParticles = (function () {
         }
         return str;
     }
-    function parseSuffix(nameObj: any): void {
+    function parseSuffix(nameObj: Record<string, any>): void {
         if (!nameObj.suffix && nameObj.given) {
             let m = nameObj.given.match(/(\s*,!*\s*)/);
             if (m) {
@@ -317,7 +317,7 @@ export const parseParticles = (function () {
             }
         }
     }
-    return function (nameObj: any): void {
+    return function (nameObj: Record<string, any>): void {
         const res = splitParticles(nameObj.family);
         const lastNameValue = res[1];
         const lastParticleList = res[2];

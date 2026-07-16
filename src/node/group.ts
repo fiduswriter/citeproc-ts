@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 
 import { ASCENDING, DESCENDING, END, SINGLETON, START } from '../constants/core';
 export const Node_group = {
-    build: function (state, target, realGroup) {
+    build: function (this: CslNode, state: CslState, target: any[], realGroup: boolean): void {
         let func, execs;
         this.realGroup = realGroup;
         if (this.tokentype === START) {
@@ -15,7 +15,7 @@ export const Node_group = {
             }
 
             // newoutput
-            func = function (state) {
+            func = function (this: CslNode, state: CslState): void {
                 state.output.startTag("group", this);
                 
                 if (this.strings.label_form_override) {
@@ -36,7 +36,7 @@ export const Node_group = {
                         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.prefix, null, this);
                     }
                     
-                    let condition: any = false;
+                    let condition: false | { test: any; not: boolean } = false;
                     let force_suppress = false;
 
                     // XXX Can we do something better for length here?
@@ -69,7 +69,7 @@ export const Node_group = {
                             not: false
                         };
                     }
-                    const context: any = {
+                    const context: Record<string, any> = {
                         old_term_predecessor: state.tmp.term_predecessor,
                         term_intended: false,
                         variable_attempt: false,
@@ -166,7 +166,7 @@ export const Node_group = {
                     // Set the handling function only if name-delimiter
                     // is set on the parent cs:citation or cs:bibliography
                     // node.
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         if (Item.publisher && Item["publisher-place"]) {
                             const publisher_lst = Item.publisher.split(/;\s*/);
                             const publisher_place_lst = Item["publisher-place"].split(/;\s*/);
@@ -212,8 +212,8 @@ export const Node_group = {
                 
                 const if_start = new CSL.Token("if", START);
 
-                func = (function (macroName) {
-                    return function (Item, item) {
+                func = (function (macroName: string): (Item: CslItem, item: any) => boolean {
+                    return function (Item: CslItem, item: any): boolean {
                         return CSL.INIT_JURISDICTION_MACROS(state, Item, item, macroName);
                     }
                 }(this.juris));
@@ -223,9 +223,9 @@ export const Node_group = {
                 if_start.test = state.fun.match.any(if_start, state, if_start.tests);
                 target.push(if_start);
                 const text_node = new CSL.Token("text", SINGLETON);
-                func = function (state, Item, item) {
+                func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                     // This will run the juris- token list.
-                    let itemItem = Item;
+                    let itemItem: CslItem | any = Item;
                     if (item && item["best-jurisdiction"] && this.juris === "juris-locator") {
                         itemItem = item;
                     }
@@ -256,7 +256,7 @@ export const Node_group = {
             // hence the global flag on state.build.
             if (state.build["publisher-special"]) {
                 state.build["publisher-special"] = false;
-                func = function (state) {
+                func = function (state: CslState): void {
                     if (state.publisherOutput) {
                         state.publisherOutput.render();
                         state.publisherOutput = false;
@@ -266,7 +266,7 @@ export const Node_group = {
             }
             
             // quashnonfields
-            func = function (state, Item, item) {
+            func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                 if (!state.tmp.group_context.tip.condition) {
                     if (state.output.current.tip.strings.suffix) {
                         state.tmp.just_did_number = false;

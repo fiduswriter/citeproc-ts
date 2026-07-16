@@ -1,6 +1,6 @@
 import { CSL } from '../csl';
 
-export function NameReg(state) {
+export function NameReg(state: CslState) {
     let pkey, ikey, skey;
     this.state = state;
     this.namereg = {};

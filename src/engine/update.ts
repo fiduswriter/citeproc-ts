@@ -1,7 +1,7 @@
 import { CSL } from '../csl';
 import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
 import { debug } from '../logger';
-export function rebuildProcessorState(this: any, citations: any, mode: any, uncitedItemIDs: any): any {
+export function rebuildProcessorState(this: any, citations: any[], mode: string, uncitedItemIDs?: string[] | Record<string, boolean>): any {
     // Rebuilds the processor from scratch, based on a list of citation
     // objects. In a dynamic application, once the internal state of processor
     // is established, citations should edited with individual invocations
@@ -56,7 +56,7 @@ export function rebuildProcessorState(this: any, citations: any, mode: any, unci
 };
 
 
-export function restoreProcessorState(this: any, citations: any): any {
+export function restoreProcessorState(this: any, citations?: any[]): any {
     let i, ilen, j, jlen, item, Item, newitem, citationList, itemList, sortedItems;
     
     // This function is deprecated.
@@ -146,7 +146,7 @@ export function restoreProcessorState(this: any, citations: any): any {
 };
 
 
-export function updateItems(this: any, idList: any, nosort: any, rerun_ambigs: any, implicitUpdate: any): any {
+export function updateItems(this: any, idList: string[], nosort?: boolean, rerun_ambigs?: boolean, implicitUpdate?: boolean): any {
     const debug = false;
     const oldArea = this.tmp.area;
     const oldRoot = this.tmp.root;
@@ -205,7 +205,7 @@ export function updateItems(this: any, idList: any, nosort: any, rerun_ambigs: a
     return this.registry.getSortedIds();
 };
 
-export function updateUncitedItems(this: any, idList: any, nosort: any): any {
+export function updateUncitedItems(this: any, idList?: string[] | Record<string, boolean>, nosort?: boolean): any {
     let idHash;
     const oldArea = this.tmp.area;
     const oldRoot = this.tmp.root;

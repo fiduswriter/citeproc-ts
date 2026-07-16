@@ -1,10 +1,11 @@
 import { CSL } from '../csl';
+import { Blob } from '../obj/blob';
 
 import { END, LITERAL, SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 import { debug } from '../logger';
 export const Node_names = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func;
         // debug = print;
 
@@ -22,7 +23,7 @@ export const Node_names = {
                     name_labels[variable] = name_labels[Object.keys(name_labels)[0]];
                 }
             }
-            func = function (state) {
+            func = function (this: CslNode, state: CslState): void {
                 state.nameOutput.reinit(this, this.variables_real[0]);
             };
             this.execs.push(func);
@@ -37,7 +38,7 @@ export const Node_names = {
             state.build.name_label.push({});
             // init can substitute
             // init names
-            func = function (state) {
+            func = function (this: CslNode, state: CslState): void {
                 state.tmp.can_substitute.push(true);
                 state.tmp.name_node = {};
                 state.tmp.name_node.children = [];
@@ -69,7 +70,7 @@ export const Node_names = {
             // moment.
 
             // "and" and "ellipsis" are set in node_name.js
-            func = function (state) {
+            func = function (this: CslNode, state: CslState): void {
                 // Et-al (strings only)
                 // Blob production has to happen inside nameOutput()
                 // since proper escaping requires access to the output
@@ -125,8 +126,10 @@ export const Node_names = {
                     with_default_prefix = " ";
                     with_suffix = " ";
                 }
-                const thewith: any = {};
-                thewith.single = new CSL.Blob(mywith);
+                const thewith: { single: Blob; multiple: Blob } = {
+                    single: new CSL.Blob(mywith),
+                    multiple: new CSL.Blob(mywith)
+                };
                 thewith.single.strings.suffix = with_suffix;
                 thewith.multiple = new CSL.Blob(mywith);
                 thewith.multiple.strings.suffix = with_suffix;
@@ -163,7 +166,7 @@ export const Node_names = {
             this.execs.push(func);
 
             // unsets
-            func = function (state) {
+            func = function (state: CslState): void {
                 if (!state.tmp.can_substitute.pop()) {
                     state.tmp.can_substitute.replace(false, LITERAL);
                 }

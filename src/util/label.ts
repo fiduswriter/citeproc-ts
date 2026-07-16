@@ -15,7 +15,7 @@ export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, ite
             myterm = "page";
         }
     } else {
-        myterm = node.strings.term;
+        myterm = node.strings.term as string;
     }
 
     let plural: any = node.strings.plural;
@@ -35,8 +35,8 @@ export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, ite
                 state.tmp.shadow_numbers[node.strings.term].labelDecorations = node.decorations.slice();
             }
 
-            if (["locator", "number", "page"].indexOf(node.strings.term) > -1 && state.tmp.shadow_numbers[node.strings.term].label) {
-                myterm = state.tmp.shadow_numbers[node.strings.term].label;
+            if (["locator", "number", "page"].indexOf(node.strings.term as string) > -1 && state.tmp.shadow_numbers[node.strings.term as string].label) {
+                myterm = state.tmp.shadow_numbers[node.strings.term as string].label;
             }
             if (node.decorations && state.opt.development_extensions.csl_reverse_lookup_support) {
                 node.decorations.reverse();
@@ -45,11 +45,11 @@ export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, ite
             }
         }
     }
-    return castLabel(state, node, myterm, plural, TOLERANT);
+    return castLabel(state, node, myterm as string, plural as number, TOLERANT);
 };
 
-export function castLabel(state: CslState, node: CslNode, term: any, plural: any, mode: any): string {
-    let label_form = node.strings.form;
+export function castLabel(state: CslState, node: CslNode, term: string, plural: number | boolean, mode: number): string {
+    let label_form = node.strings.form as string | undefined;
     let label_capitalize_if_first = node.strings.capitalize_if_first;
     if (state.tmp.group_context.tip.label_form) {
         if (label_form === "static") {
@@ -62,7 +62,7 @@ export function castLabel(state: CslState, node: CslNode, term: any, plural: any
     if (state.tmp.group_context.tip.label_capitalize_if_first) {
         label_capitalize_if_first = state.tmp.group_context.tip.label_capitalize_if_first;
     }
-    let ret = state.getTerm(term, label_form, plural, false, mode, node.default_locale);
+    let ret = state.getTerm(term, label_form as string, plural, false, mode, node.default_locale);
     if (label_capitalize_if_first) {
         ret = CSL.Output.Formatters["capitalize-first"](state, ret);
     }

@@ -87,7 +87,7 @@ export const DateParser = function () {
         }
     };
 
-    this.addDateParserMonths = function(lst) {
+    this.addDateParserMonths = function(lst: string | string[]) {
         if ("string" === typeof lst) {
             lst = lst.split(/\s+/);
         }
@@ -131,9 +131,9 @@ export const DateParser = function () {
                 for (let jKey in extendedSets) {
                     for (let kKey in extendedSets[jKey]) {
                         abbrevLength = extendedSets[jKey][kKey];
-                        jKey = parseInt(jKey, 10) as any;
-                        kKey = parseInt(kKey, 10) as any;
-                        this.monthAbbrevs[jKey][kKey] = this.monthSets[jKey][kKey].slice(0, abbrevLength);
+                        const jKeyNum = parseInt(jKey, 10);
+                        const kKeyNum = parseInt(kKey, 10);
+                        this.monthAbbrevs[jKeyNum][kKeyNum] = this.monthSets[jKeyNum][kKeyNum].slice(0, abbrevLength);
                     }
                 }
             }
@@ -161,7 +161,7 @@ export const DateParser = function () {
      * Conversion functions
      */
 
-    this.convertDateObjectToArray = function (thedate) {
+    this.convertDateObjectToArray = function (thedate: Record<string, any>) {
         thedate["date-parts"] = [];
         thedate["date-parts"].push([]);
         let slicelen = 0;
@@ -190,7 +190,7 @@ export const DateParser = function () {
         return thedate;
     };
 
-    this.convertDateObjectToString = function(thedate) {
+    this.convertDateObjectToString = function(thedate: Record<string, any>) {
         let ret = [];
         for (let i = 0, ilen = 3; i < ilen; i += 1) {
             if (thedate[DATE_PARTS_ALL[i]]) {
@@ -202,11 +202,11 @@ export const DateParser = function () {
         return ret.join("-");
     };
 
-    this._parseNumericDate = function (ret, delim, suff, txt) {
+    this._parseNumericDate = function (ret: Record<string, any>, delim: string, suff: string, txt: string) {
         if (!suff) {
             suff = "";
         }
-        let lst = txt.split(delim);
+        let lst: any[] = txt.split(delim);
         
         for (let i=0, ilen=lst.length; i<ilen; i++) {
             if (lst[i].length === 4) {
@@ -250,7 +250,7 @@ export const DateParser = function () {
         }
     };
 
-    this.parseDateToObject = function (txt) {
+    this.parseDateToObject = function (txt: string) {
         const orig = txt;
         let slashPos = -1;
         let dashPos = -1;
@@ -313,9 +313,9 @@ export const DateParser = function () {
         }
         txt = txt.replace(/([A-Za-z])\./g, "$1");
 
-        let number: any = "";
+        let number: string = "";
         let note = "";
-        let thedate: any = {};
+        let thedate: Record<string, any> = {};
         let rangeDelim;
         let dateDelim;
         if (txt.slice(0, 1) === "\"" && txt.slice(-1) === "\"") {
@@ -389,7 +389,7 @@ export const DateParser = function () {
                     number = element;
                 }
                 if (element.toLocaleLowerCase().match(/^bc/) && number) {
-                    thedate[("year" + suff)] = "" + (number * -1);
+                    thedate[("year" + suff)] = "" + (parseInt(number, 10) * -1);
                     number = "";
                     continue;
                 }
@@ -440,15 +440,15 @@ export const DateParser = function () {
         return thedate;
     };
 
-    this.parseDateToArray = function(txt) {
+    this.parseDateToArray = function(txt: string) {
         return this.convertDateObjectToArray(this.parseDateToObject(txt));            
     };
 
-    this.parseDateToString = function(txt) {
+    this.parseDateToString = function(txt: string) {
         return this.convertDateObjectToString(this.parseDateToObject(txt));
     };
     
-    this.parse = function(txt) {
+    this.parse = function(txt: string) {
         return this.parseDateToObject(txt);
     };
     

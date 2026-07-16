@@ -5,6 +5,50 @@ import { ASCENDING, LITERAL, NONE, SUFFIX_CHARS } from '../constants/core';
 export class Opt {
     [key: string]: any;
 
+    parallel!: { enable: boolean; parallel_delimiter?: string };
+    has_disambiguate!: boolean;
+    mode!: string;
+    dates!: any;
+    jurisdictions_seen!: Record<string, boolean>;
+    suppressedJurisdictions!: Record<string, boolean>;
+    inheritedAttributes!: any;
+    "locale-sort"!: string[];
+    "locale-translit"!: string[];
+    "locale-translat"!: string[];
+    citeAffixes!: any;
+    "default-locale"!: string[];
+    update_mode!: number;
+    bib_mode!: number;
+    sort_citations!: boolean;
+    "et-al-min"!: number;
+    "et-al-use-first"!: number;
+    "et-al-use-last"!: boolean;
+    "et-al-subsequent-min"!: number | boolean;
+    "et-al-subsequent-use-first"!: number | boolean;
+    "demote-non-dropping-particle"!: string;
+    "parse-names"!: boolean;
+    "katakana-display"!: string;
+    citation_number_slug!: boolean | string;
+    trigraph!: string;
+    nodenames!: string[];
+    gender!: Record<string, string>;
+    "cite-lang-prefs"!: any;
+    has_layout_locale!: boolean;
+    disable_duplicate_year_suppression!: string[];
+    use_context_condition!: boolean;
+    jurisdiction_fallbacks!: Record<string, string>;
+    development_extensions!: Record<string, any>;
+    xclass!: string;
+    styleID!: string;
+    availableAbbrevDomains!: Record<string, string[]>;
+    require_comma_on_symbol!: string;
+    "default-locale-sort"!: string[];
+    lang!: string;
+    citation_number_sort!: boolean;
+    grouped_sort!: boolean;
+    use_parallel_delimiter?: boolean;
+    area?: string;
+
     constructor() {
         this.parallel = {
             enable: false,
@@ -179,6 +223,88 @@ export class Opt {
 export class Tmp {
     [key: string]: any;
 
+    names_max!: any;
+    names_base!: any;
+    givens_base!: any;
+    value!: any[];
+    namepart_decorations!: any;
+    namepart_type!: boolean | string;
+    area!: string;
+    root!: string;
+    extension!: string;
+    can_substitute!: any;
+    element_rendered_ok!: boolean;
+    element_trace!: any;
+    nameset_counter!: number;
+    group_context!: any;
+    term_predecessor!: boolean;
+    in_cite_predecessor!: boolean;
+    jump!: any;
+    decorations!: any;
+    tokenstore_stack!: any;
+    last_suffix_used!: string;
+    last_names_used!: string[];
+    last_years_used!: string[];
+    years_used!: string[];
+    names_used!: string[];
+    taintedItemIDs!: Record<string, boolean>;
+    taintedCitationIDs!: Record<string, boolean>;
+    initialize_with!: any;
+    disambig_request!: boolean | any;
+    "name-as-sort-order"!: boolean | string;
+    suppress_decorations!: boolean;
+    disambig_settings!: any;
+    bib_sort_keys!: string[];
+    prefix!: any;
+    suffix!: any;
+    delimiter!: any;
+    cite_locales!: string[];
+    cite_affixes!: any;
+    strip_periods!: number;
+    shadow_numbers!: Record<string, boolean>;
+    authority_stop_last!: number;
+    loadedItemIDs!: Record<string, boolean>;
+    condition_counter!: number;
+    condition_lang_val_arr!: string[];
+    condition_lang_counter_arr!: number[];
+    just_looking?: boolean;
+    just_did_number?: boolean;
+    first_name_string?: string;
+    name_node?: any;
+    done_vars?: string[];
+    last_primary_names_string?: string;
+    have_collapsed?: boolean;
+    use_cite_group_delimiter?: boolean;
+    sort_key_flag?: boolean;
+    label_blob?: any;
+    etal_node?: any;
+    etal_term?: any;
+    rendered_name?: any[];
+    offset_characters?: number;
+    count_offset_characters?: boolean | number;
+    term_predecessor_name?: boolean;
+    name_delimiter?: string;
+    probably_rendered_something?: boolean;
+    authorstring_request?: boolean;
+    lang_array?: string[];
+    multi_layout?: boolean;
+    "publisher-list"?: boolean;
+    "publisher-token"?: any;
+    "publisher-place-token"?: any;
+    "doing-macro-with-date"?: boolean;
+    citation_pos?: number;
+    citation_note_index?: number;
+    citation_id?: string;
+    citation_errors?: string[];
+    splice_delimiter?: string;
+    can_block_substitute?: boolean;
+    subsequent_author_substitute_ok?: boolean;
+    common_term_match_fail?: boolean;
+    disambig_override?: boolean;
+    abort_output?: boolean;
+    abbrev_trimmer?: any;
+    strip_periods_tag?: string;
+
     constructor() {
         this.names_max = new CSL.Stack();
         this.names_base = new CSL.Stack();
@@ -272,6 +398,15 @@ export class Tmp {
 export class Fun {
     [key: string]: any;
 
+    match!: any;
+    suffixator!: any;
+    romanizer!: any;
+    ordinalizer!: any;
+    long_ordinalizer!: any;
+    dateparser!: any;
+    flipflopper!: any;
+    decorate!: any;
+
     constructor(state: any) {
         this.match = new CSL.Util.Match();
 
@@ -287,6 +422,30 @@ export class Fun {
 
 export class Build {
     [key: string]: any;
+
+    "alternate-term"!: boolean;
+    in_bibliography!: boolean;
+    in_style!: boolean;
+    skip!: boolean;
+    postponed_macro!: boolean | string;
+    layout_flag!: boolean;
+    name!: boolean | any;
+    names_variables!: string[][];
+    name_label!: Record<string, any>[];
+    form!: boolean | string;
+    term!: boolean | string;
+    macro!: Record<string, any>;
+    macro_stack!: string[];
+    text!: boolean;
+    lang!: boolean | string;
+    area!: string;
+    root!: string;
+    extension!: string;
+    substitute_level!: any;
+    names_level!: number;
+    render_nesting_level!: number;
+    render_seen!: boolean;
+    bibliography_key_pos!: number;
 
     constructor() {
         this["alternate-term"] = false;

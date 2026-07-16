@@ -1,14 +1,23 @@
 /*global CSL: true */
 
+interface AmbigNameConfig {
+    suffix?: boolean;
+    "long-short"?: boolean;
+    "given-initials"?: string;
+    "given-long"?: boolean;
+    "initials-first"?: boolean;
+    "undifferentiated"?: number;
+}
+
 /**
  * Ambiguous Cite Configuration Object
  */
 export class AmbigConfig {
-    public maxvals: any[];
+    public maxvals: number[];
     public minval: number;
-    public names: any[];
-    public givens: any[];
-    public year_suffix: boolean;
+    public names: AmbigNameConfig[];
+    public givens: AmbigNameConfig[][];
+    public year_suffix: boolean | string;
     public disambiguate: number;
 
     constructor() {

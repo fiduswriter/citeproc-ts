@@ -7,7 +7,7 @@ export function dateMacroAsSortKey(this: any, state: CslState, Item: CslItem): v
 };
 
 
-export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro?: any): void {
+export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro?: boolean): void {
     let dp: any, elem: any, value: any, e: any, yr: any, prefix: any, i: any, ilen: any;
     const variable = this.variables[0];
     let macroFlag = "empty";
@@ -60,7 +60,7 @@ export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro
     }
 };
 
-export function dateParseArray(this: any, date_obj: any): any {
+export function dateParseArray(this: any, date_obj: Record<string, any>): Record<string, any> {
     let ret: any, field: any, dp: any, exts: any;
     ret = {};
     for (let field in date_obj) {

@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { Token } from '../obj/token';
 
 import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '../constants/core';
 /*
@@ -59,7 +60,7 @@ export class Transform {
     quashCheck: (jurisdiction: string, value: string) => string;
     getOutputFunction: (variables: string[], family_var?: string, abbreviation_fallback?: any, alternative_varname?: string) => Function;
 
-    constructor(state: any) {
+    constructor(state: CslState) {
         this.abbrevs = {};
         this.abbrevs["default"] = new state.sys.AbbreviationSegments();
 
@@ -81,7 +82,7 @@ export class Transform {
             return value;
         }
         
-        function abbreviate(state: any, tok: any, Item: any, altvar: any, basevalue: string, family_var: string, use_field: boolean): string {
+        function abbreviate(state: CslState, tok: Token, Item: CslItem, altvar: string | boolean, basevalue: string, family_var: string, use_field: boolean): string {
             let value = "";
             const myabbrev_family = FIELD_CATEGORY_REMAP[family_var];
             let preferredJurisdiction;
@@ -146,7 +147,7 @@ export class Transform {
             return value;
         }
 
-        function getFieldLocale(Item: any, field: string): string {
+        function getFieldLocale(Item: CslItem, field: string): string {
             let ret = state.opt["default-locale"][0].slice(0, 2);
             let localeRex;
             if (state.opt.development_extensions.strict_text_case_locales) {
@@ -172,7 +173,7 @@ export class Transform {
             return ret;
         }
 
-        function getTextSubField(this: any, Item: any, field: string, locale_type: string, use_default: boolean, stopOrig: any, family_var?: string): any {
+        function getTextSubField(this: any, Item: CslItem, field: string, locale_type: string, use_default: boolean, stopOrig: any, family_var?: string): any {
             let opt: any, o: any, ret: any, opts: any;
             const usedOrig = stopOrig;
             let usingOrig = false;
@@ -325,7 +326,7 @@ export class Transform {
         }
         this.loadAbbreviation = loadAbbreviation;
 
-        function publisherCheck(tok: any, Item: any, primary: any, family_var: string): boolean {
+        function publisherCheck(tok: Token, Item: CslItem, primary: any, family_var: string): boolean {
             const varname = tok.variables[0];
             if (state.publisherOutput && primary) {
                 if (["publisher", "publisher-place"].indexOf(varname) === -1) {
@@ -347,7 +348,7 @@ export class Transform {
             return false;
         }
 
-        function citeFormCheck(Item: any, value: string): void {
+        function citeFormCheck(Item: CslItem, value: string): void {
             let m = value.match(/^#([0-9]+).*>>>/);
             if (m && m[1]) {
                 Item["cite-form"] = m[1];
@@ -397,7 +398,7 @@ export class Transform {
                 localesets = state.opt['cite-lang-prefs'][langPrefs];
             }
 
-            return function (this: any, state: any, Item: any, item: any): any {
+            return function (this: any, state: CslState, Item: CslItem, item: any): any {
                 let primary: any, primary_locale: any, secondary: any, secondary_locale: any, tertiary: any, tertiary_locale: any;
                 if (!variables[0] || (!Item[variables[0]] && !Item[alternative_varname])) {
                     return null;

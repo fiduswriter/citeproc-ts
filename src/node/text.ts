@@ -4,7 +4,7 @@ import { Suffixator } from '../util/number';
 import { CITE_FIELDS, DESCENDING, END, LITERAL, MULTI_FIELDS, NUMERIC, START, SUFFIX_CHARS, TOLERANT, TRIGRAPH } from '../constants/core';
 import { debug } from '../logger';
 export const Node_text = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
         if (this.postponed_macro) {
             const group_start = CSL.Util.cloneToken(this);
@@ -67,7 +67,7 @@ export const Node_text = {
                     }
                     this.successor_prefix = state[state.build.area].opt.layout_delimiter;
                     this.splice_prefix = state[state.build.area].opt.layout_delimiter;
-                    func = function (state, Item, item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
 
                         id = "" + Item.id;
                         if (!state.tmp.just_looking) {
@@ -119,7 +119,7 @@ export const Node_text = {
                     if (state[state.tmp.area].opt["year-suffix-delimiter"]) {
                         this.successor_prefix = state[state.build.area].opt["year-suffix-delimiter"];
                     }
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         if (state.registry.registry[Item.id] && state.registry.registry[Item.id].disambig.year_suffix !== false && !state.tmp.just_looking) {
                             //state.output.append(state.registry.registry[Item.id].disambig[2],this);
                             num = parseInt(state.registry.registry[Item.id].disambig.year_suffix, 10);
@@ -157,7 +157,7 @@ export const Node_text = {
                         state.opt.bib_mode = TRIGRAPH;
                     }
                     state.opt.has_year_suffix = true;
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         label = Item["citation-label"];
                         if (!label) {
                             label = state.getCitationLabel(Item);
@@ -178,9 +178,9 @@ export const Node_text = {
                 if (this.strings.term) {
                     
                     // printterm
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         const gender = state.opt.gender[Item.type];
-                        let term = this.strings.term;
+                        let term: string = this.strings.term as string;
                         term = state.getTerm(term, form, plural, gender, TOLERANT, this.default_locale);
                         let myterm;
                         // if the term is not an empty string, say
@@ -227,7 +227,7 @@ export const Node_text = {
                     state.build.form = false;
                     state.build.plural = false;
                 } else if (this.variables_real.length) {
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
 
                         // If some text variable is rendered, we're not collapsing.
                         if (this.variables_real[0] !== "locator") {
@@ -260,9 +260,9 @@ export const Node_text = {
                         // multi-fields
                         // Initialize transform factory according to whether
                         // abbreviation is desired.
-                        let abbrevfam = this.variables[0];
+                        let abbrevfam: string | undefined | false = this.variables[0];
                         let abbrfall = false;
-                        let altvar: any = false;
+                        let altvar: string | false = false;
                         let transfall = false;
                         if (form === "short") {
                             if (this.variables_real[0].slice(-6) !== "-short") {
@@ -285,7 +285,7 @@ export const Node_text = {
                         // ordinary fields
                         if (CITE_FIELDS.indexOf(this.variables_real[0]) > -1) {
                             // per-cite fields are read from item, rather than Item
-                            func = function (state, Item, item) {
+                            func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                                 if (item && item[this.variables[0]]) {
 
                                     // Code copied to page variable as well; both
@@ -310,13 +310,13 @@ export const Node_text = {
                         } else  if (["page", "page-first", "chapter-number", "collection-number", "edition", "issue", "number", "number-of-pages", "number-of-volumes", "volume"].indexOf(this.variables_real[0]) > -1) {
                             // page gets mangled with the correct collapsing
                             // algorithm
-                            func = function(state, Item) {
+                            func = function(this: CslNode, state: CslState, Item: CslItem): void {
                                 CSL.checkNonEnglishTitleCase.call(this, state, Item);
                                 state.processNumber(this, Item, this.variables[0], Item.type);
                                 CSL.Util.outputNumericField(state, this.variables[0], Item.id);
                             };
                         } else if (["URL", "DOI"].indexOf(this.variables_real[0]) > -1) {
-                            func = function (state, Item) {
+                            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                                 let value;
                                 if (this.variables[0]) {
                                     value = state.getVariable(Item, this.variables[0], form);
@@ -328,7 +328,7 @@ export const Node_text = {
                                             }
                                         }
                                         if (this.variables[0] === "DOI") {
-                                            if (!value.match(/^https?:\/\//) && this.strings.prefix && this.strings.prefix.match(/^.*https:\/\/doi\.org\/$/)) {
+                                            if (!value.match(/^https?:\/\//) && this.strings.prefix && (this.strings.prefix as string).match(/^.*https:\/\/doi\.org\/$/)) {
                                                 value = CSL.Util.encodeDoiForUrl(value);
                                             }
                                         }
@@ -345,7 +345,7 @@ export const Node_text = {
                                                 if (this.variables_real[0] === "DOI") {
                                                     // strip a proper DOI prefix
                                                     let prefix;
-                                                    if (this.strings.prefix && this.strings.prefix.match(/^.*https:\/\/doi\.org\/$/)) {
+                                                    if (this.strings.prefix && (this.strings.prefix as string).match(/^.*https:\/\/doi\.org\/$/)) {
                                                         if (value.match(/^https?:\/\/doi\.org\//)) {
                                                             value = value.replace(/^https?:\/\/doi\.org\//, "");
                                                             value = decodeURIComponent(value);
@@ -358,7 +358,7 @@ export const Node_text = {
                                                             prefix = "https://doi.org/";
                                                         }
                                                         // set any string prefix on the clone
-                                                        clonetoken.strings.prefix = this.strings.prefix.slice(0, clonetoken.strings.prefix.length-16);
+                                                        clonetoken.strings.prefix = (this.strings.prefix as string).slice(0, (this.strings.prefix as string).length - 16);
                                                     }
                                                     if (!value.match(/^https?:\/\//)) {
                                                         value = CSL.Util.encodeDoiForUrl(value);
@@ -403,7 +403,7 @@ export const Node_text = {
                             // Sections for statutes are special. This is an uncommon
                             // variable, so we save the cost of the runtime check
                             // unless it's being used.
-                            func = function (state, Item) {
+                            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                                 let value;
                                 value = state.getVariable(Item, this.variables[0], form);
                                 if (value) {
@@ -412,7 +412,7 @@ export const Node_text = {
                                 }
                             };
                         } else if (this.variables_real[0] === "hereinafter") {
-                            func = function (state, Item) {
+                            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                                 let value = state.transform.abbrevs["default"]["hereinafter"][Item.id];
                                 if (value) {
                                     state.output.append(value, this);
@@ -421,7 +421,7 @@ export const Node_text = {
                             };
                         } else {
                             // anything left over just gets output in the normal way.
-                            func = function (state, Item) {
+                            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                                 let value;
                                 if (this.variables[0]) {
                                     value = state.getVariable(Item, this.variables[0], form);
@@ -438,7 +438,7 @@ export const Node_text = {
                     this.execs.push(func);
                 } else if (this.strings.value) {
                     // for the text value attribute.
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         state.tmp.group_context.tip.term_intended = true;
                         // true flags that this is a literal-value term
                         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.value, true, this);
@@ -461,7 +461,7 @@ export const Node_text = {
 };
 
 
-export function Node_checkNonEnglishTitleCase(state, Item) {
+export function Node_checkNonEnglishTitleCase(this: CslNode, state: CslState, Item: CslItem): void {
     if (this.strings["text-case"] === "title") {
         let lang = Item.language ? Item.language : state.opt.lang;
         if (lang && lang.slice(0, 2) !== "en") {

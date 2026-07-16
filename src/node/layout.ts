@@ -3,13 +3,13 @@ import { CSL } from '../csl';
 import { END, SINGLETON, START } from '../constants/core';
 import { debug } from '../logger';
 export const Node_layout = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, prefix_token, suffix_token, tok;
 
         function setSuffix() {
             if (state.build.area === "bibliography") {
                 suffix_token = new CSL.Token("text", SINGLETON);
-                func = function(state) {
+                func = function(state: CslState): void {
                     // Suppress suffix on all but the last item in bibliography parallels
                     if (!state.tmp.parallel_and_not_last) {
                         let suffix;
@@ -47,7 +47,7 @@ export const Node_layout = {
                 state.build.current_default_locale = state.opt["default-locale"];
             }
 
-            func = function (state, Item, item) {
+            func = function (state: CslState, Item: CslItem, item: any): void {
                 if (state.opt.development_extensions.apply_citation_wrapper
                     && state.sys.wrapCitationEntry
                     && !state.tmp.just_looking
@@ -74,7 +74,7 @@ export const Node_layout = {
             // rendering of variables
             //
             // initalize done vars
-            func = function (state, Item, item) {
+            func = function (state: CslState, Item: CslItem, item: any): void {
 
                 state.tmp.done_vars = [];
                 if (item && item["author-only"]) {
@@ -101,19 +101,19 @@ export const Node_layout = {
             };
             this.execs.push(func);
             // set opt delimiter
-            func = function (state) {
+            func = function (state: CslState): void {
                 // just in case
                 state.tmp.sort_key_flag = false;
             };
             this.execs.push(func);
             
             // reset nameset counter [all nodes]
-            func = function (state) {
+            func = function (state: CslState): void {
                 state.tmp.nameset_counter = 0;
             };
             this.execs.push(func);
 
-            func = function (state, Item) {
+            func = function (state: CslState, Item: CslItem): void {
                 let tok = new CSL.Token();
                 state.output.openLevel(tok);
             };
@@ -122,7 +122,7 @@ export const Node_layout = {
 
             if (state.build.area === "citation") {
                 prefix_token = new CSL.Token("text", SINGLETON);
-                func = function (state, Item, item) {
+                func = function (state: CslState, Item: CslItem, item: any): void {
                     if (item && item.prefix) {
                         let prefix = CSL.checkPrefixSpaceAppend(state, item.prefix);
                         if (!state.tmp.just_looking) {
@@ -236,7 +236,7 @@ export const Node_layout = {
                 state.build_layout_locale_flag = true;
                 if (state.build.area === "citation") {
                     suffix_token = new CSL.Token("text", SINGLETON);
-                    func = function (state, Item, item) {
+                    func = function (state: CslState, Item: CslItem, item: any): void {
                         if (item && item.suffix) {
                             let suffix = CSL.checkSuffixSpacePrepend(state, item.suffix);
                             if (!state.tmp.just_looking) {
@@ -250,11 +250,11 @@ export const Node_layout = {
                 }
 
                 // Closes wrapper token
-                func = function (state) {
+                func = function (state: CslState): void {
                     state.output.closeLevel();
                 };
                 this.execs.push(func);
-                func = function (state, Item) {
+                func = function (state: CslState, Item: CslItem): void {
                     if (state.opt.development_extensions.apply_citation_wrapper
                         && state.sys.wrapCitationEntry
                         && !state.tmp.just_looking

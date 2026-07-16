@@ -1,15 +1,15 @@
 /*global CSL: true */
 
-export const Util_PageRangeMangler: any = {};
+export const Util_PageRangeMangler: Record<string, Function> = {};
 
-Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string): any {
-    let rangerex: RegExp, pos: any, len: any, stringify: any, listify: any, expand: any, minimize: any, minimize_internal: any, chicago15: any, chicago16: any, lst: any, m: any, b: any, e: any, ret: any, begin: any, end: any, ret_func: any;
+Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string): Function {
+    let rangerex: RegExp, pos: number, len: number, stringify: Function, listify: Function, expand: Function, minimize: Function, minimize_internal: Function, chicago15: Function, chicago16: Function, lst: any, m: RegExpMatchArray | null, b: string[], e: string[], ret: any, begin: number, end: number, ret_func: Function;
 
     const range_delimiter = state.getTerm(rangeType + "-range-delimiter");
 
     rangerex = /([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)\s*(?:\u2013|-)\s*([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)/;
 
-    stringify = function (lst: any): string {
+    stringify = function (lst: any[]): string {
         len = lst.length;
         for (let pos = 1; pos < len; pos += 2) {
             if ("object" === typeof lst[pos]) {
@@ -21,7 +21,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return ret;
     };
 
-    listify = function (str: any): any {
+    listify = function (str: string): any[] {
         let m: any, lst: any, ret: any;
         const hyphens = "\\s+\\-\\s+";
         const this_range_delimiter = range_delimiter === "-" ? "" : range_delimiter;
@@ -43,7 +43,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return ret;
     };
 
-    expand = function (str: any): any {
+    expand = function (str: string): any[] {
         str = "" + str;
         lst = listify(str);
         len = lst.length;
@@ -67,7 +67,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return lst;
     };
 
-    minimize = function (lst: any, minchars: any, isyear: any): string {
+    minimize = function (lst: any[], minchars: number, isyear: boolean): string {
         len = lst.length;
         for (let i = 1, ilen = lst.length; i < ilen; i += 2) {
             if ("object" === typeof lst[i]) {
@@ -80,7 +80,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return stringify(lst);
     };
 
-    minimize_internal = function (begin: any, end: any, minchars: any, isyear: any): string {
+    minimize_internal = function (begin: string, end: string, minchars: number, isyear: boolean): string {
         if (!minchars) {
             minchars = 0;
         }
@@ -106,7 +106,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return ret.join("");
     };
 
-    chicago15 = function (lst: any): string {
+    chicago15 = function (lst: any[]): string {
         len = lst.length;
         for (let pos = 1; pos < len; pos += 2) {
             if ("object" === typeof lst[pos]) {
@@ -133,7 +133,7 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return stringify(lst);
     };
 
-    chicago16 = function (lst: any): string {
+    chicago16 = function (lst: any[]): string {
         len = lst.length;
         for (let pos = 1; pos < len; pos += 2) {
             if ("object" === typeof lst[pos]) {
@@ -158,38 +158,38 @@ Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string
         return stringify(lst);
     };
 
-    const sniff = function (str: any, func: any, minchars?: any, isyear?: any): string {
+    const sniff = function (str: string, func: Function, minchars?: number, isyear?: boolean): string {
         str = "" + str;
         let lst = expand(str);
         let ret = func(lst, minchars, isyear);
         return ret;
     };
     if (!state.opt[rangeType + "-range-format"]) {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, stringify);
         };
     } else if (state.opt[rangeType + "-range-format"] === "expanded") {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, stringify);
         };
     } else if (state.opt[rangeType + "-range-format"] === "minimal") {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, minimize);
         };
     } else if (state.opt[rangeType + "-range-format"] === "minimal-two") {
-        ret_func = function (str: any, isyear: any): string {
+        ret_func = function (str: string, isyear: boolean): string {
             return sniff(str, minimize, 2, isyear);
         };
     } else if (state.opt[rangeType + "-range-format"] === "chicago") {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, chicago15);
         };
     } else if (state.opt[rangeType + "-range-format"] === "chicago-15") {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, chicago15);
         };
     } else if (state.opt[rangeType + "-range-format"] === "chicago-16") {
-        ret_func = function (str: any): string {
+        ret_func = function (str: string): string {
             return sniff(str, chicago16);
         };
     }

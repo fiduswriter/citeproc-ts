@@ -1,7 +1,7 @@
 import { CSL } from '../csl';
 import { MODULE_MACROS, MODULE_TYPES } from '../constants/core';
 import { debug } from '../logger';
-export function getJurisdictionList(this: any, jurisdiction: any): any[] {
+export function getJurisdictionList(this: CslState, jurisdiction: string): string[] {
     const jurisdictionList: any[] = [];
     const jurisdictionElems = jurisdiction.split(":");
     for (let j = jurisdictionElems.length; j > 0; j -= 1) {
@@ -18,7 +18,7 @@ export function getJurisdictionList(this: any, jurisdiction: any): any[] {
     return jurisdictionList;
 };
 
-export function loadStyleModule(this: any, jurisdiction: any, xmlSource: any, skipFallback?: any): any {
+export function loadStyleModule(this: CslState, jurisdiction: string, xmlSource: any, skipFallback?: boolean): any {
     let myFallback = null;
     let macroCount = 0;
     this.juris[jurisdiction] = {};
@@ -67,7 +67,7 @@ export function loadStyleModule(this: any, jurisdiction: any, xmlSource: any, sk
     return myFallback;
 };
 
-export function retrieveAllStyleModules(this: any, jurisdictionList: any): any {
+export function retrieveAllStyleModules(this: CslState, jurisdictionList: string[]): Record<string, any> {
     let ret: any = {};
     let preferences = this.locale[this.opt.lang].opts["jurisdiction-preference"];
     preferences = preferences ? preferences : [];

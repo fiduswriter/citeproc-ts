@@ -1,6 +1,8 @@
 /*global CSL: true */
 
-export function ambigConfigDiff(a: any, b: any): number {
+import { AmbigConfig } from '../obj/ambigconfig';
+
+export function ambigConfigDiff(a: AmbigConfig, b: AmbigConfig): number {
     let pos: number, len: number, ppos: number, llen: number;
     if (a.names.length !== b.names.length) {
         return 1;
@@ -26,7 +28,7 @@ export function ambigConfigDiff(a: any, b: any): number {
     return 0;
 };
 
-export function cloneAmbigConfig(config: any, oldconfig?: any): any {
+export function cloneAmbigConfig(config: AmbigConfig, oldconfig?: AmbigConfig): AmbigConfig {
     let i: number, ilen: number, j: number, jlen: number, param: any;
     let ret: any = {};
     ret.names = [];
@@ -57,7 +59,7 @@ export function cloneAmbigConfig(config: any, oldconfig?: any): any {
 /**
  * Return current base configuration for disambiguation
  */
-export function getAmbigConfig(this: any): any {
+export function getAmbigConfig(this: CslState): AmbigConfig {
     let config: any, ret: any;
     config = this.tmp.disambig_request;
     if (!config) {
@@ -70,13 +72,13 @@ export function getAmbigConfig(this: any): any {
 /**
  * Return max values for disambiguation
  */
-export function getMaxVals(this: any): any {
+export function getMaxVals(this: CslState): any[] {
     return this.tmp.names_max.mystack.slice();
 };
 
 /**
  * Return min value for disambiguation
  */
-export function getMinVal(this: any): any {
+export function getMinVal(this: CslState): any {
     return this.tmp["et-al-min"];
 };

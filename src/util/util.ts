@@ -9,7 +9,7 @@ export class Match {
         (this as any)["undefined"] = this.all;
     }
 
-    public any(token: any, state: any, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
+    public any(token: CslNode, state: CslState, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
         return (Item: CslItem, item: any): boolean => {
             for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
                 if (tests[i](Item, item)) {
@@ -20,7 +20,7 @@ export class Match {
         };
     }
 
-    public none(token: any, state: any, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
+    public none(token: CslNode, state: CslState, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
         return (Item: CslItem, item: any): boolean => {
             for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
                 if (tests[i](Item, item)) {
@@ -31,7 +31,7 @@ export class Match {
         };
     }
 
-    public all(token: any, state: any, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
+    public all(token: CslNode, state: CslState, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
         return (Item: CslItem, item: any): boolean => {
             for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
                 if (!tests[i](Item, item)) {
@@ -42,7 +42,7 @@ export class Match {
         };
     }
 
-    public nand(token: any, state: any, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
+    public nand(token: CslNode, state: CslState, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
         return (Item: CslItem, item: any): boolean => {
             for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
                 if (!tests[i](Item, item)) {

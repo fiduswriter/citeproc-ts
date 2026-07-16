@@ -476,7 +476,7 @@ export class NameOutput {
         let ret = false;
         const node = this.label[v][position];
         if (node) {
-            ret = CSL.castLabel(this.state, node, term, plural, TOLERANT);
+            ret = CSL.castLabel(this.state, node, term as string, plural as number, TOLERANT);
         }
         return ret;
     };

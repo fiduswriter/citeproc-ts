@@ -1,10 +1,11 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { Blob } from '../obj/blob';
 import { FORMAT_KEY_SEQUENCE } from '../constants/core';
 import { error } from '../logger';
-CSL.substituteOne = function (template: string): (state: CslState, list: any) => string {
-    return function (state: CslState, list: any): string {
+CSL.substituteOne = function (template: string): (state: CslState, list: string) => string {
+    return function (state: CslState, list: string): string {
         if (!list) {
             return "";
         } else {
@@ -17,10 +18,10 @@ CSL.substituteOne = function (template: string): (state: CslState, list: any) =>
 /**
  * Two-tiered substitutions gadget.
  */
-CSL.substituteTwo = function (template: string): (param: any) => (state: CslState, list: any) => string {
-    return function (param: any): (state: CslState, list: any) => string {
+CSL.substituteTwo = function (template: string): (param: string) => (state: CslState, list: string) => string {
+    return function (param: string): (state: CslState, list: string) => string {
         const template2 = template.replace("%%PARAM%%", param);
-        return function (state: CslState, list: any): string {
+        return function (state: CslState, list: string): string {
             if (!list) {
                 return "";
             } else {
@@ -34,8 +35,8 @@ CSL.substituteTwo = function (template: string): (param: any) => (state: CslStat
  * Generate string functions for designated output mode.
  * @param {String} mode Either "html" or "rtf", eventually.
  */
-CSL.Mode = function (mode: string): any {
-    let decorations: any, params: any, param: any, func: any, val: any, args: any;
+CSL.Mode = function (mode: string): Record<string, any> {
+    let decorations: Record<string, any>, params: Record<string, any>, param: string, func: any, val: any, args: string[];
     decorations = {};
     params = CSL.Output.Formats[mode];
     for (let param in params) {
@@ -80,8 +81,8 @@ CSL.Mode = function (mode: string): any {
 /**
  * Generate a separate list of formatting attributes.
  */
-CSL.setDecorations = function (state: CslState, attributes: any): any {
-    let ret: any, key: any, pos: any;
+CSL.setDecorations = function (state: CslState, attributes: Record<string, any>): any[][] {
+    let ret: any[][], key: string, pos: number;
     ret = [];
     for (let pos = 0; pos < FORMAT_KEY_SEQUENCE.length; pos += 1) {
         const key2 = FORMAT_KEY_SEQUENCE[pos];
@@ -93,10 +94,10 @@ CSL.setDecorations = function (state: CslState, attributes: any): any {
     return ret;
 };
 
-CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
+CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: (str: string) => string): void {
     const matchRex = new RegExp("(" + rexStr + ")", "g");
     const splitRex = new RegExp(rexStr, "g");
-    this.split = function (str: any): any {
+    this.split = function (str: string): { tags: string[]; strings: string[]; origStrings: string[] } {
         if (stringMangler) {
             str = stringMangler(str);
         }
@@ -124,7 +125,7 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
             origStrings: split.slice()
         };
     };
-    this.join = function (obj: any): string {
+    this.join = function (obj: { tags: string[]; strings: string[]; origStrings?: string[] }): string {
         const lst = obj.strings.slice(-1);
         for (let i = obj.tags.length - 1; i > -1; i -= 1) {
             lst.push(obj.tags[i]);
@@ -135,7 +136,7 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: any): void {
     };
 };
 
-export function normalDecorIsOrphan(this: any, blob: any, params: any): boolean {
+export function normalDecorIsOrphan(this: any, blob: Blob, params: string[]): boolean {
     if (params[1] === "normal") {
         let use_param = false;
         let all_the_decor: any;

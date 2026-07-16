@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 
 import { ASCENDING, DATE_VARIABLES, DESCENDING, END, NAME_VARIABLES, NUMERIC_VARIABLES, SINGLETON, START } from '../constants/core';
 export const Node_key = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         
         target = state[state.build.root + "_sort"].tokens;
 
@@ -20,13 +20,13 @@ export const Node_key = {
 
 
         // initialize done vars
-        func = function (state) {
+        func = function (state: CslState): void {
             state.tmp.done_vars = [];
         };
         start_key.execs.push(func);
 
         // initialize output queue
-        func = function (state) {
+        func = function (state: CslState): void {
             state.output.openLevel("empty");
         };
         start_key.execs.push(func);
@@ -49,7 +49,7 @@ export const Node_key = {
         }
 
         // et al init
-        func = function (state) {
+        func = function (this: CslNode, state: CslState): void {
             state.tmp.sort_key_flag = true;
             //print("== key node function ==");
             if (state.inheritOpt(this, "et-al-min")) {
@@ -106,7 +106,7 @@ export const Node_key = {
                     // sort order per se, but if set to DESCENDING, it reverses the sequence of numbers representing
                     // bib entries.
                     if (variable === "citation-number") {
-                        func = function (state, Item) {
+                        func = function (this: CslNode, state: CslState, Item: CslItem): void {
                             if (state.tmp.area === "bibliography_sort") {
                                 if (this.strings.sort_direction === DESCENDING) {
                                     state.bibliography_sort.opt.citation_number_sort_direction = DESCENDING;
@@ -127,19 +127,19 @@ export const Node_key = {
                             state.output.append(num, this);
                         };
                     } else {
-                        func = function (state, Item) {
-                            let num = false;
+                        func = function (this: CslNode, state: CslState, Item: CslItem): void {
+                            let num: string | false = false;
                             num = Item[variable];
                             // XXX What if this is NaN?
                             if (num) {
                                 // Code currently in util_number.js
-                                num = CSL.Util.padding(num);
+                                num = CSL.Util.padding("" + num);
                             }
                             state.output.append(num, this);
                         };
                     }
                 } else if (variable === "citation-label") {
-                    func = function (state, Item) {
+                    func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         const trigraph = state.getCitationLabel(Item);
                         state.output.append(trigraph, this);
                     };
@@ -153,14 +153,14 @@ export const Node_key = {
                     const transfall = true;
                     func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
                 } else if ("court-class" === variable) {
-                    func = function(state, Item, item) {
+                    func = function(state: CslState, Item: CslItem, item: any): void {
                         CSL.INIT_JURISDICTION_MACROS(state, Item, item, "juris-main")
                         // true is for sortKey mode
                         const cls = CSL.GET_COURT_CLASS(state, Item, true);
                         state.output.append(cls, "empty");
                     }
                 } else {
-                    func = function (state, Item) {
+                    func = function (state: CslState, Item: CslItem): void {
                         const varval = Item[variable];
                         state.output.append(varval, "empty");
                     };
@@ -191,7 +191,7 @@ export const Node_key = {
         //end_key.execs.push(func);
         
         // store key for use
-        func = function (state) {
+        func = function (state: CslState): void {
             let keystring = state.output.string(state, state.output.queue);
             if (state.sys.normalizeUnicode) {
                 keystring = state.sys.normalizeUnicode(keystring);
@@ -223,7 +223,7 @@ export const Node_key = {
             if (state.build.area === "citation" && state.build.extension === "_sort") {
                 // ascending sort always
                 state[state.build.area].opt.sort_directions.push([-1,1]);
-                func = function (state, Item) {
+                func = function (state: CslState, Item: CslItem): void {
                     // year-suffix Key
                     let year_suffix = state.registry.registry[Item.id].disambig.year_suffix;
                     if (!year_suffix) {
@@ -238,7 +238,7 @@ export const Node_key = {
         }
 
         // reset key params
-        func = function (state) {
+        func = function (state: CslState): void {
             // state.tmp.name_quash = new Object();
 
             // XXX This should work, should be necessary, but doesn't and isn't.

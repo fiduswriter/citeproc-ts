@@ -1,6 +1,16 @@
 import { CSL } from '../csl';
 
 import { END, SEEN, START, SUCCESSOR, SUCCESSOR_OF_SUCCESSOR, SUPPRESS } from '../constants/core';
+
+type Decoration = [string, string, string?];
+
+interface NumericStrings {
+    prefix: string;
+    suffix: string;
+    "text-case"?: string;
+    [key: string]: string | undefined;
+}
+
 /**
  * An output instance object representing a number or a range
  *
@@ -12,22 +22,24 @@ import { END, SEEN, START, SUCCESSOR, SUCCESSOR_OF_SUCCESSOR, SUPPRESS } from '.
  * in the object to the output elements.
  */
 export class NumericBlob {
-    public id: any;
-    public alldecor: any[];
-    public num: any;
-    public particle: any;
-    public blobs: any;
-    public status: any;
-    public strings: any;
-    public gender: any;
-    public decorations: any;
-    public successor_prefix: any;
-    public range_prefix: any;
-    public splice_prefix: any;
+    public id: string | undefined;
+    public alldecor: Decoration[][];
+    public num: number;
+    public particle: string;
+    public blobs: string;
+    public status: number;
+    public strings: NumericStrings;
+    public gender: string | undefined;
+    public decorations: Decoration[];
+    public successor_prefix: string;
+    public range_prefix: string;
+    public splice_prefix: string;
     public formatter: any;
-    public type: any;
+    public type: string | undefined;
+    public UGLY_DELIMITER_SUPPRESS_HACK?: boolean;
+    public suppress_splice_prefix?: boolean;
 
-    constructor(state: any, particle: any, num: any, mother_token: any, id: any) {
+    constructor(state: any, particle: string, num: number, mother_token: any, id: string | undefined) {
         // item id is used to assure that prefix delimiter is invoked only
         // when joining blobs across items
         this.id = id;
@@ -36,7 +48,7 @@ export class NumericBlob {
         this.particle = particle;
         this.blobs = num.toString();
         this.status = START;
-        this.strings = {};
+        this.strings = {} as NumericStrings;
         if (mother_token) {
             if (mother_token.strings["text-case"]) {
                 const textCase = mother_token.strings["text-case"];
@@ -69,7 +81,7 @@ export class NumericBlob {
         }
     }
 
-    public setFormatter(formatter: any): void {
+    public setFormatter(formatter: { format(num: number): string }): void {
         this.formatter = formatter;
         this.type = this.formatter.format(1);
     }
@@ -117,7 +129,7 @@ export class NumericBlob {
 }
 
 export class Output_DefaultFormatter {
-    public format(num: any): string {
+    public format(num: number): string {
         return num.toString();
     }
 }

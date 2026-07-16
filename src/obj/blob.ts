@@ -1,22 +1,49 @@
 import { error } from '../logger';
-/**
- * A blob is a unit of rendered output, carrying its own formatting
- * strings, decorations and nested child blobs.
- */
-export class Blob {
-    public levelname: any;
-    public strings: any;
-    public decorations: any[];
-    public blobs: any;
-    public alldecor: any[];
 
-    constructor(str: any, token?: any, levelname?: any) {
+type Decoration = [string, string, string?];
+
+interface BlobStrings {
+    prefix: string;
+    suffix: string;
+    delimiter: string;
+    "text-case"?: string;
+    "first_blob"?: string;
+    plural?: number;
+    form?: string;
+    [key: string]: string | number | undefined;
+}
+
+export class Blob {
+    public levelname: string | undefined;
+    public strings: BlobStrings;
+    public decorations: Decoration[];
+    public blobs: string | Blob[];
+    public alldecor: Decoration[][];
+    public num?: number;
+    public particle?: string;
+    public status?: number;
+    public formatter?: any;
+    public gender?: string;
+    public successor_prefix?: string;
+    public range_prefix?: string;
+    public splice_prefix?: string;
+    public punctuation_in_quote?: boolean;
+    public new_locale?: string;
+    public old_locale?: string;
+    public isInstitution?: boolean;
+    public suppress_splice_prefix?: boolean;
+    public UGLY_DELIMITER_SUPPRESS_HACK?: boolean;
+    public checkNext?: (next: any, start?: boolean) => void;
+    public checkLast?: (last: any) => boolean;
+    public params?: any;
+
+    constructor(str?: string | Blob, token?: { strings?: Record<string, string | undefined>; decorations?: Decoration[] }, levelname?: string) {
         this.levelname = levelname;
         if (token) {
-            this.strings = { "prefix": "", "suffix": "" };
+            this.strings = { "prefix": "", "suffix": "", "delimiter": "" };
             for (const key in token.strings) {
                 if (token.strings.hasOwnProperty(key)) {
-                    this.strings[key] = token.strings[key];
+                    (this.strings as any)[key] = token.strings[key];
                 }
             }
             this.decorations = [];
@@ -27,13 +54,10 @@ export class Blob {
                 len = token.decorations.length;
             }
             for (let pos = 0; pos < len; pos += 1) {
-                this.decorations.push(token.decorations[pos].slice());
+                this.decorations.push(token.decorations[pos].slice() as Decoration);
             }
         } else {
-            this.strings = {};
-            this.strings.prefix = "";
-            this.strings.suffix = "";
-            this.strings.delimiter = "";
+            this.strings = { prefix: "", suffix: "", delimiter: "" };
             this.decorations = [];
         }
         if ("string" === typeof str) {
@@ -51,7 +75,7 @@ export class Blob {
             error("Attempt to push blob onto string object");
         } else if (false !== blob) {
             blob.alldecor = blob.alldecor.concat(this.alldecor);
-            this.blobs.push(blob);
+            (this.blobs as Blob[]).push(blob);
         }
     }
 }

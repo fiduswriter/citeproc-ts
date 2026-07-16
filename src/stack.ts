@@ -8,24 +8,24 @@ import { error } from './logger';
  * that remove some of the aggravation of managing
  * them.</p>
  */
-export class Stack {
-    public mystack: any[];
-    public tip: any;
+export class Stack<T = any> {
+    public mystack: T[];
+    public tip: T;
 
-    constructor(val?: any, literal?: boolean) {
+    constructor(val?: T, literal?: boolean) {
         this.mystack = [];
-        if (literal || val) {
-            this.mystack.push(val);
+        if (literal || val !== undefined) {
+            this.mystack.push(val as T);
         }
         this.tip = this.mystack[0];
     }
 
     /** Push a value onto the stack. */
-    public push(val: any, literal?: boolean): void {
-        if (literal || val) {
-            this.mystack.push(val);
+    public push(val?: T, literal?: boolean): void {
+        if (literal || val !== undefined) {
+            this.mystack.push(val as T);
         } else {
-            this.mystack.push("");
+            this.mystack.push("" as any);
         }
         this.tip = this.mystack[this.mystack.length - 1];
     }
@@ -33,7 +33,7 @@ export class Stack {
     /** Clear the stack */
     public clear(): void {
         this.mystack = [];
-        this.tip = {};
+        this.tip = {} as T;
     }
 
     /**
@@ -41,31 +41,31 @@ export class Stack {
      * <p>This removes some ugly syntax from the
      * main code.</p>
      */
-    public replace(val: any, literal?: boolean): void {
+    public replace(val: T, literal?: boolean): void {
         if (this.mystack.length === 0) {
             error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
         }
-        if (literal || val) {
+        if (literal || val !== undefined) {
             this.mystack[(this.mystack.length - 1)] = val;
         } else {
-            this.mystack[(this.mystack.length - 1)] = "";
+            this.mystack[(this.mystack.length - 1)] = "" as any;
         }
         this.tip = this.mystack[this.mystack.length - 1];
     }
 
     /** Remove the top value from the stack. */
-    public pop(): any {
+    public pop(): T | undefined {
         const ret = this.mystack.pop();
         if (this.mystack.length) {
             this.tip = this.mystack[this.mystack.length - 1];
         } else {
-            this.tip = {};
+            this.tip = {} as T;
         }
         return ret;
     }
 
     /** Return the top value on the stack. */
-    public value(): any {
+    public value(): T | undefined {
         return this.mystack.slice(-1)[0];
     }
 

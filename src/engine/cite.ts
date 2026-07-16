@@ -5,7 +5,7 @@ import { ASSUME_ALL_ITEMS_REGISTERED, ERROR_NO_RENDERED_FORM, NONE, NUMERIC, POS
 import { LOCATOR_LABELS_REGEXP } from '../constants/regex';
 import { LOCATOR_LABELS_MAP } from '../constants/statute';
 import { debug, error } from '../logger';
-export function previewCitationCluster(this: any, citation: any, citationsPre: any, citationsPost: any, newMode: any): any {
+export function previewCitationCluster(this: any, citation: any, citationsPre: Array<[string, number]>, citationsPost: Array<[string, number]>, newMode: string): any {
     // Generate output for a hypothetical citation at the current position,
     // Leave the registry in the same state in which it was found.
     //print("################### previewCitationCluster() #################");
@@ -37,7 +37,7 @@ export function appendCitationCluster(this: any, citation: any): any {
 };
 
 
-export function processCitationCluster(this: any, citation: any, citationsPre: any, citationsPost: any, flag: any): any {
+export function processCitationCluster(this: any, citation: any, citationsPre: Array<[string, number]>, citationsPost: Array<[string, number]>, flag: string | number): any {
     let c, preCitation, postCitation, i, ilen, j, jlen, k, klen, n, nlen, key, Item, item, noteCitations, textCitations, m, citationsInNote;
     this.debug = false;
     this.tmp.loadedItemIDs = {};
@@ -806,7 +806,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         // disambiguate > 1 for group-level clashes. When only a subset
         // of the group is cited, disambiguate > 1 can cause unnecessary
         // content (e.g. title) to render via @disambiguate conditions.
-        const clusterItemIds: any = {};
+        const clusterItemIds: Record<string, boolean> = {};
         for (let i = 0; i < citation.citationItems.length; i += 1) {
             clusterItemIds[citation.citationItems[i].id] = true;
         }
@@ -900,7 +900,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     return [this.registry.return_data, ret];
 };
 
-export function process_CitationCluster(this: any, sortedItems: any, citation: any): any {
+export function process_CitationCluster(this: any, sortedItems: any[], citation: any): any {
     let str = "";
     if (citation && citation.properties && citation.properties.mode === "composite") {
         citation.properties.mode = "author-only";
@@ -930,7 +930,7 @@ export function process_CitationCluster(this: any, sortedItems: any, citation: a
     return str;
 };
 
-export function makeCitationCluster(this: any, rawList: any): any {
+export function makeCitationCluster(this: any, rawList: any[]): any {
     let inputList, newitem, str, pos, len, item, Item;
     inputList = [];
     len = rawList.length;
@@ -983,7 +983,7 @@ export function makeCitationCluster(this: any, rawList: any): any {
  * [object] disambiguation parameters
  * [boolean] If true, include first-reference-note-number value in cite
  */
-CSL.getAmbiguousCite = function (Item, disambig, visualForm, item) {
+CSL.getAmbiguousCite = function (Item: CslItem, disambig: any, visualForm?: boolean, item?: any) {
     let ret;
     const flags = this.tmp.group_context.tip;
     const oldTermSiblingLayer = {
@@ -1007,7 +1007,7 @@ CSL.getAmbiguousCite = function (Item, disambig, visualForm, item) {
     } else {
         this.tmp.disambig_request = false;
     }
-    const itemSupp: any = {
+    const itemSupp: Record<string, any> = {
         position: POSITION_SUBSEQUENT,
         "near-note": true
     };

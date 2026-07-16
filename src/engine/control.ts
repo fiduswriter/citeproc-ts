@@ -1,7 +1,7 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
-export function setOutputFormat(this: any, mode: any): void {
+export function setOutputFormat(this: any, mode: string): void {
     this.opt.mode = mode;
     this.fun.decorate = CSL.Mode(mode);
     if (!this.output[mode]) {
@@ -10,8 +10,8 @@ export function setOutputFormat(this: any, mode: any): void {
     }
 }
 
-export function getSortFunc(this: any): any {
-    return function (a,b) {
+export function getSortFunc(this: any): (a: string, b: string) => number {
+    return function (a: any, b: any) {
         a = a.split("-");
         b = b.split("-");
         if (a.length < b.length) {
@@ -32,7 +32,7 @@ export function getSortFunc(this: any): any {
     };
 }
 
-export function setLangTagsForCslSort(this: any, tags: any): void {
+export function setLangTagsForCslSort(this: any, tags: string[]): void {
     let i, ilen;
     if (tags) {
         this.opt['locale-sort'] = [];
@@ -43,7 +43,7 @@ export function setLangTagsForCslSort(this: any, tags: any): void {
     this.opt['locale-sort'].sort(this.getSortFunc());
 }
     
-export function setLangTagsForCslTransliteration(this: any, tags: any): void {
+export function setLangTagsForCslTransliteration(this: any, tags: string[]): void {
     let i, ilen;
     this.opt['locale-translit'] = [];
     if (tags) {
@@ -54,7 +54,7 @@ export function setLangTagsForCslTransliteration(this: any, tags: any): void {
     this.opt['locale-translit'].sort(this.getSortFunc());
 }
     
-export function setLangTagsForCslTranslation(this: any, tags: any): void {
+export function setLangTagsForCslTranslation(this: any, tags: string[]): void {
     let i, ilen;
     this.opt['locale-translat'] = [];
     if (tags) {
@@ -65,7 +65,7 @@ export function setLangTagsForCslTranslation(this: any, tags: any): void {
     this.opt['locale-translat'].sort(this.getSortFunc());
 }
 
-export function setLangPrefsForCites(this: any, obj: any, conv: any): void {
+export function setLangPrefsForCites(this: any, obj: Record<string, any>, conv?: (key: string) => string): void {
     const opt = this.opt['cite-lang-prefs'];
     if (!conv) {
         conv = function (key) {

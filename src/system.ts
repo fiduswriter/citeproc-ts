@@ -1,7 +1,7 @@
 import { CSL } from './csl';
 
 import { error } from './logger';
-export function setupXml(xmlObject: any): any {
+export function setupXml(xmlObject: string | any): any {
     let dataObj: any = {};
     let parser: any = null;
     if ("undefined" !== typeof xmlObject) {

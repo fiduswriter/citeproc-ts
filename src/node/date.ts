@@ -2,7 +2,7 @@ import { CSL } from '../csl';
 
 import { END, SINGLETON, START } from '../constants/core';
 export const Node_date = {
-    build: function (state, target) {
+    build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, date_obj, len, pos, part, dpx, parts, mypos, start, end;
         if (this.tokentype === START || this.tokentype === SINGLETON) {
             // used to collect rendered date part names in node_datepart,
@@ -21,7 +21,7 @@ export const Node_date = {
             if (state.build.extension) {
                 func = CSL.dateMacroAsSortKey;
             } else {
-                func = function (state, Item, item) {
+                func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                     let dp;
                     state.tmp.element_rendered_ok = false;
                     state.tmp.donesies = [];
@@ -119,7 +119,7 @@ export const Node_date = {
             this.execs.push(func);
 
             // newoutput
-            func = function (state, Item) {
+            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                 if (!Item[this.variables[0]]) {
                     return;
                 }
@@ -156,7 +156,7 @@ export const Node_date = {
 
         if (!state.build.extension && (this.tokentype === END || this.tokentype === SINGLETON)) {
             // mergeoutput
-            func = function (state, Item) {
+            func = function (this: CslNode, state: CslState, Item: CslItem): void {
                 if (!Item[this.variables[0]]) {
                     return;
                 }

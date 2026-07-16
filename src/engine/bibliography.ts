@@ -3,7 +3,7 @@ import { CSL } from '../csl';
 
 import { NUMERIC, START } from '../constants/core';
 import { debug } from '../logger';
-export function makeBibliography(this: any, bibsection: any): any {
+export function makeBibliography(this: any, bibsection?: any): any {
     let debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
     debug = false;
     if (!bibsection && (this.bibliography.opt.exclude_types || this.bibliography.opt.exclude_with_fields)) {
