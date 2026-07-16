@@ -1,5 +1,6 @@
 var config = %%CONFIG%%
-const chai = await import(%%CHAI_PATH%%);
+const chaiModule = await import(%%CHAI_PATH%%);
+const chai = chaiModule.default;
 const { createSys } = await import(%%RUNPREP_PATH%%);
 const Sys = await createSys(config);
 const assert = chai.assert;
