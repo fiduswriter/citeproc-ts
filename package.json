@@ -1,6 +1,6 @@
 {
     "name": "citeproc-ts",
-    "version": "0.1.0-dev",
+    "version": "0.1.0",
     "description": "The citeproc-js citation formatting module ported to TypeScript",
     "main": "./citeproc.mjs",
     "exports": {
