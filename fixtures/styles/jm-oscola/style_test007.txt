@@ -1,0 +1,79 @@
+>>===== MODE =====>>
+all
+<<===== MODE =====<<
+
+>>===== KEYS =====>>
+[
+  "5VCJM7N7"
+]
+<<===== KEYS =====<<
+
+>>===== DESCRIPTION =====>>
+should pass test style_test007
+<<===== DESCRIPTION =====<<
+
+>>===== RESULT =====>>
+FIRST
+  UNSC Res 770 (1992) SCOR Resolutions and Decisions 24.
+FIRST w/LOCATOR
+  UNSC Res 770 (1992) SCOR Resolutions and Decisions 24, 123.
+FIRST w/LABEL
+  UNSC Res 770 (1992) SCOR Resolutions and Decisions 24, para 123.
+IBID
+  ibid.
+IBID w/LOCATOR
+  ibid at 123.
+SUBSEQUENT
+  UNSC Res 770.
+SUBSEQUENT w/LOCATOR
+  UNSC Res 770 123.
+SUBSEQUENT w/BACKREF
+  UNSC Res 770 (n 1).
+SUBSEQUENT w/BACKREF+LOCATOR
+  UNSC Res 770 (n 1) 123.
+BIBLIOGRAPHY
+<div class="csl-bib-body">
+  <div class="csl-entry">UNSC Res 770 (1992) SCOR Resolutions and Decisions 24.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== INPUT =====>>
+[
+  {
+    "type": "bill",
+    "number": "770",
+    "container-title": "Security Council Official Record Resolutions and Decisions",
+    "page": "24",
+    "authority": "Security Council",
+    "issued": {
+      "raw": "1992"
+    },
+    "note": "",
+    "multi": {
+      "main": {},
+      "_keys": {}
+    },
+    "jurisdiction": "un.int",
+    "event": "Resolution"
+  }
+]
+<<===== INPUT =====<<
+
+
+>>===== ABBREVIATIONS =====>>
+{
+  "un.int": {
+    "institution-part": {
+      "General Assembly": "UNGA",
+      "Security Council": "UNSC"
+    },
+    "title": {
+      "Resolution": "Res."
+    },
+    "container-title": {
+      "General Assembly Official Record": "GAOR",
+      "Security Council Official Record Resolutions and Decisions": "SCOR Resolutions and Decisions"
+    }
+  }
+}
+<<===== ABBREVIATIONS =====<<

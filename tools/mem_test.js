@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-"use strict";
 
 // Memory usage test for CSL.Engine instantiation.
 //
@@ -9,21 +8,24 @@
 // from the citation-style-language/styles repo (155 macros, 6 macro-based sort
 // keys -- good for memory testing).
 
-var fs = require("fs");
-var path = require("path");
-var ROOT = path.join(__dirname, "..");
+import fs from "fs";
+import path from "path";
+import os from "os";
+import { execFileSync } from "child_process";
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(__dirname, "..");
 
 var STYLE_URL = "https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-shortened-notes-bibliography.csl";
-var CACHED_STYLE_PATH = path.join(require("os").tmpdir(), "citeproc-mem-test-chicago-shortened-notes-bibliography.csl");
+var CACHED_STYLE_PATH = path.join(os.tmpdir(), "citeproc-mem-test-chicago-shortened-notes-bibliography.csl");
 var FALLBACK_STYLE_PATH = path.join(ROOT, "docs", "chicago-fullnote-bibliography.csl");
 
 async function main() {
     var CSL = (await import(path.join(ROOT, "citeproc.mjs"))).default;
 
-    // Load locale
     var localeXml = fs.readFileSync(path.join(ROOT, "locale", "locales-en-US.xml"), "utf8");
 
-    // Load style
     var stylePath = process.argv[2];
     var styleXml;
     if (stylePath) {
@@ -36,7 +38,6 @@ async function main() {
     else {
         try {
             console.log("Downloading style...");
-            var execFileSync = require("child_process").execFileSync;
             styleXml = execFileSync("curl", ["-sfL", STYLE_URL], { encoding: "utf8" });
             fs.writeFileSync(CACHED_STYLE_PATH, styleXml);
             stylePath = CACHED_STYLE_PATH;

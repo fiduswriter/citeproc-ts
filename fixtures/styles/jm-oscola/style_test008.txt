@@ -1,0 +1,80 @@
+>>===== MODE =====>>
+all
+<<===== MODE =====<<
+
+>>===== KEYS =====>>
+[
+  "FBZXG667"
+]
+<<===== KEYS =====<<
+
+>>===== DESCRIPTION =====>>
+should pass test style_test008
+<<===== DESCRIPTION =====<<
+
+>>===== RESULT =====>>
+FIRST
+  UNGA Res 2621 (XXV) (1970) GAOR 25th Session Supp 16, 10.
+FIRST w/LOCATOR
+  UNGA Res 2621 (XXV) (1970) GAOR 25th Session Supp 16, 10, 123.
+FIRST w/LABEL
+  UNGA Res 2621 (XXV) (1970) GAOR 25th Session Supp 16, 10, para 123.
+IBID
+  ibid.
+IBID w/LOCATOR
+  ibid at 123.
+SUBSEQUENT
+  UNGA Res 2621 (XXV).
+SUBSEQUENT w/LOCATOR
+  UNGA Res 2621 (XXV) 123.
+SUBSEQUENT w/BACKREF
+  UNGA Res 2621 (XXV) (n 1).
+SUBSEQUENT w/BACKREF+LOCATOR
+  UNGA Res 2621 (XXV) (n 1) 123.
+BIBLIOGRAPHY
+<div class="csl-bib-body">
+  <div class="csl-entry">UNGA Res 2621 (XXV) (1970) GAOR 25th Session Supp 16, 10.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== INPUT =====>>
+[
+  {
+    "type": "bill",
+    "number": "2621 (XXV)",
+    "container-title": "General Assembly Official Record",
+    "page": "10",
+    "authority": "General Assembly",
+    "chapter-number": "25",
+    "issued": {
+      "raw": "1970"
+    },
+    "note": "supplement: 16",
+    "multi": {
+      "main": {},
+      "_keys": {}
+    },
+    "archive_location": "A/8086",
+    "jurisdiction": "un.int",
+    "event": "Resolution"
+  }
+]
+<<===== INPUT =====<<
+
+
+>>===== ABBREVIATIONS =====>>
+{
+  "un.int": {
+    "institution-part": {
+      "General Assembly": "UNGA",
+      "Security Council": "UNSC"
+    },
+    "title": {
+      "Resolution": "Res."
+    },
+    "container-title": {
+      "General Assembly Official Record": "GAOR"
+    }
+  }
+}
+<<===== ABBREVIATIONS =====<<

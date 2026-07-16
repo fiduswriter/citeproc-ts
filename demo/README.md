@@ -20,4 +20,4 @@ npx http-server . -p 8080
 
 Open `http://localhost:8080/demo.html` in your browser.
 
-Alternatively, any static file server (Python, Apache, etc.) will work — just serve from the project root so that `../citeproc.js` resolves to the built bundle.
+Alternatively, any static file server (Python, Apache, etc.) will work — just serve from the project root so that `../citeproc.mjs` resolves to the built bundle.

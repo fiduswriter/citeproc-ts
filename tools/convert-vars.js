@@ -2,15 +2,18 @@
 /**
  * Convert var → let/const in TypeScript source files.
  * Uses ts-morph (TypeScript compiler wrapper) for AST-aware conversion.
- * 
+ *
  * Usage: node tools/convert-vars.js [files...]
  *   If no files given, converts all src/ .ts files that still have 'var'.
  */
 
-const ts = require("typescript");
-const fs = require("fs");
-const path = require("path");
-const { execSync } = require("child_process");
+import ts from "typescript";
+import fs from "fs";
+import path from "path";
+import { execSync } from "child_process";
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function collectFiles(root) {
   const result = [];
@@ -43,8 +46,6 @@ function convertFile(filePath) {
     true
   );
 
-  // Phase 1: Collect all variable info from AST
-  // Map of variable name → { declarations: Set<Declaration>, assignments: Set<Assignment> }
   const varInfo = new Map();
 
   function getVarInfo(name) {
@@ -58,14 +59,12 @@ function convertFile(filePath) {
     if (ts.isVariableDeclaration(node)) {
       if (node.parent && ts.isVariableDeclarationList(node.parent)) {
         if (node.parent.flags & ts.NodeFlags.Let || node.parent.flags & ts.NodeFlags.Const) {
-          // Skip already-modern declarations
         } else if (node.parent.flags & ts.NodeFlags.Var) {
           const name = ts.isIdentifier(node.name) ? node.name.text : null;
           if (name) {
             const info = getVarInfo(name);
             info.declarations.add(node);
             info.scopes.push([...scopeChain, "function"]);
-            // Check if it's a for-loop variable
             const parent = node.parent.parent;
             if (parent && (ts.isForStatement(parent) || ts.isForInStatement(parent) || ts.isForOfStatement(parent))) {
               info.isLoopVar = true;
@@ -75,8 +74,7 @@ function convertFile(filePath) {
       }
     }
 
-    // Find assignments to identifiers
-    if (ts.isBinaryExpression(node) && 
+    if (ts.isBinaryExpression(node) &&
         (node.operatorToken.kind === ts.SyntaxKind.EqualsToken ||
          node.operatorToken.kind === ts.SyntaxKind.PlusEqualsToken ||
          node.operatorToken.kind === ts.SyntaxKind.MinusEqualsToken)) {
@@ -87,7 +85,6 @@ function convertFile(filePath) {
       }
     }
 
-    // Postfix/prefix ++ and --
     if ((ts.isPostfixUnaryExpression(node) || ts.isPrefixUnaryExpression(node)) &&
         (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
       if (ts.isIdentifier(node.operand)) {
@@ -102,13 +99,10 @@ function convertFile(filePath) {
 
   visit(sourceFile, ["global"]);
 
-  // Phase 2: Determine for each var whether it's reassigned
   const reassignedNames = new Set();
   for (const [name, info] of varInfo) {
     for (const dec of info.declarations) {
-      // Check if there are assignments outside the declaration
       for (const assign of info.assignments) {
-        // Simple check: if the assignment position differs from declaration position
         if (assign.pos !== dec.pos) {
           reassignedNames.add(name);
           break;
@@ -117,32 +111,16 @@ function convertFile(filePath) {
     }
   }
 
-  // Phase 3: Apply text transformations
   let result = sourceText;
-
-  // Helper: find the var keyword position for each declaration
   const replacements = [];
-  
-  function findVarKeyword(node) {
-    const list = node.parent; // VariableDeclarationList
-    if (!list) return -1;
-    if (list.getChildCount() > 0) {
-      const first = list.getChildAt(0);
-      if (first.kind === ts.SyntaxKind.VarKeyword) {
-        return first.getStart(sourceFile);
-      }
-    }
-    return -1;
-  }
 
   function processNode(node) {
     if (ts.isVariableDeclarationList(node)) {
       if (node.flags & ts.NodeFlags.Var) {
         const varPos = node.getStart(sourceFile);
-        const varEnd = varPos + 3; // "var" length
+        const varEnd = varPos + 3;
 
         if (node.parent && ts.isVariableStatement(node.parent)) {
-          // Regular var statement
           const declarations = node.declarations;
           if (declarations.length === 1) {
             const name = ts.isIdentifier(declarations[0].name) ? declarations[0].name.text : null;
@@ -151,12 +129,10 @@ function convertFile(filePath) {
               replacements.push({ start: varPos, end: varEnd, text: keyword });
             }
           } else {
-            // Multi-declaration: need to split or use let for all
-            // Conservative: use let for all in multi-decl
             replacements.push({ start: varPos, end: varEnd, text: "let" });
           }
         } else if (node.parent &&
-                   (ts.isForStatement(node.parent) || 
+                   (ts.isForStatement(node.parent) ||
                     ts.isForInStatement(node.parent) ||
                     ts.isForOfStatement(node.parent))) {
           const declarations = node.declarations;
@@ -178,7 +154,6 @@ function convertFile(filePath) {
 
   processNode(sourceFile);
 
-  // Apply replacements in reverse order
   replacements.sort((a, b) => b.start - a.start);
   for (const r of replacements) {
     result = result.slice(0, r.start) + r.text + result.slice(r.end);
@@ -191,7 +166,6 @@ function convertFile(filePath) {
   return false;
 }
 
-// Main
 const args = process.argv.slice(2);
 let files;
 if (args.length > 0) {
@@ -217,7 +191,6 @@ for (const f of files) {
 
 console.log(`\nConverted ${converted} files.`);
 
-// Verify
 console.log("\nRunning tsc --noEmit...");
 try {
   execSync("npx tsc --noEmit", { cwd: path.join(__dirname, ".."), stdio: "inherit" });

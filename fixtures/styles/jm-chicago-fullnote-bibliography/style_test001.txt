@@ -1,0 +1,68 @@
+>>===== MODE =====>>
+all
+<<===== MODE =====<<
+
+>>===== KEYS =====>>
+[
+  "MJKDE7BW"
+]
+<<===== KEYS =====<<
+
+>>===== DESCRIPTION =====>>
+should pass test style_test001
+<<===== DESCRIPTION =====<<
+
+>>===== RESULT =====>>
+FIRST
+  Code of Criminal Procedure [JP].
+FIRST w/LOCATOR
+  Code of Criminal Procedure 123 [JP].
+FIRST w/LABEL
+  Code of Criminal Procedure ¶ 123 [JP].
+IBID
+  <i>Ibid.</i>
+IBID w/LOCATOR
+  <i>Ibid.</i> at 123.
+SUBSEQUENT
+  Code of Criminal Procedure.
+SUBSEQUENT w/LOCATOR
+  Code of Criminal Procedure at 123.
+SUBSEQUENT w/BACKREF
+  Code of Criminal Procedure.
+SUBSEQUENT w/BACKREF+LOCATOR
+  Code of Criminal Procedure at 123.
+BIBLIOGRAPHY
+<div class="csl-bib-body">
+  <div class="csl-entry">Code of Criminal Procedure [JP].</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== INPUT =====>>
+[
+  {
+    "type": "legislation",
+    "title": "Code of Criminal Procedure",
+    "issued": "2018",
+    "URL": "https://wipolex.wipo.int/en/text/214811",
+    "note": "",
+    "multi": {
+      "main": {},
+      "_keys": {}
+    },
+    "jurisdiction": "jp",
+    "original-date": "1948-07-10 July 10, 1948",
+    "event-date": "2016-06-00 June 2016"
+  }
+]
+<<===== INPUT =====<<
+
+
+>>===== ABBREVIATIONS =====>>
+{
+  "default": {
+    "place": {
+      "jp": "JP"
+    }
+  }
+}
+<<===== ABBREVIATIONS =====<<

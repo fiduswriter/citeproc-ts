@@ -23,7 +23,6 @@ Copyright (c) 2009-2019 Frank Bennett
 	and <http://www.gnu.org/licenses/>.
 */
 
-'use strict';
 /*global CSL: true */
 
 var __defProp = Object.defineProperty;

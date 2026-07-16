@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const DEBUG = process.env.RNC_DEBUG === '1';
 
@@ -1073,10 +1073,10 @@ function validateCSL(cslXml, schemaPath) {
     return { valid: valid, errors: validator.errors };
 }
 
-module.exports = { validateCSL, loadSchema, tokenize, Parser, Validator, parseXmlSimple };
+export { validateCSL, loadSchema, tokenize, Parser, Validator, parseXmlSimple };
 
 // CLI mode
-if (require.main === module) {
+if (process.argv[1] && import.meta.url.endsWith(process.argv[1])) {
     var args = process.argv.slice(2);
     var schemaPath = args[0];
     var xmlPath = args[1];

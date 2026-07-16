@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const { parseFixture } = require(path.join(__dirname, '..', 'test-runner', 'dist', 'lib', 'fixture-parser.js'));
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { parseFixture } from '../test-runner/dist/lib/fixture-parser.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const FIX_DIR = path.join(ROOT, 'fixtures', 'std', 'processor-tests', 'humans');
 const LOCALE_FILE = path.join(ROOT, 'locale', 'locales-en-US.xml');

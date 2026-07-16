@@ -3,16 +3,15 @@
 # Run from the project root.  Does everything in one shot.
 set -euo pipefail
 
-echo "==> Building citeproc.js..."
+echo "==> Building citeproc.mjs..."
 npm run build --silent
 
 echo "==> Preparing pages content..."
 rm -rf _pages
 mkdir _pages
-cp citeproc.js _pages/
+cp citeproc.mjs _pages/
 cp -r demo/* _pages/
 cp logo.svg _pages/
-sed -i 's|src="../citeproc.js"|src="./citeproc.js"|' _pages/index.html
 
 echo "==> Pushing to pages branch..."
 cd _pages

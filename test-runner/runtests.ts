@@ -12,9 +12,6 @@ import zoteroToCSLM from 'zotero2jurismcsl';
 import zoteroToCSL from 'zotero-to-csl';
 import { getAbbrevPath } from "citeproc-abbrevs";
 import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
-
-const _require = createRequire(import.meta.url);
 
 import { getConfig } from "./lib/configs.js";
 import { getReporters } from "./lib/reporters.js";
@@ -33,10 +30,11 @@ const reporters = getReporters(config);
 const { version } = JSON.parse(fs.readFileSync(path.join(scriptDir, "package.json"), "utf8"));
 
 var rncValidator = null;
-function getRNCValidator() {
+async function getRNCValidator() {
     if (!rncValidator) {
         var projectRoot = config.path.src ? path.join(config.path.src, "..") : config.path.cwd;
-        rncValidator = _require(path.join(projectRoot, "tools", "rnc-validator.js")).validateCSL;
+        const mod = await import(path.join(projectRoot, "tools", "rnc-validator.js"));
+        rncValidator = mod.validateCSL;
     }
     return rncValidator;
 }
@@ -352,16 +350,16 @@ function Bundle(noStrip?) {
     fs.writeFileSync(path.join(config.path.src, "..", "citeproc.mjs"), license + ret + "\nexport default CSL");
 }
 
-function validateCSLWithSchema(schema, test) {
-    var validator = getRNCValidator();
+async function validateCSLWithSchema(schema, test) {
+    var validator = await getRNCValidator();
     return validator(test.CSL, schema);
 }
 
-function runJingAsync(validationCount, validationGoal, schema, test) {
-    var jingPromise = new Promise<void>((resolve, reject) => {
+function runValidationAsync(validationCount, validationGoal, schema, test) {
+    var jingPromise = new Promise<void>(async (resolve, reject) => {
         var result;
         try {
-            result = validateCSLWithSchema(schema, test);
+            result = await validateCSLWithSchema(schema, test);
         } catch (e) {
             reject('Validation error: ' + e.message);
             return;
@@ -449,7 +447,7 @@ async function runValidationsAsync() {
         } else {
             throw new Error("Version not found in CSL for fixture: " + key);
         }
-        await runJingAsync(validationCount, validationGoal, schema, test);
+        await runValidationAsync(validationCount, validationGoal, schema, test);
         process.stdout.write("+");
         validationCount++;
         if (options.watch) {
@@ -671,7 +669,7 @@ async function bundleValidateTest(continueAfter?) {
                     if (csl.match(/^<\?.*\?>/)) {
                         csl = csl.split("\n").slice(1).join("\n");
                     }
-                    var res = await runJingAsync(count, goal, config.path.cslmschema, {CSL:csl, NAME:fn});
+                    var res = await runValidationAsync(count, goal, config.path.cslmschema, {CSL:csl, NAME:fn});
                     count++;
                 }
                 process.exit();

@@ -27,7 +27,7 @@ citeproc-js powers the word processor integrations in both [Zotero](https://www.
 
 ```bash
 npm install
-npm run build          # builds citeproc.mjs and citeproc.js
+npm run build          # builds citeproc.mjs
 npm run build:runner   # compiles the test runner
 ```
 
