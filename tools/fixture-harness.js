@@ -65,13 +65,14 @@ function runFixture(name) {
                     for (const d of doc) d.prefix = '..';
                     for (let j = 0; j < result.length; j++) {
                         const insert = result[j];
+                        if (!insert) continue;
                         let replaced = false;
                         for (const d of doc) {
                             if (d.citationID === insert[2]) {
                                 d.prefix = '>>'; d.String = insert[1]; result[j] = null; replaced = true; break;
                             }
                         }
-                        if (!replaced && insert) {
+                        if (!replaced) {
                             doc = doc.slice(0, insert[0]).concat([{ prefix: '>>', citationID: insert[2], String: insert[1] }]).concat(doc.slice(insert[0]));
                         }
                     }
