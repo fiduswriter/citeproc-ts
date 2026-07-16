@@ -1,5 +1,4 @@
-import { CSL } from '../../csl';
-
+import { POSITION_FIRST } from '../../constants/core';
 export function disambigNames(this: any): void {
     let pos: any;
     for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
@@ -66,7 +65,7 @@ export function _runDisambigNames(this: any, lst: any, pos: any): void {
         } else {
             param = paramx;
         }
-        if (!this.state.tmp.just_looking && this.item && this.item.position === CSL.POSITION_FIRST) {
+        if (!this.state.tmp.just_looking && this.item && this.item.position === POSITION_FIRST) {
             if (paramx > param) {
                 param = paramx;
             }

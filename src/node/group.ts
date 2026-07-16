@@ -1,10 +1,11 @@
 import { CSL } from '../csl';
 
+import { ASCENDING, DESCENDING, END, SINGLETON, START } from '../constants/core';
 export const Node_group = {
     build: function (state, target, realGroup) {
         let func, execs;
         this.realGroup = realGroup;
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
             CSL.Util.substituteStart.call(this, state, target);
             if (state.build.substitute_level.value()) {
                 state.build.substitute_level.replace((state.build.substitute_level.value() + 1));
@@ -206,10 +207,10 @@ export const Node_group = {
                 
                 // Code for fetching an instantiating?
 
-                const choose_start = new CSL.Token("choose", CSL.START);
+                const choose_start = new CSL.Token("choose", START);
                 CSL.Node.choose.build.call(choose_start, state, target);
                 
-                const if_start = new CSL.Token("if", CSL.START);
+                const if_start = new CSL.Token("if", START);
 
                 func = (function (macroName) {
                     return function (Item, item) {
@@ -221,7 +222,7 @@ export const Node_group = {
                 if_start.tests.push(func);
                 if_start.test = state.fun.match.any(if_start, state, if_start.tests);
                 target.push(if_start);
-                const text_node = new CSL.Token("text", CSL.SINGLETON);
+                const text_node = new CSL.Token("text", SINGLETON);
                 func = function (state, Item, item) {
                     // This will run the juris- token list.
                     let itemItem = Item;
@@ -239,14 +240,14 @@ export const Node_group = {
                 text_node.execs.push(func);
                 target.push(text_node);
 
-                const if_end = new CSL.Token("if", CSL.END);
+                const if_end = new CSL.Token("if", END);
                 CSL.Node["if"].build.call(if_end, state, target);
-                const else_start = new CSL.Token("else", CSL.START);
+                const else_start = new CSL.Token("else", START);
                 CSL.Node["else"].build.call(else_start, state, target);
             }
         }
 
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             
             // Unbundle and print publisher lists
             // Same constraints on creating the necessary function here
@@ -286,10 +287,10 @@ export const Node_group = {
                     if (state.tmp.area === "bibliography_sort") {
                         const citationNumberIdx = flags.done_vars.indexOf("citation-number");
                         if (this.strings.sort_direction && citationNumberIdx > -1 && state.tmp.group_context.length() == 1) {
-                            if (this.strings.sort_direction === CSL.DESCENDING) {
-                                state.bibliography_sort.opt.citation_number_sort_direction = CSL.DESCENDING;
+                            if (this.strings.sort_direction === DESCENDING) {
+                                state.bibliography_sort.opt.citation_number_sort_direction = DESCENDING;
                             } else {
-                                state.bibliography_sort.opt.citation_number_sort_direction = CSL.ASCENDING;
+                                state.bibliography_sort.opt.citation_number_sort_direction = ASCENDING;
                             }
                             flags.done_vars = flags.done_vars.slice(0, citationNumberIdx).concat(flags.done_vars.slice(citationNumberIdx + 1))
                         }
@@ -366,14 +367,14 @@ export const Node_group = {
             this.execs.push(func);
             
             if (this.juris) {
-                const else_end = new CSL.Token("else", CSL.END);
+                const else_end = new CSL.Token("else", END);
                 CSL.Node["else"].build.call(else_end, state, target);
-                const choose_end = new CSL.Token("choose", CSL.END);
+                const choose_end = new CSL.Token("choose", END);
                 CSL.Node.choose.build.call(choose_end, state, target);
             }
         }
 
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             if (!this.juris) {
                 target.push(this);
             }

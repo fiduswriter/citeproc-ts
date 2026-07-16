@@ -1,5 +1,6 @@
 import { CSL } from './csl';
 
+import { error } from './logger';
 /**
  * String stack object.
  * <p>Numerous string stacks are used to track nested
@@ -42,7 +43,7 @@ export class Stack {
      */
     public replace(val: any, literal?: boolean): void {
         if (this.mystack.length === 0) {
-            CSL.error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
+            error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
         }
         if (literal || val) {
             this.mystack[(this.mystack.length - 1)] = val;

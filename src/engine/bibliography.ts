@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { NUMERIC, START } from '../constants/core';
+import { debug } from '../logger';
 export function makeBibliography(this: any, bibsection: any): any {
     let debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
     debug = false;
@@ -39,19 +41,19 @@ export function makeBibliography(this: any, bibsection: any): any {
         len = this.bibliography.tokens.length;
         for (let pos = 0; pos < len; pos += 1) {
             tok = this.bibliography.tokens[pos];
-            CSL.debug("bibtok: " + tok.name);
+            debug("bibtok: " + tok.name);
         }
-        CSL.debug("---");
+        debug("---");
         len = this.citation.tokens.length;
         for (let pos = 0; pos < len; pos += 1) {
             tokk = this.citation.tokens[pos];
-            CSL.debug("cittok: " + tok.name);
+            debug("cittok: " + tok.name);
         }
-        CSL.debug("---");
+        debug("---");
         len = this.bibliography_sort.tokens.length;
         for (let pos = 0; pos < len; pos += 1) {
             tokkk = this.bibliography_sort.tokens[pos];
-            CSL.debug("bibsorttok: " + tok.name);
+            debug("bibsorttok: " + tok.name);
         }
     }
     //SNIP-END
@@ -280,7 +282,7 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
         //SNIP-START
         if (debug) {
-            CSL.debug("BIB: " + item.id);
+            debug("BIB: " + item.id);
         }
 
         if (item.container_id) {
@@ -291,7 +293,7 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
         
         //SNIP-END
-        bib_entry = new CSL.Token("group", CSL.START);
+        bib_entry = new CSL.Token("group", START);
         bib_entry.decorations = [["@bibliography", "entry"]].concat(this.bibliography.opt.layout_decorations);
         this.output.startTag("bib_entry", bib_entry);
         if (item.system_id && this.sys.embedBibliographyEntry) {
@@ -392,7 +394,7 @@ CSL.getBibliographyEntries = function (bibsection) {
 
         res = this.output.string(this, this.output.queue)[0];
         
-        if (!res && this.opt.update_mode === CSL.NUMERIC) {
+        if (!res && this.opt.update_mode === NUMERIC) {
             const err = (ret.length + 1) + ". [CSL STYLE ERROR: reference with no printed form.]";
             res = CSL.Output.Formats[this.opt.mode]["@bibliography/entry"](this, err);
         }

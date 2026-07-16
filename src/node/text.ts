@@ -1,20 +1,22 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
 
+import { CITE_FIELDS, DESCENDING, END, LITERAL, MULTI_FIELDS, NUMERIC, START, SUFFIX_CHARS, TOLERANT, TRIGRAPH } from '../constants/core';
+import { debug } from '../logger';
 export const Node_text = {
     build: function (state, target) {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
         if (this.postponed_macro) {
             const group_start = CSL.Util.cloneToken(this);
             group_start.name = "group";
-            group_start.tokentype = CSL.START;
+            group_start.tokentype = START;
             CSL.Node.group.build.call(group_start, state, target);
 
             CSL.expandMacro.call(state, this, target);
 
             const group_end = CSL.Util.cloneToken(this);
             group_end.name = "group";
-            group_end.tokentype = CSL.END;
+            group_end.tokentype = END;
             if (this.postponed_macro === 'juris-locator-label') {
                 group_end.isJurisLocatorLabel = true;
             }
@@ -54,10 +56,10 @@ export const Node_text = {
                 if (this.variables_real[0] === "citation-number") {
 
                     if (state.build.root === "citation") {
-                        state.opt.update_mode = CSL.NUMERIC;
+                        state.opt.update_mode = NUMERIC;
                     }
                     if (state.build.root === "bibliography") {
-                        state.opt.bib_mode = CSL.NUMERIC;
+                        state.opt.bib_mode = NUMERIC;
                     }
                     //this.strings.is_rangeable = true;
                     if ("citation-number" === state[state.tmp.area].opt.collapse) {
@@ -88,7 +90,7 @@ export const Node_text = {
                             if (item && item["author-only"]) {
                                 state.tmp.element_trace.replace("suppress-me");
                             }
-                            if (state.tmp.area !== "bibliography_sort" && state.bibliography_sort.tmp.citation_number_map && state.bibliography_sort.opt.citation_number_sort_direction === CSL.DESCENDING) {
+                            if (state.tmp.area !== "bibliography_sort" && state.bibliography_sort.tmp.citation_number_map && state.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
                                 num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[id].seq];
                             } else {
                                 num = state.registry.registry[id].seq;
@@ -131,7 +133,7 @@ export const Node_text = {
                                 this.successor_prefix = state[state.tmp.area].opt.cite_group_delimiter;
                             }
                             number = new CSL.NumericBlob(state, false, num, this, Item.id);
-                            formatter = new Suffixator(CSL.SUFFIX_CHARS);
+                            formatter = new Suffixator(SUFFIX_CHARS);
                             number.setFormatter(formatter);
                             state.output.append(number, "literal");
                             firstoutput = false;
@@ -152,7 +154,7 @@ export const Node_text = {
                     this.execs.push(func);
                 } else if (this.variables_real[0] === "citation-label") {
                     if (state.build.root === "bibliography") {
-                        state.opt.bib_mode = CSL.TRIGRAPH;
+                        state.opt.bib_mode = TRIGRAPH;
                     }
                     state.opt.has_year_suffix = true;
                     func = function (state, Item) {
@@ -179,7 +181,7 @@ export const Node_text = {
                     func = function (state, Item) {
                         const gender = state.opt.gender[Item.type];
                         let term = this.strings.term;
-                        term = state.getTerm(term, form, plural, gender, CSL.TOLERANT, this.default_locale);
+                        term = state.getTerm(term, form, plural, gender, TOLERANT, this.default_locale);
                         let myterm;
                         // if the term is not an empty string, say
                         // that we rendered a term
@@ -194,7 +196,7 @@ export const Node_text = {
                         // I guess, actually).
                         if (!state.tmp.term_predecessor && !(state.opt["class"] === "in-text" && state.tmp.area === "citation")) {
                             myterm = CSL.Output.Formatters["capitalize-first"](state, term);
-                            //CSL.debug("Capitalize");
+                            //debug("Capitalize");
                         } else {
                             myterm = term;
                         }
@@ -217,7 +219,7 @@ export const Node_text = {
                         if (state.tmp.can_block_substitute) {
                             // Black magic here. This causes the cs:substitution condition to pass,
                             // blocking further rendering within its scope. 
-                            state.tmp.can_substitute.replace(false, CSL.LITERAL);
+                            state.tmp.can_substitute.replace(false, LITERAL);
                         }
                     };
                     this.execs.push(func);
@@ -249,7 +251,7 @@ export const Node_text = {
                     // plain string fields
 
                     // Deal with multi-fields and ordinary fields separately.
-                    if (CSL.MULTI_FIELDS.indexOf(this.variables_real[0]) > -1
+                    if (MULTI_FIELDS.indexOf(this.variables_real[0]) > -1
                         || this.variables_real[0].indexOf("-main") > -1
                         || this.variables_real[0].indexOf("-sub") > -1
                         || ["language-name", "language-name-original"].indexOf(this.variables_real[0]) > -1
@@ -281,7 +283,7 @@ export const Node_text = {
                         func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
                     } else {
                         // ordinary fields
-                        if (CSL.CITE_FIELDS.indexOf(this.variables_real[0]) > -1) {
+                        if (CITE_FIELDS.indexOf(this.variables_real[0]) > -1) {
                             // per-cite fields are read from item, rather than Item
                             func = function (state, Item, item) {
                                 if (item && item[this.variables[0]]) {
@@ -445,7 +447,7 @@ export const Node_text = {
                         if (state.tmp.can_block_substitute) {
                             // Black magic here. This causes the cs:substitution condition to pass,
                             // blocking further rendering within its scope. 
-                            state.tmp.can_substitute.replace(false, CSL.LITERAL);
+                            state.tmp.can_substitute.replace(false, LITERAL);
                         }
                     };
                     this.execs.push(func);

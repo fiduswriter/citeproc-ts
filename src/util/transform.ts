@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '../constants/core';
 /*
  * Fields can be transformed by translation/transliteration, or by
  * abbreviation.  Transformations are performed in that order.
@@ -82,7 +83,7 @@ export class Transform {
         
         function abbreviate(state: any, tok: any, Item: any, altvar: any, basevalue: string, family_var: string, use_field: boolean): string {
             let value = "";
-            const myabbrev_family = CSL.FIELD_CATEGORY_REMAP[family_var];
+            const myabbrev_family = FIELD_CATEGORY_REMAP[family_var];
             let preferredJurisdiction;
             if (!myabbrev_family) {
                 return basevalue;
@@ -184,7 +185,7 @@ export class Transform {
                 };
             }
             let stickyLongForm = false;
-            if (CSL.VARIABLES_WITH_SHORT_FORM.indexOf(field) > -1
+            if (VARIABLES_WITH_SHORT_FORM.indexOf(field) > -1
                 && family_var) {
                 field = field + "-short";
                 stickyLongForm = true;
@@ -389,7 +390,7 @@ export class Transform {
 
         function getOutputFunction(variables: string[], family_var?: string, abbreviation_fallback?: any, alternative_varname?: string): Function {
             let localesets;
-            const langPrefs = CSL.LangPrefsMap[variables[0]];
+            const langPrefs = LangPrefsMap[variables[0]];
             if (!langPrefs) {
                 localesets = false;
             } else {

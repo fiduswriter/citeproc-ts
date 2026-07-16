@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { ASCENDING, DATE_VARIABLES, DESCENDING, END, NAME_VARIABLES, NUMERIC_VARIABLES, SINGLETON, START } from '../constants/core';
 export const Node_key = {
     build: function (state, target) {
         
@@ -7,7 +8,7 @@ export const Node_key = {
 
         let func;
         const debug = false;
-        const start_key = new CSL.Token("key", CSL.START);
+        const start_key = new CSL.Token("key", START);
 
         state.tmp.root = state.build.root;
 
@@ -32,7 +33,7 @@ export const Node_key = {
 
         // sort direction
         const sort_direction = [];
-        if (this.strings.sort_direction === CSL.DESCENDING) {
+        if (this.strings.sort_direction === DESCENDING) {
             //print("sort: descending on "+state.tmp.area);
             sort_direction.push(1);
             sort_direction.push(-1);
@@ -43,7 +44,7 @@ export const Node_key = {
         }
         state[state.build.area].opt.sort_directions.push(sort_direction);
 
-        if (CSL.DATE_VARIABLES.indexOf(this.variables[0]) > -1) {
+        if (DATE_VARIABLES.indexOf(this.variables[0]) > -1) {
             state.build.date_key = true;
         }
 
@@ -69,17 +70,17 @@ export const Node_key = {
         // ops to initialize the key's output structures
         if (this.variables.length) {
             const variable = this.variables[0];
-            if (CSL.NAME_VARIABLES.indexOf(variable) > -1) {
+            if (NAME_VARIABLES.indexOf(variable) > -1) {
                 //
                 // Start tag
-                const names_start_token = new CSL.Token("names", CSL.START);
-                names_start_token.tokentype = CSL.START;
+                const names_start_token = new CSL.Token("names", START);
+                names_start_token.tokentype = START;
                 names_start_token.variables = this.variables;
                 CSL.Node.names.build.call(names_start_token, state, target);
                 //
                 // Name tag
-                const name_token = new CSL.Token("name", CSL.SINGLETON);
-                name_token.tokentype = CSL.SINGLETON;
+                const name_token = new CSL.Token("name", SINGLETON);
+                name_token.tokentype = SINGLETON;
                 name_token.strings["name-as-sort-order"] = "all";
                 name_token.strings["sort-separator"] = " ";
                 name_token.strings["et-al-use-last"] = state.inheritOpt(this, "et-al-use-last");
@@ -88,29 +89,29 @@ export const Node_key = {
                 CSL.Node.name.build.call(name_token, state, target);
                 //
                 // Institution tag
-                const institution_token = new CSL.Token("institution", CSL.SINGLETON);
-                institution_token.tokentype = CSL.SINGLETON;
+                const institution_token = new CSL.Token("institution", SINGLETON);
+                institution_token.tokentype = SINGLETON;
                 CSL.Node.institution.build.call(institution_token, state, target);
                 //
                 // End tag
-                const names_end_token = new CSL.Token("names", CSL.END);
-                names_end_token.tokentype = CSL.END;
+                const names_end_token = new CSL.Token("names", END);
+                names_end_token.tokentype = END;
                 CSL.Node.names.build.call(names_end_token, state, target);
             } else {
-                const single_text = new CSL.Token("text", CSL.SINGLETON);
+                const single_text = new CSL.Token("text", SINGLETON);
                 single_text.strings.sort_direction = this.strings.sort_direction;
                 single_text.dateparts = this.dateparts;
-                if (CSL.NUMERIC_VARIABLES.indexOf(variable) > -1) {
+                if (NUMERIC_VARIABLES.indexOf(variable) > -1) {
                     // citation-number is virtualized. As a sort key it has no effect on registry
                     // sort order per se, but if set to DESCENDING, it reverses the sequence of numbers representing
                     // bib entries.
                     if (variable === "citation-number") {
                         func = function (state, Item) {
                             if (state.tmp.area === "bibliography_sort") {
-                                if (this.strings.sort_direction === CSL.DESCENDING) {
-                                    state.bibliography_sort.opt.citation_number_sort_direction = CSL.DESCENDING;
+                                if (this.strings.sort_direction === DESCENDING) {
+                                    state.bibliography_sort.opt.citation_number_sort_direction = DESCENDING;
                                 } else {
-                                    state.bibliography_sort.opt.citation_number_sort_direction = CSL.ASCENDING;
+                                    state.bibliography_sort.opt.citation_number_sort_direction = ASCENDING;
                                 }
                             }
                             let num;
@@ -142,7 +143,7 @@ export const Node_key = {
                         const trigraph = state.getCitationLabel(Item);
                         state.output.append(trigraph, this);
                     };
-                } else if (CSL.DATE_VARIABLES.indexOf(variable) > -1) {
+                } else if (DATE_VARIABLES.indexOf(variable) > -1) {
                     func = CSL.dateAsSortKey;
                     single_text.variables = this.variables;
                 } else if ("title" === variable) {
@@ -170,7 +171,7 @@ export const Node_key = {
         } else { // macro
             //
             // if it's not a variable, it's a macro
-            const token = new CSL.Token("text", CSL.SINGLETON);
+            const token = new CSL.Token("text", SINGLETON);
             token.strings.sort_direction = this.strings.sort_direction;
             token.postponed_macro = this.postponed_macro;
             CSL.expandMacro.call(state, token, target);
@@ -179,7 +180,7 @@ export const Node_key = {
         // ops to output the key string result to an array go
         // on the closing "key" tag before it is pushed.
         // Do not close the level.
-        const end_key = new CSL.Token("key", CSL.END);
+        const end_key = new CSL.Token("key", END);
 
         // Eliminated at revision 1.0.159.
         // Was causing non-fatal error "wanted empty but found group".

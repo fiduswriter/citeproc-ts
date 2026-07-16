@@ -1,8 +1,10 @@
 import { CSL } from '../csl';
 
+import { SINGLETON, START } from '../constants/core';
+import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 export const Node_institution = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
-        if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {
+        if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
 
             let func = function (this: CslNode, state: CslState): void {
                 if ("string" === typeof this.strings.delimiter) {
@@ -25,7 +27,7 @@ export const Node_institution = {
                 if ("undefined" === typeof this.and_term && state.tmp.and_term) {
                     this.and_term = state.tmp.and_term;
                 }
-                if (CSL.STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
+                if (STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
                     this.and_prefix_single = " ";
                     this.and_prefix_multiple = ", ";
                     if ("string" === typeof state.tmp.institution_delimiter) {
@@ -70,7 +72,7 @@ export const Node_institution = {
         target.push(this);
     },
     configure: function (this: CslNode, state: CslState): void {
-        if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {
+        if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
             state.build.has_institution = true;
         }
     }

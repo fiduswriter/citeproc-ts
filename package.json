@@ -2,7 +2,10 @@
     "name": "citeproc-ts",
     "version": "0.1.0-dev",
     "description": "The citeproc-js citation formatting module ported to TypeScript",
-    "main": "citeproc_commonjs.js",
+    "main": "./citeproc.mjs",
+    "exports": {
+        ".": "./citeproc.mjs"
+    },
     "bin": {
         "cslrun": "./test-runner/dist/runtests.js"
     },
@@ -11,7 +14,7 @@
         "url": "https://codeberg.org/fiduswriter/citeproc-ts"
     },
     "files": [
-        "citeproc_commonjs.js",
+        "citeproc.mjs",
         "test-runner/dist/",
         "tools/rnc-validator.js"
     ],

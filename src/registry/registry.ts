@@ -5,6 +5,8 @@ import { CitationReg } from '../disambig/citations';
 /*global CSL: true */
 
 
+import { DESCENDING, NUMERIC } from '../constants/core';
+import { debug } from '../logger';
 //
 // Time for a rewrite of this module.
 //
@@ -436,9 +438,9 @@ export class Registry {
                 //if (!this.ambigcites[akey]){
                 //    this.ambigcites[akey] = [];
                 //}
-                //CSL.debug("Run: "+item+"("+this.ambigcites[akey]+")");
+                //debug("Run: "+item+"("+this.ambigcites[akey]+")");
                 //if (this.ambigcites[akey].indexOf(item) === -1){
-                //    CSL.debug("  Add: "+item);
+                //    debug("  Add: "+item);
                 //    this.ambigcites[akey].push(item);
                 //}
                 //
@@ -593,7 +595,7 @@ export class Registry {
         //
         // 19. Reset citation numbers on list items
         //
-        if (this.state.bibliography_sort.opt.citation_number_sort_direction === CSL.DESCENDING) {
+        if (this.state.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
             this.state.bibliography_sort.tmp.citation_number_map = {};
         }
         len = this.reflist.length;
@@ -602,12 +604,12 @@ export class Registry {
             // save the overhead of rerenderings if citation-number is not
             // used in the style.
             item.seq = (pos + 1);
-            if (this.state.bibliography_sort.opt.citation_number_sort_direction === CSL.DESCENDING) {
+            if (this.state.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
                 this.state.bibliography_sort.tmp.citation_number_map[item.seq] = (this.reflist.length - item.seq + 1);
             }
-            // update_mode is set to CSL.NUMERIC if citation-number is rendered
+            // update_mode is set to NUMERIC if citation-number is rendered
             // in citations.
-            if (this.state.opt.update_mode === CSL.NUMERIC && item.seq != this.oldseq[item.id]) {
+            if (this.state.opt.update_mode === NUMERIC && item.seq != this.oldseq[item.id]) {
                 this.state.tmp.taintedItemIDs[item.id] = true;
             }
             if (item.seq != this.oldseq[item.id]) {
@@ -712,7 +714,7 @@ export class Registry {
     registerAmbigToken(akey: any, id: any, ambig_config: any) {
         //SNIP-START
         if (!this.registry[id]) {
-            CSL.debug("Warning: unregistered item: itemID=("+id+"), akey=("+akey+")");
+            debug("Warning: unregistered item: itemID=("+id+"), akey=("+akey+")");
         }
         //SNIP-END
         // Preserve existing disambiguate value (set by @disambiguate conditions)
@@ -820,7 +822,7 @@ CSL.getSortKeys = function (Item: any, key_type: any) {
     let area, root, extension, strip_prepositions, len, pos;
     //SNIP-START
     if (false) {
-        CSL.debug("KEY TYPE: " + key_type);
+        debug("KEY TYPE: " + key_type);
     }
     //SNIP-END
     area = this.tmp.area;
@@ -843,7 +845,7 @@ CSL.getSortKeys = function (Item: any, key_type: any) {
     }
     //SNIP-START
     if (false) {
-        CSL.debug("sort keys (" + key_type + "): " + this[key_type].keys);
+        debug("sort keys (" + key_type + "): " + this[key_type].keys);
     }
     //SNIP-END
     

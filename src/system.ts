@@ -1,5 +1,6 @@
 import { CSL } from './csl';
 
+import { error } from './logger';
 export function setupXml(xmlObject: any): any {
     let dataObj: any = {};
     let parser: any = null;
@@ -23,10 +24,10 @@ export function setupXml(xmlObject: any): any {
             parser = new CSL.XmlJSON(xmlObject);
         }
     } else {
-        CSL.error("unable to parse XML input");
+        error("unable to parse XML input");
     }
     if (!parser) {
-        CSL.error("citeproc-js error: unable to parse CSL style or locale object");
+        error("citeproc-js error: unable to parse CSL style or locale object");
     }
     return parser;
 };

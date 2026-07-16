@@ -1,5 +1,4 @@
-import { CSL } from '../csl';
-
+import { error } from '../logger';
 /**
  * A blob is a unit of rendered output, carrying its own formatting
  * strings, decorations and nested child blobs.
@@ -49,7 +48,7 @@ export class Blob {
 
     public push(blob: any): void {
         if ("string" === typeof this.blobs) {
-            CSL.error("Attempt to push blob onto string object");
+            error("Attempt to push blob onto string object");
         } else if (false !== blob) {
             blob.alldecor = blob.alldecor.concat(this.alldecor);
             this.blobs.push(blob);

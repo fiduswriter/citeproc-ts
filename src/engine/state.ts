@@ -1,6 +1,7 @@
 import { CSL } from '../csl';
 import { Suffixator, Romanizer, Ordinalizer, LongOrdinalizer } from '../util/number';
 
+import { ASCENDING, LITERAL, NONE, SUFFIX_CHARS } from '../constants/core';
 export class Opt {
     [key: string]: any;
 
@@ -104,8 +105,8 @@ export class Opt {
             }
         };
         this["default-locale"] = [];
-        this.update_mode = CSL.NONE;
-        this.bib_mode = CSL.NONE;
+        this.update_mode = NONE;
+        this.bib_mode = NONE;
         this.sort_citations = false;
 
         this["et-al-min"] = 0;
@@ -191,7 +192,7 @@ export class Tmp {
         this.root = "citation";
         this.extension = "";
 
-        this.can_substitute = new CSL.Stack(0, CSL.LITERAL);
+        this.can_substitute = new CSL.Stack(0, LITERAL);
 
         this.element_rendered_ok = false;
 
@@ -217,7 +218,7 @@ export class Tmp {
 
         this.in_cite_predecessor = false;
 
-        this.jump = new CSL.Stack(0, CSL.LITERAL);
+        this.jump = new CSL.Stack(0, LITERAL);
 
         this.decorations = new CSL.Stack();
 
@@ -244,11 +245,11 @@ export class Tmp {
 
         this.bib_sort_keys = [];
 
-        this.prefix = new CSL.Stack("", CSL.LITERAL);
+        this.prefix = new CSL.Stack("", LITERAL);
 
-        this.suffix = new CSL.Stack("", CSL.LITERAL);
+        this.suffix = new CSL.Stack("", LITERAL);
 
-        this.delimiter = new CSL.Stack("", CSL.LITERAL);
+        this.delimiter = new CSL.Stack("", LITERAL);
 
         this.cite_locales = [];
         this.cite_affixes = {
@@ -274,7 +275,7 @@ export class Fun {
     constructor(state: any) {
         this.match = new CSL.Util.Match();
 
-        this.suffixator = new Suffixator(CSL.SUFFIX_CHARS);
+        this.suffixator = new Suffixator(SUFFIX_CHARS);
 
         this.romanizer = new Romanizer();
 
@@ -319,7 +320,7 @@ export class Build {
         this.root = "citation";
         this.extension = "";
 
-        this.substitute_level = new CSL.Stack(0, CSL.LITERAL);
+        this.substitute_level = new CSL.Stack(0, LITERAL);
         this.names_level = 0;
         this.render_nesting_level = 0;
         this.render_seen = false;
@@ -401,7 +402,7 @@ export class BibliographySort {
         this.opt = {};
         this.opt.sort_directions = [];
         this.opt.topdecor = [];
-        this.opt.citation_number_sort_direction = CSL.ASCENDING;
+        this.opt.citation_number_sort_direction = ASCENDING;
         this.opt.citation_number_secondary = false;
         this.tmp = {};
         this.keys = [];

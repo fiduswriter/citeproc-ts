@@ -1,16 +1,19 @@
 import { CSL } from '../csl';
 
+import { END, LITERAL, SINGLETON, START } from '../constants/core';
+import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
+import { debug } from '../logger';
 export const Node_names = {
     build: function (state, target) {
         let func;
-        // CSL.debug = print;
+        // debug = print;
 
-        if (this.tokentype === CSL.START || this.tokentype === CSL.SINGLETON) {
+        if (this.tokentype === START || this.tokentype === SINGLETON) {
             CSL.Util.substituteStart.call(this, state, target);
             state.build.substitute_level.push(1);
         }
         
-        if (this.tokentype === CSL.SINGLETON) {
+        if (this.tokentype === SINGLETON) {
             state.build.names_variables[state.build.names_variables.length-1].concat(this.variables);
             for (let i in this.variables) {
                 const variable = this.variables[i];
@@ -25,7 +28,7 @@ export const Node_names = {
             this.execs.push(func);
         }
 
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
 
             state.build.names_flag = true;
             state.build.name_flag = false;
@@ -44,7 +47,7 @@ export const Node_names = {
 
         }
         
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
 
             // Set/reset name blobs if they exist, for processing
             // by namesOutput()
@@ -90,7 +93,7 @@ export const Node_names = {
                     this.etal_prefix_multiple = " ";
                 }
                 this.etal_suffix = "";
-                if (!CSL.STARTSWITH_ROMANESQUE_REGEXP.test(this.etal_term)) {
+                if (!STARTSWITH_ROMANESQUE_REGEXP.test(this.etal_term)) {
                     // Not sure what the correct treatment is here, but we should not suppress
                     // a comma-space.
                     // https://forums.zotero.org/discussion/76679/delimiter-precedes-et-al-always-dose-not-work-in-locale-zh-cn
@@ -118,7 +121,7 @@ export const Node_names = {
                 const mywith = "with";
                 let with_default_prefix = "";
                 let with_suffix = "";
-                if (CSL.STARTSWITH_ROMANESQUE_REGEXP.test(mywith)) {
+                if (STARTSWITH_ROMANESQUE_REGEXP.test(mywith)) {
                     with_default_prefix = " ";
                     with_suffix = " ";
                 }
@@ -162,7 +165,7 @@ export const Node_names = {
             // unsets
             func = function (state) {
                 if (!state.tmp.can_substitute.pop()) {
-                    state.tmp.can_substitute.replace(false, CSL.LITERAL);
+                    state.tmp.can_substitute.replace(false, LITERAL);
                 }
                 
                 // For posterity ...
@@ -187,7 +190,7 @@ export const Node_names = {
         }
         target.push(this);
 
-        if (this.tokentype === CSL.END || this.tokentype === CSL.SINGLETON) {
+        if (this.tokentype === END || this.tokentype === SINGLETON) {
             state.build.substitute_level.pop();
             CSL.Util.substituteEnd.call(this, state, target);
         }

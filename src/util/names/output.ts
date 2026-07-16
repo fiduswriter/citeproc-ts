@@ -1,6 +1,8 @@
 import { CSL } from '../../csl';
 /*global CSL: true */
 
+import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
+import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
 export class NameOutput {
     [key: string]: any;
 
@@ -101,7 +103,7 @@ export class NameOutput {
                 }
             }
             if (this.state.tmp.value.length) {
-                this.state.tmp.can_substitute.replace(false, CSL.LITERAL);
+                this.state.tmp.can_substitute.replace(false, LITERAL);
             }
 
             this.state.tmp.value = oldval;
@@ -474,7 +476,7 @@ export class NameOutput {
         let ret = false;
         const node = this.label[v][position];
         if (node) {
-            ret = CSL.castLabel(this.state, node, term, plural, CSL.TOLERANT);
+            ret = CSL.castLabel(this.state, node, term, plural, TOLERANT);
         }
         return ret;
     };
@@ -832,7 +834,7 @@ export class NameOutput {
                 }
                 //this.state.output.append(blobs[i], style, true);
                 this.state.tmp.group_context.tip.variable_success = true;
-                this.state.tmp.can_substitute.replace(false, CSL.LITERAL);
+                this.state.tmp.can_substitute.replace(false, LITERAL);
                 if (str === "!here>>>") {
                     blobs[i] = false;
                 } else {
@@ -997,10 +999,10 @@ export class NameOutput {
             fullname = name.family.replace(/\"/g, '')+name.given.replace(/\"/g, '');
         }
         
-        if(fullname.match(CSL.KATAKANA_REGEXP)) {
+        if(fullname.match(KATAKANA_REGEXP)) {
             ret = 1;
         }
-        else if(name.family.replace(/\"/g, '').match(CSL.KATAKANA_REGEXP) && name.given.match(CSL.STARTSWITH_KATAKANA_REGEXP))
+        else if(name.family.replace(/\"/g, '').match(KATAKANA_REGEXP) && name.given.match(STARTSWITH_KATAKANA_REGEXP))
         {
             /**
             Initial in given name
@@ -1017,10 +1019,10 @@ export class NameOutput {
         // 1 = mixed content
         // 2 = pure romanesque
         let ret = 2;
-        if (!name.family.replace(/\"/g, '').match(CSL.ROMANESQUE_REGEXP)) {
+        if (!name.family.replace(/\"/g, '').match(ROMANESQUE_REGEXP)) {
             ret = 0;
         }
-        if (!ret && name.given && name.given.match(CSL.STARTSWITH_ROMANESQUE_REGEXP)) {
+        if (!ret && name.given && name.given.match(STARTSWITH_ROMANESQUE_REGEXP)) {
             ret = 1;
         }
         let top_locale;
@@ -1291,7 +1293,7 @@ export class NameOutput {
         }
         // XXX Just generally assume for the present that personal names render something
         this.state.tmp.group_context.tip.variable_success = true;
-        this.state.tmp.can_substitute.replace(false, CSL.LITERAL);
+        this.state.tmp.can_substitute.replace(false, LITERAL);
         this.state.tmp.term_predecessor = true;
         // notSerious
         //this.state.output.append(blob, "literal", true);
@@ -1692,9 +1694,9 @@ export class NameOutput {
     setRenderedName(name: any) {
         if (this.state.tmp.area === "bibliography") {
             let strname = "";
-            for (let j=0,jlen=CSL.NAME_PARTS.length;j<jlen;j+=1) {
-                if (name[CSL.NAME_PARTS[j]]) {
-                    strname += name[CSL.NAME_PARTS[j]];
+            for (let j=0,jlen=NAME_PARTS.length;j<jlen;j+=1) {
+                if (name[NAME_PARTS[j]]) {
+                    strname += name[NAME_PARTS[j]];
                 }
             }
             this.state.tmp.rendered_name.push(strname);
@@ -1806,8 +1808,8 @@ export class NameOutput {
             static_ordering_val = true;
         } else {
             if (this.state.opt['auto-vietnamese-names']
-                && (CSL.VIETNAMESE_NAMES.exec(name.family + " " + name.given)
-                    && CSL.VIETNAMESE_SPECIALS.exec(name.family + name.given))) {
+                && (VIETNAMESE_NAMES.exec(name.family + " " + name.given)
+                    && VIETNAMESE_SPECIALS.exec(name.family + name.given))) {
                 
                 static_ordering_val = true;
             }

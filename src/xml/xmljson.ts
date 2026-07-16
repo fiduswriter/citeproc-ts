@@ -1,5 +1,4 @@
-import { CSL } from '../csl';
-
+import { INSTITUTION_KEYS, NAME_ATTRIBUTES } from '../constants/core';
 export class XmlJSON {
     dataObj: any;
     institution: any;
@@ -345,14 +344,14 @@ export class XmlJSON {
             }
             if (insertPos > -1) {
                 const institution = this.nodeCopy(this.institution);
-                for (let i = 0, ilen = CSL.NAME_ATTRIBUTES.length; i < ilen; i += 1) {
-                    const attrname = CSL.NAME_ATTRIBUTES[i];
+                for (let i = 0, ilen = NAME_ATTRIBUTES.length; i < ilen; i += 1) {
+                    const attrname = NAME_ATTRIBUTES[i];
                     if ("undefined" !== typeof attributes[attrname]) {
                         institution.attrs[attrname] = attributes[attrname];
                     }
                 }
-                for (let i = 0, ilen = CSL.INSTITUTION_KEYS.length; i < ilen; i += 1) {
-                    const attrname = CSL.INSTITUTION_KEYS[i];
+                for (let i = 0, ilen = INSTITUTION_KEYS.length; i < ilen; i += 1) {
+                    const attrname = INSTITUTION_KEYS[i];
                     if ("undefined" !== typeof attributes[attrname]) {
                         institution.children[0].attrs[attrname] = attributes[attrname];
                     }

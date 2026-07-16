@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { TOLERANT } from '../constants/core';
 export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, item: any): string {
     let myterm: string;
     if ("locator" === node.strings.term) {
@@ -44,7 +45,7 @@ export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, ite
             }
         }
     }
-    return castLabel(state, node, myterm, plural, CSL.TOLERANT);
+    return castLabel(state, node, myterm, plural, TOLERANT);
 };
 
 export function castLabel(state: CslState, node: CslNode, term: any, plural: any, mode: any): string {

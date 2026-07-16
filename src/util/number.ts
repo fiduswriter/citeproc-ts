@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { LOOSE, LangPrefsMap, ROMAN_NUMERALS, SUFFIX_CHARS } from '../constants/core';
+import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
 export function padding(num: any): string {
     let m = num.match(/\s*(-{0,1}[0-9]+)/);
     if (m) {
@@ -28,7 +30,7 @@ export class LongOrdinalizer {
             num = "0" + num;
         }
         let ret = CSL.Engine.getField(
-            CSL.LOOSE, 
+            LOOSE, 
             this.state.locale[this.state.opt.lang].terms,
             "long-ordinal-" + num,
             "long", 
@@ -131,7 +133,7 @@ export class Romanizer {
             len = numstr.length;
             for (let pos = 0; pos < len; pos += 1) {
                 n = parseInt(numstr[pos], 10);
-                ret = CSL.ROMAN_NUMERALS[pos][n] + ret;
+                ret = ROMAN_NUMERALS[pos][n] + ret;
             }
         }
         return ret;
@@ -143,7 +145,7 @@ export class Suffixator {
 
     constructor(slist: any) {
         if (!slist) {
-            slist = CSL.SUFFIX_CHARS;
+            slist = SUFFIX_CHARS;
         }
         this.slist = slist.split(",");
     }
@@ -219,16 +221,16 @@ export function processNumber(node, ItemObject, variable) {
     function normalizeFieldValue(str, defaultLabel?) {
         str = str.trim();
         let m = str.match(/^([^ ]+)/);
-        if (m && !CSL.STATUTE_SUBDIV_STRINGS[m[1]]) {
+        if (m && !STATUTE_SUBDIV_STRINGS[m[1]]) {
             let embeddedLabel = null;
             if (["locator", "locator-extra", "page"].indexOf(variable) > -1) {
                 if (ItemObject.label) {
-                    embeddedLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[ItemObject.label];
+                    embeddedLabel = STATUTE_SUBDIV_STRINGS_REVERSE[ItemObject.label];
                 } else {
                     embeddedLabel = "p.";
                 }
             } else {
-                embeddedLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable];
+                embeddedLabel = STATUTE_SUBDIV_STRINGS_REVERSE[variable];
             }
             if (embeddedLabel) {
                 str = embeddedLabel + " " + str;
@@ -242,7 +244,7 @@ export function processNumber(node, ItemObject, variable) {
         joiningSuffix = joiningSuffix ? joiningSuffix : "";
         const info: any = {};
 
-        if (!label && !CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable]) {
+        if (!label && !STATUTE_SUBDIV_STRINGS_REVERSE[variable]) {
             label = "var:"+ variable;
         }
 
@@ -375,9 +377,9 @@ export function processNumber(node, ItemObject, variable) {
                 // merge bad leading label into content
                 if (m.length > 0) {
                     const slug = m[0].trim();
-                    const notAlabel = !CSL.STATUTE_SUBDIV_STRINGS[slug]
-                        || "undefined" === typeof me.getTerm(CSL.STATUTE_SUBDIV_STRINGS[slug])
-                        || (["locator", "number", "locator-extra", "page"].indexOf(variable) === -1 && CSL.STATUTE_SUBDIV_STRINGS[slug] !== variable);
+                    const notAlabel = !STATUTE_SUBDIV_STRINGS[slug]
+                        || "undefined" === typeof me.getTerm(STATUTE_SUBDIV_STRINGS[slug])
+                        || (["locator", "number", "locator-extra", "page"].indexOf(variable) === -1 && STATUTE_SUBDIV_STRINGS[slug] !== variable);
                     if (notAlabel) {
                         if (i === 0) {
                             m = m.slice(1);
@@ -475,7 +477,7 @@ export function processNumber(node, ItemObject, variable) {
             if (currentLabelInfo.pos === 0) {
                 if (["locator", "number", "locator-extra", "page"].indexOf(variable) > -1) {
                     // Actually, shouldn't we do this always?
-                    if ("undefined" === typeof me.getTerm(CSL.STATUTE_SUBDIV_STRINGS[currentLabelInfo.label])) {
+                    if ("undefined" === typeof me.getTerm(STATUTE_SUBDIV_STRINGS[currentLabelInfo.label])) {
                         values[currentLabelInfo.pos].labelVisibility = true;
                     }
                 }
@@ -484,7 +486,7 @@ export function processNumber(node, ItemObject, variable) {
                 // does not match the context, it should be
                 // marked for rendering.
                 if (["locator", "number", "locator-extra", "page"].indexOf(variable) === -1) {
-                    if (CSL.STATUTE_SUBDIV_STRINGS[currentLabelInfo.label] !== variable) {
+                    if (STATUTE_SUBDIV_STRINGS[currentLabelInfo.label] !== variable) {
                         values[0].labelVisibility = true;
                     }
                 }
@@ -597,7 +599,7 @@ export function processNumber(node, ItemObject, variable) {
             } else {
                 label = val.label;
             }
-            ret = !!me.getTerm(CSL.STATUTE_SUBDIV_STRINGS[label]);
+            ret = !!me.getTerm(STATUTE_SUBDIV_STRINGS[label]);
         }
         return ret;
     }
@@ -732,7 +734,7 @@ export function processNumber(node, ItemObject, variable) {
             obj.numeric = values[0].numeric;
             obj.collapsible = values[0].collapsible;
             obj.plural = values[0].plural;
-            obj.label = CSL.STATUTE_SUBDIV_STRINGS[values[0].label];
+            obj.label = STATUTE_SUBDIV_STRINGS[values[0].label];
             if (variable === "number" && obj.label === "issue" && me.getTerm("number")) {
                 obj.label = "number";
             }
@@ -771,7 +773,7 @@ export function processNumber(node, ItemObject, variable) {
     }
 
     // Possibly apply multilingual transform
-    const languageRole = CSL.LangPrefsMap[variable];
+    const languageRole = LangPrefsMap[variable];
     if (languageRole) {
         const localeType = this.opt["cite-lang-prefs"][languageRole][0];
         val = this.transform.getTextSubField(ItemObject, realVariable, "locale-"+localeType, true);
@@ -830,7 +832,7 @@ export function processNumber(node, ItemObject, variable) {
         if ("number" === typeof val) {
             val = "" + val;
         }
-        const defaultLabel = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[variable];
+        const defaultLabel = STATUTE_SUBDIV_STRINGS_REVERSE[variable];
 
         if (this.tmp.shadow_numbers[realVariable].values.length === 0) {
             // XXX
@@ -920,7 +922,7 @@ export function outputNumericField(state: any, varname: string, itemID: string):
             if ('var:' === num.label.slice(0,4)) {
                 labelName = num.label.slice(4);
             } else {
-                labelName = CSL.STATUTE_SUBDIV_STRINGS[num.label];
+                labelName = STATUTE_SUBDIV_STRINGS[num.label];
             }
             if (labelName) {
                 // Simplify this some day.

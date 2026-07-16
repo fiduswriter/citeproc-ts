@@ -1,4 +1,5 @@
-import { CSL } from '../csl';
+import { STATUTE_SUBDIV_PLAIN_REGEX, STATUTE_SUBDIV_PLAIN_REGEX_FRONT } from '../constants/regex';
+import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
 export function remapSectionVariable(this: any, inputList: any): void {
     for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
         const Item = inputList[i][0];
@@ -7,10 +8,10 @@ export function remapSectionVariable(this: any, inputList: any): void {
         if (["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1) {
             if (item.locator) {
                 item.locator = item.locator.trim();
-                let m = item.locator.match(CSL.STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
+                let m = item.locator.match(STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
                 if (!m) {
                     if (item.label) {
-                        item.locator = CSL.STATUTE_SUBDIV_STRINGS_REVERSE[item.label] + " " + item.locator;
+                        item.locator = STATUTE_SUBDIV_STRINGS_REVERSE[item.label] + " " + item.locator;
                     } else {
                         item.locator = "p. " + item.locator;
                     }
@@ -19,7 +20,7 @@ export function remapSectionVariable(this: any, inputList: any): void {
             let sectionMasterLabel = null;
             if (Item.section) {
                 Item.section = Item.section.trim();
-                const m2 = Item.section.match(CSL.STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
+                const m2 = Item.section.match(STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
                 if (!m2) {
                     Item.section = "sec. " + Item.section;
                     sectionMasterLabel = "sec.";
@@ -68,9 +69,9 @@ export function setNumberLabels(this: any, Item: CslItem): void {
         let value = "" + Item.number;
         value = value.split("\\").join("");
         const firstword = value.split(/\s+/)[0];
-        const firstlabel = CSL.STATUTE_SUBDIV_STRINGS[firstword];
+        const firstlabel = STATUTE_SUBDIV_STRINGS[firstword];
         if (firstlabel) {
-            const splt = value.split(CSL.STATUTE_SUBDIV_PLAIN_REGEX);
+            const splt = value.split(STATUTE_SUBDIV_PLAIN_REGEX);
             if (splt.length > 1) {
                 const lst = [];
                 for (let j = 1, jlen = splt.length; j < jlen; j += 1) {

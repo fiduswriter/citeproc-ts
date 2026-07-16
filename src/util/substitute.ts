@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { DISPLAY_CLASSES, END, SINGLETON, START } from '../constants/core';
 export function Util_substituteStart(state, target) {
     let element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
     func = function (state, Item, item) {
@@ -56,7 +57,7 @@ export function Util_substituteStart(state, target) {
     this.strings.cls = false;
     if (state.build.render_nesting_level === 0) {
         if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
-            bib_first = new CSL.Token("group", CSL.START);
+            bib_first = new CSL.Token("group", START);
             bib_first.decorations = [["@display", "left-margin"]];
             func = function (state, Item) {
                 if (!state.tmp.render_seen) {
@@ -66,8 +67,8 @@ export function Util_substituteStart(state, target) {
             };
             bib_first.execs.push(func);
             target.push(bib_first);
-        } else if (CSL.DISPLAY_CLASSES.indexOf(display) > -1) {
-            bib_first = new CSL.Token("group", CSL.START);
+        } else if (DISPLAY_CLASSES.indexOf(display) > -1) {
+            bib_first = new CSL.Token("group", START);
             bib_first.decorations = [["@display", display]];
             func = function (state, Item) {
                 bib_first.strings.first_blob = Item.id;
@@ -80,9 +81,9 @@ export function Util_substituteStart(state, target) {
     }
     state.build.render_nesting_level += 1;
     if (state.build.substitute_level.value() === 1) {
-        choose_start = new CSL.Token("choose", CSL.START);
+        choose_start = new CSL.Token("choose", START);
         CSL.Node.choose.build.call(choose_start, state, target);
-        if_start = new CSL.Token("if", CSL.START);
+        if_start = new CSL.Token("if", START);
         func = function () {
             if (state.tmp.can_substitute.value()) {
                 return true;
@@ -101,7 +102,7 @@ export function Util_substituteStart(state, target) {
 
         func = function (state, Item, item) {
             if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
-                const variable_entry = new CSL.Token("text", CSL.START);
+                const variable_entry = new CSL.Token("text", START);
                 variable_entry.decorations = [["@showid", "true"]];
                 state.output.startTag("variable_entry", variable_entry);
                 let position = null;
@@ -192,7 +193,7 @@ export function Util_substituteEnd(state, target) {
             this.execs.push(func);
             state.build.cls = false;
         } else if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
-            bib_first_end = new CSL.Token("group", CSL.END);
+            bib_first_end = new CSL.Token("group", END);
             func = function (state) {
                 if (!state.tmp.render_seen) {
                     state.output.endTag("bib_first");
@@ -200,7 +201,7 @@ export function Util_substituteEnd(state, target) {
             };
             bib_first_end.execs.push(func);
             target.push(bib_first_end);
-            bib_other = new CSL.Token("group", CSL.START);
+            bib_other = new CSL.Token("group", START);
             bib_other.decorations = [["@display", "right-inline"]];
             func = function (state) {
                 if (!state.tmp.render_seen) {
@@ -213,14 +214,14 @@ export function Util_substituteEnd(state, target) {
         }
     }
     if (state.build.substitute_level.value() === 1) {
-        if_end = new CSL.Token("if", CSL.END);
+        if_end = new CSL.Token("if", END);
         target.push(if_end);
-        choose_end = new CSL.Token("choose", CSL.END);
+        choose_end = new CSL.Token("choose", END);
         CSL.Node.choose.build.call(choose_end, state, target);
     }
 
     if ("names" === this.name || ("text" === this.name && this.variables_real !== "title")) {
-        author_substitute = new CSL.Token("text", CSL.SINGLETON);
+        author_substitute = new CSL.Token("text", SINGLETON);
         const substitution_name = this.name;
         func = function (state, Item) {
             if (state.tmp.area !== "bibliography") {

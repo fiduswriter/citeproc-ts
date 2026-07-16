@@ -1,4 +1,6 @@
 import { CSL } from '../csl';
+import { MODULE_MACROS, MODULE_TYPES } from '../constants/core';
+import { debug } from '../logger';
 export function getJurisdictionList(this: any, jurisdiction: any): any[] {
     const jurisdictionList: any[] = [];
     const jurisdictionElems = jurisdiction.split(":");
@@ -48,13 +50,13 @@ export function loadStyleModule(this: any, jurisdiction: any, xmlSource: any, sk
     CSL.SET_COURT_CLASSES(this, lang, myXml, myXml.dataObj);
 
     if (!this.juris[jurisdiction].types) {
-        this.juris[jurisdiction].types = CSL.MODULE_TYPES;
+        this.juris[jurisdiction].types = MODULE_TYPES;
     }
     myNodes = myXml.getNodesByName(myXml.dataObj, "macro");
     for (let i2 = 0, ilen2 = myNodes.length; i2 < ilen2; i2 += 1) {
         const myName = myXml.getAttributeValue(myNodes[i2], "name");
-        if (!CSL.MODULE_MACROS[myName]) {
-            CSL.debug("CSL: skipping non-modular macro name \"" + myName + "\" in module context");
+        if (!MODULE_MACROS[myName]) {
+            debug("CSL: skipping non-modular macro name \"" + myName + "\" in module context");
             continue;
         }
         macroCount += 1;

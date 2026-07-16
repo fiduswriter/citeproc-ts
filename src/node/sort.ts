@@ -1,9 +1,10 @@
 import { CSL } from '../csl';
 
+import { END, START } from '../constants/core';
 export const Node_sort = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         target = state[state.build.root + "_sort"].tokens;
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
             if (state.build.area === "citation") {
                 state.opt.sort_citations = true;
             }
@@ -34,7 +35,7 @@ export const Node_sort = {
             this.execs.push(func);
 
         }
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             state.build.area = state.build.root;
             state.build.extension = "";
             const funcEnd = function (this: CslNode, state: CslState): void {

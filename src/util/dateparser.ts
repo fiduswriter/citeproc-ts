@@ -1,6 +1,5 @@
-import { CSL } from '../csl';
-
-
+import { DATE_PARTS_ALL } from '../constants/core';
+import { debug } from '../logger';
 export const DateParser = function () {
 
     /*
@@ -94,7 +93,7 @@ export const DateParser = function () {
         }
 
         if (lst.length !== 12 && lst.length !== 16) {
-            CSL.debug("month [+season] list of "+lst.length+", expected 12 or 16. Ignoring.");
+            debug("month [+season] list of "+lst.length+", expected 12 or 16. Ignoring.");
             return;
         }
 
@@ -118,7 +117,7 @@ export const DateParser = function () {
                         if (this.monthAbbrevs[j][k] === lst[i].slice(0, abbrevLength)) {
                             while (this.monthSets[j][k].slice(0, abbrevLength) === lst[i].slice(0, abbrevLength)) {
                                 if (abbrevLength > lst[i].length || abbrevLength > this.monthSets[j][k].length) {
-                                    CSL.debug("unable to disambiguate month string in date parser: "+lst[i]);
+                                    debug("unable to disambiguate month string in date parser: "+lst[i]);
                                     break;
                                 } else {
                                     abbrevLength += 1;
@@ -194,8 +193,8 @@ export const DateParser = function () {
     this.convertDateObjectToString = function(thedate) {
         let ret = [];
         for (let i = 0, ilen = 3; i < ilen; i += 1) {
-            if (thedate[CSL.DATE_PARTS_ALL[i]]) {
-                ret.push(thedate[CSL.DATE_PARTS_ALL[i]]);
+            if (thedate[DATE_PARTS_ALL[i]]) {
+                ret.push(thedate[DATE_PARTS_ALL[i]]);
             } else {
                 break;
             }
@@ -415,8 +414,8 @@ export const DateParser = function () {
             suff = "_end";
         }
         if (isRange) {
-            for (let j=0,jlen=CSL.DATE_PARTS_ALL.length; j<jlen; j++) {
-                const item = CSL.DATE_PARTS_ALL[j];
+            for (let j=0,jlen=DATE_PARTS_ALL.length; j<jlen; j++) {
+                const item = DATE_PARTS_ALL[j];
                 if (thedate[item] && !thedate[(item + "_end")]) {
                     thedate[(item + "_end")] = thedate[item];
                 } else if (!thedate[item] && thedate[(item + "_end")]) {

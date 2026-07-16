@@ -1,12 +1,14 @@
 import { CSL } from '../csl';
 
+import { END, SINGLETON, START } from '../constants/core';
+import { debug } from '../logger';
 export const Node_layout = {
     build: function (state, target) {
         let func, prefix_token, suffix_token, tok;
 
         function setSuffix() {
             if (state.build.area === "bibliography") {
-                suffix_token = new CSL.Token("text", CSL.SINGLETON);
+                suffix_token = new CSL.Token("text", SINGLETON);
                 func = function(state) {
                     // Suppress suffix on all but the last item in bibliography parallels
                     if (!state.tmp.parallel_and_not_last) {
@@ -37,7 +39,7 @@ export const Node_layout = {
             }
         }
 
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
 
             if (this.locale_raw) {
                 state.build.current_default_locale = this.locale_raw;
@@ -52,7 +54,7 @@ export const Node_layout = {
                     && Item.system_id 
                     && state.tmp.area === "citation") { 
 
-                    const cite_entry = new CSL.Token("group", CSL.START);
+                    const cite_entry = new CSL.Token("group", START);
                     cite_entry.decorations = [["@cite", "entry"]];
                     state.output.startTag("cite_entry", cite_entry);
                     state.output.current.value().item_id = Item.system_id;
@@ -66,7 +68,7 @@ export const Node_layout = {
         }
 
         // XXX Works, but using state.tmp looks wrong here? We're in the build layer ...
-        if (this.tokentype === CSL.START && !state.tmp.cite_affixes[state.build.area]) {
+        if (this.tokentype === START && !state.tmp.cite_affixes[state.build.area]) {
             //
             // done_vars is used to prevent the repeated
             // rendering of variables
@@ -94,7 +96,7 @@ export const Node_layout = {
                     }
                 }
 
-                //CSL.debug(" === init rendered_name === ");
+                //debug(" === init rendered_name === ");
                 state.tmp.rendered_name = false;
             };
             this.execs.push(func);
@@ -119,7 +121,7 @@ export const Node_layout = {
             target.push(this);
 
             if (state.build.area === "citation") {
-                prefix_token = new CSL.Token("text", CSL.SINGLETON);
+                prefix_token = new CSL.Token("text", SINGLETON);
                 func = function (state, Item, item) {
                     if (item && item.prefix) {
                         let prefix = CSL.checkPrefixSpaceAppend(state, item.prefix);
@@ -138,7 +140,7 @@ export const Node_layout = {
         // Cast token to be used in one of the configurations below.
         let my_tok;
         if (this.locale_raw) {
-            my_tok = new CSL.Token("dummy", CSL.START);
+            my_tok = new CSL.Token("dummy", START);
             my_tok.locale = this.locale_raw;
             my_tok.strings.delimiter = this.strings.delimiter;
             my_tok.strings.suffix = this.strings.suffix;
@@ -147,7 +149,7 @@ export const Node_layout = {
             }
         }
 
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
             state.build.layout_flag = true;
                             
             // Only run the following once, to set up the final layout node ...
@@ -168,7 +170,7 @@ export const Node_layout = {
                 if (state.tmp.cite_affixes[state.build.area]) {
                     // if build_layout_locale_flag is true,
                     // write cs:else START to the token list.
-                    tok = new CSL.Token("else", CSL.START);
+                    tok = new CSL.Token("else", START);
                     CSL.Node["else"].build.call(tok, state, target);
                 }
 
@@ -180,7 +182,7 @@ export const Node_layout = {
                     // if layout_locale_flag is untrue,
                     // write cs:choose START and cs:if START
                     // to the token list.
-                    const choose_tok = new CSL.Token("choose", CSL.START);
+                    const choose_tok = new CSL.Token("choose", START);
                     CSL.Node.choose.build.call(choose_tok, state, target);
                     my_tok.name = "if";
                     CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
@@ -198,14 +200,14 @@ export const Node_layout = {
                 state.tmp.cite_affixes[state.build.area][my_tok.locale].suffix = this.strings.suffix;
             }
         }
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             if (this.locale_raw) {
                 setSuffix();
                 if (!state.build.layout_locale_flag) {
                     // If layout_locale_flag is untrue, write cs:if END
                     // to the token list.
                     my_tok.name = "if";
-                    my_tok.tokentype = CSL.END;
+                    my_tok.tokentype = END;
                     CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
                     CSL.Node["if"].build.call(my_tok, state, target);
                     state.build.layout_locale_flag = true;
@@ -213,7 +215,7 @@ export const Node_layout = {
                     // If layout_locale_flag is true, write cs:else-if END
                     // to the token list.
                     my_tok.name = "else-if";
-                    my_tok.tokentype = CSL.END;
+                    my_tok.tokentype = END;
                     CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
                     CSL.Node["else-if"].build.call(my_tok, state, target);
                 }
@@ -225,15 +227,15 @@ export const Node_layout = {
                     // If layout_locale_flag is true, write cs:else END
                     // and cs:choose END to the token list.
                     if (state.build.layout_locale_flag) {
-                        tok = new CSL.Token("else", CSL.END);
+                        tok = new CSL.Token("else", END);
                         CSL.Node["else"].build.call(tok, state, target);
-                        tok = new CSL.Token("choose", CSL.END);
+                        tok = new CSL.Token("choose", END);
                         CSL.Node.choose.build.call(tok, state, target);
                     }
                 }
                 state.build_layout_locale_flag = true;
                 if (state.build.area === "citation") {
-                    suffix_token = new CSL.Token("text", CSL.SINGLETON);
+                    suffix_token = new CSL.Token("text", SINGLETON);
                     func = function (state, Item, item) {
                         if (item && item.suffix) {
                             let suffix = CSL.checkSuffixSpacePrepend(state, item.suffix);

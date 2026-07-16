@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { PARTICLE_FAMILY_REGEXP, PARTICLE_GIVEN_REGEXP } from '../constants/regex';
 export const ParticleList = (function () {
     const always_dropping_1 = [[[0, 1], null]];
     const always_dropping_3 = [[[0, 3], null]];
@@ -247,9 +247,9 @@ export const parseParticles = (function () {
         let hasParticle: any;
         if (firstNameFlag) {
             nameValue = nameValue.split("").reverse().join("");
-            rex = CSL.PARTICLE_GIVEN_REGEXP;
+            rex = PARTICLE_GIVEN_REGEXP;
         } else {
-            rex = CSL.PARTICLE_FAMILY_REGEXP;
+            rex = PARTICLE_FAMILY_REGEXP;
         }
         let m = nameValue.match(rex);
         while (m) {

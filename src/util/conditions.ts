@@ -1,11 +1,12 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { END, SINGLETON, START } from '../constants/core';
 CSL.Conditions = {};
 
 CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
     let func: ((state: CslState) => void) | ((this: CslNode, state: CslState) => any);
-    if (this.tokentype === CSL.START || this.tokentype === CSL.SINGLETON) {
+    if (this.tokentype === START || this.tokentype === SINGLETON) {
         if (this.locale) {
             state.opt.lang = this.locale;
         }
@@ -23,7 +24,7 @@ CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
             this.execs.push(func);
         }
     }
-    if (this.tokentype === CSL.END || this.tokentype === CSL.SINGLETON) {
+    if (this.tokentype === END || this.tokentype === SINGLETON) {
         if (state.build.substitute_level.value() === 0) {
             func = function (this: CslNode, state: CslState): void {
                 state.tmp.condition_counter--;
@@ -56,12 +57,12 @@ CSL.Conditions.TopNode = function (this: CslNode, state: CslState): void {
 };
 
 CSL.Conditions.Configure = function (this: CslNode, state: CslState, pos: number): void {
-    if (this.tokentype === CSL.START) {
+    if (this.tokentype === START) {
         // jump index on failure
         this.fail = state.configure.fail.slice(-1)[0];
         this.succeed = this.next;
         state.configure.fail[(state.configure.fail.length - 1)] = pos;
-    } else if (this.tokentype === CSL.SINGLETON) {
+    } else if (this.tokentype === SINGLETON) {
         // jump index on failure
         this.fail = this.next;
         this.succeed = state.configure.succeed.slice(-1)[0];

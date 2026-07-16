@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { DATE_VARIABLES, DESCENDING, GIVENNAME_DISAMBIGUATION_RULES, LITERAL, NUMERIC_VARIABLES, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_MAP, POSITION_SUBSEQUENT, START } from '../constants/core';
 export const Attributes: { [key: string]: Function } = {};
 
 Attributes["@disambiguate"] = function (state, arg) {
@@ -46,7 +47,7 @@ Attributes["@is-numeric"] = function (state, arg) {
             if (!myitem[variable]) {
                 return false;
             }
-            if (CSL.NUMERIC_VARIABLES.indexOf(variable) > -1) {
+            if (NUMERIC_VARIABLES.indexOf(variable) > -1) {
                 if (!state.tmp.shadow_numbers[variable]) {
                     state.processNumber(false, myitem, variable, Item.type);
                 }
@@ -118,16 +119,16 @@ Attributes["@locator"] = function (state, arg) {
 Attributes["@position"] = function (state, arg) {
     if (!this.tests) {this.tests = []; };
     let tryposition;
-    state.opt.update_mode = CSL.POSITION;
+    state.opt.update_mode = POSITION;
     const trypositions = arg.split(/\s+/);
     const testSubsequentNear = function (Item, item) {
-        if (item && CSL.POSITION_MAP[item.position] >= CSL.POSITION_MAP[CSL.POSITION_SUBSEQUENT] && item["near-note"]) {
+        if (item && POSITION_MAP[item.position] >= POSITION_MAP[POSITION_SUBSEQUENT] && item["near-note"]) {
             return true;
         }
         return false;
     };
     const testSubsequentNotNear = function (Item, item) {
-        if (item && CSL.POSITION_MAP[item.position] == CSL.POSITION_MAP[CSL.POSITION_SUBSEQUENT] && !item["near-note"]) {
+        if (item && POSITION_MAP[item.position] == POSITION_MAP[POSITION_SUBSEQUENT] && !item["near-note"]) {
             return true;
         }
         return false;
@@ -143,7 +144,7 @@ Attributes["@position"] = function (state, arg) {
             if (item && typeof item.position === "number") {
                 if (item.position === 0 && tryposition === 0) {
                     return true;
-                } else if (tryposition > 0 && CSL.POSITION_MAP[item.position] >= CSL.POSITION_MAP[tryposition]) {
+                } else if (tryposition > 0 && POSITION_MAP[item.position] >= POSITION_MAP[tryposition]) {
                     return true;
                 }
             } else if (tryposition === 0) {
@@ -155,15 +156,15 @@ Attributes["@position"] = function (state, arg) {
     for (let i=0,ilen=trypositions.length;i<ilen;i+=1) {
         let tryposition = trypositions[i];
         if (tryposition === "first") {
-            tryposition = CSL.POSITION_FIRST;
+            tryposition = POSITION_FIRST;
         } else if (tryposition === "container-subsequent") {
-            tryposition = CSL.POSITION_CONTAINER_SUBSEQUENT;
+            tryposition = POSITION_CONTAINER_SUBSEQUENT;
         } else if (tryposition === "subsequent") {
-            tryposition = CSL.POSITION_SUBSEQUENT;
+            tryposition = POSITION_SUBSEQUENT;
         } else if (tryposition === "ibid") {
-            tryposition = CSL.POSITION_IBID;
+            tryposition = POSITION_IBID;
         } else if (tryposition === "ibid-with-locator") {
-            tryposition = CSL.POSITION_IBID_WITH_LOCATOR;
+            tryposition = POSITION_IBID_WITH_LOCATOR;
         }
         if ("near-note" === tryposition) {
             this.tests.push(testSubsequentNear);
@@ -271,7 +272,7 @@ Attributes["@variable"] = function (state, arg) {
                 if (variable === "year-suffix") {
                     output = true;
                     break;
-                } else if (CSL.DATE_VARIABLES.indexOf(variable) > -1) {
+                } else if (DATE_VARIABLES.indexOf(variable) > -1) {
                     if (state.opt.development_extensions.locator_date_and_revision && "locator-date" === variable) {
                         output = true;
                         break;
@@ -349,7 +350,7 @@ Attributes["@variable"] = function (state, arg) {
                         state.tmp.rendered_name.push(Item[variable]);
                     }
                 }
-                state.tmp.can_substitute.replace(false,  CSL.LITERAL);
+                state.tmp.can_substitute.replace(false,  LITERAL);
             } else {
                 state.tmp.group_context.tip.variable_attempt = true;
             }
@@ -607,7 +608,7 @@ Attributes["@locale"] = function (state, arg) {
 
     if (this.name === "layout") {
         this.locale_raw = arg;
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
             if (!state.opt.multi_layout) {
                 state.opt.multi_layout = [];
             }
@@ -1057,7 +1058,7 @@ Attributes["@names-use-last"] = function (state, arg) {
 
 Attributes["@sort"] = function (state, arg) {
     if (arg === "descending") {
-        this.strings.sort_direction = CSL.DESCENDING;
+        this.strings.sort_direction = DESCENDING;
     }
 };
 
@@ -1088,7 +1089,7 @@ Attributes["@publisher-and"] = function (state, arg) {
 };
 
 Attributes["@givenname-disambiguation-rule"] = function (state, arg) {
-    if (CSL.GIVENNAME_DISAMBIGUATION_RULES.indexOf(arg) > -1) {
+    if (GIVENNAME_DISAMBIGUATION_RULES.indexOf(arg) > -1) {
         state.citation.opt["givenname-disambiguation-rule"] = arg;
     }
 };

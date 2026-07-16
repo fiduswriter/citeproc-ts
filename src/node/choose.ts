@@ -1,14 +1,13 @@
-import { CSL } from '../csl';
-
+import { END, LITERAL, START } from '../constants/core';
 export const Node_choose = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: (state: CslState) => void;
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
             func = function (state: CslState): void {
-                state.tmp.jump.push(undefined, CSL.LITERAL);
+                state.tmp.jump.push(undefined, LITERAL);
             };
         }
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             func = function (state: CslState): void {
                 state.tmp.jump.pop();
             };
@@ -18,7 +17,7 @@ export const Node_choose = {
     },
 
     configure: function (this: CslNode, state: CslState, pos: number): void {
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
             state.configure.fail.push((pos));
             state.configure.succeed.push((pos));
         } else {

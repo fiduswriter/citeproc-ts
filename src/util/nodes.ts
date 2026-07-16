@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { DATE_VARIABLES, END, MODULE_MACROS, POSITION, SINGLETON, START } from '../constants/core';
+import { debug, error } from '../logger';
 /* For node execution pretty-printing (see below) */
 
 /*
@@ -32,7 +34,7 @@ export function tokenExec(token, Item, item) {
         }
     }
     if (debug) {
-        CSL.debug(token.name + " (" + token.tokentype + ") ---> done");
+        debug(token.name + " (" + token.tokentype + ") ---> done");
     }
     return next;
 };
@@ -48,7 +50,7 @@ export function expandMacro(macro_key_token, target) {
 
     const sort_direction = macro_key_token.strings.sort_direction;
     
-    macro_key_token = new CSL.Token("group", CSL.START);
+    macro_key_token = new CSL.Token("group", START);
     
     let hasDate = false;
     let macroid = false;
@@ -68,22 +70,22 @@ export function expandMacro(macro_key_token, target) {
     }
 
     if (this.build.macro_stack.indexOf(mkey) > -1) {
-        CSL.error("CSL processor error: call to macro \"" + mkey + "\" would cause an infinite loop");
+        error("CSL processor error: call to macro \"" + mkey + "\" would cause an infinite loop");
     } else {
         this.build.macro_stack.push(mkey);
     }
 
     macro_key_token.cslid = macroid;
 
-    if (CSL.MODULE_MACROS[mkey]) {
+    if (MODULE_MACROS[mkey]) {
         macro_key_token.juris = mkey;
-        this.opt.update_mode = CSL.POSITION;
+        this.opt.update_mode = POSITION;
     }
     // Macro group is treated as a real node in the style
     CSL.Node.group.build.call(macro_key_token, this, target, true);
 
     if (!this.cslXml.getNodeValue(macro_nodes)) {
-        CSL.error("CSL style error: undefined macro \"" + mkey + "\"");
+        error("CSL style error: undefined macro \"" + mkey + "\"");
     }
 
     let mytarget = getMacroTarget.call(this, mkey);
@@ -100,7 +102,7 @@ export function expandMacro(macro_key_token, target) {
                 }
             };
         }(mkey));
-        const text_node = new CSL.Token("text", CSL.SINGLETON);
+        const text_node = new CSL.Token("text", SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     } else {
@@ -112,12 +114,12 @@ export function expandMacro(macro_key_token, target) {
                 }
             };
         }(mkey));
-        const text_node = new CSL.Token("text", CSL.SINGLETON);
+        const text_node = new CSL.Token("text", SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     }
 
-    end_of_macro = new CSL.Token("group", CSL.END);
+    end_of_macro = new CSL.Token("group", END);
     end_of_macro.strings.sort_direction = sort_direction;
     
     if (hasDate) {
@@ -185,16 +187,16 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
         return;
     }
     if (!CSL.Node[state.cslXml.nodename(this)]) {
-        CSL.error("Undefined node name \"" + name + "\".");
+        error("Undefined node name \"" + name + "\".");
     }
     attrfuncs = [];
     attributes = state.cslXml.attributes(this);
     decorations = CSL.setDecorations.call(this, state, attributes);
     token = new CSL.Token(name, tokentype);
-    if (tokentype !== CSL.END || name === "if" || name === "else-if" || name === "layout") {
+    if (tokentype !== END || name === "if" || name === "else-if" || name === "layout") {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
-                if (tokentype === CSL.END && key !== "@language" && key !== "@locale") {
+                if (tokentype === END && key !== "@language" && key !== "@locale") {
                     continue;
                 }
                 if (attributes.hasOwnProperty(key)) {
@@ -202,21 +204,21 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
                         try {
                             CSL.Attributes[key].call(token, state, "" + attributes[key]);
                         } catch (e) {
-                            CSL.error(key + " attribute: " + e);
+                            error(key + " attribute: " + e);
                         }
                     } else {
-                        CSL.debug("warning: undefined attribute \""+key+"\" in style");
+                        debug("warning: undefined attribute \""+key+"\" in style");
                     }
                 }
             }
         }
         token.decorations = decorations;
-        if (CSL.DATE_VARIABLES.indexOf(attributes['@variable']) > -1) {
+        if (DATE_VARIABLES.indexOf(attributes['@variable']) > -1) {
             var_stack.push(token.variables);
         }
-    } else if (tokentype === CSL.END && attributes['@variable']) {
+    } else if (tokentype === END && attributes['@variable']) {
         token.hasVariable = true;
-        if (CSL.DATE_VARIABLES.indexOf(attributes['@variable']) > -1) {
+        if (DATE_VARIABLES.indexOf(attributes['@variable']) > -1) {
             token.variables = var_stack.pop();
         }
     }

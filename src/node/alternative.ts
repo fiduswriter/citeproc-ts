@@ -1,13 +1,14 @@
 import { CSL } from '../csl';
 
+import { END, START } from '../constants/core';
 export const Node_alternative = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
 
-            const choose_tok = new CSL.Token("choose", CSL.START);
+            const choose_tok = new CSL.Token("choose", START);
             CSL.Node["choose"].build.call(choose_tok, state, target);
 
-            const if_tok = new CSL.Token("if", CSL.START);
+            const if_tok = new CSL.Token("if", START);
             CSL.Attributes["@alternative-node-internal"].call(if_tok, state);
             CSL.Node["if"].build.call(if_tok, state, target);
 
@@ -91,10 +92,10 @@ export const Node_alternative = {
             this.execs.push(func);
             target.push(this);
 
-            const choose_tok2 = new CSL.Token("choose", CSL.START);
+            const choose_tok2 = new CSL.Token("choose", START);
             CSL.Node["choose"].build.call(choose_tok2, state, target);
 
-            const if_tok2 = new CSL.Token("if", CSL.START);
+            const if_tok2 = new CSL.Token("if", START);
             CSL.Attributes["@alternative-node-internal"].call(if_tok2, state);
             const func2 = function (this: CslNode, state: CslState): void {
                 state.tmp.abort_alternative = true;
@@ -102,12 +103,12 @@ export const Node_alternative = {
             if_tok2.execs.push(func2);
             CSL.Node["if"].build.call(if_tok2, state, target);
 
-        } else if (this.tokentype === CSL.END) {
+        } else if (this.tokentype === END) {
 
-            const if_tok3 = new CSL.Token("if", CSL.END);
+            const if_tok3 = new CSL.Token("if", END);
             CSL.Node["if"].build.call(if_tok3, state, target);
 
-            const choose_tok3 = new CSL.Token("choose", CSL.END);
+            const choose_tok3 = new CSL.Token("choose", END);
             CSL.Node["choose"].build.call(choose_tok3, state, target);
 
             const func3 = function (this: CslNode, state: CslState, Item: CslItem): void {
@@ -120,10 +121,10 @@ export const Node_alternative = {
             this.execs.push(func3);
             target.push(this);
 
-            const if_tok4 = new CSL.Token("if", CSL.END);
+            const if_tok4 = new CSL.Token("if", END);
             CSL.Node["if"].build.call(if_tok4, state, target);
 
-            const choose_tok4 = new CSL.Token("choose", CSL.END);
+            const choose_tok4 = new CSL.Token("choose", END);
             CSL.Node["choose"].build.call(choose_tok4, state, target);
 
         }

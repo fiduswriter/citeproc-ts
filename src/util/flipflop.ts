@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { ROMANESQUE_REGEXP } from '../constants/regex';
 // Use a state machine
 
 // Needs some tweaks:
@@ -469,7 +470,7 @@ export function Util_FlipFlopper(state) {
         if (str.slice(0, 1) === " " && !str.match(/^\s+[\'\"]/)) {
             leadingSpace = true;
         }
-        const rex = new RegExp("(" + CSL.ROMANESQUE_REGEXP.source + ")\u2019(" + CSL.ROMANESQUE_REGEXP.source + ")", "g");
+        const rex = new RegExp("(" + ROMANESQUE_REGEXP.source + ")\u2019(" + ROMANESQUE_REGEXP.source + ")", "g");
         str = " " + str.replace(rex, "$1\'$2");
         const doppel = _doppelString(str);
         if (doppel.tags.length === 0) {

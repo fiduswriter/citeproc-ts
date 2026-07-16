@@ -1,8 +1,7 @@
-import { CSL } from '../csl';
-
+import { END, START } from '../constants/core';
 export const Node_intext = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
-        if (this.tokentype === CSL.START) {
+        if (this.tokentype === START) {
 
             state.build.area = "intext";
             state.build.root = "intext";
@@ -15,7 +14,7 @@ export const Node_intext = {
             };
             this.execs.push(func);
         }
-        if (this.tokentype === CSL.END) {
+        if (this.tokentype === END) {
 
             state.intext_sort = {
                 opt: {

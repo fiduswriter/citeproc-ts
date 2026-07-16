@@ -1,7 +1,6 @@
-import { CSL } from '../csl';
-/*global CSL: true */
-
-
+import { NAME_VARIABLES } from '../constants/core';
+import { ROMANESQUE_NOT_REGEXP } from '../constants/regex';
+import { error } from '../logger';
 export function getCitationLabel(this: any, Item: CslItem): string {
     let label = "";
     const params = this.getTrigraphParams();
@@ -12,8 +11,8 @@ export function getCitationLabel(this: any, Item: CslItem): string {
     }
     myname = myname.replace(".", "");
     myname = myname.slice(0, 1).toUpperCase() + myname.slice(1);
-    for (let i = 0, ilen = CSL.NAME_VARIABLES.length; i < ilen; i += 1) {
-        const n = CSL.NAME_VARIABLES[i];
+    for (let i = 0, ilen = NAME_VARIABLES.length; i < ilen; i += 1) {
+        const n = NAME_VARIABLES[i];
         if (Item[n]) {
             const names = Item[n];
             if (names.length > params.length) {
@@ -38,7 +37,7 @@ export function getCitationLabel(this: any, Item: CslItem): string {
                 if (m) {
                     myname = myname.slice(m[1].length);
                 }
-                myname = myname.replace(CSL.ROMANESQUE_NOT_REGEXP, "");
+                myname = myname.replace(ROMANESQUE_NOT_REGEXP, "");
                 if (!myname) {
                     break;
                 }
@@ -88,7 +87,7 @@ export function getTrigraphParams(this: any): any[] {
     const params: any[] = [];
     const ilst = this.opt.trigraph.split(":");
     if (!this.opt.trigraph || this.opt.trigraph.slice(0, 1) !== "A") {
-        CSL.error("Bad trigraph definition: " + this.opt.trigraph);
+        error("Bad trigraph definition: " + this.opt.trigraph);
     }
     for (let i = 0, ilen = ilst.length; i < ilen; i += 1) {
         let str = ilst[i];
@@ -105,7 +104,7 @@ export function getTrigraphParams(this: any): any[] {
                 config.year += 1;
                 break;
             default:
-                CSL.error("Invalid character in trigraph definition: " + this.opt.trigraph);
+                error("Invalid character in trigraph definition: " + this.opt.trigraph);
             }
         }
         params.push(config);

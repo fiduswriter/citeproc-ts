@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { DATE_PARTS, DATE_PARTS_INTERNAL } from '../constants/core';
+import { debug, error } from '../logger';
 export function dateMacroAsSortKey(this: any, state: CslState, Item: CslItem): void {
     dateAsSortKey.call(this, state, Item, true);
 };
@@ -28,8 +30,8 @@ export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro
         dp = {};
     }
     if (dp.year) {
-        for (let i = 0, ilen = CSL.DATE_PARTS_INTERNAL.length; i < ilen; i += 1) {
-            elem = CSL.DATE_PARTS_INTERNAL[i];
+        for (let i = 0, ilen = DATE_PARTS_INTERNAL.length; i < ilen; i += 1) {
+            elem = DATE_PARTS_INTERNAL[i];
             value = 0;
             e = elem;
             if (e.slice(-4) === "_end") {
@@ -66,22 +68,22 @@ export function dateParseArray(this: any, date_obj: any): any {
             dp = date_obj["date-parts"];
             if (dp.length > 1) {
                 if (dp[0].length !== dp[1].length) {
-                    CSL.error("CSL data error: element mismatch in date range input.");
+                    error("CSL data error: element mismatch in date range input.");
                 }
             }
             exts = ["", "_end"];
             for (let i = 0, ilen = dp.length; i < ilen; i += 1) {
-                for (let j = 0, jlen = CSL.DATE_PARTS.length; j < jlen; j += 1) {
+                for (let j = 0, jlen = DATE_PARTS.length; j < jlen; j += 1) {
                     if (isNaN(parseInt(dp[i][j], 10))) {
-                        ret[(CSL.DATE_PARTS[j] + exts[i])] = undefined;
+                        ret[(DATE_PARTS[j] + exts[i])] = undefined;
                     } else {
-                        ret[(CSL.DATE_PARTS[j] + exts[i])] = parseInt(dp[i][j], 10);
+                        ret[(DATE_PARTS[j] + exts[i])] = parseInt(dp[i][j], 10);
                     }
                 }
             }
         } else if (date_obj.hasOwnProperty(field)) {
             if (field === "literal" && "object" === typeof date_obj.literal && "string" === typeof date_obj.literal.part) {
-                CSL.debug("Warning: fixing up weird literal date value");
+                debug("Warning: fixing up weird literal date value");
                 ret.literal = date_obj.literal.part;
             } else {
                 ret[field] = date_obj[field];

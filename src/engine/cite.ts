@@ -1,6 +1,10 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { ASSUME_ALL_ITEMS_REGISTERED, ERROR_NO_RENDERED_FORM, NONE, NUMERIC, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_SUBSEQUENT, POSITION_TEST_VARS, PREVIEW, SWAPPING_PUNCTUATION, TERMINAL_PUNCTUATION } from '../constants/core';
+import { LOCATOR_LABELS_REGEXP } from '../constants/regex';
+import { LOCATOR_LABELS_MAP } from '../constants/statute';
+import { debug, error } from '../logger';
 export function previewCitationCluster(this: any, citation: any, citationsPre: any, citationsPost: any, newMode: any): any {
     // Generate output for a hypothetical citation at the current position,
     // Leave the registry in the same state in which it was found.
@@ -14,7 +18,7 @@ export function previewCitationCluster(this: any, citation: any, citationsPre: a
     // Restore the output format even if the preview fails
     let ret;
     try {
-        ret = this.processCitationCluster(citation, citationsPre, citationsPost, CSL.PREVIEW);
+        ret = this.processCitationCluster(citation, citationsPre, citationsPost, PREVIEW);
     } finally {
         this.setOutputFormat(oldMode);
     }
@@ -51,10 +55,10 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     let oldCitationList;
     let oldItemList;
     let oldAmbigs;
-    if (flag === CSL.PREVIEW) {
+    if (flag === PREVIEW) {
         //SNIP-START
         if (this.debug) {
-            CSL.debug("****** start state save *********");
+            debug("****** start state save *********");
         }
         //SNIP-END
         //
@@ -110,7 +114,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
 
         //SNIP-START
         if (this.debug) {
-            CSL.debug("****** end state save *********");
+            debug("****** end state save *********");
         }
         //SNIP-END
     }
@@ -145,9 +149,9 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         }
         if (this.opt.development_extensions.locator_label_parse) {
             if (item.locator && ["bill","gazette","legislation","regulation","treaty"].indexOf(Item.type) === -1 && (!item.label || item.label === 'page')) {
-                let m = CSL.LOCATOR_LABELS_REGEXP.exec(item.locator);
+                let m = LOCATOR_LABELS_REGEXP.exec(item.locator);
                 if (m) {
-                    const tryLabel = CSL.LOCATOR_LABELS_MAP[m[2]];
+                    const tryLabel = LOCATOR_LABELS_MAP[m[2]];
                     if (this.getTerm(tryLabel)) {
                         item.label = tryLabel;
                         item.locator = m[3];
@@ -173,11 +177,11 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         preCitation = citationsPre[i];
         if (this.opt.development_extensions.strict_inputs) {
             if (citationById[preCitation[0]]) {
-                CSL.error("Previously referenced citationID " + preCitation[0] + " encountered in citationsPre");
+                error("Previously referenced citationID " + preCitation[0] + " encountered in citationsPre");
             }
             if (preCitation[1]) {
                 if (lastNotePos > preCitation[1]) {
-                    CSL.debug("Note index sequence is not sane at citationsPre[" + i + "]");
+                    debug("Note index sequence is not sane at citationsPre[" + i + "]");
                 }
                 lastNotePos = preCitation[1];
             }
@@ -193,11 +197,11 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     }
     if (this.opt.development_extensions.strict_inputs) {
         if (citationById[citation.citationID]) {
-            CSL.error("Citation with previously referenced citationID " + citation.citationID);
+            error("Citation with previously referenced citationID " + citation.citationID);
         }
         if (citation.properties.noteIndex) {
             if (lastNotePos > citation.properties.noteIndex) {
-                CSL.debug("Note index sequence is not sane for citation " + citation.citationID);
+                debug("Note index sequence is not sane for citation " + citation.citationID);
             }
             lastNotePos = citation.properties.noteIndex;
         }
@@ -208,11 +212,11 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         postCitation = citationsPost[i];
         if (this.opt.development_extensions.strict_inputs) {
             if (citationById[postCitation[0]]) {
-                CSL.error("Previously referenced citationID " + postCitation[0] + " encountered in citationsPost");
+                error("Previously referenced citationID " + postCitation[0] + " encountered in citationsPost");
             }
             if (postCitation[1]) {
                 if (lastNotePos > postCitation[1]) {
-                    CSL.debug("Note index sequence is not sane at postCitation[" + i + "]");
+                    debug("Note index sequence is not sane at postCitation[" + i + "]");
                 }
                 lastNotePos = postCitation[1];
             }
@@ -232,7 +236,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     // to state.tmp.taintedItemIDs.
     //
     // (2) The processor memos the type of style referencing as
-    // CSL.NONE, CSL.NUMERIC or CSL.POSITION in state.opt.update_mode.
+    // NONE, NUMERIC or POSITION in state.opt.update_mode.
     //
     // XXXX: NO LONGER
     // (3) For citations containing cites with backreference note numbers,
@@ -250,7 +254,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     //
     // set positions in reconstituted list, noting taints
     this.registry.citationreg.citationsByItemId = {};
-    if (this.opt.update_mode === CSL.POSITION) {
+    if (this.opt.update_mode === POSITION) {
         textCitations = [];
         noteCitations = [];
         citationsInNote = {};
@@ -268,7 +272,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                 this.registry.citationreg.citationsByItemId[item[1].id].push(citationByIndex[i]);
             }
         }
-        if (this.opt.update_mode === CSL.POSITION) {
+        if (this.opt.update_mode === POSITION) {
             if (citationByIndex[i].properties.noteIndex) {
                 noteCitations.push(citationByIndex[i]);
             } else {
@@ -280,17 +284,17 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     //
     // update bibliography items here
     //
-    if (flag !== CSL.ASSUME_ALL_ITEMS_REGISTERED) {
+    if (flag !== ASSUME_ALL_ITEMS_REGISTERED) {
         //SNIP-START
         if (this.debug) {
-            CSL.debug("****** start update items *********");
+            debug("****** start update items *********");
         }
         //SNIP-END
         // true signals implicit updateItems (will not rerun sys.retrieveItem())
         this.updateItems(update_items, null, null, true);
         //SNIP-START
         if (this.debug) {
-            CSL.debug("****** endo update items *********");
+            debug("****** endo update items *********");
         }
         //SNIP-END
     }
@@ -354,7 +358,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     }
 
     let citations;
-    if (this.opt.update_mode === CSL.POSITION) {
+    if (this.opt.update_mode === POSITION) {
         for (let i = 0; i < 2; i += 1) {
             let first_ref = {};
             let last_ref = {};
@@ -431,7 +435,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                         }
                     }
                     // Don't touch item data of other cites when previewing
-                    if (flag === CSL.PREVIEW) {
+                    if (flag === PREVIEW) {
                         if (onecitation.citationID != citation.citationID) {
                             if ("undefined" === typeof first_ref[item[1].id]) {
                                 first_ref[first_id] = onecitation.properties.noteIndex;
@@ -492,7 +496,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                         first_ref[first_id] = onecitation.properties.noteIndex;
                         last_ref[last_id] = onecitation.properties.noteIndex;
                         first_container_ref[last_id] = onecitation.properties.noteIndex;
-                        item[1].position = CSL.POSITION_FIRST;
+                        item[1].position = POSITION_FIRST;
                     } else {
                         //
                         // backward-looking position evaluation happens here.
@@ -608,24 +612,24 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                             if (!prev_locator && curr_locator) {
                                 //     (a) if the previous onecitation had no locator
                                 //         and this onecitation has one, use ibid+pages
-                                item[1].position = CSL.POSITION_IBID_WITH_LOCATOR;
+                                item[1].position = POSITION_IBID_WITH_LOCATOR;
                             } else if (!prev_locator && !curr_locator) {
                                 //     (b) if the previous onecitation had no locator
                                 //         and this onecitation also has none, use ibid
-                                item[1].position = CSL.POSITION_IBID;
+                                item[1].position = POSITION_IBID;
                                 //print("setting ibid in cmd_cite()");
                             } else if (prev_locator && curr_locator === prev_locator) {
                                 //     (c) if the previous onecitation had a locator
                                 //         (page number, etc.) and this onecitation has
                                 //         a locator that is identical, use ibid
 
-                                item[1].position = CSL.POSITION_IBID;
+                                item[1].position = POSITION_IBID;
                                 //print("setting ibid in cmd_cite() [2]");
                             } else if (prev_locator && curr_locator && curr_locator !== prev_locator) {
                                 //     (d) if the previous onecitation had a locator,
                                 //         and this onecitation has one that differs,
                                 //         use ibid+pages
-                                item[1].position = CSL.POSITION_IBID_WITH_LOCATOR;
+                                item[1].position = POSITION_IBID_WITH_LOCATOR;
                             } else {
                                 //     (e) if the previous onecitation had a locator
                                 //         and this onecitation has none, use subsequent
@@ -636,16 +640,16 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                             }
                         }
                         if (suprame) {
-                            item[1].position = CSL.POSITION_CONTAINER_SUBSEQUENT;
+                            item[1].position = POSITION_CONTAINER_SUBSEQUENT;
                             if ("undefined" === typeof first_ref[first_id]) {
                                 first_ref[first_id] = onecitation.properties.noteIndex;
                             } else {
-                                item[1].position = CSL.POSITION_SUBSEQUENT;
+                                item[1].position = POSITION_SUBSEQUENT;
                             }
                         }
                         if (suprame || ibidme) {
                             if (onecitation.properties.mode === "author-only") {
-                                item[1].position = CSL.POSITION_FIRST;
+                                item[1].position = POSITION_FIRST;
                             }
                             if (first_container_ref[last_id] != onecitation.properties.noteIndex) {
                                 item[1]['first-container-reference-note-number'] = first_container_ref[last_id];
@@ -670,17 +674,17 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                     }
                     if (onecitation.properties.noteIndex) {
                         const note_distance = parseInt(onecitation.properties.noteIndex, 10) - parseInt(last_ref[last_id], 10);
-                        if (item[1].position !== CSL.POSITION_FIRST
+                        if (item[1].position !== POSITION_FIRST
                             && note_distance <= this.citation.opt["near-note-distance"]) {
                             item[1]["near-note"] = true;
                         }
                         last_ref[last_id] = onecitation.properties.noteIndex;
-                    } else if (item[1].position !== CSL.POSITION_FIRST) {
+                    } else if (item[1].position !== POSITION_FIRST) {
                         item[1]["near-note"] = true;
                     }
                     if (onecitation.citationID != citation.citationID) {
-                        for (let n = 0, nlen = CSL.POSITION_TEST_VARS.length; n < nlen; n += 1) {
-                            const param = CSL.POSITION_TEST_VARS[n];
+                        for (let n = 0, nlen = POSITION_TEST_VARS.length; n < nlen; n += 1) {
+                            const param = POSITION_TEST_VARS[n];
                             if (item[1][param] !== oldvalue[param]) {
                                 if (this.registry.registry[item[0].id]) {
                                     if (param === 'first-reference-note-number') {
@@ -722,24 +726,24 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
     }
 
     let ret = [];
-    if (flag === CSL.PREVIEW) {
+    if (flag === PREVIEW) {
         // If previewing, return only a rendered string
         //SNIP-START
         if (this.debug) {
-            CSL.debug("****** start run processor *********");
+            debug("****** start run processor *********");
         }
         //SNIP-END
         try {
             ret = this.process_CitationCluster.call(this, citation.sortedItems, citation);
         } catch (e) {
-            CSL.error("Error running CSL processor for preview: "+e);
+            error("Error running CSL processor for preview: "+e);
         } finally {
             // Restore state even if an error occurred above
 
             //SNIP-START
             if (this.debug) {
-                CSL.debug("****** end run processor *********");
-                CSL.debug("****** start state restore *********");
+                debug("****** end run processor *********");
+                debug("****** start state restore *********");
             }
             //SNIP-END
             // Wind out anything related to new items added for the preview.
@@ -757,7 +761,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
 
             //SNIP-START
             if (this.debug) {
-                CSL.debug("****** start final update *********");
+                debug("****** start final update *********");
             }
             //SNIP-END
             const oldItemIds = [];
@@ -767,7 +771,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
             this.updateItems(oldItemIds, null, null, true);
             //SNIP-START
             if (this.debug) {
-                CSL.debug("****** end final update *********");
+                debug("****** end final update *********");
             }
             //SNIP-END
             // Roll back disambig states (only for items no longer in this citation)
@@ -784,7 +788,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
             }
             //SNIP-START
             if (this.debug) {
-                CSL.debug("****** end state restore *********");
+                debug("****** end state restore *********");
             }
             //SNIP-END
         }
@@ -913,7 +917,7 @@ export function process_CitationCluster(this: any, sortedItems: any, citation: a
         }
         const thirdChunk = CSL.getCitationCluster.call(this, sortedItems, citation);
         citation.properties.mode = "composite";
-        if (firstChunk && secondChunk && CSL.SWAPPING_PUNCTUATION.concat(["\u2019", "\'"]).indexOf(secondChunk[0]) > -1) {
+        if (firstChunk && secondChunk && SWAPPING_PUNCTUATION.concat(["\u2019", "\'"]).indexOf(secondChunk[0]) > -1) {
             firstChunk += secondChunk;
             secondChunk = false;
         }
@@ -939,9 +943,9 @@ export function makeCitationCluster(this: any, rawList: any): any {
         // Code block is copied from processCitationCluster() above
         if (this.opt.development_extensions.locator_label_parse) {
             if (item.locator && ["bill","gazette","legislation","regulation","treaty"].indexOf(Item.type) === -1 && (!item.label || item.label === 'page')) {
-                let m = CSL.LOCATOR_LABELS_REGEXP.exec(item.locator);
+                let m = LOCATOR_LABELS_REGEXP.exec(item.locator);
                 if (m) {
-                    const tryLabel = CSL.LOCATOR_LABELS_MAP[m[2]];
+                    const tryLabel = LOCATOR_LABELS_MAP[m[2]];
                     if (this.getTerm(tryLabel)) {
                         item.label = tryLabel;
                         item.locator = m[3];
@@ -1004,7 +1008,7 @@ CSL.getAmbiguousCite = function (Item, disambig, visualForm, item) {
         this.tmp.disambig_request = false;
     }
     const itemSupp: any = {
-        position: CSL.POSITION_SUBSEQUENT,
+        position: POSITION_SUBSEQUENT,
         "near-note": true
     };
 
@@ -1078,7 +1082,7 @@ CSL.getSpliceDelimiter = function (last_locator, last_collapsed, pos) {
     } else if (this.tmp.use_cite_group_delimiter) {
         this.tmp.splice_delimiter = this.citation.opt.cite_group_delimiter;
     } else {
-        if (this.tmp.have_collapsed && this.opt.xclass === "in-text" && this.opt.update_mode !== CSL.NUMERIC) {
+        if (this.tmp.have_collapsed && this.opt.xclass === "in-text" && this.opt.update_mode !== NUMERIC) {
             this.tmp.splice_delimiter = ", ";
         } else if (this.tmp.cite_locales[pos - 1]) {
             //
@@ -1102,7 +1106,7 @@ CSL.getSpliceDelimiter = function (last_locator, last_collapsed, pos) {
         this.tmp.splice_delimiter = this.citation.opt["after-collapse-delimiter"];
     } else if (this.tmp.use_cite_group_delimiter) {
         this.tmp.splice_delimiter = this.citation.opt.cite_group_delimiter;
-    } else if (this.tmp.have_collapsed && this.opt.xclass === "in-text" && this.opt.update_mode !== CSL.NUMERIC) {
+    } else if (this.tmp.have_collapsed && this.opt.xclass === "in-text" && this.opt.update_mode !== NUMERIC) {
         this.tmp.splice_delimiter = ", ";
     } else if (this.tmp.cite_locales[pos - 1]) {
         //
@@ -1282,7 +1286,7 @@ CSL.getCitationCluster = function (inputList, citation) {
                 noteIndex: this.tmp.citation_note_index,
                 itemID: "" + Item.id,
                 citationItems_pos: pos,
-                error_code: CSL.ERROR_NO_RENDERED_FORM
+                error_code: ERROR_NO_RENDERED_FORM
             };
             this.tmp.citation_errors.push(error_object);
         }
@@ -1339,7 +1343,7 @@ CSL.getCitationCluster = function (inputList, citation) {
     if (last_locale && this.tmp.cite_affixes[this.tmp.area][last_locale] && this.tmp.cite_affixes[this.tmp.area][last_locale].suffix) {
         suffix = this.tmp.cite_affixes[this.tmp.area][last_locale].suffix;
     }
-    if (CSL.TERMINAL_PUNCTUATION.slice(0, -1).indexOf(suffix.slice(0, 1)) > -1) {
+    if (TERMINAL_PUNCTUATION.slice(0, -1).indexOf(suffix.slice(0, 1)) > -1) {
         suffix = suffix.slice(0, 1);
     }
     //print("=== FROM CITE ===");
@@ -1398,7 +1402,7 @@ CSL.getCitationCluster = function (inputList, citation) {
             this.tmp.suppress_decorations = false;
             if (!composite) {
                 if (this.opt.development_extensions.throw_on_empty) {
-                    CSL.error("Citation would render no content");
+                    error("Citation would render no content");
                 } else {
                     composite = "[NO_PRINTED_FORM]";
                 }
@@ -1479,7 +1483,7 @@ CSL.getCitationCluster = function (inputList, citation) {
     result += this.output.renderBlobs(objects);
 
     if (result) {
-        //if (CSL.TERMINAL_PUNCTUATION.indexOf(this.tmp.last_chr) > -1
+        //if (TERMINAL_PUNCTUATION.indexOf(this.tmp.last_chr) > -1
         //    && this.tmp.last_chr === use_layout_suffix.slice(0, 1)) {
         //    use_layout_suffix = use_layout_suffix.slice(1);
         //}
@@ -1502,7 +1506,7 @@ CSL.getCitationCluster = function (inputList, citation) {
     this.tmp.suppress_decorations = false;
     if (!result) {
         if (this.opt.development_extensions.throw_on_empty) {
-            CSL.error("Citation would render no content");
+            error("Citation would render no content");
         } else {
             result = "[NO_PRINTED_FORM]"
         }
@@ -1549,7 +1553,7 @@ CSL.getCite = function (Item, item, prevItemID, blockShadowNumberReset) {
             error_object = {
                 index: this.tmp.bibliography_pos,
                 itemID: "" + Item.id,
-                error_code: CSL.ERROR_NO_RENDERED_FORM
+                error_code: ERROR_NO_RENDERED_FORM
             };
             this.tmp.bibliography_errors.push(error_object);
         }

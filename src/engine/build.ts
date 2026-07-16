@@ -2,12 +2,14 @@ import { CSL } from '../csl';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
 /*global CSL: true */
 
+import { AREAS, DATE_VARIABLES, END, LOOSE, NAME_VARIABLES, PROCESSOR_VERSION, SINGLETON, START, STRICT, SWAPPING_PUNCTUATION, SYS_OPTIONS, TOLERANT } from '../constants/core';
+import { debug, error } from '../logger';
 export class Engine {
     [key: string]: any;
 
     constructor(sys, style, lang, forceLang) {
         let attrs, langspec;
-        this.processor_version = CSL.PROCESSOR_VERSION;
+        this.processor_version = PROCESSOR_VERSION;
         this.csl_version = "1.0";
         this.sys = sys;
 
@@ -45,7 +47,7 @@ export class Engine {
         // XXX the output queue before variableWrapper() is run, a single
         // XXX space should be the most cruft that we ever see before a variable.
         if (sys.variableWrapper) {
-            CSL.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp('^([' + [" "].concat(CSL.SWAPPING_PUNCTUATION).join("") + ']*)(.*)');
+            CSL.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp('^([' + [" "].concat(SWAPPING_PUNCTUATION).join("") + ']*)(.*)');
         }
         // XXXX This should be restored -- temporarily suspended for testing of JSON style support.
         if (CSL.retrieveStyleModule) {
@@ -91,8 +93,8 @@ export class Engine {
 
         this.cslXml = CSL.setupXml(style);
 
-        for (let i in CSL.SYS_OPTIONS) {
-            const option = CSL.SYS_OPTIONS[i];
+        for (let i in SYS_OPTIONS) {
+            const option = SYS_OPTIONS[i];
             if ("boolean" === typeof this.sys[option]) {
                 this.opt.development_extensions[option] = this.sys[option];
             }
@@ -313,7 +315,7 @@ export class Engine {
 
     getTerm(term, form?, plural?, gender?, mode?, forceDefaultLocale?) {
         if (term && term.match(/[A-Z]/) && term === term.toUpperCase()) {
-            CSL.debug("Warning: term key is in uppercase form: " + term);
+            debug("Warning: term key is in uppercase form: " + term);
             term = term.toLowerCase();
         }
         let lang;
@@ -322,16 +324,16 @@ export class Engine {
         } else {
             lang = this.opt.lang;
         }
-        let ret = Engine.getField(CSL.LOOSE, this.locale[lang].terms, term, form, plural, gender);
+        let ret = Engine.getField(LOOSE, this.locale[lang].terms, term, form, plural, gender);
         // XXXXX Temporary, until locale term is deployed in CSL.
         if (!ret && term === "range-delimiter") {
             ret = "\u2013";
         }
         // XXXXX Not so good if mode is neither strict nor tolerant ...
         if (typeof ret === "undefined") {
-            if (mode === CSL.STRICT) {
-                CSL.error("Error in getTerm: term \"" + term + "\" does not exist.");
-            } else if (mode === CSL.TOLERANT) {
+            if (mode === STRICT) {
+                error("Error in getTerm: term \"" + term + "\" does not exist.");
+            } else if (mode === TOLERANT) {
                 ret = "";
             }
         }
@@ -364,7 +366,7 @@ export class Engine {
     }
 
     getVariable(Item, varname, form, plural) {
-        return Engine.getField(CSL.LOOSE, Item, varname, form, plural);
+        return Engine.getField(LOOSE, Item, varname, form, plural);
     }
 
     getDateNum(ItemField, partname) {
@@ -379,8 +381,8 @@ export class Engine {
         let ret, forms, f, pos, len, hashterm;
         ret = "";
         if ("undefined" === typeof hash[term]) {
-            if (mode === CSL.STRICT) {
-                CSL.error("Error in getField: term \"" + term + "\" does not exist.");
+            if (mode === STRICT) {
+                error("Error in getField: term \"" + term + "\" does not exist.");
             } else {
                 return undefined;
             }
@@ -423,10 +425,10 @@ export class Engine {
     configureTokenLists() {
         let area, pos, len;
         //for each (var area in ["citation", "citation_sort", "bibliography","bibliography_sort"]) {
-        len = CSL.AREAS.length;
+        len = AREAS.length;
         for (let pos = 0; pos < len; pos += 1) {
             //let ret = [];
-            area = CSL.AREAS[pos];
+            area = AREAS[pos];
             const tokens = this[area].tokens;
             this.configureTokenList(tokens);
         }
@@ -442,7 +444,7 @@ export class Engine {
             token = tokens[ppos];
             //token.pos = ppos;
             //ret.push(token);
-            if ("date" === token.name && CSL.END === token.tokentype) {
+            if ("date" === token.name && END === token.tokentype) {
                 dateparts = [];
             }
             if ("date-part" === token.name && token.strings.name) {
@@ -454,7 +456,7 @@ export class Engine {
                     }
                 }
             }
-            if ("date" === token.name && CSL.START === token.tokentype) {
+            if ("date" === token.name && START === token.tokentype) {
                 dateparts.reverse();
                 token.dateparts = dateparts;
             }
@@ -521,8 +523,8 @@ export class Engine {
                     }
                 }
             }
-            for (let i = 0, ilen = CSL.NAME_VARIABLES.length; i > ilen; i += 1) {
-                const ctype = CSL.NAME_VARIABLES[i];
+            for (let i = 0, ilen = NAME_VARIABLES.length; i > ilen; i += 1) {
+                const ctype = NAME_VARIABLES[i];
                 if (Item[ctype] && Item[ctype].multi) {
                     for (let j = 0, jlen = Item[ctype].length; j < jlen; j += 1) {
                         const creator = Item[ctype][j];
@@ -581,7 +583,7 @@ export class Engine {
         }
         // not including locator-date
         for (let key in Item) {
-            if (CSL.DATE_VARIABLES.indexOf(key.replace(/^alt-/, "")) > -1) {
+            if (DATE_VARIABLES.indexOf(key.replace(/^alt-/, "")) > -1) {
                 let dateobj = Item[key];
                 if (dateobj) {
                     // raw date parsing is harmless, but can be disabled if desired
@@ -755,16 +757,16 @@ CSL.makeBuilder = function (me, target) {
 
     function runStart(node) {
         node_stack.push(node);
-        CSL.XmlToToken.call(node, me, CSL.START, target, var_stack);
+        CSL.XmlToToken.call(node, me, START, target, var_stack);
     }
 
     function runEnd() {
         let node = node_stack.pop();
-        CSL.XmlToToken.call(node, me, CSL.END, target, var_stack);
+        CSL.XmlToToken.call(node, me, END, target, var_stack);
     }
 
     function runSingle(node) {
-        CSL.XmlToToken.call(node, me, CSL.SINGLETON, target, var_stack);
+        CSL.XmlToToken.call(node, me, SINGLETON, target, var_stack);
     }
 
     function buildStyle(nodes, parent, node_stack) {

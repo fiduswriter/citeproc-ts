@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { FORMAT_KEY_SEQUENCE } from '../constants/core';
+import { error } from '../logger';
 CSL.substituteOne = function (template: string): (state: CslState, list: any) => string {
     return function (state: CslState, list: any): string {
         if (!list) {
@@ -58,7 +60,7 @@ CSL.Mode = function (mode: string): any {
             } else if (typeof val === "function") {
                 func = val;
             } else {
-                CSL.error("Bad " + mode + " config entry for " + param + ": " + val);
+                error("Bad " + mode + " config entry for " + param + ": " + val);
             }
 
             if (args.length === 1) {
@@ -81,8 +83,8 @@ CSL.Mode = function (mode: string): any {
 CSL.setDecorations = function (state: CslState, attributes: any): any {
     let ret: any, key: any, pos: any;
     ret = [];
-    for (let pos = 0; pos < CSL.FORMAT_KEY_SEQUENCE.length; pos += 1) {
-        const key2 = CSL.FORMAT_KEY_SEQUENCE[pos];
+    for (let pos = 0; pos < FORMAT_KEY_SEQUENCE.length; pos += 1) {
+        const key2 = FORMAT_KEY_SEQUENCE[pos];
         if (attributes[key2]) {
             ret.push([key2, attributes[key2]]);
             delete attributes[key2];

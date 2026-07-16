@@ -1,6 +1,9 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { END, SEEN, SINGLETON, START, SUCCESSOR, SUPPRESS, TERMINAL_PUNCTUATION } from '../constants/core';
+import { ROMANESQUE_REGEXP } from '../constants/regex';
+import { error } from '../logger';
 export class Queue {
     public levelname: any;
     public state: any;
@@ -44,10 +47,10 @@ export class Queue {
         ret = base_token;
         if (modifier_token) {
             if (!base_token) {
-                base_token = new CSL.Token(base, CSL.SINGLETON);
+                base_token = new CSL.Token(base, SINGLETON);
                 base_token.decorations = [];
             }
-            ret = new CSL.Token(base, CSL.SINGLETON);
+            ret = new CSL.Token(base, SINGLETON);
             let key = "";
             for (let key in base_token.strings) {
                 if (base_token.strings.hasOwnProperty(key)) {
@@ -120,7 +123,7 @@ export class Queue {
             blob = new CSL.Blob(undefined, this.formats.value().empty, "empty");
         } else {
             if (!this.formats.value() || !this.formats.value()[token]) {
-                CSL.error("CSL processor error: call to nonexistent format token \"" + token + "\"");
+                error("CSL processor error: call to nonexistent format token \"" + token + "\"");
             }
             blob = new CSL.Blob(undefined, this.formats.value()[token], token);
         }
@@ -134,7 +137,7 @@ export class Queue {
 
     closeLevel(name: any) {
         if (name && name !== this.current.value().levelname) {
-            CSL.error("Level mismatch error:  wanted " + name + " but found " + this.current.value().levelname);
+            error("Level mismatch error:  wanted " + name + " but found " + this.current.value().levelname);
         }
         const blob = this.current.pop();
         if (!this.state.tmp.just_looking && this.checkNestedBrace) {
@@ -180,7 +183,7 @@ export class Queue {
             token = tokname;
         }
         if (!token) {
-            CSL.error("CSL processor error: unknown format token name: " + tokname);
+            error("CSL processor error: unknown format token name: " + tokname);
         }
         if (token.strings && "undefined" === typeof token.strings.delimiter) {
             token.strings.delimiter = "";
@@ -218,7 +221,7 @@ export class Queue {
                 if (blob.blobs.slice(0, 1) !== " ") {
                     let blobPrefix = "";
                     let blobBlobs = blob.blobs;
-                    while (CSL.TERMINAL_PUNCTUATION.indexOf(blobBlobs.slice(0, 1)) > -1) {
+                    while (TERMINAL_PUNCTUATION.indexOf(blobBlobs.slice(0, 1)) > -1) {
                         blobPrefix = blobPrefix + blobBlobs.slice(0, 1);
                         blobBlobs = blobBlobs.slice(1);
                     }
@@ -238,7 +241,7 @@ export class Queue {
                 if (blob.decorations[i][0] === "@quotes" && blob.decorations[i][1] !== "false") {
                     blob.punctuation_in_quote = this.state.getOpt("punctuation-in-quote");
                 }
-                if (!blob.blobs.match(CSL.ROMANESQUE_REGEXP)) {
+                if (!blob.blobs.match(ROMANESQUE_REGEXP)) {
                     if (blob.decorations[i][0] === "@font-style") {
                         blob.decorations = blob.decorations.slice(0, i).concat(blob.decorations.slice(i + 1));
                     }
@@ -514,7 +517,7 @@ export class Queue {
                 } else {
                     ret = [blob];
                 }
-            } else if (blob.status !== CSL.SUPPRESS) {
+            } else if (blob.status !== SUPPRESS) {
                 if (blob.particle) {
                     str = blob.particle + blob.num;
                 } else {
@@ -544,17 +547,17 @@ export class Queue {
                 }
                 str = txt_esc(blob.strings.prefix) + str + txt_esc(blob.strings.suffix);
                 let addme = "";
-                if (blob.status === CSL.END) {
+                if (blob.status === END) {
                     addme = txt_esc(blob.range_prefix);
-                } else if (blob.status === CSL.SUCCESSOR) {
+                } else if (blob.status === SUCCESSOR) {
                     addme = txt_esc(blob.successor_prefix);
-                } else if (blob.status === CSL.START) {
+                } else if (blob.status === START) {
                     if (pos > 0 && !blob.suppress_splice_prefix) {
                         addme = txt_esc(blob.splice_prefix);
                     } else {
                         addme = "";
                     }
-                } else if (blob.status === CSL.SEEN) {
+                } else if (blob.status === SEEN) {
                     addme = txt_esc(blob.splice_prefix);
                 }
                 ret += addme;

@@ -1,5 +1,6 @@
 import { CSL } from '../../csl';
 
+import { debug } from '../../logger';
 export function divideAndTransliterateNames(this: any): void {
     let i: number, ilen: number, j: number, jlen: number;
     const Item = this.Item;
@@ -43,12 +44,12 @@ export function divideAndTransliterateNames(this: any): void {
 export function _normalizeVariableValue(this: any, Item: CslItem, variable: any): any {
     let names: any;
     if ("string" === typeof Item[variable] || "number" === typeof Item[variable]) {
-        CSL.debug("name variable \"" + variable + "\" is string or number, not array. Attempting to fix.");
+        debug("name variable \"" + variable + "\" is string or number, not array. Attempting to fix.");
         names = [{ literal: Item[variable] + "" }];
     } else if (!Item[variable]) {
         names = [];
     } else if ("number" !== typeof Item[variable].length) {
-        CSL.debug("name variable \"" + variable + "\" is object, not array. Attempting to fix.");
+        debug("name variable \"" + variable + "\" is object, not array. Attempting to fix.");
         Item[variable] = [Item[variable]];
         names = Item[variable].slice();
     } else {

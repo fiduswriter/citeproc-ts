@@ -1,5 +1,5 @@
-import { CSL } from './csl';
 /*global CSL: true, Zotero: true */
+import { CSL } from './csl';
 
 CSL.debug = function (str: string): void {
     Zotero.debug("CSL: " + str);

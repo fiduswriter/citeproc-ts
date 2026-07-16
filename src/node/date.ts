@@ -1,9 +1,10 @@
 import { CSL } from '../csl';
 
+import { END, SINGLETON, START } from '../constants/core';
 export const Node_date = {
     build: function (state, target) {
         let func, date_obj, len, pos, part, dpx, parts, mypos, start, end;
-        if (this.tokentype === CSL.START || this.tokentype === CSL.SINGLETON) {
+        if (this.tokentype === START || this.tokentype === SINGLETON) {
             // used to collect rendered date part names in node_datepart,
             // for passing through to node_key, for use in dates embedded
             // in macros
@@ -153,7 +154,7 @@ export const Node_date = {
             this.execs.push(func);
         }
 
-        if (!state.build.extension && (this.tokentype === CSL.END || this.tokentype === CSL.SINGLETON)) {
+        if (!state.build.extension && (this.tokentype === END || this.tokentype === SINGLETON)) {
             // mergeoutput
             func = function (state, Item) {
                 if (!Item[this.variables[0]]) {
@@ -165,7 +166,7 @@ export const Node_date = {
         }
         target.push(this);
 
-        if (this.tokentype === CSL.END || this.tokentype === CSL.SINGLETON) {
+        if (this.tokentype === END || this.tokentype === SINGLETON) {
             if (!state.build.extension) {
                 CSL.Util.substituteEnd.call(this, state, target);
             }

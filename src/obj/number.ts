@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 
+import { END, SEEN, START, SUCCESSOR, SUCCESSOR_OF_SUCCESSOR, SUPPRESS } from '../constants/core';
 /**
  * An output instance object representing a number or a range
  *
@@ -34,7 +35,7 @@ export class NumericBlob {
         this.num = num;
         this.particle = particle;
         this.blobs = num.toString();
-        this.status = CSL.START;
+        this.status = START;
         this.strings = {};
         if (mother_token) {
             if (mother_token.strings["text-case"]) {
@@ -75,30 +76,30 @@ export class NumericBlob {
 
     public checkNext(next: any, start?: any): void {
         if (start) {
-            this.status = CSL.START;
+            this.status = START;
             if ("object" === typeof next) {
                 if (next.num === (this.num + 1)) {
-                    next.status = CSL.SUCCESSOR;
+                    next.status = SUCCESSOR;
                 } else {
-                    next.status = CSL.SEEN;
+                    next.status = SEEN;
                 }
             }
         } else if (!next || !next.num || this.type !== next.type || next.num !== (this.num + 1)) {
-            if (this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
-                this.status = CSL.END;
+            if (this.status === SUCCESSOR_OF_SUCCESSOR) {
+                this.status = END;
             }
             if ("object" === typeof next) {
-                next.status = CSL.SEEN;
+                next.status = SEEN;
             }
         } else { // next number is in the sequence
-            if (this.status === CSL.START || this.status === CSL.SEEN) {
-                next.status = CSL.SUCCESSOR;
-            } else if (this.status === CSL.SUCCESSOR || this.status === CSL.SUCCESSOR_OF_SUCCESSOR) {
+            if (this.status === START || this.status === SEEN) {
+                next.status = SUCCESSOR;
+            } else if (this.status === SUCCESSOR || this.status === SUCCESSOR_OF_SUCCESSOR) {
                 if (this.range_prefix) {
-                    next.status = CSL.SUCCESSOR_OF_SUCCESSOR;
-                    this.status = CSL.SUPPRESS;
+                    next.status = SUCCESSOR_OF_SUCCESSOR;
+                    this.status = SUPPRESS;
                 } else {
-                    next.status = CSL.SUCCESSOR;
+                    next.status = SUCCESSOR;
                 }
             }
         }
@@ -106,9 +107,9 @@ export class NumericBlob {
 
     public checkLast(last: any): boolean {
         // Used to adjust final non-range join
-        if (this.status === CSL.SEEN
-            || (last.num !== (this.num - 1) && this.status === CSL.SUCCESSOR)) {
-            this.status = CSL.SUCCESSOR;
+        if (this.status === SEEN
+            || (last.num !== (this.num - 1) && this.status === SUCCESSOR)) {
+            this.status = SUCCESSOR;
             return true;
         }
         return false;

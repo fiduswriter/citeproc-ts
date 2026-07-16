@@ -1,9 +1,11 @@
 import { CSL } from '../csl';
 
+import { POSITION, SINGLETON, START } from '../constants/core';
+import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 export const Node_name = {
     build: function (state, target) {
         let func;
-        if ([CSL.SINGLETON, CSL.START].indexOf(this.tokentype) > -1) {
+        if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
             let oldTmpRoot;
             if ("undefined" === typeof state.tmp.root) {
                 oldTmpRoot = undefined;
@@ -14,19 +16,19 @@ export const Node_name = {
             // Many CSL styles set et-al-[min|use-first]
             // and et-al-subsequent-[min|use-first] to the same
             // value.
-            // Set state.opt.update_mode = CSL.POSITION if
+            // Set state.opt.update_mode = POSITION if
             // et-al-subsequent-min or et-al-subsequent-use-first
             // are set AND their value differs from their plain
             // counterparts.
             if (state.inheritOpt(this, "et-al-subsequent-min")
                 && (state.inheritOpt(this, "et-al-subsequent-min") !== state.inheritOpt(this, "et-al-min"))) {
                 
-                state.opt.update_mode = CSL.POSITION;
+                state.opt.update_mode = POSITION;
             }
             if (state.inheritOpt(this, "et-al-subsequent-use-first")
                 && (state.inheritOpt(this, "et-al-subsequent-use-first") !== state.inheritOpt(this, "et-al-use-first"))) {
                 
-                state.opt.update_mode = CSL.POSITION;
+                state.opt.update_mode = POSITION;
             }
 
             state.tmp.root = oldTmpRoot;
@@ -52,7 +54,7 @@ export const Node_name = {
                     }
                 }
                 state.tmp.and_term = this.and_term;
-                if (CSL.STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
+                if (STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
                     this.and_prefix_single = " ";
                     this.and_prefix_multiple = ", ";
                     // Workaround to allow explicit empty string

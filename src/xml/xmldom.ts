@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { INSTITUTION_KEYS } from '../constants/core';
 /**
  * Functions for parsing an XML object using E4X.
  */
@@ -310,8 +310,8 @@ export class XmlDOM {
                 theinstitutionpart = theinstitution.getElementsByTagName("institution-part").item(0);
                 thename = name.item(0);
                 thenames.insertBefore(theinstitution, thename.nextSibling);
-                for (let j = 0, jlen = CSL.INSTITUTION_KEYS.length; j < jlen; j += 1) {
-                    const attrname = CSL.INSTITUTION_KEYS[j];
+                for (let j = 0, jlen = INSTITUTION_KEYS.length; j < jlen; j += 1) {
+                    const attrname = INSTITUTION_KEYS[j];
                     const attrval = thename.getAttribute(attrname);
                     if (attrval) {
                         theinstitutionpart.setAttribute(attrname, attrval);
@@ -320,8 +320,8 @@ export class XmlDOM {
                 const nameparts = thename.getElementsByTagName("name-part");
                 for (let j = 0, jlen = nameparts.length; j < jlen; j += 1) {
                     if ('family' === nameparts[j].getAttribute('name')) {
-                        for (let k = 0, klen = CSL.INSTITUTION_KEYS.length; k < klen; k += 1) {
-                            const attrname = CSL.INSTITUTION_KEYS[k];
+                        for (let k = 0, klen = INSTITUTION_KEYS.length; k < klen; k += 1) {
+                            const attrname = INSTITUTION_KEYS[k];
                             const attrval = nameparts[j].getAttribute(attrname);
                             if (attrval) {
                                 theinstitutionpart.setAttribute(attrname, attrval);

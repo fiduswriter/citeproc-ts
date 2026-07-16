@@ -1,5 +1,4 @@
-import { CSL } from '../../csl';
-
+import { NAME_PARTS } from '../../constants/core';
 export function checkCommonAuthor(this: any, requireMatch: any): boolean {
     if (!requireMatch) {
         return false;
@@ -87,8 +86,8 @@ export function _compareNamesets(this: any, base_nameset: any, nameset: any): bo
         return false;
     }
     for (let i = 0, ilen = nameset.length; i < ilen; i += 1) {
-        for (let j = 0, jlen = CSL.NAME_PARTS.length; j < jlen; j += 1) {
-            const part = CSL.NAME_PARTS[j];
+        for (let j = 0, jlen = NAME_PARTS.length; j < jlen; j += 1) {
+            const part = NAME_PARTS[j];
             if (!base_nameset[i] || base_nameset[i][part] != nameset[i][part]) {
                 return false;
             }

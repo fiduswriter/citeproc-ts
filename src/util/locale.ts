@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 /*global CSL: true */
 
+import { GENDERS, LANG_BASES, SKIP_WORDS } from '../constants/core';
+import { debug } from '../logger';
 CSL.localeResolve = function (langstr, defaultLocale) {
     let ret, langlst;
     if (!defaultLocale) {
@@ -14,9 +16,9 @@ CSL.localeResolve = function (langstr, defaultLocale) {
     //    langstr = "en_US";
     //}
     langlst = langstr.split(/[\-_]/);
-    ret.base = CSL.LANG_BASES[langlst[0]];
+    ret.base = LANG_BASES[langlst[0]];
     if ("undefined" === typeof ret.base) {
-        //CSL.debug("Warning: unknown locale "+langstr+", setting fallback to "+defaultLocale);
+        //debug("Warning: unknown locale "+langstr+", setting fallback to "+defaultLocale);
         return {base:defaultLocale, best:langstr, bare:langlst[0]};
     }
     if (langlst.length === 1) {
@@ -99,7 +101,7 @@ export function localeSet(myxml, lang_in, lang_out) {
         this.locale[lang_out].terms = {};
         this.locale[lang_out].opts = {};
         // Set default skip words. Can be overridden in locale by attribute on style-options node.
-        this.locale[lang_out].opts["skip-words"] = CSL.SKIP_WORDS;
+        this.locale[lang_out].opts["skip-words"] = SKIP_WORDS;
         // Initialise leading noise word to false. Actual assignment is below. Empty by default, can be overridden in locale by attribute on style-options node.
         if (!this.locale[lang_out].opts["leading-noise-words"]) {
             this.locale[lang_out].opts["leading-noise-words"] = [];
@@ -322,7 +324,7 @@ export function localeSet(myxml, lang_in, lang_out) {
     // sub-segments
     for (let termname in this.locale[lang_out].terms) {
         for (let i = 0, ilen = 2; i < ilen; i += 1) {
-            genderform = CSL.GENDERS[i];
+            genderform = GENDERS[i];
             if (this.locale[lang_out].terms[termname][genderform]) {
                 for (let form in this.locale[lang_out].terms[termname]) {
                     if (!this.locale[lang_out].terms[termname][genderform][form]) {

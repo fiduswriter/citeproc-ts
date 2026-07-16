@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 import { Output_formatters } from './formatters';
 
+import { SWAPPING_PUNCTUATION } from '../constants/core';
+import { SUPERSCRIPTS, SUPERSCRIPTS_REGEXP } from '../constants/regex';
 /**
  * Output specifications.
  * @class
@@ -20,9 +22,9 @@ class OutputFormats {
             .replace(/</g, "&#60;")
             .replace(/>/g, "&#62;")
             .replace(/\s\s/g, "\u00A0 ")
-            .replace(CSL.SUPERSCRIPTS_REGEXP,
+            .replace(SUPERSCRIPTS_REGEXP,
                 function (aChar: string) {
-                    return "<sup>" + CSL.SUPERSCRIPTS[aChar] + "</sup>";
+                    return "<sup>" + SUPERSCRIPTS[aChar] + "</sup>";
                 });
     },
     "bibstart": "<div class=\"csl-bib-body\">\n",
@@ -90,7 +92,7 @@ class OutputFormats {
                     str = m[2];
                 }
                 let postPunct = "";
-                if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+                if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                     postPunct = str.slice(-1);
                     str = str.slice(0, -1);
                 }
@@ -190,9 +192,9 @@ class OutputFormats {
         }
         return text
             .replace(/([\\{}])/g, "\\$1")
-            .replace(CSL.SUPERSCRIPTS_REGEXP,
+            .replace(SUPERSCRIPTS_REGEXP,
                 function (aChar: string) {
-                    return "\\super " + CSL.SUPERSCRIPTS[aChar] + "\\nosupersub{}";
+                    return "\\super " + SUPERSCRIPTS[aChar] + "\\nosupersub{}";
                 })
             .replace(/[\u007F-\uFFFF]/g,
                 function (aChar: string) { return "\\uc0\\u" + aChar.charCodeAt(0).toString() + "{}"; })
@@ -254,7 +256,7 @@ class OutputFormats {
                 str = m[2];
             }
             let postPunct = "";
-            if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+            if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
                 str = str.slice(0, -1);
             }
@@ -284,8 +286,8 @@ class OutputFormats {
             .replace("~", "pass:[~]")
             .replace("[[", "pass:[[[]")
             .replace("  ", "&#160; ")
-            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar: string) {
-                return "^" + CSL.SUPERSCRIPTS[aChar] + "^";
+            .replace(SUPERSCRIPTS_REGEXP, function (aChar: string) {
+                return "^" + SUPERSCRIPTS[aChar] + "^";
             });
     },
     "bibstart": "",
@@ -346,7 +348,7 @@ class OutputFormats {
                 str = m[2];
             }
             let postPunct = "";
-            if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+            if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
                 str = str.slice(0, -1);
             }
@@ -377,8 +379,8 @@ class OutputFormats {
             .replace(/</g, "&#60;")
             .replace(/>/g, "&#62;")
             .replace("  ", "&#160; ")
-            .replace(CSL.SUPERSCRIPTS_REGEXP, function (aChar: string) {
-                return "<fo:inline vertical-align=\"super\">" + CSL.SUPERSCRIPTS[aChar] + "</fo:inline>";
+            .replace(SUPERSCRIPTS_REGEXP, function (aChar: string) {
+                return "<fo:inline vertical-align=\"super\">" + SUPERSCRIPTS[aChar] + "</fo:inline>";
             });
     },
     "bibstart": "",
@@ -460,7 +462,7 @@ class OutputFormats {
                 str = m[2];
             }
             let postPunct = "";
-            if (str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+            if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
                 postPunct = str.slice(-1);
                 str = str.slice(0, -1);
             }

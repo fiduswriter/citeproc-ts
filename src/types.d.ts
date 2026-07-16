@@ -40,7 +40,7 @@ interface CslItem {
  * falls through the index signature until the owning modules are migrated.
  */
 interface CslNode {
-    tokentype?: string;
+    tokentype?: any;
     name?: string;
     match?: string;
     strings?: { [key: string]: any };

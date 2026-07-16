@@ -1,4 +1,6 @@
 import { CSL } from '../csl';
+import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
+import { debug } from '../logger';
 export function rebuildProcessorState(this: any, citations: any, mode: any, uncitedItemIDs: any): any {
     // Rebuilds the processor from scratch, based on a list of citation
     // objects. In a dynamic application, once the internal state of processor
@@ -37,7 +39,7 @@ export function rebuildProcessorState(this: any, citations: any, mode: any, unci
     for (let i=0,ilen=citations.length;i<ilen;i+=1) {
         // res contains a result report and a list of [index,string] pairs
         // index begins at 0
-        const res = this.processCitationCluster(citations[i],pre,post,CSL.ASSUME_ALL_ITEMS_REGISTERED);
+        const res = this.processCitationCluster(citations[i],pre,post,ASSUME_ALL_ITEMS_REGISTERED);
         pre.push([citations[i].citationID,citations[i].properties.noteIndex]);
         for (let j=0,jlen=res[1].length;j<jlen;j+=1) {
             const index = res[1][j][0];
@@ -158,7 +160,7 @@ export function updateItems(this: any, idList: any, nosort: any, rerun_ambigs: a
     if (!implicitUpdate) {
         this.tmp.loadedItemIDs = {};
     }
-    //CSL.debug = print
+    //debug = print
     //SNIP-START
     if (debug) {
         CSL.debug("--> init <--");

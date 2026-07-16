@@ -1,6 +1,7 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
 
+import { SUFFIX_CHARS } from '../constants/core';
 export const Node_date_part = {
     build: function (state, target) {
         let func, pos, len, first_date, value, value_end, real, have_collapsed, invoked, precondition, known_year, bc, ad, bc_end, ad_end, ready, curr, dcurr, number, num, formatter, item, blob;
@@ -280,7 +281,7 @@ export const Node_date_part = {
                     number = new CSL.NumericBlob(state, false, num, this, Item.id);
                     this.successor_prefix = state[state.build.area].opt.layout_delimiter;
                     this.splice_prefix = state[state.build.area].opt.layout_delimiter;
-                    formatter = new Suffixator(CSL.SUFFIX_CHARS);
+                    formatter = new Suffixator(SUFFIX_CHARS);
                     number.setFormatter(formatter);
                     if (state[state.tmp.area].opt.collapse === "year-suffix-ranged") {
                         number.range_prefix = state.getTerm("citation-range-delimiter");
