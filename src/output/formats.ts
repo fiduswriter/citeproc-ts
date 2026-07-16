@@ -13,7 +13,7 @@ class OutputFormats {
 /**
  * HTML output format specification.
  */
-(OutputFormats.prototype as any).html = {
+(OutputFormats.prototype as Record<string, any>).html = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";
@@ -117,7 +117,7 @@ class OutputFormats {
 };
 
 /** Plain text output specification. */
-(OutputFormats.prototype as any).text = {
+(OutputFormats.prototype as Record<string, any>).text = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";
@@ -185,7 +185,7 @@ class OutputFormats {
 };
 
 /** RTF output specification. */
-(OutputFormats.prototype as any).rtf = {
+(OutputFormats.prototype as Record<string, any>).rtf = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";
@@ -274,7 +274,7 @@ class OutputFormats {
 };
 
 /** AsciiDoc output specification. */
-(OutputFormats.prototype as any).asciidoc = {
+(OutputFormats.prototype as Record<string, any>).asciidoc = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";
@@ -370,7 +370,7 @@ class OutputFormats {
 };
 
 /** XSL-FO output specification. */
-(OutputFormats.prototype as any).fo = {
+(OutputFormats.prototype as Record<string, any>).fo = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";
@@ -484,7 +484,7 @@ class OutputFormats {
 };
 
 /** LaTeX .bbl output. */
-(OutputFormats.prototype as any).latex = {
+(OutputFormats.prototype as Record<string, any>).latex = {
     "text_escape": function (text?: string): string {
         if (!text) {
             text = "";

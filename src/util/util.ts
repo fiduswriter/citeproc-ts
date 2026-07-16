@@ -4,9 +4,10 @@
  * semantics.
  */
 export class Match {
+    [key: string]: any;
+
     constructor() {
-        // A bare <if> with no match attribute falls back to "all".
-        (this as any)["undefined"] = this.all;
+        this["undefined"] = this.all;
     }
 
     public any(token: CslNode, state: CslState, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {

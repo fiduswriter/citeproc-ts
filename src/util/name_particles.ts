@@ -244,7 +244,7 @@ export const parseParticles = (function () {
         nameValue = caseOverride ? nameValue.toLowerCase() : nameValue;
         const particleList: string[] = [];
         let rex: RegExp;
-        let hasParticle: boolean | undefined | string;
+        let hasParticle: boolean | undefined;
         if (firstNameFlag) {
             nameValue = nameValue.split("").reverse().join("");
             rex = PARTICLE_GIVEN_REGEXP;

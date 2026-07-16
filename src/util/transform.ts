@@ -54,8 +54,8 @@ import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '.
  */
 
 export class Transform {
-    abbrevs: any;
-    getTextSubField: (Item: any, field: string, locale_type: string, use_default: boolean, stopOrig: any, family_var?: string) => any;
+    abbrevs: Record<string, any>;
+    getTextSubField: (this: any, Item: CslItem, field: string, locale_type: string, use_default: boolean, stopOrig: any, family_var?: string) => any;
     loadAbbreviation: (jurisdiction: string, category: string, orig: string, lang: string) => string;
     quashCheck: (jurisdiction: string, value: string) => string;
     getOutputFunction: (variables: string[], family_var?: string, abbreviation_fallback?: any, alternative_varname?: string) => Function;

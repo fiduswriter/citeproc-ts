@@ -3,13 +3,13 @@ import { CSL } from '../csl';
 
 export const Output_formatters = (function () {
     const rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2010\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
-    const tagDoppel: any = new CSL.Doppeler(rexStr, function (str: string) {
+    const tagDoppel: { split: (str: string) => { tags: string[]; strings: string[]; origStrings: string[] }; join: (obj: { tags: string[]; strings: string[] }) => string } = new CSL.Doppeler(rexStr, function (str: string) {
         return str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3").replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?(\")[^>]*(>)/g, "$1 $2 $3;$4$5");
     });
     const rexNameStr = "(?:[-\\s]*<\\/*(?:span\s+class=\"no(?:case|decor)\"|i|sc|b|sub|sup)>[-\\s]*|[-\\s]+)";
-    const nameDoppel: any = new CSL.Doppeler(rexNameStr);
+    const nameDoppel: { split: (str: string) => { tags: string[]; strings: string[]; origStrings: string[] }; join: (obj: { tags: string[]; strings: string[] }) => string } = new CSL.Doppeler(rexNameStr);
 
-    const wordDoppel: any = new CSL.Doppeler("(?:[\u00A0\u0020\u00A0\u2000-\u200B\u205F\u3000]+)");
+    const wordDoppel: { split: (str: string) => { tags: string[]; strings: string[]; origStrings: string[] }; join: (obj: { tags: string[]; strings: string[] }) => string } = new CSL.Doppeler("(?:[\u00A0\u0020\u00A0\u2000-\u200B\u205F\u3000]+)");
 
     const _tagParams: { [tag: string]: string } = {
         "<span style=\"font-variant: small-caps;\">": "</span>",
@@ -40,7 +40,7 @@ export const Output_formatters = (function () {
             "\u2018": { opener: "\u2018", closer: "\u2019" },
             "\u201C": { opener: "\u201C", closer: "\u201D" }
         };
-        function tryOpen(tag: string, pos: number): boolean | number {
+        function tryOpen(tag: string, pos: number): boolean | number | undefined {
             if (config.quoteState.length === 0 || tag === config.quoteState[config.quoteState.length - 1].opener) {
                 config.quoteState.push({
                     opener: quoteParams[tag].opener,

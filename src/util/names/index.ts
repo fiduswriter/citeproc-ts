@@ -1,14 +1,14 @@
 import { CSL } from '../../csl';
 import { _compareNamesets } from './common';
 
-export const Util_Names: any = {};
+export const Util_Names: Record<string, Function> = {};
 
 Util_Names.compareNamesets = _compareNamesets;
 
 /**
  * Un-initialize a name (quash caps after first character)
  */
-Util_Names.unInitialize = function (state, name) {
+Util_Names.unInitialize = function (state: CslState, name: string): string {
     let i, ilen, namelist, punctlist, ret;
     if (!name) {
         return "";
@@ -28,7 +28,7 @@ Util_Names.unInitialize = function (state, name) {
 /**
  * Initialize a name.
  */
-Util_Names.initializeWith = function (state, name, terminator, normalizeOnly) {
+Util_Names.initializeWith = function (state: CslState, name: string, terminator?: string, normalizeOnly?: boolean): string {
     let i, ilen, mm, lst, ret;
     if (!name) {
         return "";
@@ -80,11 +80,11 @@ Util_Names.initializeWith = function (state, name, terminator, normalizeOnly) {
     return ret;
 };
 
-Util_Names.notag = function(str) {
+Util_Names.notag = function(str: string): string {
     return str.replace(/^(?:<[^>]+>)*/, "");
 };
 
-Util_Names.mergetag = function(state, tagstr, newstr) {
+Util_Names.mergetag = function(state: CslState, tagstr: string, newstr: string): string {
     let m = tagstr.match(/(?:-*<[^>]+>-*)/g);
     if (!m) {
         return newstr;
@@ -101,7 +101,7 @@ Util_Names.mergetag = function(state, tagstr, newstr) {
     return newstr;
 };
 
-Util_Names.tagonly = function(state, str) {
+Util_Names.tagonly = function(state: CslState, str: string): string {
     let m = str.match(/(?:<[^>]+>)+/);
     if (!m) {
         return str;
@@ -110,7 +110,7 @@ Util_Names.tagonly = function(state, str) {
     }
 };
 
-Util_Names.doNormalize = function (state, namelist, terminator) {
+Util_Names.doNormalize = function (state: CslState, namelist: string[], terminator?: string): string {
     let i, ilen;
     terminator = terminator ? terminator : "";
     const isAbbrev = [];
@@ -145,7 +145,7 @@ Util_Names.doNormalize = function (state, namelist, terminator) {
     return namelist.join("").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020\ufeff\u00a0]+$/,"").replace(/\s*\-\s*/g, "-").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020]+/g, " ");
 };
 
-Util_Names.doInitialize = function (state, namelist, terminator) {
+Util_Names.doInitialize = function (state: CslState, namelist: string[], terminator: string): string {
     let i, ilen, m, j, jlen, lst, n;
     for (let i = 0, ilen = namelist.length; i < ilen; i += 2) {
         n = namelist[i];
@@ -204,7 +204,7 @@ Util_Names.doInitialize = function (state, namelist, terminator) {
     return ret;
 };
 
-Util_Names.getRawName = function (name) {
+Util_Names.getRawName = function (name: CslName): string {
     let ret = [];
     if (name.literal) {
         ret.push(name.literal);
