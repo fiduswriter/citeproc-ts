@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 /**
  * An output instance object representing a number or a range

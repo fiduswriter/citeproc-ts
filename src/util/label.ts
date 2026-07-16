@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, item: any): string {
     let myterm: string;

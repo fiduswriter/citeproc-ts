@@ -23,7 +23,7 @@ export class Match {
     public none(token: any, state: any, tests: Array<(Item: CslItem, item: any) => boolean>): (Item: CslItem, item: any) => boolean {
         return (Item: CslItem, item: any): boolean => {
             for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
-                if (!tests[i](Item, item)) {
+                if (tests[i](Item, item)) {
                     return false;
                 }
             }

@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 export const Attributes: { [key: string]: Function } = {};
 

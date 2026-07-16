@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 export const ParticleList = (function () {
     const always_dropping_1 = [[[0, 1], null]];
     const always_dropping_3 = [[[0, 3], null]];

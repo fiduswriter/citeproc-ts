@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 export function dateMacroAsSortKey(this: any, state: CslState, Item: CslItem): void {
     dateAsSortKey.call(this, state, Item, true);

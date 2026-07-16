@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 export function NameReg(state) {
     let pkey, ikey, skey;

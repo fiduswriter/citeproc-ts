@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 export function Util_substituteStart(state, target) {
     let element_trace, display, bib_first, func, choose_start, if_start, nodetypes;

@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from '../csl';
 
 /**
  * A blob is a unit of rendered output, carrying its own formatting

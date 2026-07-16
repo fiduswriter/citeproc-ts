@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from './csl';
 
 /**
  * String stack object.

@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from './csl';
 
 /**
  * Returns a comparison function for sorting, honouring any

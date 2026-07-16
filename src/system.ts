@@ -1,4 +1,4 @@
-/*global CSL: true */
+import { CSL } from './csl';
 
 export function setupXml(xmlObject: any): any {
     let dataObj: any = {};
