@@ -717,6 +717,13 @@ export class Registry {
             CSL.debug("Warning: unregistered item: itemID=("+id+"), akey=("+akey+")");
         }
         //SNIP-END
+        // Preserve existing disambiguate value (set by @disambiguate conditions)
+        const oldDisambig = this.registry[id] ? this.registry[id].disambig : null;
+        let disambiguateOverride = false;
+        if (oldDisambig && oldDisambig.disambiguate) {
+            disambiguateOverride = oldDisambig.disambiguate;
+        }
+
         // Taint if number of names to be included has changed
         if (this.registry[id] && this.registry[id].disambig && this.registry[id].disambig.names) {
             for (let i = 0, ilen = ambig_config.names.length; i < ilen; i += 1) {
@@ -745,6 +752,9 @@ export class Registry {
         }
         this.registry[id].ambig = akey;
         this.registry[id].disambig = CSL.cloneAmbigConfig(ambig_config);
+        if (disambiguateOverride) {
+            this.registry[id].disambig.disambiguate = disambiguateOverride;
+        }
     }
 }
 

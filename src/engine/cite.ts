@@ -796,6 +796,35 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
         for (let rerunAkey in rerunAkeys) {
             this.disambiguate.run(rerunAkey, citation);
         }
+        // After disambiguation re-run, cap disambiguate for items whose
+        // ambig group has members not in the current citation.
+        // The re-run processes the entire ambig group and may set
+        // disambiguate > 1 for group-level clashes. When only a subset
+        // of the group is cited, disambiguate > 1 can cause unnecessary
+        // content (e.g. title) to render via @disambiguate conditions.
+        const clusterItemIds: any = {};
+        for (let i = 0; i < citation.citationItems.length; i += 1) {
+            clusterItemIds[citation.citationItems[i].id] = true;
+        }
+        for (let rerunAkey in rerunAkeys) {
+            const groupIds = this.registry.ambigcites[rerunAkey];
+            if (!groupIds || groupIds.length < 2) continue;
+            let citedCount = 0;
+            for (let gi = 0; gi < groupIds.length; gi += 1) {
+                if (clusterItemIds[groupIds[gi]]) {
+                    citedCount += 1;
+                }
+            }
+            if (citedCount > 0 && citedCount < groupIds.length) {
+                for (let gi = 0; gi < groupIds.length; gi += 1) {
+                    const gid = "" + groupIds[gi];
+                    if (this.registry.registry[gid] && this.registry.registry[gid].disambig
+                        && this.registry.registry[gid].disambig.disambiguate > 1) {
+                        this.registry.registry[gid].disambig.disambiguate = 1;
+                    }
+                }
+            }
+        }
         // Run taints only if not previewing
         //
         // Push taints to the return object

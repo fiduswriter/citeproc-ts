@@ -73,16 +73,16 @@ export const Node_text = {
                                 if (state.tmp.area === "bibliography_sort") {
                                     state.tmp.group_context.tip.done_vars.push("citation-number");
                                 }
+                                let sortnum;
                                 if (state.tmp.area === "citation_sort" && state.bibliography_sort.tmp.citation_number_map) {
-                                    let num = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
+                                    sortnum = state.bibliography_sort.tmp.citation_number_map[state.registry.registry[Item.id].seq];
                                 } else {
-                                    let num = state.registry.registry[Item.id].seq;
+                                    sortnum = state.registry.registry[Item.id].seq;
                                 }
-                                if (num) {
-                                    // Code currently in util_number.js
-                                    num = CSL.Util.padding("" + num);
+                                if (sortnum) {
+                                    sortnum = CSL.Util.padding("" + sortnum);
                                 }
-                                state.output.append(num, this);
+                                state.output.append(sortnum, this);
                                 return;
                             }
                             if (item && item["author-only"]) {
