@@ -3,7 +3,8 @@
  * Build citeproc bundles from the modular TypeScript entry point.
  *
  * Outputs:
- *   citeproc.mjs          – ES module (primary dist file: modern Node, bundlers, browsers)
+ *   citeproc.mjs          – ES module (Node.js: primary via "main" / "exports")
+ *   citeproc.js           – ES module (browser: <script type="module">, same as .mjs)
  *   citeproc_commonjs.js  – CommonJS (internal: test-runner only, NOT published)
  */
 'use strict';
@@ -45,19 +46,23 @@ Copyright (c) 2009-2019 Frank Bennett
 `;
 
 async function build() {
-    // 1. ES module – primary dist file
+    // 1. ES module for Node.js (primary: "main" / "exports")
+    const esmFile = path.join(ROOT, 'citeproc.mjs');
     await esbuild.build({
         entryPoints: [ENTRY],
         bundle: true,
         platform: 'neutral',
         format: 'esm',
         target: 'es2018',
-        outfile: path.join(ROOT, 'citeproc.mjs'),
+        outfile: esmFile,
         banner: { js: LICENSE_HEADER },
         logLevel: 'info'
     });
 
-    // 2. CommonJS – internal use by the test-runner only
+    // 2. Copy as citeproc.js for browser <script type="module"> use (demo pages)
+    fs.copyFileSync(esmFile, path.join(ROOT, 'citeproc.js'));
+
+    // 3. CommonJS – internal use by the test-runner only
     await esbuild.build({
         entryPoints: [ENTRY],
         bundle: true,
@@ -69,7 +74,7 @@ async function build() {
         logLevel: 'info'
     });
 
-    process.stdout.write('Built citeproc.mjs + citeproc_commonjs.js\n');
+    process.stdout.write('Built citeproc.mjs + citeproc.js + citeproc_commonjs.js\n');
 }
 
 build().catch((err) => {

@@ -6,5 +6,6 @@
     "contributors": [
         "Johannes Wilm"
     ],
-    "license": "MIT"
+    "license": "MIT",
+    "type": "commonjs"
 }

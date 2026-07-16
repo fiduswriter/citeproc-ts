@@ -15,6 +15,7 @@
     },
     "files": [
         "citeproc.mjs",
+        "citeproc.js",
         "test-runner/dist/",
         "tools/rnc-validator.js"
     ],
@@ -25,7 +26,7 @@
     ],
     "license": "(CPAL-1.0 OR AGPL-3.0-or-later)",
     "scripts": {
-        "build": "node tools/build-bundle.js",
+        "build": "node tools/build-bundle.cjs",
         "build:runner": "tsc -p test-runner/tsconfig.json && cp test-runner/lib/templateJS.js test-runner/lib/templateTXT.txt test-runner/dist/lib/ && cp test-runner/package.json test-runner/dist/package.json",
         "pretest": "npm run build && npm run build:runner",
         "test": "node test-runner/dist/runtests.js -a -N",
