@@ -1,6 +1,8 @@
 // demo.js — citeproc-ts CSL citation formatter
 // Original citeproc-js by Michael McMillan & Frank Bennett
 
+import CSL from '../citeproc.js';
+
 (async function () {
     const STYLE_ID = "chicago-notes-bibliography";
 
