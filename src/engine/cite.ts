@@ -770,10 +770,16 @@ export function processCitationCluster(this: any, citation: any, citationsPre: a
                 CSL.debug("****** end final update *********");
             }
             //SNIP-END
-            // Roll back disambig states
+            // Roll back disambig states (only for items no longer in this citation)
+            const currentIds = {};
+            for (let j = 0, jlen = citation.citationItems.length; j < jlen; j += 1) {
+                currentIds[citation.citationItems[j].id] = true;
+            }
             for (let key in oldAmbigs) {
                 if (oldAmbigs.hasOwnProperty(key)) {
-                    this.registry.registry[key].disambig = oldAmbigs[key];
+                    if (!currentIds[key]) {
+                        this.registry.registry[key].disambig = oldAmbigs[key];
+                    }
                 }
             }
             //SNIP-START
