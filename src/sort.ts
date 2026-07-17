@@ -1,4 +1,5 @@
 import { CSL } from './csl';
+import { toLocaleLowerCase } from './util/locale_shared';
 
 /**
  * Returns a comparison function for sorting, honouring any
@@ -9,7 +10,7 @@ export function getSortCompare(default_locale?: string): (a: string, b: string) 
         return CSL.stringCompare;
     }
     const me: any = this;
-    const strcmp_opts = {
+    const strcmp_opts: Intl.CollatorOptions = {
         sensitivity: "base",
         ignorePunctuation: true,
         numeric: true
@@ -18,7 +19,7 @@ export function getSortCompare(default_locale?: string): (a: string, b: string) 
         default_locale = "en-US";
     }
     const strcmp = function (a: string, b: string): number {
-        return CSL.toLocaleLowerCase.call(me, a).localeCompare(CSL.toLocaleLowerCase.call(me, b), default_locale as string, strcmp_opts);
+        return toLocaleLowerCase(me, a).localeCompare(toLocaleLowerCase(me, b), default_locale as string, strcmp_opts);
     };
     const stripPunct = function (str: string): string {
         return str.replace(/^[\[\]\'\"]*/g, "");

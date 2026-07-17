@@ -4,6 +4,7 @@ import { CSL } from '../csl';
 import { ASSUME_ALL_ITEMS_REGISTERED, ERROR_NO_RENDERED_FORM, NONE, NUMERIC, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_SUBSEQUENT, POSITION_TEST_VARS, PREVIEW, SWAPPING_PUNCTUATION, TERMINAL_PUNCTUATION } from '../constants/core';
 import { LOCATOR_LABELS_REGEXP } from '../constants/regex';
 import { LOCATOR_LABELS_MAP } from '../constants/statute';
+import { checkPrefixSpaceAppend, checkSuffixSpacePrepend } from '../util/affix';
 import { debug, error } from '../logger';
 export function previewCitationCluster(this: any, citation: any, citationsPre: Array<[string, number]>, citationsPost: Array<[string, number]>, newMode: string): any {
     // Generate output for a hypothetical citation at the current position,
@@ -1142,7 +1143,7 @@ CSL.getCitationCluster = function (inputList, citation) {
             suppressAuthor = citation.properties.mode === "suppress-author" ? !!citation.properties.mode : false;
         }
         if (citation.properties.prefix) {
-            citation_prefix = CSL.checkPrefixSpaceAppend(this, citation.properties.prefix);
+            citation_prefix = checkPrefixSpaceAppend(this, citation.properties.prefix);
         }
     }
     inputList = inputList ? inputList : [];
@@ -1334,7 +1335,7 @@ CSL.getCitationCluster = function (inputList, citation) {
 
     let citation_suffix = "";
     if (citation) {
-        citation_suffix = CSL.checkSuffixSpacePrepend(this, citation.properties.suffix);
+        citation_suffix = checkSuffixSpacePrepend(this, citation.properties.suffix);
     }
     let suffix = this.citation.opt.layout_suffix;
     const last_locale = this.tmp.cite_locales[this.tmp.cite_locales.length - 1];

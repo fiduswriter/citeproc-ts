@@ -1,6 +1,7 @@
 import { CSL } from '../csl';
 
 import { END, SINGLETON, START } from '../constants/core';
+import { checkPrefixSpaceAppend, checkSuffixSpacePrepend, checkIgnorePredecessor } from '../util/affix';
 import { debug } from '../logger';
 export const Node_layout = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -124,11 +125,11 @@ export const Node_layout = {
                 prefix_token = new CSL.Token("text", SINGLETON);
                 func = function (state: CslState, Item: CslItem, item: any): void {
                     if (item && item.prefix) {
-                        let prefix = CSL.checkPrefixSpaceAppend(state, item.prefix);
+                        let prefix = checkPrefixSpaceAppend(state, item.prefix);
                         if (!state.tmp.just_looking) {
                             prefix = state.output.checkNestedBrace.update(prefix);
                         }
-                        const ignorePredecessor = CSL.checkIgnorePredecessor(state, prefix);
+                        const ignorePredecessor = checkIgnorePredecessor(state, prefix);
                         state.output.append(prefix, this, false, ignorePredecessor);
                     }
                 };
@@ -238,7 +239,7 @@ export const Node_layout = {
                     suffix_token = new CSL.Token("text", SINGLETON);
                     func = function (state: CslState, Item: CslItem, item: any): void {
                         if (item && item.suffix) {
-                            let suffix = CSL.checkSuffixSpacePrepend(state, item.suffix);
+                            let suffix = checkSuffixSpacePrepend(state, item.suffix);
                             if (!state.tmp.just_looking) {
                                 suffix = state.output.checkNestedBrace.update(suffix);
                             }

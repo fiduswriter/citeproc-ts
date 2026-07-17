@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 import { Token } from '../obj/token';
+import { titlecaseSentenceOrNormal, demoteNoiseWords } from './title';
+import { getAbbrevsDomain } from './locale_shared';
 
 import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '../constants/core';
 /*
@@ -283,7 +285,7 @@ export class Transform {
                         }
                         const seg = field.slice(0, -5);
                         const sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
-                        ret.name = CSL.titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase);
+                        ret.name = titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, CSL.Output.Formatters);
                         delete ret.token.strings["text-case"];
                     }
                 }
@@ -300,7 +302,7 @@ export class Transform {
                 jurisdiction = "default";
             }
             const country = jurisdiction.split(":")[0];
-            const domain = CSL.getAbbrevsDomain(state, country, lang);
+            const domain = getAbbrevsDomain(state, country, lang);
             if (domain) {
                 jurisdiction += ("@" + domain);
             }
@@ -524,7 +526,7 @@ export class Transform {
                 }
                 
                 if ("title" === variables[0]) {
-                    primary = CSL.demoteNoiseWords(state, primary, this["leading-noise-words"]);
+                    primary = demoteNoiseWords(state, primary, this["leading-noise-words"]);
                 }
                 if (secondary || tertiary) {
                     state.output.openLevel("empty");

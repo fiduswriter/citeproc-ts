@@ -1,5 +1,6 @@
 import { CSL } from '../../csl';
 import { _compareNamesets } from './common';
+import { toLocaleLowerCase } from '../locale_shared';
 
 export const Util_Names: Record<string, Function> = {};
 
@@ -174,7 +175,7 @@ Util_Names.doInitialize = function (state: CslState, namelist: string[], termina
                     }
                 }
                 if (s.length < m[2].length) {
-                    extra = CSL.toLocaleLowerCase.call(state, s);
+                    extra = toLocaleLowerCase(state, s);
                 }
             }
             namelist[i] = m[1] + extra;

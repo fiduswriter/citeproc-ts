@@ -3,6 +3,8 @@ import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySo
 /*global CSL: true */
 
 import { AREAS, DATE_VARIABLES, END, LOOSE, NAME_VARIABLES, PROCESSOR_VERSION, SINGLETON, START, STRICT, SWAPPING_PUNCTUATION, SYS_OPTIONS, TOLERANT } from '../constants/core';
+import { normalizeLocaleStr, AbbreviationSegments } from '../util/locale_shared';
+import { extractTitleAndSubtitle } from '../util/title';
 import { debug, error } from '../logger';
 export class Engine {
     [key: string]: any;
@@ -59,7 +61,7 @@ export class Engine {
         if (this.sys.stringCompare) {
             CSL.stringCompare = this.sys.stringCompare;
         }
-        this.sys.AbbreviationSegments = CSL.AbbreviationSegments;
+        this.sys.AbbreviationSegments = AbbreviationSegments;
 
         this.transform = new CSL.Transform(this);
         // true or false
@@ -160,11 +162,11 @@ export class Engine {
         // eventual cleanup.
         if (lang) {
             lang = lang.replace("_", "-");
-            lang = CSL.normalizeLocaleStr(lang);
+            lang = normalizeLocaleStr(lang);
         }
         if (this.opt["default-locale"][0]) {
             this.opt["default-locale"][0] = this.opt["default-locale"][0].replace("_", "-");
-            this.opt["default-locale"][0] = CSL.normalizeLocaleStr(this.opt["default-locale"][0]);
+            this.opt["default-locale"][0] = normalizeLocaleStr(this.opt["default-locale"][0]);
         }
         if (lang && forceLang) {
             this.opt["default-locale"] = [lang];
@@ -661,7 +663,7 @@ export class Engine {
         // Add support for main_title_from_short_title
         if (this.opt.development_extensions.main_title_from_short_title) {
             const narrowSpaceLocale = this.opt["default-locale"][0].slice(0, 2).toLowerCase() === "fr";
-            CSL.extractTitleAndSubtitle.call(this, Item, narrowSpaceLocale);
+            extractTitleAndSubtitle(this, Item, narrowSpaceLocale);
         }
         const isLegalType = ["bill", "legal_case", "legislation", "gazette", "regulation"].indexOf(Item.type) > -1;
         if (this.opt.development_extensions.force_jurisdiction && isLegalType) {

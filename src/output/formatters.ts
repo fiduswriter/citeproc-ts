@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 /*global CSL: true */
+import { toLocaleUpperCase, toLocaleLowerCase } from '../util/locale_shared';
 
 export const Output_formatters = (function () {
     const rexStr = "(?:\u2018|\u2019|\u201C|\u201D| \"| \'|\"|\'|[-\u2010\u2013\u2014\/.,;?!:]|\\[|\\]|\\(|\\)|<span style=\"font-variant: small-caps;\">|<span class=\"no(?:case|decor)\">|<\/span>|<\/?(?:i|sc|b|sub|sup)>)";
@@ -24,7 +25,7 @@ export const Output_formatters = (function () {
         const m = word.match(/(^\s*)((?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))(.*)/);
         // Do not uppercase lone Greek letters
         if (m && !(m[2].match(/^[\u0370-\u03FF]$/) && !m[3])) {
-            return m[1] + CSL.toLocaleUpperCase.call(this, m[2]) + m[3];
+            return m[1] + toLocaleUpperCase(this, m[2]) + m[3];
         }
         return word;
     }
@@ -143,7 +144,7 @@ export const Output_formatters = (function () {
         if (config.lastWordPos) {
             const lastWords = wordDoppel.split(config.doppel.strings[config.lastWordPos.strings]);
             let lastWord = lastWords.strings[config.lastWordPos.words];
-            if (lastWord.length > 1 && CSL.toLocaleLowerCase.call(this, lastWord).match(config.skipWordsRex)) {
+            if (lastWord.length > 1 && toLocaleLowerCase(this, lastWord).match(config.skipWordsRex)) {
                 lastWord = _capitalise.call(this, lastWord);
                 lastWords.strings[config.lastWordPos.words] = lastWord;
             }
@@ -167,7 +168,7 @@ export const Output_formatters = (function () {
                 for (let i = 0, ilen = words.length; i < ilen; i += 1) {
                     const word = words[i];
                     if (word) {
-                        words[i] = CSL.toLocaleLowerCase.call(state, word);
+                        words[i] = toLocaleLowerCase(state, word);
                     }
                 }
                 return words.join(" ");
@@ -189,7 +190,7 @@ export const Output_formatters = (function () {
                 for (let i = 0, ilen = words.length; i < ilen; i += 1) {
                     const word = words[i];
                     if (word) {
-                        words[i] = CSL.toLocaleUpperCase.call(state, word);
+                        words[i] = toLocaleUpperCase(state, word);
                     }
                 }
                 return words.join(" ");
@@ -215,7 +216,7 @@ export const Output_formatters = (function () {
                             words[i] = _capitalise.call(state, word);
                             config.isFirst = false;
                         } else {
-                            words[i] = CSL.toLocaleLowerCase.call(state, word);
+                            words[i] = toLocaleLowerCase(state, word);
                         }
                     }
                 }
@@ -241,7 +242,7 @@ export const Output_formatters = (function () {
                         if (!word) {
                             continue;
                         }
-                        const lcase = CSL.toLocaleLowerCase.call(state, word);
+                        const lcase = toLocaleLowerCase(state, word);
                         let capitalize = false;
                         if (word.length > 1 && !lcase.match(config.skipWordsRex)) {
                             capitalize = true;
@@ -285,7 +286,7 @@ export const Output_formatters = (function () {
                     const word = words[i];
                     if (word) {
                         if (config.isFirst) {
-                            if (word === CSL.toLocaleLowerCase.call(state, word)) {
+                            if (word === toLocaleLowerCase(state, word)) {
                                 words[i] = _capitalise.call(state, word);
                             }
                             config.isFirst = false;
@@ -313,7 +314,7 @@ export const Output_formatters = (function () {
                 for (let i = 0, ilen = words.length; i < ilen; i += 1) {
                     const word = words[i];
                     if (word) {
-                        if (word === CSL.toLocaleLowerCase.call(state, word)) {
+                        if (word === toLocaleLowerCase(state, word)) {
                             words[i] = _capitalise.call(state, word);
                         }
                     }
