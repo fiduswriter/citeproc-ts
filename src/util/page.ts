@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 export const Util_PageRangeMangler: Record<string, Function> = {};
 
 Util_PageRangeMangler.getFunction = function (state: CslState, rangeType: string): Function {

@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 export function Util_fixDateNode(this: any, parent: any, pos: any, node: any): any {
     const lingo = this.cslXml.getAttributeValue(node, "lingo");
 

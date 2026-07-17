@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { Blob } from '../obj/blob';
 import { FORMAT_KEY_SEQUENCE } from '../constants/core';

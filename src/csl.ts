@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 'use strict';
 
 import * as Core from './constants/core';

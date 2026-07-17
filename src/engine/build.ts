@@ -1,6 +1,5 @@
 import { CSL } from '../csl';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
-/*global CSL: true */
 
 import { AREAS, DATE_VARIABLES, END, LOOSE, NAME_VARIABLES, PROCESSOR_VERSION, SINGLETON, START, STRICT, SWAPPING_PUNCTUATION, SYS_OPTIONS, TOLERANT } from '../constants/core';
 import { normalizeLocaleStr, AbbreviationSegments } from '../util/locale_shared';

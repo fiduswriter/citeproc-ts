@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 export function ambigConfigDiff(a: any, b: any): number {
     let pos: number, len: number, ppos: number, llen: number;
     if (a.names.length !== b.names.length) {

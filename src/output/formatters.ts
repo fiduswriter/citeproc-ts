@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 import { toLocaleUpperCase, toLocaleLowerCase } from '../util/locale_shared';
 
 export const Output_formatters = (function () {

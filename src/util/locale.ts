@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { GENDERS, LANG_BASES, SKIP_WORDS } from '../constants/core';
 import { debug } from '../logger';

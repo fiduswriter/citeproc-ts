@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 /**
  * Shared data shapes (CSL-JSON input and the processor runtime).
  *

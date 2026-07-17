@@ -1,5 +1,4 @@
 import { CSL } from '../../csl';
-/*global CSL: true */
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';

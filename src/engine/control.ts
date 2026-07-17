@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 export function setOutputFormat(this: any, mode: string): void {
     this.opt.mode = mode;

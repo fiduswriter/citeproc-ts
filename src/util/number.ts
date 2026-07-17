@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { LOOSE, LangPrefsMap, ROMAN_NUMERALS, SUFFIX_CHARS } from '../constants/core';
 import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';

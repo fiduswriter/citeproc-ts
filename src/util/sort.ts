@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 export const Util_Sort: any = {};
 
 Util_Sort.strip_prepositions = function (str: string): string {

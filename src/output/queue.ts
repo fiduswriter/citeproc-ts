@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { END, SEEN, SINGLETON, START, SUCCESSOR, SUPPRESS, TERMINAL_PUNCTUATION } from '../constants/core';
 import { ROMANESQUE_REGEXP } from '../constants/regex';

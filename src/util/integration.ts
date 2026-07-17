@@ -1,6 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
-
 
 export function setCitationId(this: any, citation: any, force?: boolean): string | boolean {
     let ret: string | boolean, id: number, direction: number;

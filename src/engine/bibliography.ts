@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { NUMERIC, START } from '../constants/core';
 import { debug } from '../logger';

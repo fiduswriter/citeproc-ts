@@ -1,5 +1,4 @@
 import { CSL } from '../csl';
-/*global CSL: true */
 
 import { END, SINGLETON, START } from '../constants/core';
 export const Conditions = {

@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 interface AmbigNameConfig {
     suffix?: boolean;
     "long-short"?: boolean;

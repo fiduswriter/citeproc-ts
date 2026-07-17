@@ -3,9 +3,6 @@ import { NameReg } from '../disambig/names';
 import { CitationReg } from '../disambig/citations';
 import { AmbigConfig } from '../obj/ambigconfig';
 
-/*global CSL: true */
-
-
 import { DESCENDING, NUMERIC } from '../constants/core';
 import { debug } from '../logger';
 //
