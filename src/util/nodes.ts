@@ -1,4 +1,5 @@
-import { CSL } from '../csl';
+import { internals } from './internals';
+import { makeBuilder } from '../engine/build';
 
 import { Token } from '../obj/token';
 import { setDecorations } from '../util/processor';
@@ -161,7 +162,7 @@ export function getMacroTarget(mkey) {
 };
 
 export function buildMacro(mytarget, macro_nodes) {
-    const builder = CSL.makeBuilder(this, mytarget);
+    const builder = makeBuilder(this, mytarget);
     let mynode;
     if ("undefined" === typeof macro_nodes.length) {
         mynode = macro_nodes;
@@ -191,7 +192,7 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
         }
         return;
     }
-    if (!CSL.Node[state.cslXml.nodename(this)]) {
+    if (!internals.Node[state.cslXml.nodename(this)]) {
         error("Undefined node name \"" + name + "\".");
     }
     attrfuncs = [];
@@ -232,5 +233,5 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
     } else {
         target = state[state.build.area].tokens;
     }
-    CSL.Node[name].build.call(token, state, target, true);
+    internals.Node[name].build.call(token, state, target, true);
 };

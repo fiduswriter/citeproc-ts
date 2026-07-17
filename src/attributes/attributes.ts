@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { localeResolve } from '../util/locale';
 import { GET_COURT_CLASS } from '../util/csl-shared';
 
 import { DATE_VARIABLES, DESCENDING, GIVENNAME_DISAMBIGUATION_RULES, LITERAL, NUMERIC_VARIABLES, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_MAP, POSITION_SUBSEQUENT, START } from '../constants/core';
@@ -616,7 +616,7 @@ Attributes["@locale"] = function (state: CslState, arg: string) {
             const locale_data = [];
             const locales = arg.split(/\s+/);
             const sort_locale = {};
-            const localeMaster = CSL.localeResolve(locales[0], locale_default);
+            const localeMaster = localeResolve(locales[0], locale_default);
             locale_data.push(localeMaster);
             if (localeMaster.generic) {
                 sort_locale[localeMaster.generic] = localeMaster.best;
@@ -624,7 +624,7 @@ Attributes["@locale"] = function (state: CslState, arg: string) {
                 sort_locale[localeMaster.best] = localeMaster.best;
             }
             for (let i=1,ilen=locales.length;i<ilen;i+=1) {
-                const localeServant = CSL.localeResolve(locales[i], locale_default);
+                const localeServant = localeResolve(locales[i], locale_default);
                 locale_data.push(localeServant);
                 if (localeServant.generic) {
                     sort_locale[localeServant.generic] = localeMaster.best;
@@ -644,7 +644,7 @@ Attributes["@locale"] = function (state: CslState, arg: string) {
         for (let i = 0, ilen = lst.length; i < ilen; i += 1) {
             lang = lst[i];
         
-            langspec = CSL.localeResolve(lang, locale_default);
+            langspec = localeResolve(lang, locale_default);
             if (lst[i].length === 2) {
                 locale_bares.push(langspec.bare);
             }
@@ -667,7 +667,7 @@ Attributes["@locale"] = function (state: CslState, arg: string) {
                 } else {
                     lang = Item.language;
                 }
-                langspec = CSL.localeResolve(lang, locale_default);
+                langspec = localeResolve(lang, locale_default);
                 for (let i = 0, ilen = locale_list.length; i < ilen; i += 1) {
                     if (langspec.best === locale_list[i].best) {
                         state.tmp.condition_lang_counter_arr.push(state.tmp.condition_counter);
@@ -710,7 +710,7 @@ Attributes["@locale-internal"] = function (state: CslState, arg: string) {
         for (let i = 0, ilen = lst.length; i < ilen; i += 1) {
             lang = lst[i];
         
-            langspec = CSL.localeResolve(lang, state.opt["default-locale"][0]);
+            langspec = localeResolve(lang, state.opt["default-locale"][0]);
             if (lst[i].length === 2) {
                 this.locale_bares.push(langspec.bare);
             }
@@ -730,7 +730,7 @@ Attributes["@locale-internal"] = function (state: CslState, arg: string) {
                 let langspec: any = false;
                 if (Item.language) {
                     const lang2 = Item.language;
-                    langspec = CSL.localeResolve(lang2, state.opt["default-locale"][0]);
+                    langspec = localeResolve(lang2, state.opt["default-locale"][0]);
                     if (langspec.best === state.opt["default-locale"][0]) {
                         langspec = false;
                     }

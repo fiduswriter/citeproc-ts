@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { getCite } from '../engine/cite';
 
 import { SINGLETON } from '../constants/core';
 export const Node_alternative_text = {
@@ -6,7 +6,7 @@ export const Node_alternative_text = {
         if (this.tokentype === SINGLETON) {
             let func = function (this: CslNode, state: CslState, Item: CslItem): void {
                 const item = state.refetchItem(Item.id);
-                CSL.getCite.call(state, item);
+                getCite.call(state, item);
             };
             this.execs.push(func);
         }

@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { internals } from '../util/internals';
 import { getAmbigConfig, cloneAmbigConfig } from '../util/disambig';
 import { getSortCompare } from '../sort';
 import { Util_Sort } from '../util/sort';
@@ -114,8 +114,8 @@ export class Registry {
         this.refhash = {};
         this.namereg = new NameReg(state);
         this.citationreg = new CitationReg(state);
-        // See CSL.NameOutput.prototype.outputNames
-        // and CSL.Registry.prototype.doinserts
+        // See NameOutput.prototype.outputNames
+        // and Registry.prototype.doinserts
         this.authorstrings = {};
 
         // for parallel delimiter support
@@ -138,8 +138,8 @@ export class Registry {
         this.ambigcites = {};
         this.ambigresets = {};
         this.sorter = new Comparifier(state, "bibliography_sort");
-        //this.modes = CSL.getModes.call(this.state);
-        //this.checkerator = new CSL.Checkerator();
+        //this.modes = getModes.call(this.state);
+        //this.checkerator = new Checkerator();
     }
 
     getSortedIds() {
@@ -411,7 +411,7 @@ export class Registry {
                 //  4c. Add names in items to be inserted to names reg
                 //      (implicit in getAmbiguousCite).
                 //
-                akey = CSL.getAmbiguousCite.call(this.state, Item);
+                akey = internals.getAmbiguousCite.call(this.state, Item);
                 this.ambigsTouched[akey] = true;
                 //
                 //  4d. Record ambig pool key on akey list (used for updating further
@@ -556,7 +556,7 @@ export class Registry {
 
             if ("undefined" === typeof akey) {
                 this.state.tmp.disambig_settings = false;
-                akey = CSL.getAmbiguousCite.call(this.state, Item);
+                akey = internals.getAmbiguousCite.call(this.state, Item);
                 abase = getAmbigConfig.call(this.state);
                 this.registerAmbigToken(akey, key, abase);
             }
@@ -566,7 +566,7 @@ export class Registry {
                     Item = this.state.refetchItem(loneKey);
                     this.registry[loneKey].disambig = new AmbigConfig();
                     this.state.tmp.disambig_settings = false;
-                    akey = CSL.getAmbiguousCite.call(this.state, Item);
+                    akey = internals.getAmbiguousCite.call(this.state, Item);
                     abase = getAmbigConfig.call(this.state);
                     this.registerAmbigToken(akey, loneKey, abase);
                 }
@@ -645,7 +645,7 @@ export class Registry {
             let key = this.mylist[i];
             // The last of these conditions may create some thrashing on styles that do not require sorting.
             if (this.touched[key] || this.state.tmp.taintedItemIDs[key] || !this.registry[key].sortkeys) {
-                this.registry[key].sortkeys = CSL.getSortKeys.call(this.state, this.state.retrieveItem(key), "bibliography_sort");
+                this.registry[key].sortkeys = getSortKeys.call(this.state, this.state.retrieveItem(key), "bibliography_sort");
             }
         }
     }
@@ -854,7 +854,7 @@ export function getSortKeys(this: CslState, Item: CslItem, key_type: string) {
     this.tmp.disambig_override = true;
     this.tmp.disambig_request = false;
     this.tmp.suppress_decorations = true;
-    CSL.getCite.call(this, Item);
+    internals.getCite.call(this, Item);
     this.tmp.suppress_decorations = false;
     this.tmp.disambig_override = false;
     len = this[key_type].keys.length;

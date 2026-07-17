@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { internals } from '../util/internals';
 import { checkNestedBrace, parseLocator, getSafeEscape } from '../util/csl-shared';
 import { cloneAmbigConfig } from '../util/disambig';
 import { Queue } from '../output/queue';
@@ -306,7 +306,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
 
     if (!this.opt.citation_number_sort && sortedItems && sortedItems.length > 1 && this.citation_sort.tokens.length > 0) {
         for (let i = 0, ilen = sortedItems.length; i < ilen; i += 1) {
-            sortedItems[i][1].sortkeys = CSL.getSortKeys.call(this, sortedItems[i][0], "citation_sort");
+            sortedItems[i][1].sortkeys = internals.getSortKeys.call(this, sortedItems[i][0], "citation_sort");
         }
 
         /*
@@ -323,7 +323,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
                 const mydisambig = this.registry.registry[sortedItems[i][0].id].disambig;
 
                 this.tmp.authorstring_request = true;
-                CSL.getAmbiguousCite.call(this, sortedItems[i][0], mydisambig);
+                getAmbiguousCite.call(this, sortedItems[i][0], mydisambig);
                 const authorstring = this.registry.authorstrings[sortedItems[i][0].id];
                 this.tmp.authorstring_request = false;
 
@@ -712,7 +712,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
     if (this.opt.citation_number_sort && sortedItems && sortedItems.length > 1 && this.citation_sort.tokens.length > 0) {
         if (!citation.properties.unsorted) {
             for (let i = 0, ilen = sortedItems.length; i < ilen; i += 1) {
-                sortedItems[i][1].sortkeys = CSL.getSortKeys.call(this, sortedItems[i][0], "citation_sort");
+                sortedItems[i][1].sortkeys = internals.getSortKeys.call(this, sortedItems[i][0], "citation_sort");
             }
             sortedItems.sort(this.citation.srt.compareCompositeKeys);
         }
@@ -846,7 +846,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
             const mycitation = this.registry.citationreg.citationById[key];
             if (!mycitation.properties.unsorted) {
                 for (let i = 0, ilen = mycitation.sortedItems.length; i < ilen; i += 1) {
-                    mycitation.sortedItems[i][1].sortkeys = CSL.getSortKeys.call(this, mycitation.sortedItems[i][0], "citation_sort");
+                    mycitation.sortedItems[i][1].sortkeys = internals.getSortKeys.call(this, mycitation.sortedItems[i][0], "citation_sort");
                 }
                 mycitation.sortedItems.sort(this.citation.srt.compareCompositeKeys);
             }
@@ -909,7 +909,7 @@ export function process_CitationCluster(this: any, sortedItems: any[], citation:
     let str = "";
     if (citation && citation.properties && citation.properties.mode === "composite") {
         citation.properties.mode = "author-only";
-        let firstChunk = CSL.getCitationCluster.call(this, sortedItems, citation);
+        let firstChunk = getCitationCluster.call(this, sortedItems, citation);
         citation.properties.mode = "suppress-author";
         let secondChunk: any = "";
         if (citation.properties.infix) {
@@ -920,7 +920,7 @@ export function process_CitationCluster(this: any, sortedItems: any[], citation:
                 secondChunk = secondChunk.join("");
             }
         }
-        const thirdChunk = CSL.getCitationCluster.call(this, sortedItems, citation);
+        const thirdChunk = getCitationCluster.call(this, sortedItems, citation);
         citation.properties.mode = "composite";
         if (firstChunk && secondChunk && SWAPPING_PUNCTUATION.concat(["\u2019", "\'"]).indexOf(secondChunk[0]) > -1) {
             firstChunk += secondChunk;
@@ -930,7 +930,7 @@ export function process_CitationCluster(this: any, sortedItems: any[], citation:
             return obj;
         }).join(" ");
     } else {
-        str = CSL.getCitationCluster.call(this, sortedItems, citation);
+        str = getCitationCluster.call(this, sortedItems, citation);
     }
     return str;
 };
@@ -970,12 +970,12 @@ export function makeCitationCluster(this: any, rawList: any[]): any {
     if (inputList && inputList.length > 1 && this.citation_sort.tokens.length > 0) {
         len = inputList.length;
         for (let pos = 0; pos < len; pos += 1) {
-            inputList[pos][1].sortkeys = CSL.getSortKeys.call(this, inputList[pos][0], "citation_sort");
+            inputList[pos][1].sortkeys = internals.getSortKeys.call(this, inputList[pos][0], "citation_sort");
         }
         inputList.sort(this.citation.srt.compareCompositeKeys);
     }
     this.tmp.citation_errors = [];
-    str = CSL.getCitationCluster.call(this, inputList);
+    str = getCitationCluster.call(this, inputList);
     return str;
 };
 
@@ -1037,7 +1037,7 @@ export function getAmbiguousCite(this: any, Item: CslItem, disambig?: any, visua
     this.tmp.suppress_decorations = true;
     this.tmp.just_looking = true;
 
-    CSL.getCite.call(this, Item, itemSupp, null, false);
+    getCite.call(this, Item, itemSupp, null, false);
     // !!!
     for (let i=0,ilen=this.output.queue.length;i<ilen;i+=1) {
         Queue.purgeEmptyBlobs(this.output.queue[i]);
@@ -1268,7 +1268,7 @@ export function getCitationCluster(this: any, inputList: any, citation?: any) {
             const output = this.output;
             this.output = new Queue(this);
             this.output.adjust = new Queue.adjust();
-            CSL.getAmbiguousCite.call(this, Item, null, false, item);
+            getAmbiguousCite.call(this, Item, null, false, item);
             this.output = output;
         }
 
@@ -1277,10 +1277,10 @@ export function getCitationCluster(this: any, inputList: any, citation?: any) {
 
 
         if (pos > 0) {
-            CSL.getCite.call(this, Item, item, "" + inputList[(pos - 1)][0].id, true);
+            getCite.call(this, Item, item, "" + inputList[(pos - 1)][0].id, true);
         } else {
             this.tmp.term_predecessor = false;
-            CSL.getCite.call(this, Item, item, null, true);
+            getCite.call(this, Item, item, null, true);
         }
 
         // Make a note of any errors
@@ -1295,7 +1295,7 @@ export function getCitationCluster(this: any, inputList: any, citation?: any) {
             };
             this.tmp.citation_errors.push(error_object);
         }
-        params.splice_delimiter = CSL.getSpliceDelimiter.call(this, last_locator, last_collapsed, pos);
+        params.splice_delimiter = getSpliceDelimiter.call(this, last_locator, last_collapsed, pos);
         // XXX This appears to be superfluous.
         if (item && item["author-only"]) {
             this.tmp.suppress_decorations = true;
@@ -1541,7 +1541,7 @@ export function getCite(this: any, Item: any, item?: any, prevItemID?: any, bloc
     this.tmp.probably_rendered_something = false;
     this.tmp.prevItemID = prevItemID;
 
-    CSL.citeStart.call(this, Item, item, blockShadowNumberReset);
+    citeStart.call(this, Item, item, blockShadowNumberReset);
     next = 0;
     this.tmp.name_node = {};
     this.nameOutput = new NameOutput(this, Item, item);
@@ -1551,7 +1551,7 @@ export function getCite(this: any, Item: any, item?: any, prevItemID?: any, bloc
         next = tokenExec.call(this, this[this.tmp.area].tokens[next], Item, item);
     }
 
-    CSL.citeEnd.call(this, Item, item);
+    citeEnd.call(this, Item, item);
     // Odd place for this, but it seems to fit here
     if (!this.tmp.cite_renders_content && !this.tmp.just_looking) {
         if (this.tmp.area === "bibliography") {

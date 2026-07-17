@@ -7,7 +7,6 @@ import * as Statute from './constants/statute';
 import { checkPrefixSpaceAppend, checkSuffixSpacePrepend, checkIgnorePredecessor } from './util/affix';
 import { TITLE_FIELD_SPLITS, TITLE_SPLIT, demoteNoiseWords, extractTitleAndSubtitle, titlecaseSentenceOrNormal } from './util/title';
 import { normalizeLocaleStr, toLocaleUpperCase, toLocaleLowerCase, getAbbrevsDomain, AbbreviationSegments } from './util/locale_shared';
-import { error, debug } from './logger';
 import { Conditions } from './util/conditions';
 import { Doppeler, substituteOne, substituteTwo, setDecorations, Mode } from './util/processor';
 
@@ -28,7 +27,6 @@ import { localeResolve } from './util/locale';
 import { makeBuilder } from './engine/build';
 import { getAmbiguousCite, getSpliceDelimiter, getCitationCluster, getCite, citeStart, citeEnd } from './engine/cite';
 import { getBibliographyEntries } from './engine/bibliography';
-import { getSortKeys } from './registry/registry';
 
 
 export const CSL: CSLNamespace = {
@@ -36,8 +34,6 @@ export const CSL: CSLNamespace = {
     ...Regex,
     ...Statute,
 
-    error,
-    debug,
     normalizeLocaleStr,
     toLocaleUpperCase,
     toLocaleLowerCase,
@@ -80,13 +76,18 @@ export const CSL: CSLNamespace = {
     getCite,
     citeStart,
     citeEnd,
-    getBibliographyEntries,
-    getSortKeys
+    getBibliographyEntries
 };
 
-CSL.ITERATION = 0;
 CSL.internals = internals;
 CSL.Node = internals.Node;
+
+Object.defineProperty(CSL, 'ITERATION', {
+    get: () => internals.ITERATION,
+    set: (v) => { internals.ITERATION = v; },
+    enumerable: true,
+    configurable: true
+});
 
 Object.defineProperty(CSL, 'stringCompare', {
     get: () => internals.stringCompare,
@@ -98,6 +99,27 @@ Object.defineProperty(CSL, 'stringCompare', {
 Object.defineProperty(CSL, 'VARIABLE_WRAPPER_PREPUNCT_REX', {
     get: () => internals.VARIABLE_WRAPPER_PREPUNCT_REX,
     set: (v) => { internals.VARIABLE_WRAPPER_PREPUNCT_REX = v; },
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty(CSL, 'debug', {
+    get: () => internals.debug,
+    set: (v) => { internals.debug = v; },
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty(CSL, 'error', {
+    get: () => internals.error,
+    set: (v) => { internals.error = v; },
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty(CSL, 'getSortKeys', {
+    get: () => internals.getSortKeys,
+    set: (v) => { internals.getSortKeys = v; },
     enumerable: true,
     configurable: true
 });

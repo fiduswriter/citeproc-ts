@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { localeResolve } from './locale';
 import { setupXml } from '../system';
 
 export function getLocaleNames(myxml: any, preferredLocale?: string): string[] {
@@ -7,7 +7,7 @@ export function getLocaleNames(myxml: any, preferredLocale?: string): string[] {
     function extendLocaleList(localeList: string[], locale?: string): void {
         const forms = ["base", "best"];
         if (locale) {
-            const normalizedLocale = CSL.localeResolve(locale);
+            const normalizedLocale = localeResolve(locale);
             for (let i = 0, ilen = forms.length; i < ilen; i += 1) {
                 if (normalizedLocale[forms[i]] && localeList.indexOf(normalizedLocale[forms[i]]) === -1) {
                     localeList.push(normalizedLocale[forms[i]]);

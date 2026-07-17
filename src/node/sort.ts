@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { localeResolve } from '../util/locale';
 
 import { END, START } from '../constants/core';
 export const Node_sort = {
@@ -13,7 +13,7 @@ export const Node_sort = {
 
             let func = function (this: CslNode, state: CslState, Item: CslItem): void {
                 if (state.opt.has_layout_locale) {
-                    const langspec = CSL.localeResolve(Item.language, state.opt["default-locale"][0]);
+                    const langspec = localeResolve(Item.language, state.opt["default-locale"][0]);
                     const sort_locales = state[state.tmp.area.slice(0, -5)].opt.sort_locales;
                     let langForItem;
                     for (let i = 0, ilen = sort_locales.length; i < ilen; i += 1) {

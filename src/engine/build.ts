@@ -1,6 +1,6 @@
-import { CSL } from '../csl';
 import { parseNoteFieldHacks } from '../util/csl-shared';
 import { internals } from '../util/internals';
+import { localeResolve } from '../util/locale';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
 import { Queue } from '../output/queue';
 import { Registry } from '../registry/registry';
@@ -66,11 +66,11 @@ export class Engine {
             internals.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp('^([' + [" "].concat(SWAPPING_PUNCTUATION).join("") + ']*)(.*)');
         }
         // XXXX This should be restored -- temporarily suspended for testing of JSON style support.
-        if (CSL.retrieveStyleModule) {
-            this.sys.retrieveStyleModule = CSL.retrieveStyleModule;
+        if (internals.retrieveStyleModule) {
+            this.sys.retrieveStyleModule = internals.retrieveStyleModule;
         }
-        if (CSL.getAbbreviation) {
-            this.sys.getAbbreviation = CSL.getAbbreviation;
+        if (internals.getAbbreviation) {
+            this.sys.getAbbreviation = internals.getAbbreviation;
         }
         if (this.sys.stringCompare) {
             internals.stringCompare = this.sys.stringCompare;
@@ -197,7 +197,7 @@ export class Engine {
         if (!lang) {
             lang = this.opt["default-locale"][0];
         }
-        langspec = CSL.localeResolve(lang);
+        langspec = localeResolve(lang);
         this.opt.lang = langspec.best;
         this.opt["default-locale"][0] = langspec.best;
         this.locale = {};
@@ -298,7 +298,7 @@ export class Engine {
         if (!this.cslXml.getNodeValue(area_nodes)) {
             return;
         }
-        const builder = CSL.makeBuilder(this, target);
+        const builder = makeBuilder(this, target);
         let mynode;
         if ("undefined" === typeof area_nodes.length) {
             mynode = area_nodes;
@@ -448,7 +448,7 @@ export class Engine {
             const tokens = this[area].tokens;
             this.configureTokenList(tokens);
         }
-        this.version = CSL.version;
+        this.version = internals.version;
         return this.state;
     }
 
@@ -477,8 +477,8 @@ export class Engine {
                 token.dateparts = dateparts;
             }
             token.next = (ppos + 1);
-            if (token.name && CSL.Node[token.name].configure) {
-                CSL.Node[token.name].configure.call(token, this, ppos);
+            if (token.name && internals.Node[token.name].configure) {
+                internals.Node[token.name].configure.call(token, this, ppos);
             }
         }
     }
@@ -515,8 +515,8 @@ export class Engine {
             this.opt.development_extensions.normalize_lang_keys_to_lowercase = 100;
         }
 
-        //Zotero.debug("XXX === ITERATION " + CSL.ITERATION + " " + id + " ===");
-        CSL.ITERATION += 1;
+        //Zotero.debug("XXX === ITERATION " + internals.ITERATION + " " + id + " ===");
+        internals.ITERATION += 1;
 
         Item = JSON.parse(JSON.stringify(this.sys.retrieveItem("" + id)));
 

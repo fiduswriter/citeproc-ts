@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { getAmbiguousCite } from '../engine/cite';
 import { ambigConfigDiff, getAmbigConfig, getMaxVals, cloneAmbigConfig } from '../util/disambig';
 
 export class Disambiguation {
@@ -92,7 +92,7 @@ export class Disambiguation {
         }
 
         this.Item = list[1][0];
-        this.ItemCite = CSL.getAmbiguousCite.call(this.state, this.Item, this.base, true);
+        this.ItemCite = getAmbiguousCite.call(this.state, this.Item, this.base, true);
 
         this.scanlist = list[1];
         this.partners = [];
@@ -102,7 +102,7 @@ export class Disambiguation {
 
         for (let pos = 1, len = list[1].length; pos < len; pos += 1) {
             otherItem = list[1][pos];
-            const otherItemCite = CSL.getAmbiguousCite.call(this.state, otherItem, this.base, true);
+            const otherItemCite = getAmbiguousCite.call(this.state, otherItem, this.base, true);
             if (this.debug) {
                 if (pos > 1) {
                     this.state.sys.print("  -----------");
@@ -472,7 +472,7 @@ export class Disambiguation {
 
     getCiteData(Item: CslItem, base?: any): void {
         if (!this.maxNamesByItemId[Item.id]) {
-            CSL.getAmbiguousCite.call(this.state, Item, base);
+            getAmbiguousCite.call(this.state, Item, base);
             base = getAmbigConfig.call(this.state);
             this.maxNamesByItemId[Item.id] = getMaxVals.call(this.state);
             this.state.registry.registry[Item.id].disambig.givens = this.state.tmp.disambig_settings.givens.slice();

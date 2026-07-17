@@ -1,10 +1,10 @@
 /*global CSL: true, Zotero: true */
-import { CSL } from './csl';
+import { internals } from './util/internals';
 
-CSL.debug = function (str: string): void {
+internals.debug = function (str: string): void {
     Zotero.debug("CSL: " + str);
 };
 
-CSL.error = function (str: string): void {
+internals.error = function (str: string): void {
     Zotero.debug("CSL error: " + str);
 };

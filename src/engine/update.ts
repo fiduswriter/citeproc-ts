@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 import { Registry } from '../registry/registry';
 import { Disambiguation } from '../disambig/cites';
 import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
@@ -60,14 +59,14 @@ export function rebuildProcessorState(this: any, citations: any[], mode: string,
 
 export function restoreProcessorState(this: any, citations?: any[]): any {
     let i, ilen, j, jlen, item, Item, newitem, citationList, itemList, sortedItems;
-    
+
     // This function is deprecated.
     // Use rebuildProcessorState() instead.
 
     // Quickly restore state from citation details retained by
     // calling application.
     //
-    // if citations are provided, position details and sortkeys 
+    // if citations are provided, position details and sortkeys
     // on the citation objects are are assumed to be correct.  Item
     // data is retrieved, and sortedItems arrays are created and
     // sorted as required by the current style.
@@ -165,7 +164,7 @@ export function updateItems(this: any, idList: string[], nosort?: boolean, rerun
     //debug = print
     //SNIP-START
     if (debug) {
-        CSL.debug("--> init <--");
+        debug("--> init <--");
     }
     //SNIP-END
     this.registry.init(idList);
@@ -177,14 +176,14 @@ export function updateItems(this: any, idList: string[], nosort?: boolean, rerun
 	}
 
     this.registry.dodeletes(this.registry.myhash);
-    
+
     this.registry.doinserts(this.registry.mylist);
-    
+
     this.registry.dorefreshes();
 
     // *** affects reflist
     this.registry.rebuildlist(nosort);
-    
+
     this.registry.setsortkeys();
 
     // taints always
@@ -196,7 +195,7 @@ export function updateItems(this: any, idList: string[], nosort?: boolean, rerun
     // *** affects reflist
     // taints if numbered style
     this.registry.renumber();
-    
+
     // taints always
     //this.registry.yearsuffix();
 

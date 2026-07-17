@@ -1,4 +1,4 @@
-import { CSL } from '../../csl';
+import { localeResolve } from '../locale';
 import { UPDATE_GROUP_CONTEXT_CONDITION } from '../csl-shared';
 import { Util_Names } from './index';
 import { castLabel } from '../label';
@@ -1702,7 +1702,7 @@ export class NameOutput {
 
     getNameParams(langTag: any) {
         let ret = {};
-        const langspec = CSL.localeResolve(this.Item.language, this.state.opt["default-locale"][0]);
+        const langspec = localeResolve(this.Item.language, this.state.opt["default-locale"][0]);
         const try_locale = this.state.locale[langspec.best] ? langspec.best : this.state.opt["default-locale"][0];
         const name_as_sort_order = this.state.locale[try_locale].opts["name-as-sort-order"];
         const name_as_reverse_order = this.state.locale[try_locale].opts["name-as-reverse-order"];

@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { localeResolve } from '../util/locale';
 import { NameOutput } from '../util/names/output';
 import { Token } from '../obj/token';
 
@@ -30,7 +30,7 @@ export const Node_alternative = {
                     newItem = JSON.parse(JSON.stringify(Item));
 
                     newItem.language = newItem["language-name"];
-                    const langspec = CSL.localeResolve(newItem.language, state.opt["default-locale"][0]);
+                    const langspec = localeResolve(newItem.language, state.opt["default-locale"][0]);
 
                     if (state.opt.multi_layout) {
                         for (let i in state.opt.multi_layout) {

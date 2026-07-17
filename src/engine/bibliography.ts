@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { getCite } from './cite';
 import { Queue } from '../output/queue';
 import { Output_formats } from '../output/formats';
 import { Token } from '../obj/token';
@@ -60,7 +60,7 @@ export function makeBibliography(this: any, bibsection?: any): any {
     //SNIP-END
 
     // For paged returns
-    ret = CSL.getBibliographyEntries.call(this, bibsection);
+    ret = getBibliographyEntries.call(this, bibsection);
     entry_ids = ret[0];
     entry_strings = ret[1];
 
@@ -330,14 +330,14 @@ export function getBibliographyEntries(this: any, bibsection?: any) {
                 } else {
                     delete this.tmp.parallel_and_not_last;
                 }
-                entry_item_ids.push("" + CSL.getCite.call(this, sortedItems[j][0], sortedItems[j][1]));
+                entry_item_ids.push("" + getCite.call(this, sortedItems[j][0], sortedItems[j][1]));
                 this.tmp.cite_index++;
                 skips[sortedItems[j][0].id] = true;
             }
         } else if (!this.registry.registry[item.id].siblings) {
             this.tmp.term_predecessor = false;
             this.tmp.cite_index = 0;
-            entry_item_ids.push("" + CSL.getCite.call(this, item));
+            entry_item_ids.push("" + getCite.call(this, item));
             if (bibsection && bibsection.page_start && bibsection.page_length) {
                 page_item_count += 1;
             }
