@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION } from '../util/csl-shared';
 import { evaluateLabel } from '../util/label';
 import { Output_formatters } from '../output/formatters';
 
@@ -17,7 +17,7 @@ export const Node_label = {
                 if (termtxt) {
                     state.tmp.group_context.tip.term_intended = true;
                 }
-                CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, termtxt, null, this);
+                UPDATE_GROUP_CONTEXT_CONDITION(state, termtxt, null, this);
                 if (termtxt.indexOf("%s") === -1) {
                     // ^ Suppress output here if we have an embedded term
                     if (this.strings.capitalize_if_first) {

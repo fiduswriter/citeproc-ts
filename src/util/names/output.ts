@@ -1,4 +1,5 @@
 import { CSL } from '../../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION } from '../csl-shared';
 import { Util_Names } from './index';
 import { castLabel } from '../label';
 import { parseParticles } from '../name_particles';
@@ -374,7 +375,7 @@ export class NameOutput {
         // Need to rescue the value for collapse comparison.
         const namesToken = Util_cloneToken(this.names);
         if (this.state.tmp.group_context.tip.condition) {
-            CSL.UPDATE_GROUP_CONTEXT_CONDITION(this.state, this.names.strings.prefix, null, this.names);
+            UPDATE_GROUP_CONTEXT_CONDITION(this.state, this.names.strings.prefix, null, this.names);
         }
         this.state.output.append(blob, namesToken);
         if (this.state.tmp.term_predecessor_name) {

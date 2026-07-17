@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { checkNestedBrace, parseLocator, getSafeEscape } from '../util/csl-shared';
 import { cloneAmbigConfig } from '../util/disambig';
 import { Queue } from '../output/queue';
 import { NameOutput } from '../util/names/output';
@@ -148,7 +149,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
         if (Item.id) {
             this.transform.loadAbbreviation("default", "hereinafter", Item.id, Item.language);
         }
-        item = CSL.parseLocator.call(this, item);
+        item = parseLocator.call(this, item);
         if (this.opt.development_extensions.consolidate_legal_items) {
             this.remapSectionVariable([[Item,item]]);
         }
@@ -1139,7 +1140,7 @@ CSL.getSpliceDelimiter = function (last_locator, last_collapsed, pos) {
 CSL.getCitationCluster = function (inputList, citation) {
     let result, objects, myparams, len, pos, item, last_collapsed, params, empties, composite, compie, myblobs, Item, llen, ppos, obj, preceding_item, txt_esc, error_object, citationID, authorOnly, suppressAuthor;
     let citation_prefix = "";
-    this.output.checkNestedBrace = new CSL.checkNestedBrace(this);
+    this.output.checkNestedBrace = new checkNestedBrace(this);
     if (citation) {
         citationID = citation.citationID;
         authorOnly = citation.properties.mode === "author-only" ? !!citation.properties.mode : false;
@@ -1152,7 +1153,7 @@ CSL.getCitationCluster = function (inputList, citation) {
     }
     inputList = inputList ? inputList : [];
     this.tmp.last_primary_names_string = false;
-    txt_esc = CSL.getSafeEscape(this);
+    txt_esc = getSafeEscape(this);
     this.tmp.area = "citation";
     this.tmp.root = "citation";
     result = "";
@@ -1254,7 +1255,7 @@ CSL.getCitationCluster = function (inputList, citation) {
 
         Item = inputList[pos][0];
         item = inputList[pos][1];
-        item = CSL.parseLocator.call(this, item);
+        item = parseLocator.call(this, item);
         last_collapsed = this.tmp.have_collapsed;
         let last_locator = false;
         if (pos > 0 && inputList[pos-1][1]) {

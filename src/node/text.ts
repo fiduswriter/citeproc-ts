@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION } from '../util/csl-shared';
 import { Suffixator, padding, outputNumericField } from '../util/number';
 import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
 import { expandMacro } from '../util/nodes';
@@ -196,7 +196,7 @@ export const Node_text = {
                         if (term !== "") {
                             state.tmp.group_context.tip.term_intended = true;
                         }
-                        CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, term, null, this);
+                        UPDATE_GROUP_CONTEXT_CONDITION(state, term, null, this);
                         
                         // capitalize the first letter of a term, if it is the
                         // first thing rendered in a citation (or if it is
@@ -449,7 +449,7 @@ export const Node_text = {
                     func = function (this: CslNode, state: CslState, Item: CslItem): void {
                         state.tmp.group_context.tip.term_intended = true;
                         // true flags that this is a literal-value term
-                        CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.value, true, this);
+                        UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.value, true, this);
                         Node_checkNonEnglishTitleCase.call(this, state, Item);
                         state.output.append(this.strings.value, this);
                         if (state.tmp.can_block_substitute) {

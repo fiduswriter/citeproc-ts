@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { INIT_JURISDICTION_MACROS, GET_COURT_CLASS } from '../util/csl-shared';
 import { padding } from '../util/number';
 import { dateAsSortKey } from '../util/date';
 import { expandMacro } from '../util/nodes';
@@ -162,9 +162,9 @@ export const Node_key = {
                     func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
                 } else if ("court-class" === variable) {
                     func = function(state: CslState, Item: CslItem, item: any): void {
-                        CSL.INIT_JURISDICTION_MACROS(state, Item, item, "juris-main")
+                        INIT_JURISDICTION_MACROS(state, Item, item, "juris-main")
                         // true is for sortKey mode
-                        const cls = CSL.GET_COURT_CLASS(state, Item, true);
+                        const cls = GET_COURT_CLASS(state, Item, true);
                         state.output.append(cls, "empty");
                     }
                 } else {

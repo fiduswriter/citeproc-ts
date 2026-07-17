@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { GET_COURT_CLASS } from '../util/csl-shared';
 
 import { DATE_VARIABLES, DESCENDING, GIVENNAME_DISAMBIGUATION_RULES, LITERAL, NUMERIC_VARIABLES, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_MAP, POSITION_SUBSEQUENT, START } from '../constants/core';
 export const Attributes: { [key: string]: Function } = {};
@@ -766,7 +767,7 @@ Attributes["@court-class"] = function (state: CslState, arg: string) {
 	const tryclasses = arg.split(/\s+/);
     const maketest = function (tryclass: string) {
         return function(Item: CslItem) {
-            const cls = CSL.GET_COURT_CLASS(state, Item);
+            const cls = GET_COURT_CLASS(state, Item);
             if (cls === tryclass) {
                 return true;
             } else {

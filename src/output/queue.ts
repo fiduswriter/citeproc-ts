@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { getSafeEscape } from '../util/csl-shared';
 
 import { Token } from '../obj/token';
 import { Blob } from '../obj/blob';
@@ -262,7 +262,7 @@ export class Queue {
 
     string(state: CslState, myblobs: any[], blob?: any): any[] {
         let i: number, ilen: number, j: number, jlen: number, b: string;
-        const txt_esc = CSL.getSafeEscape(this.state);
+        const txt_esc = getSafeEscape(this.state);
         const blobs = myblobs.slice();
         let ret: any[] = [];
         
@@ -464,7 +464,7 @@ export class Queue {
 
     renderBlobs(blobs: any[], delim?: string, in_cite?: boolean, parent?: any): string | any {
         let state, ret, ret_last_char, use_delim, blob, pos, len, ppos, llen, str, params, txt_esc;
-        txt_esc = CSL.getSafeEscape(this.state);
+        txt_esc = getSafeEscape(this.state);
         if (!delim) {
             delim = "";
         }

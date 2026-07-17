@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION, EVALUATE_GROUP_CONDITION, INIT_JURISDICTION_MACROS } from '../util/csl-shared';
 import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
 import { PublisherOutput } from '../util/publishers';
 import { tokenExec } from '../util/nodes';
@@ -41,7 +41,7 @@ export const Node_group = {
                 if (this.realGroup) {
                     
                     if (state.tmp.group_context.tip.condition) {
-                        CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.prefix, null, this);
+                        UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.prefix, null, this);
                     }
                     
                     let condition: false | { test: any; not: boolean } = false;
@@ -222,7 +222,7 @@ export const Node_group = {
 
                 func = (function (macroName: string): (Item: CslItem, item: any) => boolean {
                     return function (Item: CslItem, item: any): boolean {
-                        return CSL.INIT_JURISDICTION_MACROS(state, Item, item, macroName);
+                        return INIT_JURISDICTION_MACROS(state, Item, item, macroName);
                     }
                 }(this.juris));
                 
@@ -309,7 +309,7 @@ export const Node_group = {
                     //    print("    flags="+JSON.stringify(flags, params));
                     //}
                     if (flags.condition) {
-                        flags.force_suppress = CSL.EVALUATE_GROUP_CONDITION(state, flags);
+                        flags.force_suppress = EVALUATE_GROUP_CONDITION(state, flags);
                     }
                     if (state.tmp.group_context.tip.condition) {
                         state.tmp.group_context.tip.force_suppress = flags.force_suppress;

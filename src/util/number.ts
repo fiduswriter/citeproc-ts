@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION } from './csl-shared';
 
 import { Engine } from '../engine/build';
 import { NumericBlob } from '../obj/number';
@@ -984,7 +984,7 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
                 state.output.append(label+num.labelSuffix, "empty");
             }
         }
-        CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, masterStyling.strings.prefix, null, masterStyling, `${num.particle}${num.value}`);
+        UPDATE_GROUP_CONTEXT_CONDITION(state, masterStyling.strings.prefix, null, masterStyling, `${num.particle}${num.value}`);
         if (num.collapsible) {
             let blob;
             if (num.value.match(/^[1-9][0-9]*$/) && Number.isSafeInteger(parseInt(num.value, 10))) {

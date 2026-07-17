@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { SET_COURT_CLASSES } from './csl-shared';
 
 import { setupXml } from '../system';
 
@@ -406,6 +407,6 @@ export function localeSet(myxml, lang_in, lang_out) {
     //
     // Xml: get list of nodes by node type
     //
-    CSL.SET_COURT_CLASSES(this, lang_out, myxml, locale);
+    SET_COURT_CLASSES(this, lang_out, myxml, locale);
 };
 

@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { SET_COURT_CLASSES } from './csl-shared';
 import { setupXml } from '../system';
 import { MODULE_MACROS, MODULE_TYPES } from '../constants/core';
 import { debug } from '../logger';
@@ -48,7 +48,7 @@ export function loadStyleModule(this: CslState, jurisdiction: string, xmlSource:
         }
     }
     const lang = this.opt.lang ? this.opt.lang : this.opt["default-locale"][0];
-    CSL.SET_COURT_CLASSES(this, lang, myXml, myXml.dataObj);
+    SET_COURT_CLASSES(this, lang, myXml, myXml.dataObj);
 
     if (!this.juris[jurisdiction].types) {
         this.juris[jurisdiction].types = MODULE_TYPES;

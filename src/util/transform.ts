@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { UPDATE_GROUP_CONTEXT_CONDITION } from './csl-shared';
 import { Token, Util_cloneToken } from '../obj/token';
 import { titlecaseSentenceOrNormal, demoteNoiseWords } from './title';
 import { getAbbrevsDomain } from './locale_shared';
@@ -536,7 +536,7 @@ export class Transform {
                     if (primary_locale) {
                         state.tmp.lang_array = [primary_locale].concat(oldLangArray);
                     }
-                    CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, null, null, primary_tok, primary_tok.strings.prefix + primary);
+                    UPDATE_GROUP_CONTEXT_CONDITION(state, null, null, primary_tok, primary_tok.strings.prefix + primary);
                     state.output.append(primary, primary_tok);
                     state.tmp.probably_rendered_something = true;
 
@@ -601,7 +601,7 @@ export class Transform {
                     if (primary_locale) {
                         state.tmp.lang_array = [primary_locale].concat(oldLangArray);
                     }
-                    CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, null, null, primary_tok, primary_tok.strings.prefix + primary);
+                    UPDATE_GROUP_CONTEXT_CONDITION(state, null, null, primary_tok, primary_tok.strings.prefix + primary);
                     state.output.append(primary, primary_tok);
                     state.tmp.probably_rendered_something = true;
                 }

@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { parseNoteFieldHacks } from '../util/csl-shared';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
 import { Queue } from '../output/queue';
 import { Registry } from '../registry/registry';
@@ -593,7 +594,7 @@ export class Engine {
         // Optional development extensions
         if (this.opt.development_extensions.field_hack && Item.note) {
             // false is for validFieldsForType (all conforming entries scrubbed when false)
-            CSL.parseNoteFieldHacks(Item, false, this.opt.development_extensions.allow_field_hack_date_override);
+            parseNoteFieldHacks(Item, false, this.opt.development_extensions.allow_field_hack_date_override);
         }
         // not including locator-date
         for (let key in Item) {
