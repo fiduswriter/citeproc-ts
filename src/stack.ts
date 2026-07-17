@@ -1,5 +1,3 @@
-import { CSL } from './csl';
-
 import { error } from './logger';
 /**
  * String stack object.

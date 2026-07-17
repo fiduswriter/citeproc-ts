@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { AmbigConfig } from '../obj/ambigconfig';
+
 import { ASSUME_ALL_ITEMS_REGISTERED, ERROR_NO_RENDERED_FORM, NONE, NUMERIC, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_SUBSEQUENT, POSITION_TEST_VARS, PREVIEW, SWAPPING_PUNCTUATION, TERMINAL_PUNCTUATION } from '../constants/core';
 import { LOCATOR_LABELS_REGEXP } from '../constants/regex';
 import { LOCATOR_LABELS_MAP } from '../constants/statute';
@@ -1599,11 +1601,11 @@ CSL.citeStart = function (Item, item, blockShadowNumberReset) {
         this.tmp.disambig_request = this.registry.registry[Item.id].disambig;
         this.tmp.disambig_settings = this.registry.registry[Item.id].disambig;
     } else {
-        this.tmp.disambig_settings = new CSL.AmbigConfig();
+        this.tmp.disambig_settings = new AmbigConfig();
     }
     if (this.tmp.area !== 'citation') {
         if (!this.registry.registry[Item.id]) {
-            this.tmp.disambig_restore = new CSL.AmbigConfig();
+            this.tmp.disambig_restore = new AmbigConfig();
         } else {
             this.tmp.disambig_restore = CSL.cloneAmbigConfig(this.registry.registry[Item.id].disambig);
             if (this.tmp.area === 'bibliography' && this.tmp.disambig_settings && this.tmp.disambig_override) {

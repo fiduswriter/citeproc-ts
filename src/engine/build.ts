@@ -1,6 +1,10 @@
 import { CSL } from '../csl';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
 
+import { Attributes } from '../attributes/attributes';
+import { Parallel } from '../util/parallel';
+import { Transform } from '../util/transform';
+
 import { AREAS, DATE_VARIABLES, END, LOOSE, NAME_VARIABLES, PROCESSOR_VERSION, SINGLETON, START, STRICT, SWAPPING_PUNCTUATION, SYS_OPTIONS, TOLERANT } from '../constants/core';
 import { normalizeLocaleStr, AbbreviationSegments } from '../util/locale_shared';
 import { extractTitleAndSubtitle } from '../util/title';
@@ -62,7 +66,7 @@ export class Engine {
         }
         this.sys.AbbreviationSegments = AbbreviationSegments;
 
-        this.transform = new CSL.Transform(this);
+        this.transform = new Transform(this as any);
         // true or false
         this.setParseNames = function (val) {
             this.opt['parse-names'] = val;
@@ -229,7 +233,7 @@ export class Engine {
         this.buildTokenLists(area_nodes, this[this.build.area].tokens);
 
         if (this.opt.parallel.enable) {
-            this.parallel = new CSL.Parallel(this);
+            this.parallel = new Parallel(this as any);
         }
 
         this.juris = {};
@@ -309,7 +313,7 @@ export class Engine {
         for (let attrname in attributes) {
             if (attributes.hasOwnProperty(attrname)) {
                 // attr = attributes[key];
-                CSL.Attributes[attrname].call(dummy, this, attributes[attrname]);
+                Attributes[attrname].call(dummy, this, attributes[attrname]);
             }
         }
     }

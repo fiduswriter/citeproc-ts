@@ -1,4 +1,3 @@
-import { CSL } from '../../csl';
 import { Blob } from '../../obj/blob';
 import { Token } from '../../obj/token';
 
@@ -183,7 +182,7 @@ export function _join(this: any, blobs: any[], delimiter: string, finalJoin?: an
 export function _getToken(this: any, tokenname: string): any {
     const token = this[tokenname];
     if (tokenname === "institution") {
-        const newtoken = new CSL.Token();
+        const newtoken = new Token();
         return newtoken;
     }
     return token;

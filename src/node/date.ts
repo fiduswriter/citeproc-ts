@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Util_cloneToken } from '../obj/token';
+
 import { END, SINGLETON, START } from '../constants/core';
 export const Node_date = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -9,7 +11,7 @@ export const Node_date = {
             // for passing through to node_key, for use in dates embedded
             // in macros
             state.dateput.string(state, state.dateput.queue);
-            state.tmp.date_token = CSL.Util.cloneToken(this);
+            state.tmp.date_token = Util_cloneToken(this);
             state.tmp.date_token.strings.prefix = "";
             state.tmp.date_token.strings.suffix = "";
             state.dateput.openLevel(this);

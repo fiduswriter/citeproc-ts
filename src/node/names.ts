@@ -127,11 +127,11 @@ export const Node_names = {
                     with_suffix = " ";
                 }
                 const thewith: { single: Blob; multiple: Blob } = {
-                    single: new CSL.Blob(mywith),
-                    multiple: new CSL.Blob(mywith)
+                    single: new Blob(mywith),
+                    multiple: new Blob(mywith)
                 };
                 thewith.single.strings.suffix = with_suffix;
-                thewith.multiple = new CSL.Blob(mywith);
+                thewith.multiple = new Blob(mywith);
                 thewith.multiple.strings.suffix = with_suffix;
                 if (state.inheritOpt(state.nameOutput.name, "delimiter-precedes-last") === "always") {
                     thewith.single.strings.prefix = state.inheritOpt(this, "delimiter", "names-delimiter");

@@ -1,5 +1,8 @@
 import { CSL } from '../csl';
 
+import { NumericBlob } from '../obj/number';
+import { Token, Util_cloneToken } from '../obj/token';
+
 import { LOOSE, LangPrefsMap, ROMAN_NUMERALS, SUFFIX_CHARS } from '../constants/core';
 import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
 export function padding(num: string): string {
@@ -544,8 +547,8 @@ export function processNumber(node: CslNode | false, ItemObject: Record<string, 
     }
 
     function setStyling(values) {
-        const masterNode = CSL.Util.cloneToken(node);
-        const masterStyling = new CSL.Token();
+        const masterNode = Util_cloneToken(node);
+        const masterStyling = new Token();
         if (!me.tmp.just_looking) {
             // Per discussion @ https://discourse.citationstyles.org/t/formatting-attributes-and-hyphen/1518
             masterStyling.decorations = masterNode.decorations;
@@ -568,7 +571,7 @@ export function processNumber(node: CslNode | false, ItemObject: Record<string, 
             for (let i=0,ilen=values.length; i<ilen; i++) {
                 let val = values[i];
                 // Clone node, make styling parameters on each instance sane.
-                const newnode = CSL.Util.cloneToken(masterNode);
+                const newnode = Util_cloneToken(masterNode);
                 newnode.gender = (node as CslNode).gender;
                 if (masterLabel === val.label) {
                     newnode.formatter = (node as CslNode).formatter;
@@ -583,7 +586,7 @@ export function processNumber(node: CslNode | false, ItemObject: Record<string, 
                 if (values[0].value.slice(0,1) === "\"" && values[values.length-1].value.slice(-1) === "\"") {
                     values[0].value = values[0].value.slice(1);
                     values[values.length-1].value = values[values.length-1].value.slice(0,-1);
-                    masterStyling.decorations.push(["@quotes", true]);
+                    masterStyling.decorations.push(["@quotes", true as any]);
                 }
             }
         }
@@ -956,10 +959,10 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
         if (label) {
             labelPlaceholderPos = label.indexOf("%s");
         }
-        const numStyling = CSL.Util.cloneToken(num.styling);
+        const numStyling = Util_cloneToken(num.styling);
         numStyling.formatter = num.styling.formatter;
-        numStyling.type = num.styling.type;
-        numStyling.num = num.styling.num;
+        (numStyling as any).type = num.styling.type;
+        (numStyling as any).num = num.styling.num;
         numStyling.gender = num.styling.gender;
         
         if (labelPlaceholderPos > 0 && labelPlaceholderPos < (label.length-2)) {
@@ -971,7 +974,7 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
                 labelName = num.label;
             }
             if (labelPlaceholderPos > 0) {
-                const prefixLabelStyling = new CSL.Token();
+                const prefixLabelStyling = new Token();
                 prefixLabelStyling.decorations = labelDecorations;
                 state.output.append(label.slice(0,labelPlaceholderPos), prefixLabelStyling);
             } else if (labelPlaceholderPos === (label.length-2) || labelPlaceholderPos === -1) {
@@ -983,9 +986,9 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
         if (num.collapsible) {
             let blob;
             if (num.value.match(/^[1-9][0-9]*$/) && Number.isSafeInteger(parseInt(num.value, 10))) {
-                blob = new CSL.NumericBlob(state, num.particle, parseInt(num.value, 10), numStyling, itemID);
+                blob = new NumericBlob(state, num.particle, parseInt(num.value, 10), numStyling, itemID);
             } else {
-                blob = new CSL.NumericBlob(state, num.particle, num.value, numStyling, itemID);
+                blob = new NumericBlob(state, num.particle, num.value, numStyling, itemID);
             }
             if ("undefined" === typeof blob.gender) {
                 blob.gender = state.locale[state.opt.lang]["noun-genders"][varname];
@@ -1000,7 +1003,7 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
                 lastLabelName = labelName;
             }
             if (labelName !== lastLabelName || i === (nums.length-1)) {
-                const suffixLabelStyling = new CSL.Token();
+                const suffixLabelStyling = new Token();
                 suffixLabelStyling.decorations = labelDecorations;
                 state.output.append(label.slice(labelPlaceholderPos+2), suffixLabelStyling);
             }

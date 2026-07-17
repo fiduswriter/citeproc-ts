@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Blob } from '../obj/blob';
+
 import { SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 export const Node_institution = {
@@ -58,10 +60,10 @@ export const Node_institution = {
                     this.and.multiple.strings.prefix = this.and_prefix_multiple;
                     this.and.multiple.strings.suffix = this.and_suffix;
                 } else if ("undefined" !== this.strings.delimiter) {
-                    this.and.single = new CSL.Blob(state.tmp.institution_delimiter);
+                    this.and.single = new Blob(state.tmp.institution_delimiter);
                     this.and.single.strings.prefix = "";
                     this.and.single.strings.suffix = "";
-                    this.and.multiple = new CSL.Blob(state.tmp.institution_delimiter);
+                    this.and.multiple = new Blob(state.tmp.institution_delimiter);
                     this.and.multiple.strings.prefix = "";
                     this.and.multiple.strings.suffix = "";
                 }

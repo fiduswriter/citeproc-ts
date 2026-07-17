@@ -61,9 +61,9 @@ export class Blob {
             this.decorations = [];
         }
         if ("string" === typeof str) {
-            this.blobs = str;
+            (this.blobs as string) = str;
         } else if (str) {
-            this.blobs = [str];
+            this.blobs = [str as Blob];
         } else {
             this.blobs = [];
         }

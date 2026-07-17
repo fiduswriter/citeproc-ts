@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+
 import { END, LITERAL, SINGLETON, START } from '../constants/core';
 export const Node_substitute = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -7,9 +9,9 @@ export const Node_substitute = {
         if (this.tokentype === START) {
             /* */
             // set conditional
-            const choose_start = new CSL.Token("choose", START);
+            const choose_start = new Token("choose", START);
             CSL.Node.choose.build.call(choose_start, state, target);
-            const if_singleton = new CSL.Token("if", SINGLETON);
+            const if_singleton = new Token("if", SINGLETON);
             func = function (): boolean {
                 if (state.tmp.value.length && !state.tmp.common_term_match_fail) {
                     return true;
@@ -33,7 +35,7 @@ export const Node_substitute = {
         }
         if (this.tokentype === END) {
             target.push(this);
-            const choose_end = new CSL.Token("choose", END);
+            const choose_end = new Token("choose", END);
             CSL.Node.choose.build.call(choose_end, state, target);
             /* */
         }

@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+
 import { DATE_VARIABLES, END, MODULE_MACROS, POSITION, SINGLETON, START } from '../constants/core';
 import { debug, error } from '../logger';
 /* For node execution pretty-printing (see below) */
@@ -50,7 +52,7 @@ export function expandMacro(macro_key_token, target) {
 
     const sort_direction = macro_key_token.strings.sort_direction;
     
-    macro_key_token = new CSL.Token("group", START);
+    macro_key_token = new Token("group", START);
     
     let hasDate = false;
     let macroid = false;
@@ -102,7 +104,7 @@ export function expandMacro(macro_key_token, target) {
                 }
             };
         }(mkey));
-        const text_node = new CSL.Token("text", SINGLETON);
+        const text_node = new Token("text", SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     } else {
@@ -114,12 +116,12 @@ export function expandMacro(macro_key_token, target) {
                 }
             };
         }(mkey));
-        const text_node = new CSL.Token("text", SINGLETON);
+        const text_node = new Token("text", SINGLETON);
         text_node.execs.push(func);
         target.push(text_node);
     }
 
-    end_of_macro = new CSL.Token("group", END);
+    end_of_macro = new Token("group", END);
     end_of_macro.strings.sort_direction = sort_direction;
     
     if (hasDate) {
@@ -192,7 +194,7 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
     attrfuncs = [];
     attributes = state.cslXml.attributes(this);
     decorations = CSL.setDecorations.call(this, state, attributes);
-    token = new CSL.Token(name, tokentype);
+    token = new Token(name, tokentype);
     if (tokentype !== END || name === "if" || name === "else-if" || name === "layout") {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {

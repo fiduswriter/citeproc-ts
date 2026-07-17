@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { Token } from '../obj/token';
 
 export class PublisherOutput {
     state: CslState;
@@ -32,7 +32,7 @@ export class PublisherOutput {
         } else if (this.group_tok.strings.and === "symbol") {
             and_term = "&";
         }
-        const tok = new CSL.Token();
+        const tok = new Token();
         tok.strings.suffix = " ";
         tok.strings.prefix = " ";
         this.state.output.append(and_term, tok, true);
@@ -135,7 +135,7 @@ export class PublisherOutput {
     _getToken(tokenname: string): any {
         const token = this[tokenname];
         if (tokenname === "institution") {
-            const newtoken = new CSL.Token();
+            const newtoken = new Token();
             return newtoken;
         }
         return token;

@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+
 import { ASCENDING, DATE_VARIABLES, DESCENDING, END, NAME_VARIABLES, NUMERIC_VARIABLES, SINGLETON, START } from '../constants/core';
 export const Node_key = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -8,7 +10,7 @@ export const Node_key = {
 
         let func;
         const debug = false;
-        const start_key = new CSL.Token("key", START);
+        const start_key = new Token("key", START);
 
         state.tmp.root = state.build.root;
 
@@ -73,13 +75,13 @@ export const Node_key = {
             if (NAME_VARIABLES.indexOf(variable) > -1) {
                 //
                 // Start tag
-                const names_start_token = new CSL.Token("names", START);
+                const names_start_token = new Token("names", START);
                 names_start_token.tokentype = START;
                 names_start_token.variables = this.variables;
                 CSL.Node.names.build.call(names_start_token, state, target);
                 //
                 // Name tag
-                const name_token = new CSL.Token("name", SINGLETON);
+                const name_token = new Token("name", SINGLETON);
                 name_token.tokentype = SINGLETON;
                 name_token.strings["name-as-sort-order"] = "all";
                 name_token.strings["sort-separator"] = " ";
@@ -89,16 +91,16 @@ export const Node_key = {
                 CSL.Node.name.build.call(name_token, state, target);
                 //
                 // Institution tag
-                const institution_token = new CSL.Token("institution", SINGLETON);
+                const institution_token = new Token("institution", SINGLETON);
                 institution_token.tokentype = SINGLETON;
                 CSL.Node.institution.build.call(institution_token, state, target);
                 //
                 // End tag
-                const names_end_token = new CSL.Token("names", END);
+                const names_end_token = new Token("names", END);
                 names_end_token.tokentype = END;
                 CSL.Node.names.build.call(names_end_token, state, target);
             } else {
-                const single_text = new CSL.Token("text", SINGLETON);
+                const single_text = new Token("text", SINGLETON);
                 single_text.strings.sort_direction = this.strings.sort_direction;
                 single_text.dateparts = this.dateparts;
                 if (NUMERIC_VARIABLES.indexOf(variable) > -1) {
@@ -171,7 +173,7 @@ export const Node_key = {
         } else { // macro
             //
             // if it's not a variable, it's a macro
-            const token = new CSL.Token("text", SINGLETON);
+            const token = new Token("text", SINGLETON);
             token.strings.sort_direction = this.strings.sort_direction;
             token.postponed_macro = this.postponed_macro;
             CSL.expandMacro.call(state, token, target);
@@ -180,7 +182,7 @@ export const Node_key = {
         // ops to output the key string result to an array go
         // on the closing "key" tag before it is pushed.
         // Do not close the level.
-        const end_key = new CSL.Token("key", END);
+        const end_key = new Token("key", END);
 
         // Eliminated at revision 1.0.159.
         // Was causing non-fatal error "wanted empty but found group".

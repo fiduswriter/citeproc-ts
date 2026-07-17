@@ -1,20 +1,24 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
 
+import { Blob } from '../obj/blob';
+import { NumericBlob } from '../obj/number';
+import { Util_cloneToken } from '../obj/token';
+
 import { CITE_FIELDS, DESCENDING, END, LITERAL, MULTI_FIELDS, NUMERIC, START, SUFFIX_CHARS, TOLERANT, TRIGRAPH } from '../constants/core';
 import { debug } from '../logger';
 export const Node_text = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
         if (this.postponed_macro) {
-            const group_start = CSL.Util.cloneToken(this);
+            const group_start = Util_cloneToken(this);
             group_start.name = "group";
             group_start.tokentype = START;
             CSL.Node.group.build.call(group_start, state, target);
 
             CSL.expandMacro.call(state, this, target);
 
-            const group_end = CSL.Util.cloneToken(this);
+            const group_end = Util_cloneToken(this);
             group_end.name = "group";
             group_end.tokentype = END;
             if (this.postponed_macro === 'juris-locator-label') {
@@ -98,7 +102,7 @@ export const Node_text = {
                             if (state.opt.citation_number_slug) {
                                 state.output.append(state.opt.citation_number_slug, this);
                             } else {
-                                number = new CSL.NumericBlob(state, false, num, this, Item.id);
+                                number = new NumericBlob(state, false, num, this, Item.id);
                                 if (state.tmp.in_cite_predecessor) {
                                     number.suppress_splice_prefix = true;
                                 }
@@ -132,7 +136,7 @@ export const Node_text = {
                             if (state[state.tmp.area].opt.cite_group_delimiter) {
                                 this.successor_prefix = state[state.tmp.area].opt.cite_group_delimiter;
                             }
-                            number = new CSL.NumericBlob(state, false, num, this, Item.id);
+                            number = new NumericBlob(state, false, num, this, Item.id);
                             formatter = new Suffixator(SUFFIX_CHARS);
                             number.setFormatter(formatter);
                             state.output.append(number, "literal");
@@ -337,9 +341,9 @@ export const Node_text = {
                                             if (!this.decorations.length || this.decorations[0][0] !== "@" + this.variables[0]) {
                                                 // Special-casing to fix https://github.com/Juris-M/citeproc-js/issues/57
                                                 // clone current token, to avoid collateral damage
-                                                const clonetoken = CSL.Util.cloneToken(this);
+                                                const clonetoken = Util_cloneToken(this);
                                                 // cast a group blob
-                                                const groupblob = new CSL.Blob(null, null, "url-wrapper");
+                                                const groupblob = new Blob(null, null, "url-wrapper");
                                                 // set the DOI decoration on the blob
                                                 groupblob.decorations.push(["@DOI", "true"]);
                                                 if (this.variables_real[0] === "DOI") {
@@ -365,17 +369,17 @@ export const Node_text = {
                                                     }
                                                     // cast a text blob
                                                     // set the prefix as the content of the blob
-                                                    const prefixblob = new CSL.Blob(prefix);
+                                                    const prefixblob = new Blob(prefix);
                                                     // cast another text blob
                                                     // set the value as the content of the second blob
-                                                    const valueblob = new CSL.Blob(value);
+                                                    const valueblob = new Blob(value);
                                                     // append new text token and clone to group token
                                                     groupblob.push(prefixblob);
                                                     groupblob.push(valueblob);
                                                     // append group token to output
                                                     state.output.append(groupblob, clonetoken, false, false, true);
                                                 } else {
-                                                    const valueblob = new CSL.Blob(value);
+                                                    const valueblob = new Blob(value);
                                                     // append new text token and clone to group token
                                                     groupblob.push(valueblob);
                                                     // append group token to output

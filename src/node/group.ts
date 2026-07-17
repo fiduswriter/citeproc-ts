@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+
 import { ASCENDING, DESCENDING, END, SINGLETON, START } from '../constants/core';
 export const Node_group = {
     build: function (this: CslNode, state: CslState, target: any[], realGroup: boolean): void {
@@ -207,10 +209,10 @@ export const Node_group = {
                 
                 // Code for fetching an instantiating?
 
-                const choose_start = new CSL.Token("choose", START);
+                const choose_start = new Token("choose", START);
                 CSL.Node.choose.build.call(choose_start, state, target);
                 
-                const if_start = new CSL.Token("if", START);
+                const if_start = new Token("if", START);
 
                 func = (function (macroName: string): (Item: CslItem, item: any) => boolean {
                     return function (Item: CslItem, item: any): boolean {
@@ -222,7 +224,7 @@ export const Node_group = {
                 if_start.tests.push(func);
                 if_start.test = state.fun.match.any(if_start, state, if_start.tests);
                 target.push(if_start);
-                const text_node = new CSL.Token("text", SINGLETON);
+                const text_node = new Token("text", SINGLETON);
                 func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                     // This will run the juris- token list.
                     let itemItem: CslItem | any = Item;
@@ -240,9 +242,9 @@ export const Node_group = {
                 text_node.execs.push(func);
                 target.push(text_node);
 
-                const if_end = new CSL.Token("if", END);
+                const if_end = new Token("if", END);
                 CSL.Node["if"].build.call(if_end, state, target);
-                const else_start = new CSL.Token("else", START);
+                const else_start = new Token("else", START);
                 CSL.Node["else"].build.call(else_start, state, target);
             }
         }
@@ -367,9 +369,9 @@ export const Node_group = {
             this.execs.push(func);
             
             if (this.juris) {
-                const else_end = new CSL.Token("else", END);
+                const else_end = new Token("else", END);
                 CSL.Node["else"].build.call(else_end, state, target);
-                const choose_end = new CSL.Token("choose", END);
+                const choose_end = new Token("choose", END);
                 CSL.Node.choose.build.call(choose_end, state, target);
             }
         }

@@ -10,6 +10,8 @@ import { normalizeLocaleStr, toLocaleUpperCase, toLocaleLowerCase, getAbbrevsDom
 import { error, debug } from './logger';
 import { Conditions } from './util/conditions';
 
+import { NOTE_FIELDS_REGEXP, NOTE_FIELD_REGEXP } from './constants/regex';
+
 
 export const CSL: CSLNamespace = {
     ...Core,
@@ -99,16 +101,16 @@ export const CSL: CSLNamespace = {
         for (let i=0, ilen=lines.length; i<ilen; i++) {
             const line = lines[i];
             const elems: any[] = [];
-            let m = line.match(CSL.NOTE_FIELDS_REGEXP);
+            let m = line.match(NOTE_FIELDS_REGEXP);
             if (m) {
-                const splt = line.split(CSL.NOTE_FIELDS_REGEXP);
+                const splt = line.split(NOTE_FIELDS_REGEXP);
                 for (let j=0,jlen=(splt.length-1);j<jlen;j++) {
                     elems.push(splt[j]);
                     elems.push(m[j]);
                 }
                 elems.push(splt[splt.length-1]);
                 for (let j=1,jlen=elems.length;j<jlen;j += 2) {
-                    if (elems[j-1].trim() && (i>0 || j>1) && !elems[j-1].match(CSL.NOTE_FIELD_REGEXP)) {
+                    if (elems[j-1].trim() && (i>0 || j>1) && !elems[j-1].match(NOTE_FIELD_REGEXP)) {
                         break;
                     } else {
                         elems[j] = '\n' + elems[j].slice(2,-1).trim() + '\n';
@@ -122,7 +124,7 @@ export const CSL: CSLNamespace = {
         const names: Record<string, any> = {};
         for (let i=0,ilen=lines.length;i<ilen;i++) {
             const line = lines[i];
-            const mm = line.match(CSL.NOTE_FIELD_REGEXP);
+            const mm = line.match(NOTE_FIELD_REGEXP);
             if (!line.trim()) {
                 continue;
             } else if (!mm) {

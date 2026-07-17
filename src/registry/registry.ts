@@ -561,7 +561,7 @@ export class Registry {
                 if (this.ambigresets[akkey] === 1) {
                     const loneKey = this.ambigcites[akey][0];
                     Item = this.state.refetchItem(loneKey);
-                    this.registry[loneKey].disambig = new CSL.AmbigConfig();
+                    this.registry[loneKey].disambig = new AmbigConfig();
                     this.state.tmp.disambig_settings = false;
                     akey = CSL.getAmbiguousCite.call(this.state, Item);
                     abase = CSL.getAmbigConfig.call(this.state);

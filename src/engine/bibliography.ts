@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+
 import { NUMERIC, START } from '../constants/core';
 import { debug } from '../logger';
 export function makeBibliography(this: any, bibsection?: any): any {
@@ -292,7 +294,7 @@ CSL.getBibliographyEntries = function (bibsection) {
         }
         
         //SNIP-END
-        bib_entry = new CSL.Token("group", START);
+        bib_entry = new Token("group", START);
         bib_entry.decorations = [["@bibliography", "entry"]].concat(this.bibliography.opt.layout_decorations);
         this.output.startTag("bib_entry", bib_entry);
         if (item.system_id && this.sys.embedBibliographyEntry) {

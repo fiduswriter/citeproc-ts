@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Blob } from '../obj/blob';
+
 import { POSITION, SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
 export const Node_name = {
@@ -101,10 +103,10 @@ export const Node_name = {
                     this.and.multiple.strings.suffix = this.and_suffix;
                 } else if (state.tmp.name_delimiter) {
                     // This is a little weird, but it works.
-                    this.and.single = new CSL.Blob(state.tmp.name_delimiter);
+                    this.and.single = new Blob(state.tmp.name_delimiter);
                     this.and.single.strings.prefix = "";
                     this.and.single.strings.suffix = "";
-                    this.and.multiple = new CSL.Blob(state.tmp.name_delimiter);
+                    this.and.multiple = new Blob(state.tmp.name_delimiter);
                     this.and.multiple.strings.prefix = "";
                     this.and.multiple.strings.suffix = "";
                 }
@@ -126,10 +128,10 @@ export const Node_name = {
                     this.ellipsis_prefix_single = " ";
                     this.ellipsis_prefix_multiple =  state.inheritOpt(this, "delimiter", "name-delimiter", ", ");
                     this.ellipsis_suffix = " ";
-                    this.ellipsis.single = new CSL.Blob(this.ellipsis_term);
+                    this.ellipsis.single = new Blob(this.ellipsis_term);
                     this.ellipsis.single.strings.prefix = this.ellipsis_prefix_single;
                     this.ellipsis.single.strings.suffix = this.ellipsis_suffix;
-                    this.ellipsis.multiple = new CSL.Blob(this.ellipsis_term);
+                    this.ellipsis.multiple = new Blob(this.ellipsis_term);
                     this.ellipsis.multiple.strings.prefix = this.ellipsis_prefix_multiple;
                     this.ellipsis.multiple.strings.suffix = this.ellipsis_suffix;
                 }

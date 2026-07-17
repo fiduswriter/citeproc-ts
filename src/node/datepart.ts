@@ -1,6 +1,8 @@
 import { CSL } from '../csl';
 import { Suffixator } from '../util/number';
 
+import { NumericBlob } from '../obj/number';
+
 import { SUFFIX_CHARS } from '../constants/core';
 export const Node_date_part = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -278,7 +280,7 @@ export const Node_date_part = {
                     last_string_output = "x";
                     num = parseInt(state.registry.registry[Item.id].disambig.year_suffix, 10);
                     // first argument is for number particle [a-zA-Z], never present on dates
-                    number = new CSL.NumericBlob(state, false, num, this, Item.id);
+                    number = new NumericBlob(state, false, num, this, Item.id);
                     this.successor_prefix = state[state.build.area].opt.layout_delimiter;
                     this.splice_prefix = state[state.build.area].opt.layout_delimiter;
                     formatter = new Suffixator(SUFFIX_CHARS);

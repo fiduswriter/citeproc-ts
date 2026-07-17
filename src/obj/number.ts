@@ -1,6 +1,5 @@
-import { CSL } from '../csl';
-
 import { END, SEEN, START, SUCCESSOR, SUCCESSOR_OF_SUCCESSOR, SUPPRESS } from '../constants/core';
+import { Output_formatters } from '../output/formatters';
 
 type Decoration = [string, string, string?];
 
@@ -25,7 +24,7 @@ export class NumericBlob {
     public id: string | undefined;
     public alldecor: Decoration[][];
     public num: number;
-    public particle: string;
+    public particle: string | boolean;
     public blobs: string;
     public status: number;
     public strings: NumericStrings;
@@ -39,7 +38,7 @@ export class NumericBlob {
     public UGLY_DELIMITER_SUPPRESS_HACK?: boolean;
     public suppress_splice_prefix?: boolean;
 
-    constructor(state: any, particle: string, num: number, mother_token: any, id: string | undefined) {
+    constructor(state: any, particle: string | boolean, num: number, mother_token: any, id: string | undefined) {
         // item id is used to assure that prefix delimiter is invoked only
         // when joining blobs across items
         this.id = id;
@@ -52,8 +51,8 @@ export class NumericBlob {
         if (mother_token) {
             if (mother_token.strings["text-case"]) {
                 const textCase = mother_token.strings["text-case"];
-                this.particle = CSL.Output.Formatters[textCase](state, this.particle);
-                this.blobs = CSL.Output.Formatters[textCase](state, this.blobs);
+                this.particle = Output_formatters[textCase](state, this.particle);
+                this.blobs = Output_formatters[textCase](state, this.blobs);
             }
             this.gender = mother_token.gender;
             this.decorations = mother_token.decorations;
@@ -65,7 +64,7 @@ export class NumericBlob {
             this.splice_prefix = mother_token.splice_prefix;
             this.formatter = mother_token.formatter;
             if (!this.formatter) {
-                this.formatter = new CSL.Output.DefaultFormatter();
+                this.formatter = new Output_DefaultFormatter();
             }
             if (this.formatter) {
                 this.type = this.formatter.format(1);
@@ -77,7 +76,7 @@ export class NumericBlob {
             this.successor_prefix = "";
             this.range_prefix = "";
             this.splice_prefix = "";
-            this.formatter = new CSL.Output.DefaultFormatter();
+            this.formatter = new Output_DefaultFormatter();
         }
     }
 

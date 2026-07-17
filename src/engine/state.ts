@@ -1,6 +1,9 @@
 import { CSL } from '../csl';
 import { Suffixator, Romanizer, Ordinalizer, LongOrdinalizer } from '../util/number';
 
+import { AmbigConfig } from '../obj/ambigconfig';
+import { Stack } from '../stack';
+
 import { ASCENDING, LITERAL, NONE, SUFFIX_CHARS } from '../constants/core';
 export class Opt {
     [key: string]: any;
@@ -306,9 +309,9 @@ export class Tmp {
     strip_periods_tag?: string;
 
     constructor() {
-        this.names_max = new CSL.Stack();
-        this.names_base = new CSL.Stack();
-        this.givens_base = new CSL.Stack();
+        this.names_max = new Stack();
+        this.names_base = new Stack();
+        this.givens_base = new Stack();
 
         this.value = [];
         this.namepart_decorations = {};
@@ -318,15 +321,15 @@ export class Tmp {
         this.root = "citation";
         this.extension = "";
 
-        this.can_substitute = new CSL.Stack(0, LITERAL);
+        this.can_substitute = new Stack(0, LITERAL);
 
         this.element_rendered_ok = false;
 
-        this.element_trace = new CSL.Stack("style");
+        this.element_trace = new Stack("style");
 
         this.nameset_counter = 0;
 
-        this.group_context = new CSL.Stack({
+        this.group_context = new Stack({
             term_intended: false,
             variable_attempt: false,
             variable_success: false,
@@ -344,11 +347,11 @@ export class Tmp {
 
         this.in_cite_predecessor = false;
 
-        this.jump = new CSL.Stack(0, LITERAL);
+        this.jump = new Stack(0, LITERAL);
 
-        this.decorations = new CSL.Stack();
+        this.decorations = new Stack();
 
-        this.tokenstore_stack = new CSL.Stack();
+        this.tokenstore_stack = new Stack();
 
         this.last_suffix_used = "";
         this.last_names_used = [];
@@ -359,7 +362,7 @@ export class Tmp {
         this.taintedItemIDs = {};
         this.taintedCitationIDs = {};
 
-        this.initialize_with = new CSL.Stack();
+        this.initialize_with = new Stack();
 
         this.disambig_request = false;
 
@@ -367,15 +370,15 @@ export class Tmp {
 
         this.suppress_decorations = false;
 
-        this.disambig_settings = new CSL.AmbigConfig();
+        this.disambig_settings = new AmbigConfig();
 
         this.bib_sort_keys = [];
 
-        this.prefix = new CSL.Stack("", LITERAL);
+        this.prefix = new Stack("", LITERAL);
 
-        this.suffix = new CSL.Stack("", LITERAL);
+        this.suffix = new Stack("", LITERAL);
 
-        this.delimiter = new CSL.Stack("", LITERAL);
+        this.delimiter = new Stack("", LITERAL);
 
         this.cite_locales = [];
         this.cite_affixes = {
@@ -479,7 +482,7 @@ export class Build {
         this.root = "citation";
         this.extension = "";
 
-        this.substitute_level = new CSL.Stack(0, LITERAL);
+        this.substitute_level = new Stack(0, LITERAL);
         this.names_level = 0;
         this.render_nesting_level = 0;
         this.render_seen = false;

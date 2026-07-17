@@ -1,5 +1,5 @@
 import { CSL } from '../csl';
-import { Token } from '../obj/token';
+import { Token, Util_cloneToken } from '../obj/token';
 import { titlecaseSentenceOrNormal, demoteNoiseWords } from './title';
 import { getAbbrevsDomain } from './locale_shared';
 
@@ -184,7 +184,7 @@ export class Transform {
                 return {
                     name: "",
                     usedOrig: stopOrig,
-                    token: CSL.Util.cloneToken(this)
+                    token: Util_cloneToken(this)
                 };
             }
             let stickyLongForm = false;
@@ -251,7 +251,7 @@ export class Transform {
                         usingOrig = true;
                     }
                 }
-                ret.token = CSL.Util.cloneToken(this);
+                ret.token = Util_cloneToken(this);
                 if (h === 0) {
                     if (variantMatch) {
                         ret.found_variant_ok = true;

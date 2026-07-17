@@ -72,7 +72,7 @@ export class Token {
     }
 }
 
-export function Util_cloneToken(token: Token): Token {
+export function Util_cloneToken(token: Token | any): Token {
     let newtok: Token, key: string, pos: number, len: number;
     if ("string" === typeof token) {
         return token as any;

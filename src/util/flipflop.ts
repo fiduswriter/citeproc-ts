@@ -1,4 +1,5 @@
-import { CSL } from '../csl';
+import { Blob } from '../obj/blob';
+import { Token } from '../obj/token';
 
 import { ROMANESQUE_REGEXP } from '../constants/regex';
 // Use a state machine
@@ -378,13 +379,13 @@ export function Util_FlipFlopper(state: CslState) {
                 this.latest = this.stack[this.stack.length-1];
                 if (decor) {
                     if ("string" === typeof this.latest.blobs) {
-                        const child = new CSL.Blob();
+                        const child = new Blob();
                         child.blobs = this.latest.blobs;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs = [child];
                     }
-                    const tok = new CSL.Token();
-                    const newblob = new CSL.Blob(null, tok);
+                    const tok = new Token();
+                    const newblob = new Blob(null, tok as any);
                     newblob.alldecor = this.latest.alldecor.slice();
                     
                     if (decor[0] === "@class" && decor[1] === "nodecor") {
@@ -419,15 +420,15 @@ export function Util_FlipFlopper(state: CslState) {
                     this.stack.push(newblob);
                     this.latest = newblob;
                     if (str) {
-                        const tok = new CSL.Token();
-                        const newblob = new CSL.Blob(null, tok);
+                        const tok = new Token();
+                        const newblob = new Blob(null, tok as any);
                         newblob.blobs = str;
                         newblob.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs.push(newblob);
                     }
                 } else {
                     if (str) {
-                        const child = new CSL.Blob();
+                        const child = new Blob();
                         child.blobs = str;
                         child.alldecor = this.latest.alldecor.slice();
                         this.latest.blobs.push(child);

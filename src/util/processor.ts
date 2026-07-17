@@ -93,7 +93,7 @@ CSL.setDecorations = function (state: CslState, attributes: Record<string, any>)
     return ret;
 };
 
-CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: (str: string) => string): void {
+export function Doppeler(this: any, rexStr: string, stringMangler?: (str: string) => string): void {
     const matchRex = new RegExp("(" + rexStr + ")", "g");
     const splitRex = new RegExp(rexStr, "g");
     this.split = function (str: string): { tags: string[]; strings: string[]; origStrings: string[] } {
@@ -135,6 +135,7 @@ CSL.Doppeler = function (this: any, rexStr: string, stringMangler?: (str: string
         return lst.join("");
     };
 };
+CSL.Doppeler = Doppeler;
 
 export function normalDecorIsOrphan(this: any, blob: Blob, params: string[]): boolean {
     if (params[1] === "normal") {

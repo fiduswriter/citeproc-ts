@@ -1,6 +1,7 @@
 import { CSL } from '../../csl';
 import { getRawName } from './index';
 
+import { Token, Util_cloneToken } from '../../obj/token';
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
@@ -171,7 +172,7 @@ export class NameOutput {
 
         this.variable_offset = {};
         if (this.family) {
-            this.family_decor = CSL.Util.cloneToken(this.family);
+            this.family_decor = Util_cloneToken(this.family);
             this.family_decor.strings.prefix = "";
             this.family_decor.strings.suffix = "";
             // Sets text-case value (text-case="title" is suppressed for items
@@ -184,7 +185,7 @@ export class NameOutput {
         }
 
         if (this.given) {
-            this.given_decor = CSL.Util.cloneToken(this.given);
+            this.given_decor = Util_cloneToken(this.given);
             this.given_decor.strings.prefix = "";
             this.given_decor.strings.suffix = "";
             // Sets text-case value (text-case="title" is suppressed for items
@@ -369,7 +370,7 @@ export class NameOutput {
         // Append will drop the names on the floor here if suppress-me is
         // set on element_trace.
         // Need to rescue the value for collapse comparison.
-        const namesToken = CSL.Util.cloneToken(this.names);
+        const namesToken = Util_cloneToken(this.names);
         if (this.state.tmp.group_context.tip.condition) {
             CSL.UPDATE_GROUP_CONTEXT_CONDITION(this.state, this.names.strings.prefix, null, this.names);
         }
@@ -776,7 +777,7 @@ export class NameOutput {
     _composeOneInstitutionPart(names: any[], slot: { primary: string; secondary?: string | boolean; tertiary?: string | boolean }, style: any, v?: string) {
         let primary = false, secondary = false, tertiary = false, primary_tok, secondary_tok, tertiary_tok;
         if (names[0]) {
-            primary_tok = CSL.Util.cloneToken(style);
+            primary_tok = Util_cloneToken(style);
             if (this.state.opt.citeAffixes[slot.primary]){
                 if ("<i>" === this.state.opt.citeAffixes.institutions[slot.primary].prefix) {
                     let hasItalic = false;
@@ -806,7 +807,7 @@ export class NameOutput {
 
             this.state.output.append(primary);
 
-            secondary_tok = CSL.Util.cloneToken(style);
+            secondary_tok = Util_cloneToken(style);
             if (slot.secondary) {
                 secondary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.secondary as string].prefix;
                 secondary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.secondary as string].suffix;
@@ -815,14 +816,14 @@ export class NameOutput {
                     secondary_tok.strings.prefix = " ";
                 }
             }
-            const secondary_outer = new CSL.Token();
+            const secondary_outer = new Token();
             secondary_outer.decorations.push(["@font-style", "normal"]);
             secondary_outer.decorations.push(["@font-weight", "normal"]);
             this.state.output.openLevel(secondary_outer);
             this.state.output.append(secondary, secondary_tok);
             this.state.output.closeLevel();
 
-            tertiary_tok = CSL.Util.cloneToken(style);
+            tertiary_tok = Util_cloneToken(style);
             if (slot.tertiary) {
                 tertiary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.tertiary as string].prefix;
                 tertiary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.tertiary as string].suffix;
@@ -831,7 +832,7 @@ export class NameOutput {
                     tertiary_tok.strings.prefix = " ";
                 }
             }
-            const tertiary_outer = new CSL.Token();
+            const tertiary_outer = new Token();
             tertiary_outer.decorations.push(["@font-style", "normal"]);
             tertiary_outer.decorations.push(["@font-weight", "normal"]);
             this.state.output.openLevel(tertiary_outer);
@@ -929,7 +930,7 @@ export class NameOutput {
 
                 if (!name.literal && !name.isInstitution) {
                     const nameBlob = this._renderPersonalName(v, name, slot, pos, i, j);
-                    const nameToken = CSL.Util.cloneToken(this.name);
+                    const nameToken = Util_cloneToken(this.name);
                     this.state.output.append(nameBlob, nameToken, true);
                     names.push(this.state.output.pop());
                 } else {
@@ -970,7 +971,7 @@ export class NameOutput {
 
             this.state.output.append(primary);
 
-            let secondary_tok = new CSL.Token();
+            let secondary_tok = new Token();
             if (slot.secondary) {
                 secondary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.secondary as string].prefix;
                 secondary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.secondary as string].suffix;
@@ -981,7 +982,7 @@ export class NameOutput {
             }
             this.state.output.append(secondary, secondary_tok);
 
-            let tertiary_tok = new CSL.Token();
+            let tertiary_tok = new Token();
             if (slot.tertiary) {
                 tertiary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.tertiary as string].prefix;
                 tertiary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.tertiary as string].suffix;
@@ -1531,7 +1532,7 @@ export class NameOutput {
             long_style = this.institutionpart["long"];
         }
         if (!long_style) {
-            long_style = new CSL.Token();
+            long_style = new Token();
         }
         return long_style;
     };
@@ -1541,7 +1542,7 @@ export class NameOutput {
         if (this.institutionpart["short"]) {
             short_style = this.institutionpart["short"];
         } else {
-            short_style = new CSL.Token();
+            short_style = new Token();
         }
         return short_style;
     };

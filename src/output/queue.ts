@@ -1,9 +1,12 @@
 import { CSL } from '../csl';
 
+import { Token } from '../obj/token';
+import { Blob } from '../obj/blob';
+import { Stack } from '../stack';
+
 import { END, SEEN, SINGLETON, START, SUCCESSOR, SUPPRESS, TERMINAL_PUNCTUATION } from '../constants/core';
 import { ROMANESQUE_REGEXP } from '../constants/regex';
 import { error } from '../logger';
-import { Blob } from '../obj/blob';
 export class Queue {
     public levelname: string[];
     public state: CslState;
@@ -18,11 +21,11 @@ export class Queue {
         this.levelname = ["top"];
         this.state = state;
         this.queue = [];
-        this.empty = new CSL.Token("empty");
+        this.empty = new Token("empty");
         const tokenstore: Record<string, any> = {};
         tokenstore.empty = this.empty;
-        this.formats = new CSL.Stack(tokenstore);
-        this.current = new CSL.Stack(this.queue);
+        this.formats = new Stack(tokenstore);
+        this.current = new Stack(this.queue);
     }
 
     pop() {
@@ -46,10 +49,10 @@ export class Queue {
         ret = base_token;
         if (modifier_token) {
             if (!base_token) {
-                base_token = new CSL.Token(base, SINGLETON);
+                base_token = new Token(base, SINGLETON);
                 base_token.decorations = [];
             }
-            ret = new CSL.Token(base, SINGLETON);
+            ret = new Token(base, SINGLETON);
             let key = "";
             for (let key in base_token.strings) {
                 if (base_token.strings.hasOwnProperty(key)) {
@@ -68,7 +71,7 @@ export class Queue {
 
     addToken(name: string, modifier: string, token: any) {
         let newtok: any, attr: string;
-        newtok = new CSL.Token("output");
+        newtok = new Token("output");
         if ("string" === typeof token) {
             token = this.formats.value()[token];
         }
@@ -117,14 +120,14 @@ export class Queue {
     openLevel(token?: any) {
         let blob, curr;
         if ("object" === typeof token) {
-            blob = new CSL.Blob(undefined, token);
+            blob = new Blob(undefined, token);
         } else if ("undefined" === typeof token) {
-            blob = new CSL.Blob(undefined, this.formats.value().empty, "empty");
+            blob = new Blob(undefined, this.formats.value().empty, "empty");
         } else {
             if (!this.formats.value() || !this.formats.value()[token]) {
                 error("CSL processor error: call to nonexistent format token \"" + token + "\"");
             }
-            blob = new CSL.Blob(undefined, this.formats.value()[token], token);
+            blob = new Blob(undefined, this.formats.value()[token], token);
         }
         curr = this.current.value();
         if (!this.state.tmp.just_looking && this.checkNestedBrace) {
@@ -201,7 +204,7 @@ export class Queue {
                 this.state.tmp.term_predecessor_name = true;
             }
         }
-        blob = new CSL.Blob(str, token);
+        blob = new Blob(str as string | Blob, token);
         curr = this.current.value();
         if ("undefined" === typeof curr && this.current.mystack.length === 0) {
             this.current.mystack.push([]);
