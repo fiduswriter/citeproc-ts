@@ -3,6 +3,7 @@ import { CSL } from '../csl';
 import { Token } from '../obj/token';
 import { Blob } from '../obj/blob';
 import { Stack } from '../stack';
+import { Output_formatters } from '../output/formatters';
 
 import { END, SEEN, SINGLETON, START, SUCCESSOR, SUPPRESS, TERMINAL_PUNCTUATION } from '../constants/core';
 import { ROMANESQUE_REGEXP } from '../constants/regex';
@@ -234,7 +235,7 @@ export class Queue {
                 }
             }
             if (blob.strings["text-case"]) {
-                blob.blobs = CSL.Output.Formatters[blob.strings["text-case"]](this.state, str);
+                blob.blobs = Output_formatters[blob.strings["text-case"]](this.state, str);
             }
             if (this.state.tmp.strip_periods && !noStripPeriods) {
                 blob.blobs = blob.blobs.replace(/\.([^a-z]|$)/g, "$1");
@@ -532,7 +533,7 @@ export class Queue {
                 str = this.string(state, [str_blob], false);
                 state.tmp.count_offset_characters = count_offset_characters;
                 if (blob.strings["text-case"]) {
-                    str = CSL.Output.Formatters[blob.strings["text-case"]](this.state, str);
+                    str = Output_formatters[blob.strings["text-case"]](this.state, str);
                 }
                 if (str && this.state.tmp.strip_periods) {
                     str = str.replace(/\.([^a-z]|$)/g, "$1");

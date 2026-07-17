@@ -1,7 +1,9 @@
 import { CSL } from '../csl';
 
+import { Engine } from '../engine/build';
 import { NumericBlob } from '../obj/number';
 import { Token, Util_cloneToken } from '../obj/token';
+import { Output_formatters } from '../output/formatters';
 
 import { LOOSE, LangPrefsMap, ROMAN_NUMERALS, SUFFIX_CHARS } from '../constants/core';
 import { STATUTE_SUBDIV_STRINGS, STATUTE_SUBDIV_STRINGS_REVERSE } from '../constants/statute';
@@ -31,7 +33,7 @@ export class LongOrdinalizer {
         if (typeof num === "number" && num < 10) {
             num = "0" + num;
         }
-        let ret = CSL.Engine.getField(
+        let ret = Engine.getField(
             LOOSE, 
             this.state.locale[this.state.opt.lang].terms,
             "long-ordinal-" + num,
@@ -951,7 +953,7 @@ export function outputNumericField(state: CslState, varname: string, itemID: str
                     }
                 }
                 if (labelCapitalizeIfFirst) {
-                    label = CSL.Output.Formatters["capitalize-first"](state, label);
+                    label = Output_formatters["capitalize-first"](state, label);
                 }
             }
         }

@@ -2,6 +2,7 @@ import { CSL } from '../csl';
 import { Token, Util_cloneToken } from '../obj/token';
 import { titlecaseSentenceOrNormal, demoteNoiseWords } from './title';
 import { getAbbrevsDomain } from './locale_shared';
+import { Output_formatters } from '../output/formatters';
 
 import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '../constants/core';
 /*
@@ -27,7 +28,7 @@ import { FIELD_CATEGORY_REMAP, LangPrefsMap, VARIABLES_WITH_SHORT_FORM } from '.
  *
  * The balance of multilingual variables are rendered with
  * the first matching value in the transform locales spec
- * (no transform, state.opt['locale-translit'], or 
+ * (no transform, state.opt['locale-translit'], or
  * state.opt['locale-translat']) mapped to the target
  * slot.
  *
@@ -83,7 +84,7 @@ export class Transform {
             }
             return value;
         }
-        
+
         function abbreviate(state: CslState, tok: Token, Item: CslItem, altvar: any, basevalue: string, family_var: string, use_field: boolean): string {
             let value = "";
             const myabbrev_family = FIELD_CATEGORY_REMAP[family_var];
@@ -105,7 +106,7 @@ export class Transform {
             if (["jurisdiction", "country"].indexOf(family_var) > -1 && basevalue === basevalue.toLowerCase()) {
                 normalizedKey = basevalue.toUpperCase();
             }
-            
+
             if (state.sys.getAbbreviation) {
                 if (["jurisdiction", "country", "language-name", "language-name-original"].indexOf(variable) > -1) {
                     preferredJurisdiction = "default";
@@ -129,9 +130,9 @@ export class Transform {
                     }
                 }
             }
-            
-            if (!value 
-                && (!state.opt.development_extensions.require_explicit_legal_case_title_short || Item.type !== 'legal_case') 
+
+            if (!value
+                && (!state.opt.development_extensions.require_explicit_legal_case_title_short || Item.type !== 'legal_case')
                 && altvar && Item[altvar] && use_field) {
                 value = Item[altvar];
             }
@@ -285,7 +286,7 @@ export class Transform {
                         }
                         const seg = field.slice(0, -5);
                         const sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
-                        ret.name = titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, CSL.Output.Formatters);
+                        ret.name = titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, Output_formatters as any);
                         delete ret.token.strings["text-case"];
                     }
                 }
@@ -296,7 +297,7 @@ export class Transform {
             return ret;
         }
         this.getTextSubField = getTextSubField;
-        
+
         function loadAbbreviation(jurisdiction: string, category: string, orig: string, lang: string): string {
             if (!jurisdiction) {
                 jurisdiction = "default";
@@ -356,7 +357,7 @@ export class Transform {
                 Item["cite-form"] = m[1];
             }
         }
-        
+
         function quashCheck(jurisdiction: string, value: string): string {
             let m = value.match(/^(?:#[0-9]+)*(?:!((?:[-_a-z]+(?:(?:.*)))(?:,(?:[-_a-z]+(?:(?:.*))))*))*>>>/);
             if (m) {
@@ -431,8 +432,8 @@ export class Transform {
                         slot.primary = 'locale-orig';
                     }
                 }
-                
-                if (variables[0] === "title-short" 
+
+                if (variables[0] === "title-short"
                     || (state.tmp.area !== "bibliography"
                         && !(state.tmp.area === "citation"
                              && state.opt.xclass === "note"
@@ -445,7 +446,7 @@ export class Transform {
                     slot.secondary = false;
                     slot.tertiary = false;
                 }
-                
+
                 if (state.tmp["publisher-list"]) {
                     if (variables[0] === "publisher") {
                         state.tmp["publisher-token"] = this;
@@ -454,7 +455,7 @@ export class Transform {
                     }
                     return null;
                 }
-                
+
                 const oldLangArray = state.tmp.lang_array.slice();
 
                 let res = getTextSubField.call(this, Item, variables[0], slot.primary, true, null, family_var);
@@ -502,11 +503,11 @@ export class Transform {
                         }
                     }
                 }
-                
+
                 let primaryPrefix;
                 if (slot.primary === "locale-translit") {
                     primaryPrefix = state.opt.citeAffixes[langPrefs][slot.primary].prefix;
-                }                
+                }
 
                 if (primaryPrefix === "<i>" && variables[0] === 'title' && !primaryUsedOrig) {
                     let hasItalic = false;
@@ -524,7 +525,7 @@ export class Transform {
                 if (primary_locale !== "en" && primary_tok.strings["text-case"] === "title") {
                     primary_tok.strings["text-case"] = "passthrough";
                 }
-                
+
                 if ("title" === variables[0]) {
                     primary = demoteNoiseWords(state, primary, this["leading-noise-words"]);
                 }
@@ -559,7 +560,7 @@ export class Transform {
                         if (secondary_locale) {
                             state.tmp.lang_array = [secondary_locale].concat(oldLangArray);
                         }
-                        const secondary_outer = new CSL.Token();
+                        const secondary_outer = new Token();
                         secondary_outer.decorations.push(["@font-style", "normal"]);
                         secondary_outer.decorations.push(["@font-weight", "normal"]);
                         state.output.openLevel(secondary_outer);
@@ -569,7 +570,7 @@ export class Transform {
                     if (primary === tertiary) {
                         tertiary = false;
                     }
-                    
+
                     if (tertiary) {
                         tertiary_tok.strings.prefix = state.opt.citeAffixes[langPrefs][slot.tertiary].prefix;
                         tertiary_tok.strings.suffix = state.opt.citeAffixes[langPrefs][slot.tertiary].suffix;
@@ -587,7 +588,7 @@ export class Transform {
                         if (tertiary_locale) {
                             state.tmp.lang_array = [tertiary_locale].concat(oldLangArray);
                         }
-                        const tertiary_outer = new CSL.Token();
+                        const tertiary_outer = new Token();
                         tertiary_outer.decorations.push(["@font-style", "normal"]);
                         tertiary_outer.decorations.push(["@font-weight", "normal"]);
                         state.output.openLevel(tertiary_outer);
@@ -606,7 +607,7 @@ export class Transform {
                 }
 
                 state.tmp.lang_array = oldLangArray;
-                    
+
                 if (state.tmp.can_block_substitute) {
                     state.tmp.name_node.children.push(state.output.current.value());
                 }

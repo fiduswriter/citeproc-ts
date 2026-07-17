@@ -1,6 +1,7 @@
 import { CSL } from '../../csl';
 import { _compareNamesets } from './common';
 import { toLocaleLowerCase } from '../locale_shared';
+import { Output_formatters } from '../../output/formatters';
 
 export const Util_Names: Record<string, Function> = {};
 
@@ -56,7 +57,7 @@ Util_Names.initializeWith = function (state: CslState, name: string, terminator?
         }
     }
 
-    const nameSplits = (CSL.Output.Formatters.nameDoppel as any).split(name);
+    const nameSplits = (Output_formatters.nameDoppel as any).split(name);
     let namelist = [];
     namelist = [nameSplits.strings[0]];
 

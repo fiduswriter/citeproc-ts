@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
 
+import { Output_formatters } from '../output/formatters';
+
 import { TOLERANT } from '../constants/core';
 export function evaluateLabel(node: CslNode, state: CslState, Item: CslItem, item: any): string {
     let myterm: string;
@@ -64,7 +66,7 @@ export function castLabel(state: CslState, node: CslNode, term: string, plural: 
     }
     let ret = state.getTerm(term, label_form as string, plural, false, mode, node.default_locale);
     if (label_capitalize_if_first) {
-        ret = CSL.Output.Formatters["capitalize-first"](state, ret);
+        ret = Output_formatters["capitalize-first"](state, ret);
     }
     if (state.tmp.strip_periods) {
         ret = ret.replace(/\./g, "");

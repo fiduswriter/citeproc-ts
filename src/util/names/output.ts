@@ -2,6 +2,7 @@ import { CSL } from '../../csl';
 import { getRawName } from './index';
 
 import { Token, Util_cloneToken } from '../../obj/token';
+import { Output_formatters } from '../../output/formatters';
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
@@ -1260,7 +1261,7 @@ export class NameOutput {
                 // Don't do this
                 //if (this.state.tmp.area === "bibliography" && !this.state.tmp.term_predecessor && non_dropping_particle) {
                 //    if (!has_hyphenated_non_dropping_particle) {
-                //        non_dropping_particle.blobs = CSL.Output.Formatters["capitalize-first"](this.state, non_dropping_particle.blobs)
+                //        non_dropping_particle.blobs = Output_formatters["capitalize-first"](this.state, non_dropping_particle.blobs)
                 //    }
                 //}
                 if (has_hyphenated_non_dropping_particle) {

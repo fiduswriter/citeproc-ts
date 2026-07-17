@@ -4,6 +4,7 @@ import { Suffixator } from '../util/number';
 import { Blob } from '../obj/blob';
 import { NumericBlob } from '../obj/number';
 import { Util_cloneToken } from '../obj/token';
+import { Output_formatters } from '../output/formatters';
 
 import { CITE_FIELDS, DESCENDING, END, LITERAL, MULTI_FIELDS, NUMERIC, START, SUFFIX_CHARS, TOLERANT, TRIGRAPH } from '../constants/core';
 import { debug } from '../logger';
@@ -199,7 +200,7 @@ export const Node_text = {
                         // being rendered immediately after terminal punctuation,
                         // I guess, actually).
                         if (!state.tmp.term_predecessor && !(state.opt["class"] === "in-text" && state.tmp.area === "citation")) {
-                            myterm = CSL.Output.Formatters["capitalize-first"](state, term);
+                            myterm = Output_formatters["capitalize-first"](state, term);
                             //debug("Capitalize");
                         } else {
                             myterm = term;

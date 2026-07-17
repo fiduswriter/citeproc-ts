@@ -12,6 +12,7 @@ import { Conditions } from './util/conditions';
 import { Doppeler, substituteOne, substituteTwo, setDecorations, Mode } from './util/processor';
 
 import { NOTE_FIELDS_REGEXP, NOTE_FIELD_REGEXP } from './constants/regex';
+import { Output_formatters } from './output/formatters';
 
 
 export const CSL: CSLNamespace = {
@@ -42,7 +43,7 @@ export const CSL: CSLNamespace = {
     demoteNoiseWords,
     extractTitleAndSubtitle,
     titlecaseSentenceOrNormal: function (this: any, state: any, Item: any, seg: string, lang: string | false, sentenceCase: boolean): string {
-        return titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, CSL.Output.Formatters);
+        return titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, Output_formatters as any);
     },
 
     checkNestedBrace: function(state: CslState): void {

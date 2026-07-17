@@ -3,6 +3,7 @@ import { CSL } from '../csl';
 import { Blob } from '../obj/blob';
 import { FORMAT_KEY_SEQUENCE } from '../constants/core';
 import { error } from '../logger';
+import { Output_formatters } from '../output/formatters';
 export function substituteOne(template: string): (state: CslState, list: string) => string {
     return function (state: CslState, list: string): string {
         if (!list) {
@@ -56,7 +57,7 @@ export function Mode(mode: string): Record<string, any> {
                     func = substituteOne(val);
                 }
             } else if (typeof val === "boolean" && !val) {
-                func = CSL.Output.Formatters.passthrough;
+                func = Output_formatters.passthrough;
             } else if (typeof val === "function") {
                 func = val;
             } else {

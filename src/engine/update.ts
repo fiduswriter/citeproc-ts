@@ -1,6 +1,7 @@
 import { CSL } from '../csl';
 import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
 import { debug } from '../logger';
+import { Tmp } from './state';
 export function rebuildProcessorState(this: any, citations: any[], mode: string, uncitedItemIDs?: string[] | Record<string, boolean>): any {
     // Rebuilds the processor from scratch, based on a list of citation
     // objects. In a dynamic application, once the internal state of processor
@@ -139,7 +140,7 @@ export function restoreProcessorState(this: any, citations?: any[]): any {
         ret = this.processCitationCluster(citations[0], [], citationList.slice(1));
     } else {
         this.registry = new CSL.Registry(this);
-        this.tmp = new CSL.Engine.Tmp();
+        this.tmp = new Tmp();
         this.disambiguate = new CSL.Disambiguation(this);
     }
     return ret;

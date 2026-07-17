@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { Output_formatters } from '../output/formatters';
 
 export const Node_label = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -20,7 +21,7 @@ export const Node_label = {
                     // ^ Suppress output here if we have an embedded term
                     if (this.strings.capitalize_if_first) {
                         if (!state.tmp.term_predecessor && !(state.opt["class"] === "in-text" && state.tmp.area === "citation")) {
-                            termtxt = CSL.Output.Formatters["capitalize-first"](state, termtxt);
+                            termtxt = Output_formatters["capitalize-first"](state, termtxt);
                         }
                     }
                     state.output.append(termtxt, this);
