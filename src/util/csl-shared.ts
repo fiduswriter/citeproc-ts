@@ -173,7 +173,7 @@ export function getSafeEscape(state: CslState): (txt: string) => string {
     }
 }
 
-export function UPDATE_GROUP_CONTEXT_CONDITION(state: CslState, str: string, valueTerm: any, token: any, value?: any): void {
+export function UPDATE_GROUP_CONTEXT_CONDITION(state: CslState, str: any, valueTerm: any, token: any, value?: any): void {
     if (!state.opt.use_context_condition) return;
     const flags = state.tmp.group_context.tip;
     if (flags.condition) {
