@@ -1,5 +1,5 @@
 import { CSL } from '../csl';
-
+import { NameOutput } from '../util/names/output';
 import { Token } from '../obj/token';
 
 import { Attributes } from '../attributes/attributes';
@@ -93,7 +93,7 @@ export const Node_alternative = {
 
                 state.output.openLevel(this);
                 state.registry.refhash[Item.id] = newItem;
-                state.nameOutput = new CSL.NameOutput(state, newItem);
+                state.nameOutput = new NameOutput(state, newItem);
             };
             this.execs.push(func);
             target.push(this);
@@ -121,7 +121,7 @@ export const Node_alternative = {
                 state.output.closeLevel();
                 state.registry.refhash[Item.id] = state.tmp.oldItem;
                 state.opt.lang = state.tmp.oldLang;
-                state.nameOutput = new CSL.NameOutput(state, state.tmp.oldItem);
+                state.nameOutput = new NameOutput(state, state.tmp.oldItem);
                 state.tmp.abort_alternative = false;
             };
             this.execs.push(func3);

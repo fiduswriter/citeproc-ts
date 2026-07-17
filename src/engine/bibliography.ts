@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
-
+import { Queue } from '../output/queue';
+import { Output_formats } from '../output/formats';
 import { Token } from '../obj/token';
 
 import { NUMERIC, START } from '../constants/core';
@@ -372,7 +373,7 @@ CSL.getBibliographyEntries = function (bibsection) {
             topblobs[0].strings.prefix = this.bibliography.opt.layout_prefix + topblobs[0].strings.prefix;
         }
         for (let j=0,jlen=this.output.queue.length;j<jlen;j+=1) {
-            CSL.Output.Queue.purgeEmptyBlobs(this.output.queue[j]);
+            Queue.purgeEmptyBlobs(this.output.queue[j]);
             //print("XXX: "+JSON.stringify(this.output.queue[j],['strings','prefix','suffix','delimiter','blobs','decorations'],2))
         }
         for (let j=0,jlen=this.output.queue.length;j<jlen;j+=1) {
@@ -396,7 +397,7 @@ CSL.getBibliographyEntries = function (bibsection) {
         
         if (!res && this.opt.update_mode === NUMERIC) {
             const err = (ret.length + 1) + ". [CSL STYLE ERROR: reference with no printed form.]";
-            res = CSL.Output.Formats[this.opt.mode]["@bibliography/entry"](this, err);
+            res = Output_formats[this.opt.mode]["@bibliography/entry"](this, err);
         }
         if (res) {
             ret.push(res);

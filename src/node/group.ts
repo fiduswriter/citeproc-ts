@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
-
+import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
+import { PublisherOutput } from '../util/publishers';
+import { tokenExec } from '../util/nodes';
 import { Token } from '../obj/token';
 
 import { Node_choose } from './choose';
@@ -12,7 +14,7 @@ export const Node_group = {
         let func, execs;
         this.realGroup = realGroup;
         if (this.tokentype === START) {
-            CSL.Util.substituteStart.call(this, state, target);
+            Util_substituteStart.call(this, state, target);
             if (state.build.substitute_level.value()) {
                 state.build.substitute_level.replace((state.build.substitute_level.value() + 1));
             }
@@ -178,7 +180,7 @@ export const Node_group = {
                             const publisher_place_lst = Item["publisher-place"].split(/;\s*/);
                             if (publisher_lst.length > 1
                                 && publisher_lst.length === publisher_place_lst.length) {
-                                state.publisherOutput = new CSL.PublisherOutput(state, this);
+                                state.publisherOutput = new PublisherOutput(state, this);
                                 state.publisherOutput["publisher-list"] = publisher_lst;
                                 state.publisherOutput["publisher-place-list"] = publisher_place_lst;
                             }
@@ -238,7 +240,7 @@ export const Node_group = {
                     let next = 0;
                     if (state.juris[itemItem["best-jurisdiction"]][this.juris]) {
                         while (next < state.juris[itemItem["best-jurisdiction"]][this.juris].length) {
-                            next = CSL.tokenExec.call(state, state.juris[itemItem["best-jurisdiction"]][this.juris][next], Item, item);
+                            next = tokenExec.call(state, state.juris[itemItem["best-jurisdiction"]][this.juris][next], Item, item);
                         }
                     }
                 };
@@ -387,7 +389,7 @@ export const Node_group = {
             if (state.build.substitute_level.value()) {
                 state.build.substitute_level.replace((state.build.substitute_level.value() - 1));
             }
-            CSL.Util.substituteEnd.call(this, state, target);
+            Util_substituteEnd.call(this, state, target);
         }
     }
 };

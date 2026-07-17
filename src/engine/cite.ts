@@ -1,5 +1,8 @@
 import { CSL } from '../csl';
-
+import { cloneAmbigConfig } from '../util/disambig';
+import { Queue } from '../output/queue';
+import { NameOutput } from '../util/names/output';
+import { tokenExec } from '../util/nodes';
 import { AmbigConfig } from '../obj/ambigconfig';
 
 import { ASSUME_ALL_ITEMS_REGISTERED, ERROR_NO_RENDERED_FORM, NUMERIC, POSITION, POSITION_CONTAINER_SUBSEQUENT, POSITION_FIRST, POSITION_IBID, POSITION_IBID_WITH_LOCATOR, POSITION_SUBSEQUENT, POSITION_TEST_VARS, PREVIEW, SWAPPING_PUNCTUATION, TERMINAL_PUNCTUATION } from '../constants/core';
@@ -104,7 +107,7 @@ export function processCitationCluster(this: any, citation: any, citationsPre: A
                 const ids = this.registry.ambigcites[oldAkey];
                 if (ids) {
                     for (let j = 0, jlen = ids.length; j < jlen; j += 1) {
-                        oldAmbigs[ids[j]] = CSL.cloneAmbigConfig(this.registry.registry[ids[j]].disambig);
+                        oldAmbigs[ids[j]] = cloneAmbigConfig(this.registry.registry[ids[j]].disambig);
                     }
                 }
             }
@@ -1037,7 +1040,7 @@ CSL.getAmbiguousCite = function (Item: CslItem, disambig: any, visualForm?: bool
     CSL.getCite.call(this, Item, itemSupp, null, false);
     // !!!
     for (let i=0,ilen=this.output.queue.length;i<ilen;i+=1) {
-        CSL.Output.Queue.purgeEmptyBlobs(this.output.queue[i]);
+        Queue.purgeEmptyBlobs(this.output.queue[i]);
     }
     if (this.opt.development_extensions.clean_up_csl_flaws) {
         for (let j=0,jlen=this.output.queue.length;j<jlen;j+=1) {
@@ -1263,8 +1266,8 @@ CSL.getCitationCluster = function (inputList, citation) {
         this.tmp.shadow_numbers = {};
         if (!this.tmp.just_looking && this.opt.hasPlaceholderTerm) {
             const output = this.output;
-            this.output = new CSL.Output.Queue(this);
-            this.output.adjust = new CSL.Output.Queue.adjust();
+            this.output = new Queue(this);
+            this.output.adjust = new Queue.adjust();
             CSL.getAmbiguousCite.call(this, Item, null, false, item);
             this.output = output;
         }
@@ -1353,7 +1356,7 @@ CSL.getCitationCluster = function (inputList, citation) {
 
 
     for (let i=0,ilen=this.output.queue.length;i<ilen;i+=1) {
-        CSL.Output.Queue.purgeEmptyBlobs(this.output.queue[i]);
+        Queue.purgeEmptyBlobs(this.output.queue[i]);
     }
     if (!this.tmp.suppress_decorations && this.output.queue.length) {
         if (!(this.opt.development_extensions.apply_citation_wrapper
@@ -1541,11 +1544,11 @@ CSL.getCite = function (Item, item, prevItemID, blockShadowNumberReset) {
     CSL.citeStart.call(this, Item, item, blockShadowNumberReset);
     next = 0;
     this.tmp.name_node = {};
-    this.nameOutput = new CSL.NameOutput(this, Item, item);
+    this.nameOutput = new NameOutput(this, Item, item);
 
     // rerun?
     while (next < this[this.tmp.area].tokens.length) {
-        next = CSL.tokenExec.call(this, this[this.tmp.area].tokens[next], Item, item);
+        next = tokenExec.call(this, this[this.tmp.area].tokens[next], Item, item);
     }
 
     CSL.citeEnd.call(this, Item, item);
@@ -1607,7 +1610,7 @@ CSL.citeStart = function (Item, item, blockShadowNumberReset) {
         if (!this.registry.registry[Item.id]) {
             this.tmp.disambig_restore = new AmbigConfig();
         } else {
-            this.tmp.disambig_restore = CSL.cloneAmbigConfig(this.registry.registry[Item.id].disambig);
+            this.tmp.disambig_restore = cloneAmbigConfig(this.registry.registry[Item.id].disambig);
             if (this.tmp.area === 'bibliography' && this.tmp.disambig_settings && this.tmp.disambig_override) {
                 if (this.opt["disambiguate-add-names"]) {
                     this.tmp.disambig_settings.names = this.registry.registry[Item.id].disambig.names.slice();
@@ -1654,7 +1657,7 @@ CSL.citeStart = function (Item, item, blockShadowNumberReset) {
     // SAVE PARAMETERS HERE, IF APPROPRIATE
     // (promiscuous addition of global parameters => death by a thousand cuts)
     if (!this.tmp.just_looking && item && !item.position && this.registry.registry[Item.id]) {
-        this.tmp.disambig_restore = CSL.cloneAmbigConfig(this.registry.registry[Item.id].disambig);
+        this.tmp.disambig_restore = cloneAmbigConfig(this.registry.registry[Item.id].disambig);
     }
     // XXX This only applied to the "number" variable itself? Huh?
     //this.setNumberLabels(Item);

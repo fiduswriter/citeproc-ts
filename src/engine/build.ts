@@ -1,5 +1,13 @@
 import { CSL } from '../csl';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
+import { Queue } from '../output/queue';
+import { Registry } from '../registry/registry';
+import { Disambiguation } from '../disambig/cites';
+import { dateParserInstance } from '../util/dateparser';
+import { Util_FlipFlopper } from '../util/flipflop';
+import { Util_PageRangeMangler } from '../util/page';
+import { XmlToToken } from '../util/nodes';
+import { Util_fixDateNode } from '../util/datenode';
 
 import { Attributes } from '../attributes/attributes';
 import { Parallel } from '../util/parallel';
@@ -88,14 +96,14 @@ export class Engine {
         this.bibliography = new Bibliography();
         this.intext = new InText();
 
-        this.output = new CSL.Output.Queue(this);
+        this.output = new Queue(this as unknown as CslState);
 
         //this.render = new CSL.Render(this);
         //
         // This latter queue is used for formatting date chunks
         // before they are folded back into the main queue.
         //
-        this.dateput = new CSL.Output.Queue(this);
+        this.dateput = new Queue(this as unknown as CslState);
 
         this.cslXml = setupXml(style);
 
@@ -210,9 +218,9 @@ export class Engine {
         }
         this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]);
 
-        this.output.adjust = new CSL.Output.Queue.adjust(this.getOpt('punctuation-in-quote'));
+        this.output.adjust = new Queue.adjust(this.getOpt('punctuation-in-quote') as any);
 
-        this.registry = new CSL.Registry(this);
+        this.registry = new Registry(this as unknown as CslState);
 
         // XXX For modular jurisdiction support, parameterize buildTokenLists().
         // XXX Feed as arguments:
@@ -241,18 +249,18 @@ export class Engine {
 
         this.configureTokenLists();
 
-        this.disambiguate = new CSL.Disambiguation(this);
+        this.disambiguate = new Disambiguation(this as unknown as CslState);
 
         this.splice_delimiter = false;
 
         //
         // date parser
         //
-        this.fun.dateparser = CSL.DateParser;
+        this.fun.dateparser = dateParserInstance;
         //
         // flip-flopper for inline markup
         //
-        this.fun.flipflopper = new CSL.Util.FlipFlopper(this);
+        this.fun.flipflopper = new Util_FlipFlopper(this as unknown as CslState);
         //
         // utility functions for quotes
         //
@@ -268,8 +276,8 @@ export class Engine {
         //
         // set up page mangler
         //
-        this.fun.page_mangler = CSL.Util.PageRangeMangler.getFunction(this, "page");
-        this.fun.year_mangler = CSL.Util.PageRangeMangler.getFunction(this, "year");
+        this.fun.page_mangler = Util_PageRangeMangler.getFunction(this as unknown as CslState, "page");
+        this.fun.year_mangler = Util_PageRangeMangler.getFunction(this as unknown as CslState, "year");
 
         this.setOutputFormat("html");
     }
@@ -763,16 +771,16 @@ CSL.makeBuilder = function (me, target) {
 
     function runStart(node) {
         node_stack.push(node);
-        CSL.XmlToToken.call(node, me, START, target, var_stack);
+        XmlToToken.call(node, me, START, target, var_stack);
     }
 
     function runEnd() {
         let node = node_stack.pop();
-        CSL.XmlToToken.call(node, me, END, target, var_stack);
+        XmlToToken.call(node, me, END, target, var_stack);
     }
 
     function runSingle(node) {
-        CSL.XmlToToken.call(node, me, SINGLETON, target, var_stack);
+        XmlToToken.call(node, me, SINGLETON, target, var_stack);
     }
 
     function buildStyle(nodes, parent, node_stack) {
@@ -791,7 +799,7 @@ CSL.makeBuilder = function (me, target) {
                 continue;
             }
             if (parent && me.cslXml.nodename(node) === "date") {
-                CSL.Util.fixDateNode.call(me, parent, i, node);
+                Util_fixDateNode.call(me, parent, i, node);
                 node = me.cslXml.children(parent)[i];
             }
             if (me.cslXml.numberofnodes(me.cslXml.children(node))) {

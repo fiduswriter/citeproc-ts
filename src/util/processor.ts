@@ -1,9 +1,8 @@
-import { CSL } from '../csl';
-
 import { Blob } from '../obj/blob';
 import { FORMAT_KEY_SEQUENCE } from '../constants/core';
 import { error } from '../logger';
 import { Output_formatters } from '../output/formatters';
+import { Output_formats } from '../output/formats';
 export function substituteOne(template: string): (state: CslState, list: string) => string {
     return function (state: CslState, list: string): string {
         if (!list) {
@@ -38,7 +37,7 @@ export function substituteTwo(template: string): (param: string) => (state: CslS
 export function Mode(mode: string): Record<string, any> {
     let decorations: Record<string, any>, params: Record<string, any>, param: string, func: any, val: any, args: string[];
     decorations = {};
-    params = CSL.Output.Formats[mode];
+    params = Output_formats[mode];
     for (let param in params) {
         if (true) {
 

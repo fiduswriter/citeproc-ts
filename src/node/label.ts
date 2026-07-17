@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { evaluateLabel } from '../util/label';
 import { Output_formatters } from '../output/formatters';
 
 export const Node_label = {
@@ -7,7 +8,7 @@ export const Node_label = {
         if (this.strings.term) {
             // Non-names labels
             let func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
-                let termtxt = CSL.evaluateLabel(this, state, Item, item);
+                let termtxt = evaluateLabel(this, state, Item, item);
                 if (item && this.strings.term === "locator") {
 
                     item.section_form_override = this.strings.form;

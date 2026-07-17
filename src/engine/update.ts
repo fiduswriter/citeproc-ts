@@ -1,4 +1,6 @@
 import { CSL } from '../csl';
+import { Registry } from '../registry/registry';
+import { Disambiguation } from '../disambig/cites';
 import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
 import { Tmp } from './state';
 export function rebuildProcessorState(this: any, citations: any[], mode: string, uncitedItemIDs?: string[] | Record<string, boolean>): any {
@@ -138,9 +140,9 @@ export function restoreProcessorState(this: any, citations?: any[]): any {
         // If citations is empty, rest to empty state.
         ret = this.processCitationCluster(citations[0], [], citationList.slice(1));
     } else {
-        this.registry = new CSL.Registry(this);
+        this.registry = new Registry(this);
         this.tmp = new Tmp();
-        this.disambiguate = new CSL.Disambiguation(this);
+        this.disambiguate = new Disambiguation(this);
     }
     return ret;
 };

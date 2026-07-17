@@ -1,5 +1,5 @@
-import { CSL } from '../csl';
-
+import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
+import { dateMacroAsSortKey } from '../util/date';
 import { Util_cloneToken } from '../obj/token';
 
 import { END, SINGLETON, START } from '../constants/core';
@@ -18,10 +18,10 @@ export const Node_date = {
             state.build.date_parts = [];
             state.build.date_variables = this.variables;
             if (!state.build.extension) {
-                CSL.Util.substituteStart.call(this, state, target);
+                Util_substituteStart.call(this, state, target);
             }
             if (state.build.extension) {
-                func = CSL.dateMacroAsSortKey;
+                func = dateMacroAsSortKey;
             } else {
                 func = function (this: CslNode, state: CslState, Item: CslItem, item: any): void {
                     let dp;
@@ -170,7 +170,7 @@ export const Node_date = {
 
         if (this.tokentype === END || this.tokentype === SINGLETON) {
             if (!state.build.extension) {
-                CSL.Util.substituteEnd.call(this, state, target);
+                Util_substituteEnd.call(this, state, target);
             }
         }
     }

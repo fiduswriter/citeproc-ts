@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { Util_Dates } from '../util/dates';
 import { Suffixator } from '../util/number';
 
 import { NumericBlob } from '../obj/number';
@@ -23,7 +23,7 @@ export const Node_date_part = {
             if (!val) {
                 return val;
             }
-            val = "" + CSL.Util.Dates[this.strings.name][myform](state, val, gender, this.default_locale);
+            val = "" + Util_Dates[this.strings.name][myform](state, val, gender, this.default_locale);
             if ("month" === this.strings.name) {
                 if (state.tmp.strip_periods) {
                     val = val.replace(/\./g, "");

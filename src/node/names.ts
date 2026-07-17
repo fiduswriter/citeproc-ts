@@ -1,5 +1,5 @@
-import { CSL } from '../csl';
 import { Blob } from '../obj/blob';
+import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
 
 import { END, LITERAL, SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
@@ -9,7 +9,7 @@ export const Node_names = {
         // debug = print;
 
         if (this.tokentype === START || this.tokentype === SINGLETON) {
-            CSL.Util.substituteStart.call(this, state, target);
+            Util_substituteStart.call(this, state, target);
             state.build.substitute_level.push(1);
         }
         
@@ -194,7 +194,7 @@ export const Node_names = {
 
         if (this.tokentype === END || this.tokentype === SINGLETON) {
             state.build.substitute_level.pop();
-            CSL.Util.substituteEnd.call(this, state, target);
+            Util_substituteEnd.call(this, state, target);
         }
     }
 };

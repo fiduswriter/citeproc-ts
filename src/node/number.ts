@@ -1,9 +1,10 @@
-import { CSL } from '../csl';
+import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
+import { outputNumericField } from '../util/number';
 
 export const Node_number = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func: (this: CslNode, state: CslState, Item: CslItem, item: any) => void;
-        CSL.Util.substituteStart.call(this, state, target);
+        Util_substituteStart.call(this, state, target);
         //
         // This should push a rangeable object to the queue.
         //
@@ -71,7 +72,7 @@ export const Node_number = {
                 const val = Item[varname].slice(this.substring);
                 state.output.append(val, node);
             } else {
-                CSL.Util.outputNumericField(state, varname, Item.id);
+                outputNumericField(state, varname, Item.id);
             }
 
             if (["locator", "locator-extra"].indexOf(this.variables_real[0]) > -1
@@ -83,6 +84,6 @@ export const Node_number = {
         this.execs.push(func);
         target.push(this);
 
-        CSL.Util.substituteEnd.call(this, state, target);
+        Util_substituteEnd.call(this, state, target);
     }
 };

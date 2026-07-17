@@ -1,4 +1,7 @@
 import { CSL } from '../../csl';
+import { Util_Names } from './index';
+import { castLabel } from '../label';
+import { parseParticles } from '../name_particles';
 import { getRawName } from './index';
 
 import { Token, Util_cloneToken } from '../../obj/token';
@@ -505,12 +508,11 @@ export class NameOutput {
             term = this.common_term;
         }
 
-        let ret = false;
         const node = this.label[v][position];
         if (node) {
-            ret = CSL.castLabel(this.state, node, term as string, plural as number, TOLERANT);
+            return castLabel(this.state, node, term as string, plural as number, TOLERANT);
         }
-        return ret;
+        return false;
     };
 
     _collapseAuthor() {
@@ -1470,16 +1472,16 @@ export class NameOutput {
         if (name.family && useLevel === 1) {
             if (hasInitializeWith) {
                 const initialize_with = this.state.inheritOpt(this.name, "initialize-with", false, "");
-                name.given = CSL.Util.Names.initializeWith(this.state, name.given, initialize_with, !initializeIsTurnedOn);
+                name.given = Util_Names.initializeWith(this.state, name.given, initialize_with, !initializeIsTurnedOn);
             } else {
-                name.given = CSL.Util.Names.unInitialize(this.state, name.given);
+            name.given = Util_Names.unInitialize(this.state, name.given);
             }
         } else if (useLevel === 0) {
             return {
                 blob: false
             }
         } else if (useLevel === 2) {
-            name.given = CSL.Util.Names.unInitialize(this.state, name.given);
+            name.given = Util_Names.unInitialize(this.state, name.given);
         }
 
         let str = this._stripPeriods("given", name.given);
@@ -1501,7 +1503,7 @@ export class NameOutput {
         let str = name.suffix, ret;
 
         if (str && "string" === typeof this.state.inheritOpt(this.name, "initialize-with")) {
-            str = CSL.Util.Names.initializeWith(this.state, str, this.state.inheritOpt(this.name, "initialize-with"), true);
+            str = Util_Names.initializeWith(this.state, str, this.state.inheritOpt(this.name, "initialize-with"), true);
         }
 
         str = this._stripPeriods("family", str);
@@ -1569,7 +1571,7 @@ export class NameOutput {
         if (this.state.opt.development_extensions.parse_names) {
             if (!name["non-dropping-particle"] && name.family && !noparse && name.given) {
                 if (!name["static-particles"]) {
-                    CSL.parseParticles(name, true);
+                    parseParticles(name);
                 }
             }
         }

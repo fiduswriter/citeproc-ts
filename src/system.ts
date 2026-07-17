@@ -1,4 +1,5 @@
-import { CSL } from './csl';
+import { XmlJSON, parseXml } from './xml/xmljson';
+import { XmlDOM } from './xml/xmldom';
 
 import { error } from './logger';
 export function setupXml(xmlObject: string | any): any {
@@ -10,18 +11,18 @@ export function setupXml(xmlObject: string | any): any {
                 .replace(/^\s+/, "");
             if (xmlObject.slice(0, 1) === "<") {
                 // Assume serialized XML
-                dataObj = CSL.parseXml(xmlObject);
+                dataObj = parseXml(xmlObject);
             } else {
                 // Assume serialized JSON
                 dataObj = JSON.parse(xmlObject);
             }
-            parser = new CSL.XmlJSON(dataObj);
+            parser = new XmlJSON(dataObj);
         } else if ("undefined" !== typeof xmlObject.getAttribute) {
             // Assume DOM instance
-            parser = new CSL.XmlDOM(xmlObject);
+            parser = new XmlDOM(xmlObject);
         } else {
             // Assume JS object
-            parser = new CSL.XmlJSON(xmlObject);
+            parser = new XmlJSON(xmlObject);
         }
     } else {
         error("unable to parse XML input");

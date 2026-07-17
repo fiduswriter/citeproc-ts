@@ -1,4 +1,5 @@
-import { CSL } from '../csl';
+import { Match } from '../util/util';
+import { Comparifier } from '../registry/registry';
 import { Suffixator, Romanizer, Ordinalizer, LongOrdinalizer } from '../util/number';
 
 import { AmbigConfig } from '../obj/ambigconfig';
@@ -411,7 +412,7 @@ export class Fun {
     decorate!: any;
 
     constructor(state: any) {
-        this.match = new CSL.Util.Match();
+        this.match = new Match();
 
         this.suffixator = new Suffixator(SUFFIX_CHARS);
 
@@ -509,7 +510,7 @@ export class Citation {
         };
 
         this.tokens = [];
-        this.srt = new CSL.Registry.Comparifier(state, "citation_sort");
+        this.srt = new Comparifier(state, "citation_sort");
 
         this.opt.collapse = [];
 

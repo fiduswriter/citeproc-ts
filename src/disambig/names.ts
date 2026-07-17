@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { Util_Names } from '../util/names/index';
 
 export function NameReg(state: CslState) {
     let pkey, ikey, skey;
@@ -36,7 +36,7 @@ export function NameReg(state: CslState) {
         }
         // The %s terminator enables normal initialization behavior
         // with non-Byzantine names.
-        ikey = CSL.Util.Names.initializeWith(state, skey, "%s");
+        ikey = Util_Names.initializeWith(state, skey, "%s");
         if (state.citation.opt["givenname-disambiguation-rule"] === "by-cite") {
             pkey = "" + itemid + pkey;
         }

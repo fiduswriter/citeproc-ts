@@ -1,5 +1,7 @@
 import { CSL } from '../csl';
-
+import { padding } from '../util/number';
+import { dateAsSortKey } from '../util/date';
+import { expandMacro } from '../util/nodes';
 import { Token } from '../obj/token';
 
 import { Node_institution } from './institution';
@@ -128,7 +130,7 @@ export const Node_key = {
                             }
                             if (num) {
                                 // Code currently in util_number.js
-                                num = CSL.Util.padding("" + num);
+                                num = padding("" + num);
                             }
                             state.output.append(num, this);
                         };
@@ -139,7 +141,7 @@ export const Node_key = {
                             // XXX What if this is NaN?
                             if (num) {
                                 // Code currently in util_number.js
-                                num = CSL.Util.padding("" + num);
+                                num = padding("" + num);
                             }
                             state.output.append(num, this);
                         };
@@ -150,7 +152,7 @@ export const Node_key = {
                         state.output.append(trigraph, this);
                     };
                 } else if (DATE_VARIABLES.indexOf(variable) > -1) {
-                    func = CSL.dateAsSortKey;
+                    func = dateAsSortKey;
                     single_text.variables = this.variables;
                 } else if ("title" === variable) {
                     const abbrevfam = "title";
@@ -180,7 +182,7 @@ export const Node_key = {
             const token = new Token("text", SINGLETON);
             token.strings.sort_direction = this.strings.sort_direction;
             token.postponed_macro = this.postponed_macro;
-            CSL.expandMacro.call(state, token, target);
+            expandMacro.call(state, token, target);
         }
         //
         // ops to output the key string result to an array go
@@ -235,7 +237,7 @@ export const Node_key = {
                     if (!year_suffix) {
                         year_suffix = 0;
                     }
-                    let key = CSL.Util.padding("" + year_suffix);
+                    let key = padding("" + year_suffix);
                     state[state.tmp.area].keys.push(key);
                 };
                 end_key.execs.push(func);

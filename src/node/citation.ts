@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { Comparifier } from '../registry/registry';
 
 import { END, NUMERIC, POSITION, START } from '../constants/core';
 export const Node_citation = {
@@ -35,7 +35,7 @@ export const Node_citation = {
                 const firstkey = state.citation_sort.opt.sort_directions[0].slice();
                 state.citation_sort.opt.sort_directions = [firstkey].concat(state.citation_sort.opt.sort_directions);
             }
-            state.citation.srt = new CSL.Registry.Comparifier(state, "citation_sort");
+            state.citation.srt = new Comparifier(state, "citation_sort");
         }
         target.push(this);
     }

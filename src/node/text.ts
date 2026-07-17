@@ -1,5 +1,8 @@
 import { CSL } from '../csl';
-import { Suffixator } from '../util/number';
+import { Suffixator, padding, outputNumericField } from '../util/number';
+import { Util_substituteStart, Util_substituteEnd } from '../util/substitute';
+import { expandMacro } from '../util/nodes';
+import { encodeDoiForUrl } from '../util/util';
 
 import { Blob } from '../obj/blob';
 import { NumericBlob } from '../obj/number';
@@ -17,7 +20,7 @@ export const Node_text = {
             group_start.tokentype = START;
             Node_group.build.call(group_start, state, target);
 
-            CSL.expandMacro.call(state, this, target);
+            expandMacro.call(state, this, target);
 
             const group_end = Util_cloneToken(this);
             group_end.name = "group";
@@ -28,7 +31,7 @@ export const Node_text = {
             Node_group.build.call(group_end, state, target);
 
         } else {
-            CSL.Util.substituteStart.call(this, state, target);
+            Util_substituteStart.call(this, state, target);
             // ...
             //
             // Do non-macro stuff
@@ -87,7 +90,7 @@ export const Node_text = {
                                     sortnum = state.registry.registry[Item.id].seq;
                                 }
                                 if (sortnum) {
-                                    sortnum = CSL.Util.padding("" + sortnum);
+                                    sortnum = padding("" + sortnum);
                                 }
                                 state.output.append(sortnum, this);
                                 return;
@@ -206,7 +209,7 @@ export const Node_text = {
                             myterm = term;
                         }
                         
-                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
+                        Node_checkNonEnglishTitleCase.call(this, state, Item);
                         // XXXXX Cut-and-paste code in multiple locations. This code block should be
                         // collected in a function.
                         // Tag: strip-periods-block
@@ -303,7 +306,7 @@ export const Node_text = {
                                     // XXX node_number.js. Should be a common function.
                                     // XXX BEGIN
                                     state.processNumber(this, item, this.variables[0], Item.type);
-                                    CSL.Util.outputNumericField(state, this.variables[0], Item.id);
+                                    outputNumericField(state, this.variables[0], Item.id);
                                     // XXX END
 
                                     if (["locator", "locator-extra"].indexOf(this.variables_real[0]) > -1
@@ -316,9 +319,9 @@ export const Node_text = {
                             // page gets mangled with the correct collapsing
                             // algorithm
                             func = function(this: CslNode, state: CslState, Item: CslItem): void {
-                                CSL.checkNonEnglishTitleCase.call(this, state, Item);
+                                Node_checkNonEnglishTitleCase.call(this, state, Item);
                                 state.processNumber(this, Item, this.variables[0], Item.type);
-                                CSL.Util.outputNumericField(state, this.variables[0], Item.id);
+                                outputNumericField(state, this.variables[0], Item.id);
                             };
                         } else if (["URL", "DOI"].indexOf(this.variables_real[0]) > -1) {
                             func = function (this: CslNode, state: CslState, Item: CslItem): void {
@@ -334,7 +337,7 @@ export const Node_text = {
                                         }
                                         if (this.variables[0] === "DOI") {
                                             if (!value.match(/^https?:\/\//) && this.strings.prefix && (this.strings.prefix as string).match(/^.*https:\/\/doi\.org\/$/)) {
-                                                value = CSL.Util.encodeDoiForUrl(value);
+                                                        value = encodeDoiForUrl(value);
                                             }
                                         }
                                         // true is for non-suppression of periods
@@ -366,7 +369,7 @@ export const Node_text = {
                                                         clonetoken.strings.prefix = (this.strings.prefix as string).slice(0, (this.strings.prefix as string).length - 16);
                                                     }
                                                     if (!value.match(/^https?:\/\//)) {
-                                                        value = CSL.Util.encodeDoiForUrl(value);
+                                                value = encodeDoiForUrl(value);
                                                     }
                                                     // cast a text blob
                                                     // set the prefix as the content of the blob
@@ -412,7 +415,7 @@ export const Node_text = {
                                 let value;
                                 value = state.getVariable(Item, this.variables[0], form);
                                 if (value) {
-                                    CSL.checkNonEnglishTitleCase.call(this, state, Item);
+                                    Node_checkNonEnglishTitleCase.call(this, state, Item);
                                     state.output.append(value, this);
                                 }
                             };
@@ -433,7 +436,7 @@ export const Node_text = {
                                     if (value) {
                                         value = "" + value;
                                         value = value.split("\\").join("");
-                                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
+                                        Node_checkNonEnglishTitleCase.call(this, state, Item);
                                         state.output.append(value, this);
                                     }
                                 }
@@ -447,7 +450,7 @@ export const Node_text = {
                         state.tmp.group_context.tip.term_intended = true;
                         // true flags that this is a literal-value term
                         CSL.UPDATE_GROUP_CONTEXT_CONDITION(state, this.strings.value, true, this);
-                        CSL.checkNonEnglishTitleCase.call(this, state, Item);
+                        Node_checkNonEnglishTitleCase.call(this, state, Item);
                         state.output.append(this.strings.value, this);
                         if (state.tmp.can_block_substitute) {
                             // Black magic here. This causes the cs:substitution condition to pass,
@@ -460,7 +463,7 @@ export const Node_text = {
                 }
             }
             target.push(this);
-            CSL.Util.substituteEnd.call(this, state, target);
+                            Util_substituteEnd.call(this, state, target);
         }
     }
 };

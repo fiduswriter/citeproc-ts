@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { ambigConfigDiff, getAmbigConfig, getMaxVals, cloneAmbigConfig } from '../util/disambig';
 
 export class Disambiguation {
     state: CslState;
@@ -267,7 +268,7 @@ export class Disambiguation {
             base.year_suffix = "" + pos;
             const oldBase = this.state.registry.registry[tokens[pos].id].disambig;
             this.state.registry.registerAmbigToken(this.akey, "" + tokens[pos].id, base);
-            if (CSL.ambigConfigDiff(oldBase, base)) {
+            if (ambigConfigDiff(oldBase, base)) {
                 this.state.tmp.taintedItemIDs[tokens[pos].id] = true;
             }
         }
@@ -372,7 +373,7 @@ export class Disambiguation {
         }
         let myItem = this.state.refetchItem("" + myIds[0]);
         this.getCiteData(myItem);
-        this.base = CSL.getAmbigConfig.call(this.state);
+        this.base = getAmbigConfig.call(this.state);
         if (myIds && myIds.length > 1) {
             myItemBundles.push([this.maxNamesByItemId[myItem.id], myItem]);
             for (let i = 1, ilen = myIds.length; i < ilen; i += 1) {
@@ -472,8 +473,8 @@ export class Disambiguation {
     getCiteData(Item: CslItem, base?: any): void {
         if (!this.maxNamesByItemId[Item.id]) {
             CSL.getAmbiguousCite.call(this.state, Item, base);
-            base = CSL.getAmbigConfig.call(this.state);
-            this.maxNamesByItemId[Item.id] = CSL.getMaxVals.call(this.state);
+            base = getAmbigConfig.call(this.state);
+            this.maxNamesByItemId[Item.id] = getMaxVals.call(this.state);
             this.state.registry.registry[Item.id].disambig.givens = this.state.tmp.disambig_settings.givens.slice();
             for (let i = 0, ilen = this.state.registry.registry[Item.id].disambig.givens.length; i < ilen; i += 1) {
                 this.state.registry.registry[Item.id].disambig.givens[i] = this.state.tmp.disambig_settings.givens[i].slice();
@@ -481,7 +482,7 @@ export class Disambiguation {
             this.namesetsMax = this.state.registry.registry[Item.id].disambig.names.length - 1;
             if (!this.base) {
                 this.base = base;
-                this.betterbase = CSL.cloneAmbigConfig(base);
+                this.betterbase = cloneAmbigConfig(base);
             }
             if (base.names.length < this.base.names.length) {
                 this.base = base;

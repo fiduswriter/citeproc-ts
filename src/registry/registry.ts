@@ -1,4 +1,7 @@
 import { CSL } from '../csl';
+import { getAmbigConfig, cloneAmbigConfig } from '../util/disambig';
+import { getSortCompare } from '../sort';
+import { Util_Sort } from '../util/sort';
 import { NameReg } from '../disambig/names';
 import { CitationReg } from '../disambig/citations';
 import { AmbigConfig } from '../obj/ambigconfig';
@@ -447,7 +450,7 @@ export class Registry {
                 //  4g. Set and record the base token to hold disambiguation
                 //      results ("disambig" in the object above).
                 //
-                abase = CSL.getAmbigConfig.call(this.state);
+                abase = getAmbigConfig.call(this.state);
                 this.registerAmbigToken(akey, item, abase);
 
                 //if (!this.ambigcites[akey]){
@@ -554,7 +557,7 @@ export class Registry {
             if ("undefined" === typeof akey) {
                 this.state.tmp.disambig_settings = false;
                 akey = CSL.getAmbiguousCite.call(this.state, Item);
-                abase = CSL.getAmbigConfig.call(this.state);
+                abase = getAmbigConfig.call(this.state);
                 this.registerAmbigToken(akey, key, abase);
             }
             for (let akkey in this.ambigresets) {
@@ -564,7 +567,7 @@ export class Registry {
                     this.registry[loneKey].disambig = new AmbigConfig();
                     this.state.tmp.disambig_settings = false;
                     akey = CSL.getAmbiguousCite.call(this.state, Item);
-                    abase = CSL.getAmbigConfig.call(this.state);
+                    abase = getAmbigConfig.call(this.state);
                     this.registerAmbigToken(akey, loneKey, abase);
                 }
             }
@@ -766,7 +769,7 @@ export class Registry {
             this.ambigcites[akey].push("" + id);
         }
         this.registry[id].ambig = akey;
-        this.registry[id].disambig = CSL.cloneAmbigConfig(ambig_config);
+        this.registry[id].disambig = cloneAmbigConfig(ambig_config);
         if (disambiguateOverride) {
             this.registry[id].disambig.disambiguate = disambiguateOverride;
         }
@@ -783,7 +786,7 @@ export class Comparifier {
 
     constructor(state: CslState, keyset: string) {
         let sort_directions: number[][], len: number, pos: number, compareKeys: (a: RegistryItem, b: RegistryItem) => number;
-        const sortCompare = CSL.getSortCompare.call(state, state.opt["default-locale-sort"]);
+        const sortCompare = getSortCompare.call(state, state.opt["default-locale-sort"]);
         sort_directions = state[keyset].opt.sort_directions;
         this.compareKeys = function (a: RegistryItem, b: RegistryItem) {
             len = a.sortkeys ? a.sortkeys.length : 0;
@@ -843,7 +846,7 @@ CSL.getSortKeys = function (this: CslState, Item: CslItem, key_type: string) {
     area = this.tmp.area;
     root = this.tmp.root;
     extension = this.tmp.extension;
-    strip_prepositions = CSL.Util.Sort.strip_prepositions;
+    strip_prepositions = Util_Sort.strip_prepositions;
     this.tmp.area = key_type;
     // Gawdawful, this.
     this.tmp.root = key_type.indexOf("_") > -1 ? key_type.slice(0,-5) : key_type;

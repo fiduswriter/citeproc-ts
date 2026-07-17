@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { encodeDoiForUrl } from '../util/util';
 import { Output_formatters } from './formatters';
 
 import { SWAPPING_PUNCTUATION } from '../constants/core';
@@ -8,6 +9,7 @@ import { SUPERSCRIPTS, SUPERSCRIPTS_REGEXP } from '../constants/regex';
  * @class
  */
 class OutputFormats {
+    [key: string]: any;
 }
 
 /**
@@ -110,7 +112,7 @@ class OutputFormats {
     "@DOI/true": function (state: CslState, str: string): string {
         let doiurl = str;
         if (!str.match(/^https?:\/\//)) {
-            doiurl = "https://doi.org/" + CSL.Util.encodeDoiForUrl(str);
+            doiurl = "https://doi.org/" + encodeDoiForUrl(str);
         }
         return "<a href=\"" + doiurl + "\">" + str + "</a>";
     }
@@ -218,15 +220,15 @@ class OutputFormats {
     "@strip-periods/false": Output_formatters.passthrough,
     "@quotes/true": function (state: CslState, str?: string): string | false {
         if ("undefined" === typeof str) {
-            return CSL.Output.Formats.rtf.text_escape(state.getTerm("open-quote"));
+            return Output_formats.rtf.text_escape(state.getTerm("open-quote"));
         }
-        return CSL.Output.Formats.rtf.text_escape(state.getTerm("open-quote")) + str + CSL.Output.Formats.rtf.text_escape(state.getTerm("close-quote"));
+        return Output_formats.rtf.text_escape(state.getTerm("open-quote")) + str + Output_formats.rtf.text_escape(state.getTerm("close-quote"));
     },
     "@quotes/inner": function (state: CslState, str?: string): string | false {
         if ("undefined" === typeof str) {
-            return CSL.Output.Formats.rtf.text_escape("\u2019");
+            return Output_formats.rtf.text_escape("\u2019");
         }
-        return CSL.Output.Formats.rtf.text_escape(state.getTerm("open-inner-quote")) + str + CSL.Output.Formats.rtf.text_escape(state.getTerm("close-inner-quote"));
+        return Output_formats.rtf.text_escape(state.getTerm("open-inner-quote")) + str + Output_formats.rtf.text_escape(state.getTerm("close-inner-quote"));
     },
     "@quotes/false": false,
     "bibstart": "{\\rtf ",
@@ -363,7 +365,7 @@ class OutputFormats {
     "@DOI/true": function (state: CslState, str: string): string {
         let doiurl = str;
         if (!str.match(/^https?:\/\//)) {
-            doiurl = "https://doi.org/" + CSL.Util.encodeDoiForUrl(str);
+            doiurl = "https://doi.org/" + encodeDoiForUrl(str);
         }
         return doiurl + "[" + str + "]";
     }
