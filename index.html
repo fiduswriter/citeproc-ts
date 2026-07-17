@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>citeproc-ts · CSL Citation Demo</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="local.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>citeproc-ts</h1>
+    <p class="subtitle">Citation Style Language processor — TypeScript port of <a href="https://github.com/Juris-M/citeproc-js">citeproc-js</a></p>
+  </header>
+
+  <div class="controls">
+    <button id="start-btn" disabled>Loading…</button>
+    <span id="time-badge" hidden></span>
+  </div>
+
+  <section>
+    <h2>Citations</h2>
+    <div id="cite-div"><p class="loading">Loading engine…</p></div>
+  </section>
+
+  <section>
+    <h2>Bibliography</h2>
+    <div id="bib-div"><p class="loading">—</p></div>
+  </section>
+
+  <footer>
+    <p>Forked from <a href="https://github.com/juris-m/citeproc-js">citeproc-js</a> by Michael McMillan &amp; Frank Bennett · Styles: Chicago (notes) &amp; APA</p>
+  </footer>
+</div>
+
+<script type="module" src="demo.js"></script>
+</body>
+</html>

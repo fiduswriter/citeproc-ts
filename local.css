@@ -1,0 +1,218 @@
+/* citeproc-ts demo — modern styling */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #fafaf9;
+    --card-bg: #ffffff;
+    --text: #1c1917;
+    --text-muted: #78716c;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: #e7e5e4;
+    --radius: 8px;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SF Mono", "Cascadia Code", "Fira Code", ui-monospace, monospace;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+.subtitle {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+    font-size: 0.95em;
+}
+
+.subtitle a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.subtitle a:hover {
+    text-decoration: underline;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+}
+
+#start-btn {
+    padding: 10px 24px;
+    font-size: 0.95em;
+    font-family: var(--font);
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+#start-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+#start-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+#time-badge {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    background: #f5f5f4;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+/* Sections */
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+/* Citation & Bibliography output */
+#cite-div, #bib-div {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+}
+
+.loading {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+#cite-div:empty::after {
+    content: "Click «Render Citations» to start.";
+    color: var(--text-muted);
+    font-style: italic;
+}
+#bib-div:empty {
+    display: none;
+}
+
+/* CSL-rendered content */
+div.csl-entry {
+    margin: 0 0 16px 40px;
+    line-height: 1.5;
+}
+
+div.csl-entry:last-child {
+    margin-bottom: 0;
+}
+
+div.csl-left-margin {
+    width: 2.5em;
+    float: left;
+    text-align: right;
+    padding-right: 8px;
+}
+
+div.csl-right-inline {
+    margin-left: 2.5em;
+}
+
+div.csl-indent {
+    margin: 8px 0 8px 2em;
+    padding-left: 12px;
+    border-left: 3px solid var(--border);
+}
+
+div.csl-bib-body {
+    margin-top: 8px;
+}
+
+div.csl-bib-body .csl-entry {
+    margin-bottom: 12px;
+}
+
+div.footnote {
+    margin-bottom: 6px;
+}
+
+/* Footer */
+footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.82em;
+}
+
+footer a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 16px 60px;
+    }
+    header h1 {
+        font-size: 1.6em;
+    }
+    #cite-div, #bib-div {
+        padding: 16px;
+    }
+    div.csl-entry {
+        margin-left: 20px;
+    }
+}

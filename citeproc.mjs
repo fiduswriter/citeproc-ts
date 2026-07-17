@@ -1,0 +1,20215 @@
+/*
+Copyright (c) 2009-2019 Frank Bennett
+
+	This program is free software: you can redistribute it and/or
+	modify it under EITHER
+
+      * the terms of the Common Public Attribution License (CPAL) as
+	    published by the Open Source Initiative, either version 1 of
+	    the CPAL, or (at your option) any later version; OR
+
+      * the terms of the GNU Affero General Public License (AGPL)
+        as published by the Free Software Foundation, either version
+        3 of the AGPL, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Affero General Public License for more details.
+
+	You should have received copies of the Common Public Attribution
+	License and the GNU Affero General Public License along with this
+	program.  If not, see <http://opensource.org/licenses/CPAL-1.0>
+	and <http://www.gnu.org/licenses/>.
+*/
+
+/*global CSL: true */
+
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+
+// src/constants/core.ts
+var core_exports = {};
+__export(core_exports, {
+  AFTER: () => AFTER,
+  AREAS: () => AREAS,
+  ASCENDING: () => ASCENDING,
+  ASSUME_ALL_ITEMS_REGISTERED: () => ASSUME_ALL_ITEMS_REGISTERED,
+  BEFORE: () => BEFORE,
+  CITE_FIELDS: () => CITE_FIELDS,
+  CREATORS: () => CREATORS,
+  DATE_PARTS: () => DATE_PARTS,
+  DATE_PARTS_ALL: () => DATE_PARTS_ALL,
+  DATE_PARTS_INTERNAL: () => DATE_PARTS_INTERNAL,
+  DATE_VARIABLES: () => DATE_VARIABLES,
+  DESCENDING: () => DESCENDING,
+  DISAMBIGUATE_OPTIONS: () => DISAMBIGUATE_OPTIONS,
+  DISPLAY_CLASSES: () => DISPLAY_CLASSES,
+  END: () => END,
+  ERROR_NO_RENDERED_FORM: () => ERROR_NO_RENDERED_FORM,
+  FIELD_CATEGORY_REMAP: () => FIELD_CATEGORY_REMAP,
+  FORMAT_KEY_SEQUENCE: () => FORMAT_KEY_SEQUENCE,
+  GENDERS: () => GENDERS,
+  GIVENNAME_DISAMBIGUATION_RULES: () => GIVENNAME_DISAMBIGUATION_RULES,
+  INSTITUTION_KEYS: () => INSTITUTION_KEYS,
+  LANGS: () => LANGS,
+  LANG_BASES: () => LANG_BASES,
+  LITERAL: () => LITERAL,
+  LOOSE: () => LOOSE,
+  LangPrefsMap: () => LangPrefsMap,
+  MODULE_MACROS: () => MODULE_MACROS,
+  MODULE_TYPES: () => MODULE_TYPES,
+  MULTI_FIELDS: () => MULTI_FIELDS,
+  NAME_ATTRIBUTES: () => NAME_ATTRIBUTES,
+  NAME_PARTS: () => NAME_PARTS,
+  NAME_VARIABLES: () => NAME_VARIABLES,
+  NONE: () => NONE,
+  NUMERIC: () => NUMERIC,
+  NUMERIC_VARIABLES: () => NUMERIC_VARIABLES,
+  PLURAL: () => PLURAL,
+  POSITION: () => POSITION,
+  POSITION_CONTAINER_SUBSEQUENT: () => POSITION_CONTAINER_SUBSEQUENT,
+  POSITION_FIRST: () => POSITION_FIRST,
+  POSITION_IBID: () => POSITION_IBID,
+  POSITION_IBID_WITH_LOCATOR: () => POSITION_IBID_WITH_LOCATOR,
+  POSITION_MAP: () => POSITION_MAP,
+  POSITION_SUBSEQUENT: () => POSITION_SUBSEQUENT,
+  POSITION_TEST_VARS: () => POSITION_TEST_VARS,
+  PREVIEW: () => PREVIEW,
+  PRIMARY: () => PRIMARY,
+  PROCESSOR_VERSION: () => PROCESSOR_VERSION,
+  ROMAN_NUMERALS: () => ROMAN_NUMERALS,
+  SECONDARY: () => SECONDARY,
+  SEEN: () => SEEN,
+  SINGLETON: () => SINGLETON,
+  SINGULAR: () => SINGULAR,
+  SKIP_WORDS: () => SKIP_WORDS,
+  START: () => START,
+  STRICT: () => STRICT,
+  SUCCESSOR: () => SUCCESSOR,
+  SUCCESSOR_OF_SUCCESSOR: () => SUCCESSOR_OF_SUCCESSOR,
+  SUFFIX_CHARS: () => SUFFIX_CHARS,
+  SUPPRESS: () => SUPPRESS,
+  SWAPPING_PUNCTUATION: () => SWAPPING_PUNCTUATION,
+  SYS_OPTIONS: () => SYS_OPTIONS,
+  TERMINAL_PUNCTUATION: () => TERMINAL_PUNCTUATION,
+  TOLERANT: () => TOLERANT,
+  TRIGRAPH: () => TRIGRAPH,
+  VARIABLES_WITH_SHORT_FORM: () => VARIABLES_WITH_SHORT_FORM
+});
+var AFTER = 2;
+var AREAS = ["citation", "citation_sort", "bibliography", "bibliography_sort", "intext"];
+var ASCENDING = 2;
+var ASSUME_ALL_ITEMS_REGISTERED = 2;
+var BEFORE = 1;
+var CITE_FIELDS = ["first-reference-note-number", "first-container-reference-note-number", "locator", "locator-extra"];
+var CREATORS = [
+  "author",
+  "chair",
+  "collection-editor",
+  "compiler",
+  "composer",
+  "container-author",
+  "contributor",
+  "curator",
+  "director",
+  "editor",
+  "editor-translator",
+  "editorial-director",
+  "executive-producer",
+  "guest",
+  "host",
+  "illustrator",
+  "interviewer",
+  "narrator",
+  "organizer",
+  "original-author",
+  "performer",
+  "producer",
+  "recipient",
+  "reviewed-author",
+  "script-writer",
+  "series-creator",
+  "translator",
+  "commenter"
+];
+var DATE_PARTS = ["year", "month", "day"];
+var DATE_PARTS_ALL = ["year", "month", "day", "season"];
+var DATE_PARTS_INTERNAL = ["year", "month", "day", "year_end", "month_end", "day_end"];
+var DATE_VARIABLES = [
+  "locator-date",
+  "issued",
+  "event-date",
+  "accessed",
+  "original-date",
+  "publication-date",
+  "available-date",
+  "submitted",
+  "alt-issued",
+  "alt-event"
+];
+var DESCENDING = 1;
+var DISAMBIGUATE_OPTIONS = [
+  "disambiguate-add-names",
+  "disambiguate-add-givenname",
+  "disambiguate-add-year-suffix"
+];
+var DISPLAY_CLASSES = ["block", "left-margin", "right-inline", "indent"];
+var END = 1;
+var ERROR_NO_RENDERED_FORM = 1;
+var FIELD_CATEGORY_REMAP = {
+  "title": "title",
+  "container-title": "container-title",
+  "collection-title": "collection-title",
+  "country": "place",
+  "number": "number",
+  "place": "place",
+  "archive": "container-title",
+  "title-short": "title",
+  "genre": "title",
+  "event": "title",
+  "medium": "title",
+  "archive-place": "place",
+  "publisher-place": "place",
+  "event-place": "place",
+  "jurisdiction": "place",
+  "language-name": "place",
+  "language-name-original": "place",
+  "call-number": "number",
+  "chapter-number": "number",
+  "collection-number": "number",
+  "edition": "number",
+  "page": "number",
+  "issue": "number",
+  "locator": "number",
+  "locator-extra": "number",
+  "number-of-pages": "number",
+  "number-of-volumes": "number",
+  "volume": "number",
+  "citation-number": "number",
+  "publisher": "institution-part"
+};
+var FORMAT_KEY_SEQUENCE = [
+  "@strip-periods",
+  "@font-style",
+  "@font-variant",
+  "@font-weight",
+  "@text-decoration",
+  "@vertical-align",
+  "@quotes"
+];
+var GENDERS = ["masculine", "feminine"];
+var GIVENNAME_DISAMBIGUATION_RULES = [
+  "all-names",
+  "all-names-with-initials",
+  "primary-name",
+  "primary-name-with-initials",
+  "by-cite"
+];
+var INSTITUTION_KEYS = [
+  "font-style",
+  "font-variant",
+  "font-weight",
+  "text-decoration",
+  "text-case"
+];
+var LANGS = {
+  "af-ZA": "Afrikaans",
+  "ar": "Arabic",
+  "bg-BG": "Bulgarian",
+  "ca-AD": "Catalan",
+  "cs-CZ": "Czech",
+  "da-DK": "Danish",
+  "de-AT": "Austrian",
+  "de-CH": "German (CH)",
+  "de-DE": "German (DE)",
+  "el-GR": "Greek",
+  "en-GB": "English (GB)",
+  "en-US": "English (US)",
+  "es-ES": "Spanish",
+  "et-EE": "Estonian",
+  "eu": "European",
+  "fa-IR": "Persian",
+  "fi-FI": "Finnish",
+  "fr-CA": "French (CA)",
+  "fr-FR": "French (FR)",
+  "he-IL": "Hebrew",
+  "hr-HR": "Croatian",
+  "hu-HU": "Hungarian",
+  "is-IS": "Icelandic",
+  "it-IT": "Italian",
+  "ja-JP": "Japanese",
+  "km-KH": "Khmer",
+  "ko-KR": "Korean",
+  "lt-LT": "Lithuanian",
+  "lv-LV": "Latvian",
+  "mn-MN": "Mongolian",
+  "nb-NO": "Norwegian (Bokm\xE5l)",
+  "nl-NL": "Dutch",
+  "nn-NO": "Norwegian (Nynorsk)",
+  "pl-PL": "Polish",
+  "pt-BR": "Portuguese (BR)",
+  "pt-PT": "Portuguese (PT)",
+  "ro-RO": "Romanian",
+  "ru-RU": "Russian",
+  "sk-SK": "Slovak",
+  "sl-SI": "Slovenian",
+  "sr-RS": "Serbian",
+  "sv-SE": "Swedish",
+  "th-TH": "Thai",
+  "tr-TR": "Turkish",
+  "uk-UA": "Ukrainian",
+  "vi-VN": "Vietnamese",
+  "zh-CN": "Chinese (CN)",
+  "zh-TW": "Chinese (TW)"
+};
+var LANG_BASES = {
+  af: "af_ZA",
+  ar: "ar",
+  bg: "bg_BG",
+  ca: "ca_AD",
+  cs: "cs_CZ",
+  da: "da_DK",
+  de: "de_DE",
+  el: "el_GR",
+  en: "en_US",
+  es: "es_ES",
+  et: "et_EE",
+  eu: "eu",
+  fa: "fa_IR",
+  fi: "fi_FI",
+  fr: "fr_FR",
+  he: "he_IL",
+  hr: "hr-HR",
+  hu: "hu_HU",
+  is: "is_IS",
+  it: "it_IT",
+  ja: "ja_JP",
+  km: "km_KH",
+  ko: "ko_KR",
+  lt: "lt_LT",
+  lv: "lv-LV",
+  mn: "mn_MN",
+  nb: "nb_NO",
+  nl: "nl_NL",
+  nn: "nn-NO",
+  pl: "pl_PL",
+  pt: "pt_PT",
+  ro: "ro_RO",
+  ru: "ru_RU",
+  sk: "sk_SK",
+  sl: "sl_SI",
+  sr: "sr_RS",
+  sv: "sv_SE",
+  th: "th_TH",
+  tr: "tr_TR",
+  uk: "uk_UA",
+  vi: "vi_VN",
+  zh: "zh_CN"
+};
+var LITERAL = true;
+var LOOSE = 0;
+var LangPrefsMap = {
+  "title": "titles",
+  "title-short": "titles",
+  "event": "titles",
+  "genre": "titles",
+  "medium": "titles",
+  "container-title": "journals",
+  "collection-title": "titles",
+  "archive": "journals",
+  "publisher": "publishers",
+  "authority": "publishers",
+  "publisher-place": "places",
+  "event-place": "places",
+  "archive-place": "places",
+  "jurisdiction": "places",
+  "number": "places",
+  "edition": "places",
+  "issue": "places",
+  "volume": "places"
+};
+var MODULE_MACROS = {
+  "juris-pretitle": true,
+  "juris-title": true,
+  "juris-pretitle-short": true,
+  "juris-title-short": true,
+  "juris-main": true,
+  "juris-main-short": true,
+  "juris-tail": true,
+  "juris-tail-short": true,
+  "juris-locator": true
+};
+var MODULE_TYPES = {
+  "legal_case": true,
+  "legislation": true,
+  "bill": true,
+  "hearing": true,
+  "gazette": true,
+  "report": true,
+  "regulation": true,
+  "standard": true,
+  "patent": true,
+  "locator": true
+};
+var MULTI_FIELDS = ["archive", "archive_collection", "archive_location", "archive-place", "authority", "collection-title", "container-title", "country", "division", "event", "event-place", "event-title", "genre", "jurisdiction", "medium", "original-publisher", "original-publisher-place", "original-title", "part-title", "publisher", "publisher-place", "reviewed-genre", "reviewed-title", "source", "title", "title-short", "volume-title"];
+var NAME_ATTRIBUTES = [
+  "and",
+  "delimiter-precedes-last",
+  "delimiter-precedes-et-al",
+  "initialize-with",
+  "initialize",
+  "name-as-sort-order",
+  "sort-separator",
+  "et-al-min",
+  "et-al-use-first",
+  "et-al-subsequent-min",
+  "et-al-subsequent-use-first",
+  "form",
+  "prefix",
+  "suffix",
+  "delimiter"
+];
+var NAME_PARTS = ["non-dropping-particle", "family", "given", "dropping-particle", "suffix", "literal"];
+var NAME_VARIABLES = [
+  "author",
+  "chair",
+  "collection-editor",
+  "compiler",
+  "composer",
+  "container-author",
+  "contributor",
+  "curator",
+  "director",
+  "editor",
+  "editor-translator",
+  "editorial-director",
+  "executive-producer",
+  "guest",
+  "host",
+  "illustrator",
+  "interviewer",
+  "narrator",
+  "organizer",
+  "original-author",
+  "performer",
+  "producer",
+  "recipient",
+  "reviewed-author",
+  "script-writer",
+  "series-creator",
+  "translator",
+  "commenter"
+];
+var NONE = 0;
+var NUMERIC = 1;
+var NUMERIC_VARIABLES = [
+  "call-number",
+  "chapter-number",
+  "collection-number",
+  "division",
+  "edition",
+  "page",
+  "issue",
+  "locator",
+  "locator-extra",
+  "number",
+  "number-of-pages",
+  "number-of-volumes",
+  "part-number",
+  "printing-number",
+  "section",
+  "supplement-number",
+  "version",
+  "volume",
+  "supplement",
+  // maybe deprecated this? supplement-number should serve this purpose in standard CSL.
+  "citation-number"
+];
+var PLURAL = 1;
+var POSITION = 2;
+var POSITION_CONTAINER_SUBSEQUENT = 4;
+var POSITION_FIRST = 0;
+var POSITION_IBID = 2;
+var POSITION_IBID_WITH_LOCATOR = 3;
+var POSITION_MAP = {
+  "0": 0,
+  "4": 1,
+  "1": 2,
+  "2": 3,
+  "3": 4
+};
+var POSITION_SUBSEQUENT = 1;
+var POSITION_TEST_VARS = ["position", "first-reference-note-number", "near-note"];
+var PREVIEW = "Just for laughs.";
+var PRIMARY = 1;
+var PROCESSOR_VERSION = "1.4.61";
+var ROMAN_NUMERALS = [
+  ["", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"],
+  ["", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"],
+  ["", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"],
+  ["", "m", "mm", "mmm", "mmmm", "mmmmm"]
+];
+var SECONDARY = 2;
+var SEEN = 6;
+var SINGLETON = 2;
+var SINGULAR = 0;
+var SKIP_WORDS = ["about", "above", "across", "afore", "after", "against", "al", "along", "alongside", "amid", "amidst", "among", "amongst", "anenst", "apropos", "apud", "around", "as", "aside", "astride", "at", "athwart", "atop", "barring", "before", "behind", "below", "beneath", "beside", "besides", "between", "beyond", "but", "by", "circa", "despite", "down", "during", "et", "except", "for", "forenenst", "from", "given", "in", "inside", "into", "lest", "like", "modulo", "near", "next", "notwithstanding", "of", "off", "on", "onto", "out", "over", "per", "plus", "pro", "qua", "sans", "since", "than", "through", " thru", "throughout", "thruout", "till", "to", "toward", "towards", "under", "underneath", "until", "unto", "up", "upon", "versus", "vs.", "v.", "vs", "v", "via", "vis-\xE0-vis", "with", "within", "without", "according to", "ahead of", "apart from", "as for", "as of", "as per", "as regards", "aside from", "back to", "because of", "close to", "due to", "except for", "far from", "inside of", "instead of", "near to", "next to", "on to", "out from", "out of", "outside of", "prior to", "pursuant to", "rather than", "regardless of", "such as", "that of", "up to", "where as", "or", "yet", "so", "for", "and", "nor", "a", "an", "the", "de", "d'", "von", "van", "c", "ca"];
+var START = 0;
+var STRICT = 1;
+var SUCCESSOR = 3;
+var SUCCESSOR_OF_SUCCESSOR = 4;
+var SUFFIX_CHARS = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+var SUPPRESS = 5;
+var SWAPPING_PUNCTUATION = [".", "!", "?", ":", ","];
+var SYS_OPTIONS = [
+  "prioritize_disambiguate_condition",
+  "csl_reverse_lookup_support",
+  "main_title_from_short_title",
+  "uppercase_subtitles",
+  "force_short_title_casing_alignment",
+  "implicit_short_title",
+  "split_container_title"
+];
+var TERMINAL_PUNCTUATION = [":", ".", ";", "!", "?", " "];
+var TOLERANT = 2;
+var TRIGRAPH = 3;
+var VARIABLES_WITH_SHORT_FORM = [
+  "title",
+  "container-title"
+];
+
+// src/constants/regex.ts
+var regex_exports = {};
+__export(regex_exports, {
+  ALL_ROMANESQUE_REGEXP: () => ALL_ROMANESQUE_REGEXP,
+  ENDSWITH_ROMANESQUE_REGEXP: () => ENDSWITH_ROMANESQUE_REGEXP,
+  KATAKANA_REGEXP: () => KATAKANA_REGEXP,
+  LOCATOR_LABELS_REGEXP: () => LOCATOR_LABELS_REGEXP,
+  NAME_INITIAL_REGEXP: () => NAME_INITIAL_REGEXP,
+  NOTE_FIELDS_REGEXP: () => NOTE_FIELDS_REGEXP,
+  NOTE_FIELD_REGEXP: () => NOTE_FIELD_REGEXP,
+  NUMBER_REGEXP: () => NUMBER_REGEXP,
+  PARTICLE_FAMILY_REGEXP: () => PARTICLE_FAMILY_REGEXP,
+  PARTICLE_GIVEN_REGEXP: () => PARTICLE_GIVEN_REGEXP,
+  PREFIX_PUNCTUATION: () => PREFIX_PUNCTUATION,
+  ROMANESQUE_NOT_REGEXP: () => ROMANESQUE_NOT_REGEXP,
+  ROMANESQUE_REGEXP: () => ROMANESQUE_REGEXP,
+  STARTSWITH_KATAKANA_REGEXP: () => STARTSWITH_KATAKANA_REGEXP,
+  STARTSWITH_ROMANESQUE_REGEXP: () => STARTSWITH_ROMANESQUE_REGEXP,
+  STATUTE_SUBDIV_PLAIN_REGEX: () => STATUTE_SUBDIV_PLAIN_REGEX,
+  STATUTE_SUBDIV_PLAIN_REGEX_FRONT: () => STATUTE_SUBDIV_PLAIN_REGEX_FRONT,
+  SUFFIX_PUNCTUATION: () => SUFFIX_PUNCTUATION,
+  SUPERSCRIPTS: () => SUPERSCRIPTS,
+  SUPERSCRIPTS_REGEXP: () => SUPERSCRIPTS_REGEXP,
+  TITLE_SPLIT_REGEXP: () => TITLE_SPLIT_REGEXP,
+  VIETNAMESE_NAMES: () => VIETNAMESE_NAMES,
+  VIETNAMESE_SPECIALS: () => VIETNAMESE_SPECIALS
+});
+var ALL_ROMANESQUE_REGEXP = /^[a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e]+$/;
+var ENDSWITH_ROMANESQUE_REGEXP = /[.;:&a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e]$/;
+var KATAKANA_REGEXP = /^[\u30a0-\u30ff,\uff60-\uff9f,\u3000,\s]+$/;
+var LOCATOR_LABELS_REGEXP = new RegExp("^((vrs|sv|subpara|op|subch|add|amend|annot|app|art|bibliog|bk|ch|cl|col|cmt|dec|dept|div|ex|fig|fld|fol|n|hypo|illus|intro|l|no|p|pp|para|pt|pmbl|princ|pub|r|rn|sched|sec|ser|subdiv|subsec|supp|tbl|tit|vol)\\.)\\s+(.*)");
+var NAME_INITIAL_REGEXP = /^([A-Z\u0e01-\u0e5b\u00c0-\u017f\u0400-\u042f\u0590-\u05d4\u05d6-\u05ff\u0600-\u06ff\u0370\u0372\u0376\u0386\u0388-\u03ab\u03e2\u03e4\u03e6\u03e8\u03ea\u03ec\u03ee\u03f4\u03f7\u03fd-\u03ff])([a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0400-\u052f\u0600-\u06ff\u0370-\u03ff\u1f00-\u1fff]*|)(\.)*/;
+var NOTE_FIELDS_REGEXP = /\{:(?:[\-_a-z]+|[A-Z]+):[^\}]+\}/g;
+var NOTE_FIELD_REGEXP = /^([\-_a-z]+|[A-Z]+):\s*([^\}]+)$/;
+var NUMBER_REGEXP = /(?:^\d+|\d+$)/;
+var PREFIX_PUNCTUATION = /[.;:]\s*$/;
+var ROMANESQUE_NOT_REGEXP = /[^a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e]/g;
+var ROMANESQUE_REGEXP = /[-0-9a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e]/;
+var STARTSWITH_KATAKANA_REGEXP = /^[\u30a0-\u30ff,\uff60-\uff9f]+[\u3000,a-zA-Z\s\.]*$/;
+var STARTSWITH_ROMANESQUE_REGEXP = /^[&a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e]/;
+var STATUTE_SUBDIV_PLAIN_REGEX = /(?:(?:^| )(?:vrs|sv|subpara|op|subch|add|amend|annot|app|art|bibliog|bk|ch|cl|col|cmt|dec|dept|div|ex|fig|fld|fol|n|hypo|illus|intro|l|no|p|pp|para|pt|pmbl|princ|pub|r|rn|sched|sec|ser|subdiv|subsec|supp|tbl|tit|vol)\. *)/;
+var STATUTE_SUBDIV_PLAIN_REGEX_FRONT = /(?:^\s*[.,;]*\s*(?:vrs|sv|subpara|op|subch|add|amend|annot|app|art|bibliog|bk|ch|cl|col|cmt|dec|dept|div|ex|fig|fld|fol|n|hypo|illus|intro|l|no|p|pp|para|pt|pmbl|princ|pub|r|rn|sched|sec|ser|subdiv|subsec|supp|tbl|tit|vol)\. *)/;
+var SUFFIX_PUNCTUATION = /^\s*[.;:,\(\)]/;
+var SUPERSCRIPTS = {
+  "\xAA": "a",
+  "\xB2": "2",
+  "\xB3": "3",
+  "\xB9": "1",
+  "\xBA": "o",
+  "\u02B0": "h",
+  "\u02B1": "\u0266",
+  "\u02B2": "j",
+  "\u02B3": "r",
+  "\u02B4": "\u0279",
+  "\u02B5": "\u027B",
+  "\u02B6": "\u0281",
+  "\u02B7": "w",
+  "\u02B8": "y",
+  "\u02E0": "\u0263",
+  "\u02E1": "l",
+  "\u02E2": "s",
+  "\u02E3": "x",
+  "\u02E4": "\u0295",
+  "\u1D2C": "A",
+  "\u1D2D": "\xC6",
+  "\u1D2E": "B",
+  "\u1D30": "D",
+  "\u1D31": "E",
+  "\u1D32": "\u018E",
+  "\u1D33": "G",
+  "\u1D34": "H",
+  "\u1D35": "I",
+  "\u1D36": "J",
+  "\u1D37": "K",
+  "\u1D38": "L",
+  "\u1D39": "M",
+  "\u1D3A": "N",
+  "\u1D3C": "O",
+  "\u1D3D": "\u0222",
+  "\u1D3E": "P",
+  "\u1D3F": "R",
+  "\u1D40": "T",
+  "\u1D41": "U",
+  "\u1D42": "W",
+  "\u1D43": "a",
+  "\u1D44": "\u0250",
+  "\u1D45": "\u0251",
+  "\u1D46": "\u1D02",
+  "\u1D47": "b",
+  "\u1D48": "d",
+  "\u1D49": "e",
+  "\u1D4A": "\u0259",
+  "\u1D4B": "\u025B",
+  "\u1D4C": "\u025C",
+  "\u1D4D": "g",
+  "\u1D4F": "k",
+  "\u1D50": "m",
+  "\u1D51": "\u014B",
+  "\u1D52": "o",
+  "\u1D53": "\u0254",
+  "\u1D54": "\u1D16",
+  "\u1D55": "\u1D17",
+  "\u1D56": "p",
+  "\u1D57": "t",
+  "\u1D58": "u",
+  "\u1D59": "\u1D1D",
+  "\u1D5A": "\u026F",
+  "\u1D5B": "v",
+  "\u1D5C": "\u1D25",
+  "\u1D5D": "\u03B2",
+  "\u1D5E": "\u03B3",
+  "\u1D5F": "\u03B4",
+  "\u1D60": "\u03C6",
+  "\u1D61": "\u03C7",
+  "\u2070": "0",
+  "\u2071": "i",
+  "\u2074": "4",
+  "\u2075": "5",
+  "\u2076": "6",
+  "\u2077": "7",
+  "\u2078": "8",
+  "\u2079": "9",
+  "\u207A": "+",
+  "\u207B": "\u2212",
+  "\u207C": "=",
+  "\u207D": "(",
+  "\u207E": ")",
+  "\u207F": "n",
+  "\u2120": "SM",
+  "\u2122": "TM",
+  "\u3192": "\u4E00",
+  "\u3193": "\u4E8C",
+  "\u3194": "\u4E09",
+  "\u3195": "\u56DB",
+  "\u3196": "\u4E0A",
+  "\u3197": "\u4E2D",
+  "\u3198": "\u4E0B",
+  "\u3199": "\u7532",
+  "\u319A": "\u4E59",
+  "\u319B": "\u4E19",
+  "\u319C": "\u4E01",
+  "\u319D": "\u5929",
+  "\u319E": "\u5730",
+  "\u319F": "\u4EBA",
+  "\u02C0": "\u0294",
+  "\u02C1": "\u0295",
+  "\u06E5": "\u0648",
+  "\u06E6": "\u064A"
+};
+var SUPERSCRIPTS_REGEXP = new RegExp("[\xAA\xB2\xB3\xB9\xBA\u02B0\u02B1\u02B2\u02B3\u02B4\u02B5\u02B6\u02B7\u02B8\u02E0\u02E1\u02E2\u02E3\u02E4\u1D2C\u1D2D\u1D2E\u1D30\u1D31\u1D32\u1D33\u1D34\u1D35\u1D36\u1D37\u1D38\u1D39\u1D3A\u1D3C\u1D3D\u1D3E\u1D3F\u1D40\u1D41\u1D42\u1D43\u1D44\u1D45\u1D46\u1D47\u1D48\u1D49\u1D4A\u1D4B\u1D4C\u1D4D\u1D4F\u1D50\u1D51\u1D52\u1D53\u1D54\u1D55\u1D56\u1D57\u1D58\u1D59\u1D5A\u1D5B\u1D5C\u1D5D\u1D5E\u1D5F\u1D60\u1D61\u2070\u2071\u2074\u2075\u2076\u2077\u2078\u2079\u207A\u207B\u207C\u207D\u207E\u207F\u2120\u2122\u3192\u3193\u3194\u3195\u3196\u3197\u3198\u3199\u319A\u319B\u319C\u319D\u319E\u319F\u02C0\u02C1\u06E5\u06E6]", "g");
+var TITLE_SPLIT_REGEXP = (function() {
+  const splits = [
+    "\\.\\s+",
+    "\\!\\s+",
+    "\\?\\s+",
+    "\\s*::*\\s+",
+    "\\s*\u2014\\s*",
+    "\\s+\\-\\s+",
+    "\\s*\\-\\-\\-*\\s*"
+  ];
+  return {
+    match: new RegExp("(" + splits.join("|") + ")", "g"),
+    matchfirst: new RegExp("^(" + splits.join("|") + ")"),
+    split: new RegExp("(?:" + splits.join("|") + ")")
+  };
+})();
+var VIETNAMESE_NAMES = /^(?:(?:[.AaBbCcDdEeGgHhIiKkLlMmNnOoPpQqRrSsTtUuVvXxYy \u00c0-\u00c3\u00c8-\u00ca\u00cc\u00cd\u00d2-\u00d5\u00d9\u00da\u00dd\u00e0-\u00e3\u00e8-\u00ea\u00ec\u00ed\u00f2-\u00f5\u00f9\u00fa\u00fd\u0101\u0103\u0110\u0111\u0128\u0129\u0168\u0169\u01a0\u01a1\u01af\u01b0\u1ea0-\u1ef9]{2,6})(\s+|$))+$/;
+var VIETNAMESE_SPECIALS = /[\u00c0-\u00c3\u00c8-\u00ca\u00cc\u00cd\u00d2-\u00d5\u00d9\u00da\u00dd\u00e0-\u00e3\u00e8-\u00ea\u00ec\u00ed\u00f2-\u00f5\u00f9\u00fa\u00fd\u0101\u0103\u0110\u0111\u0128\u0129\u0168\u0169\u01a0\u01a1\u01af\u01b0\u1ea0-\u1ef9]/;
+var PARTICLE_GIVEN_REGEXP = /^([^ ]+(?:\u02bb |\u2019 | |\' ) *)(.+)$/;
+var PARTICLE_FAMILY_REGEXP = /^([^ ]+(?:\-|\u02bb|\u2019| |\') *)(.+)$/;
+
+// src/constants/statute.ts
+var statute_exports = {};
+__export(statute_exports, {
+  LOCATOR_LABELS_MAP: () => LOCATOR_LABELS_MAP,
+  STATUTE_SUBDIV_STRINGS: () => STATUTE_SUBDIV_STRINGS,
+  STATUTE_SUBDIV_STRINGS_REVERSE: () => STATUTE_SUBDIV_STRINGS_REVERSE
+});
+var LOCATOR_LABELS_MAP = {
+  "vrs": "verse",
+  "sv": "sub-verbo",
+  "subpara": "subparagraph",
+  "op": "opus",
+  "subch": "subchapter",
+  "add": "addendum",
+  "amend": "amendment",
+  "annot": "annotation",
+  "app": "appendix",
+  "art": "article-locator",
+  "bibliog": "bibliography",
+  "bk": "book",
+  "ch": "chapter",
+  "cl": "clause",
+  "col": "column",
+  "cmt": "comment",
+  "dec": "decision",
+  "dept": "department",
+  "ex": "example",
+  "fig": "figure",
+  "fld": "field",
+  "fol": "folio",
+  "n": "note",
+  "hypo": "hypothetical",
+  "illus": "illustration",
+  "intro": "introduction",
+  "l": "line",
+  "no": "issue",
+  "p": "page",
+  "pp": "page",
+  "para": "paragraph",
+  "pt": "part",
+  "pmbl": "preamble",
+  "princ": "principle",
+  "pub": "publication",
+  "r": "rule",
+  "rn": "randnummer",
+  "sched": "schedule",
+  "sec": "section",
+  "ser": "series,",
+  "subdiv": "subdivision",
+  "subsec": "subsection",
+  "supp": "supplement",
+  "tbl": "table",
+  "tit": "title-locator",
+  "vol": "volume"
+};
+var STATUTE_SUBDIV_STRINGS = {
+  "vrs.": "verse",
+  "sv.": "sub-verbo",
+  "subpara.": "subparagraph",
+  "op.": "opus",
+  "subch.": "subchapter",
+  "add.": "addendum",
+  "amend.": "amendment",
+  "annot.": "annotation",
+  "app.": "appendix",
+  "art.": "article-locator",
+  "bibliog.": "bibliography",
+  "bk.": "book",
+  "ch.": "chapter",
+  "cl.": "clause",
+  "col.": "column",
+  "cmt.": "comment",
+  "dec.": "decision",
+  "dept.": "department",
+  "ex.": "example",
+  "fig.": "figure",
+  "fld.": "field",
+  "fol.": "folio",
+  "n.": "note",
+  "hypo.": "hypothetical",
+  "illus.": "illustration",
+  "intro.": "introduction",
+  "l.": "line",
+  "no.": "issue",
+  "p.": "page",
+  "pp.": "page",
+  "para.": "paragraph",
+  "pt.": "part",
+  "pmbl.": "preamble",
+  "princ.": "principle",
+  "pub.": "publication",
+  "r.": "rule",
+  "rn.": "randnummer",
+  "sched.": "schedule",
+  "sec.": "section",
+  "ser.": "series,",
+  "subdiv.": "subdivision",
+  "subsec.": "subsection",
+  "supp.": "supplement",
+  "tbl.": "table",
+  "tit.": "title-locator",
+  "vol.": "volume"
+};
+var STATUTE_SUBDIV_STRINGS_REVERSE = {
+  "verse": "vrs.",
+  "sub-verbo": "sv.",
+  "sub verbo": "sv.",
+  "subparagraph": "subpara.",
+  "opus": "op.",
+  "subchapter": "subch.",
+  "addendum": "add.",
+  "amendment": "amend.",
+  "annotation": "annot.",
+  "appendix": "app.",
+  "article": "art.",
+  "article-locator": "art.",
+  "bibliography": "bibliog.",
+  "book": "bk.",
+  "chapter": "ch.",
+  "clause": "cl.",
+  "column": "col.",
+  "comment": "cmt.",
+  "decision": "dec.",
+  "department": "dept.",
+  "example": "ex.",
+  "figure": "fig.",
+  "field": "fld.",
+  "folio": "fol.",
+  "note": "n.",
+  "hypothetical": "hypo.",
+  "illustration": "illus.",
+  "introduction": "intro.",
+  "line": "l.",
+  "issue": "no.",
+  "page": "p.",
+  "paragraph": "para.",
+  "part": "pt.",
+  "preamble": "pmbl.",
+  "principle": "princ.",
+  "publication": "pub.",
+  "rule": "r.",
+  "randnummer": "rn.",
+  "schedule": "sched.",
+  "section": "sec.",
+  "series,": "ser.",
+  "subdivision": "subdiv.",
+  "subsection": "subsec.",
+  "supplement": "supp.",
+  "table": "tbl.",
+  "title": "tit.",
+  "title-locator": "tit.",
+  "volume": "vol."
+};
+
+// src/util/affix.ts
+function checkPrefixSpaceAppend(state, prefix) {
+  if (!prefix) {
+    prefix = "";
+  }
+  let sp = "";
+  const test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g, "");
+  const test_char = test_prefix.slice(-1);
+  if (test_prefix.match(ENDSWITH_ROMANESQUE_REGEXP)) {
+    sp = " ";
+  } else if (TERMINAL_PUNCTUATION.slice(0, -1).indexOf(test_char) > -1) {
+    sp = " ";
+  } else if (test_char.match(/[\)\],0-9]/)) {
+    sp = " ";
+  }
+  prefix = (prefix + sp).replace(/\s+/g, " ");
+  return prefix;
+}
+function checkIgnorePredecessor(state, prefix) {
+  const test_prefix = prefix.replace(/<[^>]+>/g, "").replace(/["'\u201d\u2019\u00bb\u202f\u00a0 ]+$/g, "");
+  const test_char = test_prefix.slice(-1);
+  if (TERMINAL_PUNCTUATION.slice(0, -1).indexOf(test_char) > -1 && prefix.trim().indexOf(" ") > -1) {
+    state.tmp.term_predecessor = false;
+    return true;
+  }
+  return false;
+}
+function checkSuffixSpacePrepend(state, suffix) {
+  if (!suffix) {
+    return "";
+  }
+  if (suffix.match(STARTSWITH_ROMANESQUE_REGEXP) || ["[", "("].indexOf(suffix.slice(0, 1)) > -1) {
+    suffix = " " + suffix;
+  }
+  return suffix;
+}
+
+// src/util/title.ts
+function TITLE_FIELD_SPLITS(seg) {
+  const keys = ["title", "short", "main", "sub", "subjoin"];
+  let ret = {};
+  for (let i = 0, ilen = keys.length; i < ilen; i++) {
+    ret[keys[i]] = seg + "title" + (keys[i] === "title" ? "" : "-" + keys[i]);
+  }
+  return ret;
+}
+function TITLE_SPLIT(str) {
+  if (!str) {
+    return [];
+  }
+  let m = str.match(TITLE_SPLIT_REGEXP.match);
+  let lst = str.split(TITLE_SPLIT_REGEXP.split);
+  for (let i = lst.length - 2; i > -1; i--) {
+    lst[i] = lst[i].trim();
+    if (lst[i] && lst[i].slice(-1).toLowerCase() !== lst[i].slice(-1)) {
+      lst[i] = lst[i] + m[i] + lst[i + 1];
+      lst = lst.slice(0, i + 1).concat(lst.slice(i + 2));
+    } else {
+      lst = lst.slice(0, i + 1).concat([m[i]]).concat(lst.slice(i + 1));
+    }
+  }
+  return lst;
+}
+function demoteNoiseWords(state, fld, drop_or_demote) {
+  const SKIP_WORDS2 = state.locale[state.opt.lang].opts["leading-noise-words"];
+  if (fld && drop_or_demote) {
+    const parts = fld.split(/\s+/);
+    parts.reverse();
+    const toEnd = [];
+    for (let j = parts.length - 1; j > -1; j += -1) {
+      if (SKIP_WORDS2.indexOf(parts[j].toLowerCase()) > -1) {
+        toEnd.push(parts.pop());
+      } else {
+        break;
+      }
+    }
+    parts.reverse();
+    const start = parts.join(" ");
+    const end = toEnd.join(" ");
+    if ("drop" === drop_or_demote || !end) {
+      fld = start;
+    } else if ("demote" === drop_or_demote) {
+      fld = [start, end].join(", ");
+    }
+  }
+  return fld;
+}
+function extractTitleAndSubtitle(state, Item, narrowSpaceLocale) {
+  const narrowSpace = narrowSpaceLocale ? "\u202F" : "";
+  const segments = [""];
+  if (state.opt.development_extensions.split_container_title) {
+    segments.push("container-");
+  }
+  for (let i = 0, ilen = segments.length; i < ilen; i++) {
+    const seg = segments[i];
+    const title = TITLE_FIELD_SPLITS(seg);
+    const langs = [false];
+    if (Item.multi) {
+      for (let lang in Item.multi._keys[title.short]) {
+        langs.push(lang);
+      }
+    }
+    for (let j = 0, jlen = langs.length; j < jlen; j++) {
+      const lang = langs[j];
+      const vals = {};
+      if (lang) {
+        if (Item.multi._keys[title.title]) {
+          vals[title.title] = Item.multi._keys[title.title][lang];
+        }
+        if (Item.multi._keys[title["short"]]) {
+          vals[title["short"]] = Item.multi._keys[title["short"]][lang];
+        }
+      } else {
+        vals[title.title] = Item[title.title];
+        vals[title["short"]] = Item[title["short"]];
+      }
+      vals[title.main] = vals[title.title];
+      vals[title.sub] = false;
+      const shortTitle = vals[title["short"]];
+      if (vals[title.title]) {
+        if (shortTitle && shortTitle.toLowerCase() === vals[title.title].toLowerCase()) {
+          vals[title.main] = vals[title.title];
+          vals[title.subjoin] = "";
+          vals[title.sub] = "";
+        } else if (shortTitle) {
+          const tail = vals[title.title].slice(shortTitle.replace(/[\?\!]+$/, "").length);
+          const top = vals[title.title].replace(tail.replace(/^[\?\!]+/, ""), "").trim();
+          let m = TITLE_SPLIT_REGEXP.matchfirst.exec(tail);
+          if (m && top.toLowerCase() === shortTitle.toLowerCase()) {
+            vals[title.main] = top;
+            vals[title.subjoin] = m[1].replace(/[\?\!]+(\s*)$/, "$1");
+            vals[title.sub] = tail.replace(TITLE_SPLIT_REGEXP.matchfirst, "");
+            if (state.opt.development_extensions.force_short_title_casing_alignment) {
+              vals[title["short"]] = vals[title.main];
+            }
+          } else {
+            const splitTitle = TITLE_SPLIT(vals[title.title]);
+            if (splitTitle.length == 3) {
+              vals[title.main] = splitTitle[0];
+              vals[title.subjoin] = splitTitle[1];
+              vals[title.sub] = splitTitle[2];
+            } else {
+              vals[title.main] = vals[title.title];
+              vals[title.subjoin] = "";
+              vals[title.sub] = "";
+            }
+          }
+        } else {
+          const splitTitle = TITLE_SPLIT(vals[title.title]);
+          if (splitTitle.length == 3) {
+            vals[title.main] = splitTitle[0];
+            vals[title.subjoin] = splitTitle[1];
+            vals[title.sub] = splitTitle[2];
+            if (state.opt.development_extensions.implicit_short_title && Item.type !== "legal_case") {
+              if (!Item[title.short] && !vals[title.main].match(/^[\-\.[0-9]+$/)) {
+                let punct = vals[title.subjoin].trim();
+                if (["?", "!"].indexOf(punct) === -1) {
+                  punct = "";
+                }
+                vals[title.short] = vals[title.main] + punct;
+              }
+            }
+          } else {
+            vals[title.main] = vals[title.title];
+            vals[title.subjoin] = "";
+            vals[title.sub] = "";
+          }
+        }
+        if (vals[title.subjoin]) {
+          if (vals[title.subjoin].match(/([\?\!])/)) {
+            let m = vals[title.subjoin].match(/(\s*)$/);
+            vals[title.main] = vals[title.main] + narrowSpace + vals[title.subjoin].trim();
+            vals[title.subjoin] = m[1];
+          }
+        }
+      }
+      if (vals[title.subjoin]) {
+        if (vals[title.subjoin].indexOf(":") > -1) {
+          vals[title.subjoin] = narrowSpace + ": ";
+        }
+        if (vals[title.subjoin].indexOf("-") > -1 || vals[title.subjoin].indexOf("\u2014") > -1) {
+          vals[title.subjoin] = "\u2014";
+        }
+      }
+      if (lang) {
+        for (let key in vals) {
+          if (!Item.multi._keys[key]) {
+            Item.multi._keys[key] = {};
+          }
+          Item.multi._keys[key][lang] = vals[key];
+        }
+      } else {
+        for (let key in vals) {
+          Item[key] = vals[key];
+        }
+      }
+    }
+  }
+}
+function titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, formatters) {
+  var _a;
+  const title = TITLE_FIELD_SPLITS(seg);
+  const vals = {};
+  if (lang && Item.multi) {
+    if (Item.multi._keys[title.title]) {
+      vals[title.title] = Item.multi._keys[title.title][lang];
+    }
+    if (Item.multi._keys[title.main]) {
+      vals[title.main] = Item.multi._keys[title.main][lang];
+    }
+    if (Item.multi._keys[title.sub]) {
+      vals[title.sub] = Item.multi._keys[title.sub][lang];
+    }
+    if (Item.multi._keys[title.subjoin]) {
+      vals[title.subjoin] = Item.multi._keys[title.subjoin][lang];
+    }
+  } else {
+    vals[title.title] = Item[title.title];
+    vals[title.main] = Item[title.main];
+    vals[title.sub] = Item[title.sub];
+    vals[title.subjoin] = Item[title.subjoin];
+  }
+  const fmt = formatters || (typeof CSL !== "undefined" ? (_a = CSL.Output) == null ? void 0 : _a.Formatters : void 0);
+  if (vals[title.main] && vals[title.sub]) {
+    let mainTitle = vals[title.main];
+    const subJoin = vals[title.subjoin];
+    let subTitle = vals[title.sub];
+    if (sentenceCase && fmt) {
+      mainTitle = fmt.sentence(state, mainTitle);
+      subTitle = fmt.sentence(state, subTitle);
+    } else if (!sentenceCase && state.opt.development_extensions.uppercase_subtitles && fmt) {
+      subTitle = fmt["capitalize-first"](state, subTitle);
+    }
+    return [mainTitle, subJoin, subTitle].join("");
+  } else if (vals[title.title]) {
+    if (sentenceCase && fmt) {
+      return fmt.sentence(state, vals[title.title]);
+    } else if (!sentenceCase && state.opt.development_extensions.uppercase_subtitles && fmt) {
+      const splits = TITLE_SPLIT(vals[title.title]);
+      for (let i = 0, ilen = splits.length; i < ilen; i += 2) {
+        splits[i] = fmt["capitalize-first"](state, splits[i]);
+      }
+      for (let i = 1, ilen = splits.length - 1; i < ilen; i += 2) {
+        let m = splits[i].match(/([:\?\!] )/);
+        if (m) {
+          const narrowSpace = state.opt["default-locale"][0].slice(0, 2).toLowerCase() === "fr" ? "\u202F" : "";
+          splits[i] = narrowSpace + m[1];
+        }
+        if (splits[i].indexOf("-") > -1 || splits[i].indexOf("\u2014") > -1) {
+          splits[i] = "\u2014";
+        }
+      }
+      vals[title.title] = splits.join("");
+      return vals[title.title];
+    } else {
+      return vals[title.title];
+    }
+  } else {
+    return "";
+  }
+}
+
+// src/util/locale_shared.ts
+function normalizeLocaleStr(str) {
+  if (!str) {
+    return;
+  }
+  let lst = str.split("-");
+  lst[0] = lst[0].toLowerCase();
+  if (lst[1]) {
+    lst[1] = lst[1].toUpperCase();
+  }
+  return lst.join("-");
+}
+function toLocaleUpperCase(state, str) {
+  const arr = state.tmp.lang_array;
+  try {
+    str = str.toLocaleUpperCase(arr);
+  } catch (e) {
+    str = str.toUpperCase();
+  }
+  return str;
+}
+function toLocaleLowerCase(state, str) {
+  const arr = state.tmp.lang_array;
+  try {
+    str = str.toLocaleLowerCase(arr);
+  } catch (e) {
+    str = str.toLowerCase();
+  }
+  return str;
+}
+function getAbbrevsDomain(state, country, lang) {
+  let domain = null;
+  if (state.opt.availableAbbrevDomains && country && country !== "default") {
+    const globalDomainPreference = state.locale[state.opt.lang].opts["jurisdiction-preference"];
+    let itemDomainPreference = null;
+    if (state.locale[lang]) {
+      itemDomainPreference = state.locale[lang].opts["jurisdiction-preference"];
+    }
+    if (itemDomainPreference) {
+      for (let j = itemDomainPreference.length - 1; j > -1; j--) {
+        if (state.opt.availableAbbrevDomains[country].indexOf(itemDomainPreference[j]) > -1) {
+          domain = itemDomainPreference[j];
+          break;
+        }
+      }
+    }
+    if (!domain && globalDomainPreference) {
+      for (let j = globalDomainPreference.length - 1; j > -1; j--) {
+        if (state.opt.availableAbbrevDomains[country].indexOf(globalDomainPreference[j]) > -1) {
+          domain = globalDomainPreference[j];
+          break;
+        }
+      }
+    }
+  }
+  return domain;
+}
+function AbbreviationSegments() {
+  this["container-title"] = {};
+  this["collection-title"] = {};
+  this["institution-entire"] = {};
+  this["institution-part"] = {};
+  this.nickname = {};
+  this.number = {};
+  this.title = {};
+  this.place = {};
+  this.hereinafter = {};
+  this.classic = {};
+  this["container-phrase"] = {};
+  this["title-phrase"] = {};
+}
+
+// src/util/conditions.ts
+var Conditions = {
+  TopNode: function(state) {
+    let func;
+    if (this.tokentype === START || this.tokentype === SINGLETON) {
+      if (this.locale) {
+        state.opt.lang = this.locale;
+      }
+      if (!this.tests || !this.tests.length) {
+        state.tmp.conditions = new EngineCondition(state, this);
+      } else {
+        this.test = state.fun.match[this.match](this, state, this.tests);
+      }
+      if (state.build.substitute_level.value() === 0) {
+        func = function(state2) {
+          state2.tmp.condition_counter++;
+        };
+        this.execs.push(func);
+      }
+    }
+    if (this.tokentype === END || this.tokentype === SINGLETON) {
+      if (state.build.substitute_level.value() === 0) {
+        func = function(state2) {
+          state2.tmp.condition_counter--;
+          if (state2.tmp.condition_lang_counter_arr.length > 0) {
+            const counter = state2.tmp.condition_lang_counter_arr.slice(-1)[0];
+            if (counter === state2.tmp.condition_counter) {
+              state2.opt.lang = state2.tmp.condition_lang_val_arr.pop();
+              state2.tmp.condition_lang_counter_arr.pop();
+            }
+          }
+          if (this.locale_default) {
+            state2.output.current.value().old_locale = this.locale_default;
+            state2.output.closeLevel("empty");
+            state2.opt.lang = this.locale_default;
+          }
+        };
+        this.execs.push(func);
+      }
+      func = function(state2) {
+        const next = this[state2.tmp.jump.value()];
+        return next;
+      };
+      this.execs.push(func);
+      if (this.locale_default) {
+        state.opt.lang = this.locale_default;
+      }
+    }
+  },
+  Configure: function(state, pos) {
+    if (this.tokentype === START) {
+      this.fail = state.configure.fail.slice(-1)[0];
+      this.succeed = this.next;
+      state.configure.fail[state.configure.fail.length - 1] = pos;
+    } else if (this.tokentype === SINGLETON) {
+      this.fail = this.next;
+      this.succeed = state.configure.succeed.slice(-1)[0];
+      state.configure.fail[state.configure.fail.length - 1] = pos;
+    } else {
+      this.succeed = state.configure.succeed.slice(-1)[0];
+      this.fail = this.next;
+    }
+  }
+};
+var EngineCondition = class {
+  constructor(state, token) {
+    __publicField(this, "token");
+    __publicField(this, "state");
+    this.token = token;
+    this.state = state;
+  }
+  addTest(test) {
+    this.token.tests ? {} : this.token.tests = [];
+    this.token.tests.push(test);
+  }
+  addMatch(match) {
+    this.token.match = match;
+  }
+  matchCombine() {
+    this.token.test = this.state.fun.match[this.token.match](this.token, this.state, this.token.tests);
+  }
+};
+
+// src/logger.ts
+function debug(str) {
+  console.log("citeproc-js warning: " + str);
+}
+function error(str) {
+  throw new Error("citeproc-js error: " + str);
+}
+
+// src/output/formatters.ts
+var Output_formatters = (function() {
+  const rexStr = `(?:\u2018|\u2019|\u201C|\u201D| "| '|"|'|[-\u2010\u2013\u2014/.,;?!:]|\\[|\\]|\\(|\\)|<span style="font-variant: small-caps;">|<span class="no(?:case|decor)">|</span>|</?(?:i|sc|b|sub|sup)>)`;
+  const tagDoppel = new Doppeler(rexStr, function(str) {
+    return str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3").replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?(\")[^>]*(>)/g, "$1 $2 $3;$4$5");
+  });
+  const rexNameStr = '(?:[-\\s]*<\\/*(?:spans+class="no(?:case|decor)"|i|sc|b|sub|sup)>[-\\s]*|[-\\s]+)';
+  const nameDoppel = new Doppeler(rexNameStr);
+  const wordDoppel = new Doppeler("(?:[\xA0 \xA0\u2000-\u200B\u205F\u3000]+)");
+  const _tagParams = {
+    '<span style="font-variant: small-caps;">': "</span>",
+    '<span class="nocase">': "</span>",
+    '<span class="nodecor">': "</span>",
+    "<sc>": "</sc>",
+    "<sub>": "</sub>",
+    "<sup>": "</sup>"
+  };
+  function _capitalise(word) {
+    const m = word.match(/(^\s*)((?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]))(.*)/);
+    if (m && !(m[2].match(/^[\u0370-\u03FF]$/) && !m[3])) {
+      return m[1] + toLocaleUpperCase(this, m[2]) + m[3];
+    }
+    return word;
+  }
+  function _textcaseEngine(config, string) {
+    if (!string) {
+      return "";
+    }
+    config.doppel = tagDoppel.split(string);
+    const quoteParams = {
+      ' "': { opener: " '", closer: '"' },
+      " '": { opener: ' "', closer: "'" },
+      "\u2018": { opener: "\u2018", closer: "\u2019" },
+      "\u201C": { opener: "\u201C", closer: "\u201D" }
+    };
+    function tryOpen(tag, pos) {
+      if (config.quoteState.length === 0 || tag === config.quoteState[config.quoteState.length - 1].opener) {
+        config.quoteState.push({
+          opener: quoteParams[tag].opener,
+          closer: quoteParams[tag].closer,
+          pos
+        });
+        return false;
+      } else {
+        const prevPos = config.quoteState[config.quoteState.length - 1].pos;
+        config.quoteState.pop();
+        config.quoteState.push({
+          opener: quoteParams[tag].opener,
+          closer: quoteParams[tag].closer,
+          positions: pos
+        });
+        return prevPos;
+      }
+    }
+    function tryClose(tag, pos) {
+      if (config.quoteState.length > 0 && tag === config.quoteState[config.quoteState.length - 1].closer) {
+        config.quoteState.pop();
+      } else {
+        return pos;
+      }
+      return void 0;
+    }
+    function pushQuoteState(tag, pos) {
+      const isOpener = ["\u201C", "\u2018", ' "', " '"].indexOf(tag) > -1;
+      if (isOpener) {
+        return tryOpen(tag, pos);
+      } else {
+        return tryClose(tag, pos);
+      }
+    }
+    function quoteFix(tag, positions) {
+      const m = tag.match(/(^(?:\u2018|\u2019|\u201C|\u201D|\"|\')|(?: \"| \')$)/);
+      if (m) {
+        return pushQuoteState(m[1], positions);
+      }
+      return void 0;
+    }
+    if (config.doppel.strings.length && config.doppel.strings[0].trim()) {
+      config.doppel.strings[0] = config.capitaliseWords(config.doppel.strings[0], 0, config.doppel.tags[0]);
+    }
+    for (let i = 0, ilen = config.doppel.tags.length; i < ilen; i += 1) {
+      const tag = config.doppel.tags[i];
+      const str = config.doppel.strings[i + 1];
+      if (config.tagState !== null) {
+        if (_tagParams[tag]) {
+          config.tagState.push(_tagParams[tag]);
+        } else if (config.tagState.length && tag === config.tagState[config.tagState.length - 1]) {
+          config.tagState.pop();
+        }
+      }
+      if (config.afterPunct !== null) {
+        if (tag.match(/[\!\?\:]$/)) {
+          config.afterPunct = true;
+        }
+      }
+      if (config.tagState.length === 0) {
+        config.doppel.strings[i + 1] = config.capitaliseWords(str, i + 1, config.doppel, config.doppel.tags[i + 1]);
+      } else if (config.doppel.strings[i + 1].trim()) {
+        config.lastWordPos = null;
+      }
+      if (config.quoteState !== null) {
+        const quotePos = quoteFix(tag, i);
+        if (quotePos || quotePos === 0) {
+          const origChar = config.doppel.origStrings[quotePos + 1].slice(0, 1);
+          config.doppel.strings[quotePos + 1] = origChar + config.doppel.strings[quotePos + 1].slice(1);
+          config.lastWordPos = null;
+        }
+      }
+      if (config.isFirst) {
+        if (str.trim()) {
+          config.isFirst = false;
+        }
+      }
+      if (config.afterPunct) {
+        if (str.trim()) {
+          config.afterPunct = false;
+        }
+      }
+    }
+    if (config.quoteState) {
+      for (let i = 0, ilen = config.quoteState.length; i < ilen; i += 1) {
+        const quotePos = config.quoteState[i].pos;
+        if (typeof quotePos !== "undefined") {
+          const origChar = config.doppel.origStrings[quotePos + 1].slice(0, 1);
+          config.doppel.strings[quotePos + 1] = origChar + config.doppel.strings[quotePos + 1].slice(1);
+        }
+      }
+    }
+    if (config.lastWordPos) {
+      const lastWords = wordDoppel.split(config.doppel.strings[config.lastWordPos.strings]);
+      let lastWord = lastWords.strings[config.lastWordPos.words];
+      if (lastWord.length > 1 && toLocaleLowerCase(this, lastWord).match(config.skipWordsRex)) {
+        lastWord = _capitalise.call(this, lastWord);
+        lastWords.strings[config.lastWordPos.words] = lastWord;
+      }
+      config.doppel.strings[config.lastWordPos.strings] = wordDoppel.join(lastWords);
+    }
+    return tagDoppel.join(config.doppel);
+  }
+  function passthrough(state, str) {
+    return str;
+  }
+  function lowercase(state, string) {
+    const config = {
+      quoteState: null,
+      capitaliseWords: function(str) {
+        const words = str.split(" ");
+        for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+          const word = words[i];
+          if (word) {
+            words[i] = toLocaleLowerCase(state, word);
+          }
+        }
+        return words.join(" ");
+      },
+      skipWordsRex: null,
+      tagState: [],
+      afterPunct: null,
+      isFirst: null
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  function uppercase(state, string) {
+    const config = {
+      quoteState: null,
+      capitaliseWords: function(str) {
+        const words = str.split(" ");
+        for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+          const word = words[i];
+          if (word) {
+            words[i] = toLocaleUpperCase(state, word);
+          }
+        }
+        return words.join(" ");
+      },
+      skipWordsRex: null,
+      tagState: [],
+      afterPunct: null,
+      isFirst: null
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  function sentence(state, string) {
+    const config = {
+      quoteState: [],
+      capitaliseWords: function(str) {
+        const words = str.split(" ");
+        for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+          const word = words[i];
+          if (word) {
+            if (config.isFirst) {
+              words[i] = _capitalise.call(state, word);
+              config.isFirst = false;
+            } else {
+              words[i] = toLocaleLowerCase(state, word);
+            }
+          }
+        }
+        return words.join(" ");
+      },
+      skipWordsRex: null,
+      tagState: [],
+      afterPunct: null,
+      isFirst: true
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  function title(state, string) {
+    const config = {
+      quoteState: [],
+      capitaliseWords: function(str, i, followingTag) {
+        if (str.trim()) {
+          const wordle = wordDoppel.split(str);
+          const words = wordle.strings;
+          for (let j = 0, jlen = words.length; j < jlen; j += 1) {
+            const word = words[j];
+            if (!word) {
+              continue;
+            }
+            const lcase = toLocaleLowerCase(state, word);
+            let capitalize = false;
+            if (word.length > 1 && !lcase.match(config.skipWordsRex)) {
+              capitalize = true;
+            } else if (j === words.length - 1 && followingTag === "-") {
+              capitalize = true;
+            } else if (config.isFirst) {
+              capitalize = true;
+            } else if (config.afterPunct) {
+              capitalize = true;
+            }
+            if (capitalize && word === lcase) {
+              words[j] = _capitalise.call(state, word);
+            }
+            config.afterPunct = false;
+            config.isFirst = false;
+            config.lastWordPos = {
+              strings: i,
+              words: j
+            };
+          }
+          str = wordDoppel.join(wordle);
+        }
+        return str;
+      },
+      skipWordsRex: state.locale[state.opt.lang].opts["skip-words-regexp"],
+      tagState: [],
+      afterPunct: false,
+      isFirst: true
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  function capitalizeFirst(state, string) {
+    const config = {
+      quoteState: [],
+      capitaliseWords: function(str) {
+        const wordle = wordDoppel.split(str);
+        const words = wordle.strings;
+        for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+          const word = words[i];
+          if (word) {
+            if (config.isFirst) {
+              if (word === toLocaleLowerCase(state, word)) {
+                words[i] = _capitalise.call(state, word);
+              }
+              config.isFirst = false;
+              break;
+            }
+          }
+        }
+        return wordDoppel.join(wordle);
+      },
+      skipWordsRex: null,
+      tagState: [],
+      afterPunct: null,
+      isFirst: true
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  function capitalizeAll(state, string) {
+    const config = {
+      quoteState: [],
+      capitaliseWords: function(str) {
+        const wordle = wordDoppel.split(str);
+        const words = wordle.strings;
+        for (let i = 0, ilen = words.length; i < ilen; i += 1) {
+          const word = words[i];
+          if (word) {
+            if (word === toLocaleLowerCase(state, word)) {
+              words[i] = _capitalise.call(state, word);
+            }
+          }
+        }
+        return wordDoppel.join(wordle);
+      },
+      skipWordsRex: null,
+      tagState: [],
+      afterPunct: null,
+      isFirst: null
+    };
+    return _textcaseEngine.call(state, config, string);
+  }
+  return {
+    nameDoppel,
+    passthrough,
+    lowercase,
+    uppercase,
+    sentence,
+    title,
+    "capitalize-first": capitalizeFirst,
+    "capitalize-all": capitalizeAll
+  };
+})();
+
+// src/util/dateparser.ts
+var DateParser = function() {
+  const epochPairs = [
+    ["\u660E\u6CBB", 1867],
+    ["\u5927\u6B63", 1911],
+    ["\u662D\u548C", 1925],
+    ["\u5E73\u6210", 1988]
+  ];
+  const epochYearByName = {};
+  for (let i = 0, ilen = epochPairs.length; i < ilen; i++) {
+    let key = epochPairs[i][0];
+    const val = epochPairs[i][1];
+    epochYearByName[key] = val;
+  }
+  const epochMatchStrings = [];
+  const epochMap = {};
+  for (let i = 0, ilen = epochPairs.length; i < ilen; i++) {
+    const pair = epochPairs[i];
+    const val = pair[0];
+    epochMatchStrings.push(val);
+    epochMap[pair[0]] = pair[1];
+  }
+  const epochMatchString = epochMatchStrings.join("|");
+  const epochSplitter = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)");
+  const epochMatcher = new RegExp("(?:" + epochMatchString + ")(?:[0-9]+)", "g");
+  const kanjiMonthDay = /(\u6708|\u5E74)/g;
+  const kanjiYear = /\u65E5/g;
+  const kanjiRange = /\u301c/g;
+  const yearLast = "(?:[?0-9]{1,2}%%NUMD%%){0,2}[?0-9]{4}(?![0-9])";
+  const yearFirst = "[?0-9]{4}(?:%%NUMD%%[?0-9]{1,2}){0,2}(?![0-9])";
+  const numberVal = "[?0-9]{1,3}";
+  const rangeSeparator = "[%%DATED%%]";
+  const fuzzyChar = "[?~]";
+  const chars = "[^-/~?0-9]+";
+  const rexString = "(" + yearFirst + "|" + yearLast + "|" + numberVal + "|" + rangeSeparator + "|" + fuzzyChar + "|" + chars + ")";
+  const rexDash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "-"));
+  const rexDashSlash = new RegExp(rexString.replace(/%%NUMD%%/g, "-").replace(/%%DATED%%/g, "/"));
+  const rexSlashDash = new RegExp(rexString.replace(/%%NUMD%%/g, "/").replace(/%%DATED%%/g, "-"));
+  const monthString = "january february march april may june july august september october november december spring summer fall winter spring summer";
+  this.monthStrings = monthString.split(" ");
+  this.setOrderDayMonth = function() {
+    this.monthGuess = 1;
+    this.dayGuess = 0;
+  };
+  this.setOrderMonthDay = function() {
+    this.monthGuess = 0;
+    this.dayGuess = 1;
+  };
+  this.resetDateParserMonths = function() {
+    this.monthSets = [];
+    for (let i = 0, ilen = this.monthStrings.length; i < ilen; i++) {
+      this.monthSets.push([this.monthStrings[i]]);
+    }
+    this.monthAbbrevs = [];
+    for (let i = 0, ilen = this.monthSets.length; i < ilen; i++) {
+      this.monthAbbrevs.push([]);
+      for (let j = 0, jlen = this.monthSets[i].length; j < jlen; j++) {
+        this.monthAbbrevs[i].push(this.monthSets[i][0].slice(0, 3));
+      }
+    }
+    this.monthRexes = [];
+    for (let i = 0, ilen = this.monthAbbrevs.length; i < ilen; i++) {
+      this.monthRexes.push(new RegExp("(?:" + this.monthAbbrevs[i].join("|") + ")"));
+    }
+  };
+  this.addDateParserMonths = function(lst) {
+    if ("string" === typeof lst) {
+      lst = lst.split(/\s+/);
+    }
+    if (lst.length !== 12 && lst.length !== 16) {
+      debug("month [+season] list of " + lst.length + ", expected 12 or 16. Ignoring.");
+      return;
+    }
+    for (let i = 0, ilen = lst.length; i < ilen; i++) {
+      let abbrevLength = null;
+      let skip = false;
+      let insert = 3;
+      const extendedSets = {};
+      for (let j = 0, jlen = this.monthAbbrevs.length; j < jlen; j++) {
+        extendedSets[j] = {};
+        if (j === i) {
+          for (let k = 0, klen = this.monthAbbrevs[i].length; k < klen; k++) {
+            if (this.monthAbbrevs[i][k] === lst[i].slice(0, this.monthAbbrevs[i][k].length)) {
+              skip = true;
+              break;
+            }
+          }
+        } else {
+          for (let k = 0, klen = this.monthAbbrevs[j].length; k < klen; k++) {
+            abbrevLength = this.monthAbbrevs[j][k].length;
+            if (this.monthAbbrevs[j][k] === lst[i].slice(0, abbrevLength)) {
+              while (this.monthSets[j][k].slice(0, abbrevLength) === lst[i].slice(0, abbrevLength)) {
+                if (abbrevLength > lst[i].length || abbrevLength > this.monthSets[j][k].length) {
+                  debug("unable to disambiguate month string in date parser: " + lst[i]);
+                  break;
+                } else {
+                  abbrevLength += 1;
+                }
+              }
+              insert = abbrevLength;
+              extendedSets[j][k] = abbrevLength;
+            }
+          }
+        }
+        for (let jKey in extendedSets) {
+          for (let kKey in extendedSets[jKey]) {
+            abbrevLength = extendedSets[jKey][kKey];
+            const jKeyNum = parseInt(jKey, 10);
+            const kKeyNum = parseInt(kKey, 10);
+            this.monthAbbrevs[jKeyNum][kKeyNum] = this.monthSets[jKeyNum][kKeyNum].slice(0, abbrevLength);
+          }
+        }
+      }
+      if (!skip) {
+        this.monthSets[i].push(lst[i]);
+        this.monthAbbrevs[i].push(lst[i].slice(0, insert));
+      }
+    }
+    this.monthRexes = [];
+    this.monthRexStrs = [];
+    for (let i = 0, ilen = this.monthAbbrevs.length; i < ilen; i++) {
+      this.monthRexes.push(new RegExp("^(?:" + this.monthAbbrevs[i].join("|") + ")"));
+      this.monthRexStrs.push("^(?:" + this.monthAbbrevs[i].join("|") + ")");
+    }
+    if (this.monthAbbrevs.length === 18) {
+      for (let i = 12, ilen = 14; i < ilen; i++) {
+        this.monthRexes[i + 4] = new RegExp("^(?:" + this.monthAbbrevs[i].join("|") + ")");
+        this.monthRexStrs[i + 4] = "^(?:" + this.monthAbbrevs[i].join("|") + ")";
+      }
+    }
+  };
+  this.convertDateObjectToArray = function(thedate) {
+    thedate["date-parts"] = [];
+    thedate["date-parts"].push([]);
+    let slicelen = 0;
+    let part;
+    for (let i = 0, ilen = 3; i < ilen; i++) {
+      part = ["year", "month", "day"][i];
+      if (!thedate[part]) {
+        break;
+      }
+      slicelen += 1;
+      thedate["date-parts"][0].push(thedate[part]);
+      delete thedate[part];
+    }
+    thedate["date-parts"].push([]);
+    for (let i = 0, ilen = slicelen; i < ilen; i++) {
+      part = ["year_end", "month_end", "day_end"][i];
+      if (!thedate[part]) {
+        break;
+      }
+      thedate["date-parts"][1].push(thedate[part]);
+      delete thedate[part];
+    }
+    if (thedate["date-parts"][0].length !== thedate["date-parts"][1].length) {
+      thedate["date-parts"].pop();
+    }
+    return thedate;
+  };
+  this.convertDateObjectToString = function(thedate) {
+    let ret = [];
+    for (let i = 0, ilen = 3; i < ilen; i += 1) {
+      if (thedate[DATE_PARTS_ALL[i]]) {
+        ret.push(thedate[DATE_PARTS_ALL[i]]);
+      } else {
+        break;
+      }
+    }
+    return ret.join("-");
+  };
+  this._parseNumericDate = function(ret, delim, suff, txt) {
+    if (!suff) {
+      suff = "";
+    }
+    let lst = txt.split(delim);
+    for (let i = 0, ilen = lst.length; i < ilen; i++) {
+      if (lst[i].length === 4) {
+        ret["year" + suff] = lst[i].replace(/^0*/, "");
+        if (!i) {
+          lst = lst.slice(1);
+        } else {
+          lst = lst.slice(0, i);
+        }
+        break;
+      }
+    }
+    for (let i = 0, ilen = lst.length; i < ilen; i++) {
+      lst[i] = parseInt(lst[i], 10);
+    }
+    if (lst.length === 1 || lst.length === 2 && !lst[1]) {
+      const month = lst[0];
+      if (month) {
+        ret["month" + suff] = "" + lst[0];
+      }
+    } else if (lst.length === 2) {
+      if (lst[this.monthGuess] > 12) {
+        const month = lst[this.dayGuess];
+        const day = lst[this.monthGuess];
+        if (month) {
+          ret["month" + suff] = "" + month;
+          if (day) {
+            ret["day" + suff] = "" + day;
+          }
+        }
+      } else {
+        const month = lst[this.monthGuess];
+        const day = lst[this.dayGuess];
+        if (month) {
+          ret["month" + suff] = "" + month;
+          if (day) {
+            ret["day" + suff] = "" + day;
+          }
+        }
+      }
+    }
+  };
+  this.parseDateToObject = function(txt) {
+    const orig = txt;
+    let slashPos = -1;
+    let dashPos = -1;
+    let yearIsNegative = false;
+    let lst;
+    if (txt) {
+      txt = txt.replace(/^(.*[0-9])T[0-9].*/, "$1");
+      if (txt.slice(0, 1) === "-") {
+        yearIsNegative = true;
+        txt = txt.slice(1);
+      }
+      if (txt.match(/^[0-9]{1,3}$/)) {
+        while (txt.length < 4) {
+          txt = "0" + txt;
+        }
+      }
+      txt = "" + txt;
+      txt = txt.replace(/\s*[0-9]{2}:[0-9]{2}(?::[0-9]+)/, "");
+      let m = txt.match(kanjiMonthDay);
+      if (m) {
+        txt = txt.replace(/\s+/g, "");
+        txt = txt.replace(kanjiYear, "");
+        txt = txt.replace(kanjiMonthDay, "-");
+        txt = txt.replace(kanjiRange, "/");
+        txt = txt.replace(/\-\//g, "/");
+        txt = txt.replace(/-$/g, "");
+        const slst = txt.split(epochSplitter);
+        lst = [];
+        const mm = txt.match(epochMatcher);
+        if (mm) {
+          let mmx = [];
+          for (let i = 0, ilen = mm.length; i < ilen; i++) {
+            mmx = mmx.concat(mm[i].match(/([^0-9]+)([0-9]+)/).slice(1));
+          }
+          for (let i = 0, ilen = slst.length; i < ilen; i++) {
+            lst.push(slst[i]);
+            if (i !== ilen - 1) {
+              const mmpos = i * 2;
+              lst.push(mmx[mmpos]);
+              lst.push(mmx[mmpos + 1]);
+            }
+          }
+        } else {
+          lst = slst;
+        }
+        for (let i = 1, ilen = lst.length; i < ilen; i += 3) {
+          lst[i + 1] = epochMap[lst[i]] + parseInt(lst[i + 1], 10);
+          lst[i] = "";
+        }
+        txt = lst.join("");
+        txt = txt.replace(/\s*-\s*$/, "").replace(/\s*-\s*\//, "/");
+        txt = txt.replace(/\.\s*$/, "");
+        txt = txt.replace(/\.(?! )/, "");
+        slashPos = txt.indexOf("/");
+        dashPos = txt.indexOf("-");
+      }
+    }
+    txt = txt.replace(/([A-Za-z])\./g, "$1");
+    let number = "";
+    let note = "";
+    let thedate = {};
+    let rangeDelim;
+    let dateDelim;
+    if (txt.slice(0, 1) === '"' && txt.slice(-1) === '"') {
+      thedate.literal = txt.slice(1, -1);
+      return thedate;
+    }
+    if (slashPos > -1 && dashPos > -1) {
+      const slashCount = txt.split("/");
+      if (slashCount.length > 3) {
+        rangeDelim = "-";
+        txt = txt.replace(/\_/g, "-");
+        dateDelim = "/";
+        lst = txt.split(rexSlashDash);
+      } else {
+        rangeDelim = "/";
+        txt = txt.replace(/\_/g, "/");
+        dateDelim = "-";
+        lst = txt.split(rexDashSlash);
+      }
+    } else {
+      txt = txt.replace(/\//g, "-");
+      txt = txt.replace(/\_/g, "-");
+      rangeDelim = "-";
+      dateDelim = "-";
+      lst = txt.split(rexDash);
+    }
+    let ret = [];
+    for (let i = 0, ilen = lst.length; i < ilen; i++) {
+      let m = lst[i].match(/^\s*([\-\/]|[^\-\/\~\?0-9]+|[\-~?0-9]+)\s*$/);
+      if (m) {
+        ret.push(m[1]);
+      }
+    }
+    const delimPos = ret.indexOf(rangeDelim);
+    const delims = [];
+    let isRange = false;
+    if (delimPos > -1) {
+      delims.push([0, delimPos]);
+      delims.push([delimPos + 1, ret.length]);
+      isRange = true;
+    } else {
+      delims.push([0, ret.length]);
+    }
+    let suff = "";
+    for (let i = 0, ilen = delims.length; i < ilen; i++) {
+      const delim = delims[i];
+      const date = ret.slice(delim[0], delim[1]);
+      outer:
+        for (let j = 0, jlen = date.length; j < jlen; j++) {
+          const element = date[j];
+          if (element.indexOf(dateDelim) > -1) {
+            this._parseNumericDate(thedate, dateDelim, suff, element);
+            continue;
+          }
+          if (element.match(/[0-9]{4}/)) {
+            thedate["year" + suff] = element.replace(/^0*/, "");
+            continue;
+          }
+          if (element === "~" || element === "?" || element === "c" || element.match(/^cir/)) {
+            thedate.circa = true;
+          }
+          for (let k = 0, klen = this.monthRexes.length; k < klen; k++) {
+            if (element.toLocaleLowerCase().match(this.monthRexes[k])) {
+              thedate["month" + suff] = "" + (parseInt(k, 10) + 1);
+              continue outer;
+            }
+          }
+          if (element.match(/^[0-9]+$/)) {
+            number = element;
+          }
+          if (element.toLocaleLowerCase().match(/^bc/) && number) {
+            thedate["year" + suff] = "" + parseInt(number, 10) * -1;
+            number = "";
+            continue;
+          }
+          if (element.toLocaleLowerCase().match(/^ad/) && number) {
+            thedate["year" + suff] = "" + number;
+            number = "";
+            continue;
+          }
+          if (element.toLocaleLowerCase().match(/(?:mic|tri|hil|eas)/) && !thedate["season" + suff]) {
+            note = element;
+            continue;
+          }
+        }
+      if (number) {
+        thedate["day" + suff] = number;
+        number = "";
+      }
+      if (note && !thedate["season" + suff]) {
+        thedate["season" + suff] = note.trim();
+        note = "";
+      }
+      suff = "_end";
+    }
+    if (isRange) {
+      for (let j = 0, jlen = DATE_PARTS_ALL.length; j < jlen; j++) {
+        const item = DATE_PARTS_ALL[j];
+        if (thedate[item] && !thedate[item + "_end"]) {
+          thedate[item + "_end"] = thedate[item];
+        } else if (!thedate[item] && thedate[item + "_end"]) {
+          thedate[item] = thedate[item + "_end"];
+        }
+      }
+    }
+    if (!thedate.year || thedate.year && thedate.day && !thedate.month) {
+      thedate = { "literal": orig };
+    }
+    const parts = ["year", "month", "day", "year_end", "month_end", "day_end"];
+    for (let i = 0, ilen = parts.length; i < ilen; i++) {
+      let part = parts[i];
+      if ("string" === typeof thedate[part] && thedate[part].match(/^[0-9]+$/)) {
+        thedate[part] = parseInt(thedate[part], 10);
+      }
+    }
+    if (yearIsNegative && Object.keys(thedate).indexOf("year") > -1) {
+      thedate.year = thedate.year * -1;
+    }
+    return thedate;
+  };
+  this.parseDateToArray = function(txt) {
+    return this.convertDateObjectToArray(this.parseDateToObject(txt));
+  };
+  this.parseDateToString = function(txt) {
+    return this.convertDateObjectToString(this.parseDateToObject(txt));
+  };
+  this.parse = function(txt) {
+    return this.parseDateToObject(txt);
+  };
+  this.setOrderMonthDay();
+  this.resetDateParserMonths();
+};
+var dateParserInstance = new DateParser();
+
+// src/util/name_particles.ts
+var ParticleList = /* @__PURE__ */ (function() {
+  const always_dropping_1 = [[[0, 1], null]];
+  const always_dropping_3 = [[[0, 3], null]];
+  const always_non_dropping_1 = [[null, [0, 1]]];
+  const always_non_dropping_2 = [[null, [0, 2]]];
+  const always_non_dropping_3 = [[null, [0, 3]]];
+  const either_1 = [[null, [0, 1]], [[0, 1], null]];
+  const either_2 = [[null, [0, 2]], [[0, 2], null]];
+  const either_1_dropping_best = [[[0, 1], null], [null, [0, 1]]];
+  const either_2_dropping_best = [[[0, 2], null], [null, [0, 2]]];
+  const either_3_dropping_best = [[[0, 3], null], [null, [0, 3]]];
+  const non_dropping_2_alt_dropping_1_non_dropping_1 = [[null, [0, 2]], [[0, 1], [1, 2]]];
+  const PARTICLES = [
+    ["'s", always_non_dropping_1],
+    ["'s-", always_non_dropping_1],
+    ["'t", always_non_dropping_1],
+    ["a", always_non_dropping_1],
+    ["aan 't", always_non_dropping_2],
+    ["aan de", always_non_dropping_2],
+    ["aan den", always_non_dropping_2],
+    ["aan der", always_non_dropping_2],
+    ["aan het", always_non_dropping_2],
+    ["aan t", always_non_dropping_2],
+    ["aan", always_non_dropping_1],
+    ["ad-", either_1],
+    ["adh-", either_1],
+    ["af", either_1],
+    ["al", either_1],
+    ["al-", either_1],
+    ["am de", always_non_dropping_2],
+    ["am", always_non_dropping_1],
+    ["an-", either_1],
+    ["ar-", either_1],
+    ["as-", either_1],
+    ["ash-", either_1],
+    ["at-", either_1],
+    ["ath-", either_1],
+    ["auf dem", either_2_dropping_best],
+    ["auf den", either_2_dropping_best],
+    ["auf der", either_2_dropping_best],
+    ["auf ter", always_non_dropping_2],
+    ["auf", either_1_dropping_best],
+    ["aus 'm", either_2_dropping_best],
+    ["aus dem", either_2_dropping_best],
+    ["aus den", either_2_dropping_best],
+    ["aus der", either_2_dropping_best],
+    ["aus m", either_2_dropping_best],
+    ["aus", either_1_dropping_best],
+    ["aus'm", either_2_dropping_best],
+    ["az-", either_1],
+    ["a\u0161-", either_1],
+    ["a\u1E0D-", either_1],
+    ["a\u1E0F-", either_1],
+    ["a\u1E63-", either_1],
+    ["a\u1E6D-", either_1],
+    ["a\u1E6F-", either_1],
+    ["a\u1E93-", either_1],
+    ["ben", always_non_dropping_1],
+    ["bij 't", always_non_dropping_2],
+    ["bij de", always_non_dropping_2],
+    ["bij den", always_non_dropping_2],
+    ["bij het", always_non_dropping_2],
+    ["bij t", always_non_dropping_2],
+    ["bij", always_non_dropping_1],
+    ["bin", always_non_dropping_1],
+    ["boven d", always_non_dropping_2],
+    ["boven d'", always_non_dropping_2],
+    ["d", always_non_dropping_1],
+    ["d'", either_1],
+    ["da", either_1],
+    ["dal", always_non_dropping_1],
+    ["dal'", always_non_dropping_1],
+    ["dall'", always_non_dropping_1],
+    ["dalla", always_non_dropping_1],
+    ["das", either_1],
+    ["de die le", always_non_dropping_3],
+    ["de die", always_non_dropping_2],
+    ["de l", always_non_dropping_2],
+    ["de l'", always_non_dropping_2],
+    ["de la", non_dropping_2_alt_dropping_1_non_dropping_1],
+    ["de las", non_dropping_2_alt_dropping_1_non_dropping_1],
+    ["de le", always_non_dropping_2],
+    ["de li", either_2],
+    ["de van der", always_non_dropping_3],
+    ["de", either_1],
+    ["de'", either_1],
+    ["deca", always_non_dropping_1],
+    ["degli", either_1],
+    ["dei", either_1],
+    ["del", either_1],
+    ["dela", always_dropping_1],
+    ["dell'", either_1],
+    ["della", either_1],
+    ["delle", either_1],
+    ["dello", either_1],
+    ["den", either_1],
+    ["der", either_1],
+    ["des", either_1],
+    ["di", either_1],
+    ["die le", always_non_dropping_2],
+    ["do", always_non_dropping_1],
+    ["don", always_non_dropping_1],
+    ["dos", either_1],
+    ["du", either_1],
+    ["ed-", either_1],
+    ["edh-", either_1],
+    ["el", either_1],
+    ["el-", either_1],
+    ["en-", either_1],
+    ["er-", either_1],
+    ["es-", either_1],
+    ["esh-", either_1],
+    ["et-", either_1],
+    ["eth-", either_1],
+    ["ez-", either_1],
+    ["e\u0161-", either_1],
+    ["e\u1E0D-", either_1],
+    ["e\u1E0F-", either_1],
+    ["e\u1E63-", either_1],
+    ["e\u1E6D-", either_1],
+    ["e\u1E6F-", either_1],
+    ["e\u1E93-", either_1],
+    ["het", always_non_dropping_1],
+    ["i", always_non_dropping_1],
+    ["il", always_dropping_1],
+    ["im", always_non_dropping_1],
+    ["in 't", always_non_dropping_2],
+    ["in de", always_non_dropping_2],
+    ["in den", always_non_dropping_2],
+    ["in der", either_2],
+    ["in het", always_non_dropping_2],
+    ["in t", always_non_dropping_2],
+    ["in", always_non_dropping_1],
+    ["l", always_non_dropping_1],
+    ["l'", always_non_dropping_1],
+    ["la", always_non_dropping_1],
+    ["las", always_non_dropping_1],
+    ["le", always_non_dropping_1],
+    ["les", either_1],
+    ["lo", either_1],
+    ["los", always_non_dropping_1],
+    ["lou", always_non_dropping_1],
+    ["of", always_non_dropping_1],
+    ["onder 't", always_non_dropping_2],
+    ["onder de", always_non_dropping_2],
+    ["onder den", always_non_dropping_2],
+    ["onder het", always_non_dropping_2],
+    ["onder t", always_non_dropping_2],
+    ["onder", always_non_dropping_1],
+    ["op 't", always_non_dropping_2],
+    ["op de", either_2],
+    ["op den", always_non_dropping_2],
+    ["op der", always_non_dropping_2],
+    ["op gen", always_non_dropping_2],
+    ["op het", always_non_dropping_2],
+    ["op t", always_non_dropping_2],
+    ["op ten", always_non_dropping_2],
+    ["op", always_non_dropping_1],
+    ["over 't", always_non_dropping_2],
+    ["over de", always_non_dropping_2],
+    ["over den", always_non_dropping_2],
+    ["over het", always_non_dropping_2],
+    ["over t", always_non_dropping_2],
+    ["over", always_non_dropping_1],
+    ["s", always_non_dropping_1],
+    ["s'", always_non_dropping_1],
+    ["sen", always_dropping_1],
+    ["t", always_non_dropping_1],
+    ["te", always_non_dropping_1],
+    ["ten", always_non_dropping_1],
+    ["ter", always_non_dropping_1],
+    ["tho", always_non_dropping_1],
+    ["thoe", always_non_dropping_1],
+    ["thor", always_non_dropping_1],
+    ["to", always_non_dropping_1],
+    ["toe", always_non_dropping_1],
+    ["tot", always_non_dropping_1],
+    ["uijt 't", always_non_dropping_2],
+    ["uijt de", always_non_dropping_2],
+    ["uijt den", always_non_dropping_2],
+    ["uijt te de", always_non_dropping_3],
+    ["uijt ten", always_non_dropping_2],
+    ["uijt", always_non_dropping_1],
+    ["uit 't", always_non_dropping_2],
+    ["uit de", always_non_dropping_2],
+    ["uit den", always_non_dropping_2],
+    ["uit het", always_non_dropping_2],
+    ["uit t", always_non_dropping_2],
+    ["uit te de", always_non_dropping_3],
+    ["uit ten", always_non_dropping_2],
+    ["uit", always_non_dropping_1],
+    ["unter", always_non_dropping_1],
+    ["v", always_non_dropping_1],
+    ["v.", always_non_dropping_1],
+    ["v.d.", always_non_dropping_1],
+    ["van 't", always_non_dropping_2],
+    ["van de l", always_non_dropping_3],
+    ["van de l'", always_non_dropping_3],
+    ["van de", always_non_dropping_2],
+    ["van de", always_non_dropping_2],
+    ["van den", always_non_dropping_2],
+    ["van der", always_non_dropping_2],
+    ["van gen", always_non_dropping_2],
+    ["van het", always_non_dropping_2],
+    ["van la", always_non_dropping_2],
+    ["van t", always_non_dropping_2],
+    ["van ter", always_non_dropping_2],
+    ["van van de", always_non_dropping_3],
+    ["van", either_1],
+    ["vander", always_non_dropping_1],
+    ["vd", always_non_dropping_1],
+    ["ver", always_non_dropping_1],
+    ["vom und zum", always_dropping_3],
+    ["vom", either_1],
+    ["von 't", always_non_dropping_2],
+    ["von dem", either_2_dropping_best],
+    ["von den", either_2_dropping_best],
+    ["von der", either_2_dropping_best],
+    ["von t", always_non_dropping_2],
+    ["von und zu", either_3_dropping_best],
+    ["von zu", either_2_dropping_best],
+    ["von", either_1_dropping_best],
+    ["voor 't", always_non_dropping_2],
+    ["voor de", always_non_dropping_2],
+    ["voor den", always_non_dropping_2],
+    ["voor in 't", always_non_dropping_3],
+    ["voor in t", always_non_dropping_3],
+    ["voor", always_non_dropping_1],
+    ["vor der", either_2_dropping_best],
+    ["vor", either_1_dropping_best],
+    ["z", always_dropping_1],
+    ["ze", always_dropping_1],
+    ["zu", either_1_dropping_best],
+    ["zum", either_1],
+    ["zur", either_1]
+  ];
+  return PARTICLES;
+})();
+var parseParticles = /* @__PURE__ */ (function() {
+  function splitParticles(nameValue, firstNameFlag, caseOverride) {
+    let origNameValue = nameValue;
+    nameValue = caseOverride ? nameValue.toLowerCase() : nameValue;
+    const particleList = [];
+    let rex;
+    let hasParticle;
+    if (firstNameFlag) {
+      nameValue = nameValue.split("").reverse().join("");
+      rex = PARTICLE_GIVEN_REGEXP;
+    } else {
+      rex = PARTICLE_FAMILY_REGEXP;
+    }
+    let m = nameValue.match(rex);
+    while (m) {
+      const m1 = firstNameFlag ? m[1].split("").reverse().join("") : m[1];
+      let firstChar = m ? m1 : false;
+      firstChar = firstChar ? m1.replace(/^[-\'\u02bb\u2019\s]*(.).*$/, "$1") : false;
+      hasParticle = firstChar ? firstChar.toUpperCase() !== firstChar : false;
+      if (!hasParticle) {
+        break;
+      }
+      if (firstNameFlag) {
+        particleList.push(origNameValue.slice(m1.length * -1));
+        origNameValue = origNameValue.slice(0, m1.length * -1);
+      } else {
+        particleList.push(origNameValue.slice(0, m1.length));
+        origNameValue = origNameValue.slice(m1.length);
+      }
+      nameValue = m[2];
+      m = nameValue.match(rex);
+    }
+    if (firstNameFlag) {
+      nameValue = nameValue.split("").reverse().join("");
+      particleList.reverse();
+      for (let i = 1, ilen = particleList.length; i < ilen; i += 1) {
+        if (particleList[i].slice(0, 1) == " ") {
+          particleList[i - 1] += " ";
+        }
+      }
+      for (let i2 = 0, ilen2 = particleList.length; i2 < ilen2; i2 += 1) {
+        if (particleList[i2].slice(0, 1) == " ") {
+          particleList[i2] = particleList[i2].slice(1);
+        }
+      }
+      nameValue = origNameValue.slice(0, nameValue.length);
+    } else {
+      nameValue = origNameValue.slice(nameValue.length * -1);
+    }
+    return [hasParticle, nameValue, particleList];
+  }
+  function trimLast(str) {
+    const lastChar = str.slice(-1);
+    str = str.trim();
+    if (lastChar === " " && ["'", "\u2019"].indexOf(str.slice(-1)) > -1) {
+      str += " ";
+    }
+    return str;
+  }
+  function parseSuffix(nameObj) {
+    if (!nameObj.suffix && nameObj.given) {
+      let m = nameObj.given.match(/(\s*,!*\s*)/);
+      if (m) {
+        const idx = nameObj.given.indexOf(m[1]);
+        const possible_suffix = nameObj.given.slice(idx + m[1].length);
+        const possible_comma = nameObj.given.slice(idx, idx + m[1].length).replace(/\s*/g, "");
+        if (possible_suffix.replace(/\./g, "") === "et al" && !nameObj["dropping-particle"]) {
+          nameObj["dropping-particle"] = possible_suffix;
+          nameObj["comma-dropping-particle"] = ",";
+        } else {
+          if (possible_comma.length === 2) {
+            nameObj["comma-suffix"] = true;
+          }
+          nameObj.suffix = possible_suffix;
+        }
+        nameObj.given = nameObj.given.slice(0, idx);
+      }
+    }
+  }
+  return function(nameObj) {
+    const res = splitParticles(nameObj.family);
+    const lastNameValue = res[1];
+    const lastParticleList = res[2];
+    nameObj.family = lastNameValue;
+    const nonDroppingParticle = trimLast(lastParticleList.join(""));
+    if (nonDroppingParticle) {
+      nameObj["non-dropping-particle"] = nonDroppingParticle;
+    }
+    parseSuffix(nameObj);
+    const res2 = splitParticles(nameObj.given, true);
+    const firstNameValue = res2[1];
+    const firstParticleList = res2[2];
+    nameObj.given = firstNameValue;
+    const droppingParticle = firstParticleList.join("").trim();
+    if (droppingParticle) {
+      nameObj["dropping-particle"] = droppingParticle;
+    }
+  };
+})();
+
+// src/util/parallel.ts
+var Parallel = class {
+  constructor(state) {
+    __publicField(this, "state");
+    this.state = state;
+  }
+  StartCitation(sortedItems, _out) {
+    this.state.tmp.suppress_repeats = [];
+    if (sortedItems.length < 2) {
+      return;
+    }
+    let idxEnd = 0;
+    let parallelMatchList = false;
+    const siblingRanges = [];
+    for (let i = 0, ilen = sortedItems.length - 1; i < ilen; i += 1) {
+      const currItem = sortedItems[i][0];
+      const nextItem = sortedItems[i + 1][0];
+      let freshMatchList = false;
+      const info = {};
+      if (sortedItems[i][0].seeAlso && sortedItems[i][0].seeAlso.length > 0 && !parallelMatchList) {
+        freshMatchList = true;
+        parallelMatchList = [sortedItems[i][0].id].concat(sortedItems[i][0].seeAlso);
+        let tempMatchList = parallelMatchList.slice();
+        const remainder = sortedItems.slice(i);
+        remainder[0][1].parallel = "first";
+        for (let j = 0, jlen = remainder.length; j < jlen; j += 1) {
+          const itemID = remainder[j][0].id;
+          const ididx = tempMatchList.indexOf(itemID);
+          idxEnd = false;
+          if (ididx === -1) {
+            idxEnd = i + j - 1;
+          } else if (i + j === sortedItems.length - 1) {
+            idxEnd = i + j;
+          }
+          if (idxEnd) {
+            siblingRanges.push([i, idxEnd]);
+            break;
+          } else {
+            tempMatchList = tempMatchList.slice(0, ididx).concat(tempMatchList.slice(ididx + 1));
+          }
+        }
+      }
+      if (i > 0 && freshMatchList) {
+        this.state.tmp.suppress_repeats[i - 1].START = true;
+        freshMatchList = false;
+      }
+      for (const varname in this.state.opt.track_repeat) {
+        if (!currItem[varname] || !nextItem[varname]) {
+          info[varname] = false;
+        } else if ("string" === typeof nextItem[varname] || "number" === typeof nextItem[varname]) {
+          let currVal2, nextVal2;
+          if (varname === "title" && currItem["title-short"] && nextItem["title-short"]) {
+            currVal2 = currItem["title-short"];
+            nextVal2 = nextItem["title-short"];
+          } else {
+            currVal2 = currItem[varname];
+            nextVal2 = nextItem[varname];
+          }
+          if (currVal2 == nextVal2) {
+            info[varname] = true;
+          } else {
+            info[varname] = false;
+          }
+        } else if ("undefined" === typeof currItem[varname].length) {
+          info[varname] = false;
+          const currYear = currItem[varname].year;
+          const nextYear = nextItem[varname].year;
+          if (currYear && nextYear) {
+            if (currYear == nextYear) {
+              info[varname] = true;
+            }
+          }
+        } else {
+          const currVal3 = JSON.stringify(currItem[varname]);
+          const nextVal3 = JSON.stringify(nextItem[varname]);
+          if (currVal3 === nextVal3) {
+            info[varname] = true;
+          } else {
+            info[varname] = false;
+          }
+        }
+      }
+      if (!parallelMatchList) {
+        info.ORPHAN = true;
+      }
+      if (idxEnd === i) {
+        info.END = true;
+        parallelMatchList = false;
+      }
+      this.state.tmp.suppress_repeats.push(info);
+    }
+    for (let j2 = 0, jlen2 = siblingRanges.length; j2 < jlen2; j2 += 1) {
+      const masterID = sortedItems[siblingRanges[j2][0]][0].id;
+      this.state.registry.registry[masterID].master = true;
+      this.state.registry.registry[masterID].siblings = [];
+      const start = siblingRanges[j2][0];
+      const end = siblingRanges[j2][1];
+      for (let k = start; k < end; k += 1) {
+        this.state.tmp.suppress_repeats[k].SIBLING = true;
+        const siblingID = sortedItems[k + 1][0].id;
+        sortedItems[k + 1][1].parallel = "other";
+        this.state.registry.registry[masterID].siblings.push(siblingID);
+      }
+    }
+  }
+  checkRepeats(params) {
+    const idx = this.state.tmp.cite_index;
+    if (this.state.tmp.suppress_repeats) {
+      if (params.parallel_first && Object.keys(params.parallel_first).length > 0) {
+        const arr = [{}].concat(this.state.tmp.suppress_repeats);
+        let ret = true;
+        for (const varname in params.parallel_first) {
+          if (!arr[idx][varname] || arr[idx].START) {
+            ret = false;
+          }
+        }
+        return ret;
+      }
+      if (params.parallel_last && Object.keys(params.parallel_last).length > 0) {
+        const arr2 = this.state.tmp.suppress_repeats.concat([{}]);
+        let ret2 = Object.keys(params.parallel_last).length > 0;
+        for (const varname2 in params.parallel_last) {
+          if (!arr2[idx][varname2] || arr2[idx].END) {
+            ret2 = false;
+          }
+        }
+        return ret2;
+      }
+      if (params.non_parallel && Object.keys(params.non_parallel).length > 0) {
+        const arr3 = [{}].concat(this.state.tmp.suppress_repeats);
+        let ret3 = true;
+        for (const varname3 in params.non_parallel) {
+          if (!arr3[idx][varname3]) {
+            ret3 = false;
+          }
+        }
+        return ret3;
+      }
+    }
+    return false;
+  }
+};
+
+// src/util/csl-shared.ts
+function checkNestedBrace(state) {
+  if (state.opt.xclass === "note") {
+    this.depth = 0;
+    this.update = function(str) {
+      str = str ? str : "";
+      let lst = str.split(/([\(\)])/);
+      for (let i = 1, ilen = lst.length; i < ilen; i += 2) {
+        if (lst[i] === "(") {
+          if (1 === this.depth % 2) {
+            lst[i] = "[";
+          }
+          this.depth += 1;
+        } else if (lst[i] === ")") {
+          if (0 === this.depth % 2) {
+            lst[i] = "]";
+          }
+          this.depth -= 1;
+        }
+      }
+      let ret = lst.join("");
+      return ret;
+    };
+  } else {
+    this.update = function(str) {
+      return str;
+    };
+  }
+}
+function parseLocator(item) {
+  if (this.opt.development_extensions.locator_date_and_revision) {
+    if (item.locator) {
+      item.locator = "" + item.locator;
+      const idx = item.locator.indexOf("|");
+      if (idx > -1) {
+        let raw_locator = item.locator;
+        item.locator = raw_locator.slice(0, idx);
+        raw_locator = raw_locator.slice(idx + 1);
+        let m = raw_locator.match(/^([0-9]{4}-[0-9]{2}-[0-9]{2}).*/);
+        if (m) {
+          item["locator-date"] = this.fun.dateparser.parseDateToObject(m[1]);
+          raw_locator = raw_locator.slice(m[1].length);
+        }
+        item["locator-extra"] = raw_locator.replace(/^\s+/, "").replace(/\s+$/, "");
+      }
+    }
+  }
+  if (item.locator) {
+    item.locator = ("" + item.locator).replace(/\s+$/, "");
+  }
+  return item;
+}
+function parseNoteFieldHacks(Item, validFieldsForType, allowDateOverride) {
+  if ("string" !== typeof Item.note) {
+    return;
+  }
+  const elems = [];
+  let lines = Item.note.split("\n");
+  for (let i = 0, ilen = lines.length; i < ilen; i++) {
+    const line = lines[i];
+    const elems2 = [];
+    let m = line.match(NOTE_FIELDS_REGEXP);
+    if (m) {
+      const splt = line.split(NOTE_FIELDS_REGEXP);
+      for (let j = 0, jlen = splt.length - 1; j < jlen; j++) {
+        elems2.push(splt[j]);
+        elems2.push(m[j]);
+      }
+      elems2.push(splt[splt.length - 1]);
+      for (let j = 1, jlen = elems2.length; j < jlen; j += 2) {
+        if (elems2[j - 1].trim() && (i > 0 || j > 1) && !elems2[j - 1].match(NOTE_FIELD_REGEXP)) {
+          break;
+        } else {
+          elems2[j] = "\n" + elems2[j].slice(2, -1).trim() + "\n";
+        }
+      }
+      lines[i] = elems2.join("");
+    }
+  }
+  lines = lines.join("\n").split("\n");
+  let offset = 0;
+  const names = {};
+  for (let i = 0, ilen = lines.length; i < ilen; i++) {
+    const line = lines[i];
+    const mm = line.match(NOTE_FIELD_REGEXP);
+    if (!line.trim()) {
+      continue;
+    } else if (!mm) {
+      if (i === 0) {
+        continue;
+      } else {
+        offset = i;
+        break;
+      }
+    }
+    let key = mm[1];
+    const val = mm[2].replace(/^\s+/, "").replace(/\s+$/, "");
+    if (key === "type") {
+      Item.type = val;
+      lines[i] = "";
+    } else if (DATE_VARIABLES.indexOf(key.replace(/^alt-/, "")) > -1) {
+      if (!Item[key] || allowDateOverride) {
+        Item[key] = dateParserInstance.parseDateToArray(val);
+        if (!validFieldsForType || validFieldsForType[key]) {
+          lines[i] = "";
+        }
+      }
+    } else if (!Item[key]) {
+      if (NAME_VARIABLES.indexOf(key.replace(/^alt-/, "")) > -1) {
+        if (!names[key]) {
+          names[key] = [];
+        }
+        let lst = val.split(/\s*\|\|\s*/);
+        if (lst.length === 1) {
+          names[key].push({ literal: lst[0] });
+        } else if (lst.length === 2) {
+          const name = { family: lst[0], given: lst[1] };
+          parseParticles(name);
+          names[key].push(name);
+        }
+      } else {
+        Item[key] = val;
+      }
+      if (!validFieldsForType || validFieldsForType[key]) {
+        lines[i] = "";
+      }
+    }
+  }
+  for (let key in names) {
+    Item[key] = names[key];
+  }
+  if (validFieldsForType) {
+    if (lines[offset].trim()) {
+      lines[offset] = "\n" + lines[offset];
+    }
+    for (let i = offset - 1; i > -1; i--) {
+      if (!lines[i].trim()) {
+        lines = lines.slice(0, i).concat(lines.slice(i + 1));
+      }
+    }
+  }
+  Item.note = lines.join("\n").trim();
+}
+function getSafeEscape(state) {
+  if (["bibliography", "citation"].indexOf(state.tmp.area) > -1) {
+    const callbacks = [];
+    if (state.opt.development_extensions.thin_non_breaking_space_html_hack && state.opt.mode === "html") {
+      callbacks.push(function(txt) {
+        return txt.replace(/\u202f/g, '<span style="white-space:nowrap">&thinsp;</span>');
+      });
+    }
+    if (callbacks.length) {
+      return function(txt) {
+        for (let i = 0, ilen = callbacks.length; i < ilen; i += 1) {
+          txt = callbacks[i](txt);
+        }
+        return Output_formats[state.opt.mode].text_escape(txt);
+      };
+    } else {
+      return Output_formats[state.opt.mode].text_escape;
+    }
+  } else {
+    return function(txt) {
+      return txt;
+    };
+  }
+}
+function UPDATE_GROUP_CONTEXT_CONDITION(state, str, valueTerm, token, value) {
+  if (!state.opt.use_context_condition) return;
+  const flags = state.tmp.group_context.tip;
+  if (flags.condition) {
+    if (!flags.condition.termtxt) {
+      flags.condition.termtxt = str;
+      flags.condition.valueTerm = valueTerm;
+    }
+    if (!flags.value_seen && flags.condition.test === "comma-safe-numbers-only") {
+      if (value) {
+        flags.value_seen = true;
+        if (!value.match(/^[0-9]/)) {
+          state.tmp.just_did_number = false;
+        }
+      }
+    }
+  } else {
+    if (token && token.decorations.filter((o) => o[0] === "@vertical-align").length > 0) {
+      state.tmp.just_did_number = false;
+    } else if (token && token.strings.suffix) {
+      state.tmp.just_did_number = false;
+    } else if (str) {
+      if (str.match(/[0-9]$/)) {
+        state.tmp.just_did_number = true;
+      } else {
+        state.tmp.just_did_number = false;
+      }
+    }
+  }
+}
+function EVALUATE_GROUP_CONDITION(state, flags) {
+  if (!state.opt.use_context_condition) return false;
+  let testres;
+  const numbersOnly = flags.condition.test === "comma-safe-numbers-only";
+  if (flags.condition.test === "empty-label") {
+    testres = !flags.condition.termtxt;
+  } else if (flags.condition.test === "empty-label-no-decor") {
+    testres = !flags.condition.termtxt || flags.condition.termtxt.indexOf("%s") > -1;
+  } else if (["comma-safe", "comma-safe-numbers-only"].indexOf(flags.condition.test) > -1) {
+    const locale_term = flags.condition.termtxt;
+    let termStartAlpha = false;
+    if (flags.condition.termtxt) {
+      termStartAlpha = flags.condition.termtxt.slice(0, 1).match(ALL_ROMANESQUE_REGEXP);
+    }
+    const num = state.tmp.just_did_number;
+    if (num) {
+      if (flags.condition.valueTerm) {
+        testres = numbersOnly ? false : true;
+      } else if (!locale_term) {
+        testres = true;
+      } else if (termStartAlpha) {
+        testres = numbersOnly ? false : true;
+      } else if (["always", "after-number"].indexOf(state.opt.require_comma_on_symbol) > -1) {
+        testres = true;
+      } else {
+        testres = false;
+      }
+    } else {
+      if (flags.condition.valueTerm) {
+        testres = false;
+      } else if (!locale_term) {
+        testres = false;
+      } else if (termStartAlpha) {
+        testres = numbersOnly ? false : true;
+      } else if (state.opt.require_comma_on_symbol === "always") {
+        testres = true;
+      } else {
+        testres = false;
+      }
+    }
+  }
+  let force_suppress;
+  if (testres) {
+    force_suppress = false;
+  } else {
+    force_suppress = true;
+  }
+  if (flags.condition.not) {
+    force_suppress = !force_suppress;
+  }
+  return force_suppress;
+}
+function GET_COURT_CLASS(state, Item, sortKey) {
+  let cls = "";
+  let authority = null;
+  const country = Item.jurisdiction ? Item.jurisdiction.split(":")[0] : null;
+  let classType = "court_condition_classes";
+  if (sortKey) {
+    classType = "court_key_classes";
+  }
+  if (country && Item.authority) {
+    if ("string" === typeof Item.authority) {
+      authority = Item.authority;
+    } else {
+      if (Item.authority[0] && Item.authority[0].literal) {
+        authority = Item.authority[0].literal;
+      }
+    }
+  }
+  if (authority) {
+    const lang = state.opt.lang;
+    if (lang && state.locale[lang].opts[classType] && state.locale[lang].opts[classType][country] && state.locale[lang].opts[classType][country][authority]) {
+      cls = state.locale[lang].opts[classType][country][authority];
+    } else if (state.locale[state.opt["default-locale"][0]].opts[classType] && state.locale[state.opt["default-locale"][0]].opts[classType][country] && state.locale[state.opt["default-locale"][0]].opts[classType][country][authority]) {
+      cls = state.locale[state.opt["default-locale"][0]].opts[classType][country][authority];
+    }
+  }
+  return cls;
+}
+function SET_COURT_CLASSES(state, lang, myxml, dataObj) {
+  const nodes = myxml.getNodesByName(dataObj, "court-class");
+  for (let pos = 0, len = myxml.numberofnodes(nodes); pos < len; pos += 1) {
+    const courtclass = nodes[pos];
+    const attributes = myxml.attributes(courtclass);
+    let cls = attributes["@name"];
+    const country = attributes["@country"];
+    let courts = attributes["@courts"];
+    let classType = "court_key_classes";
+    if (state.registry) {
+      classType = "court_condition_classes";
+    }
+    if (cls && country && courts) {
+      courts = courts.trim().split(/\s+/);
+      if (!state.locale[lang].opts[classType]) {
+        state.locale[lang].opts[classType] = {};
+      }
+      if (!state.locale[lang].opts[classType][country]) {
+        state.locale[lang].opts[classType][country] = {};
+      }
+      for (let i = 0, ilen = courts.length; i < ilen; i++) {
+        state.locale[lang].opts[classType][country][courts[i]] = cls;
+      }
+    }
+  }
+}
+function INIT_JURISDICTION_MACROS(state, Item, item, macroName) {
+  if (Item["best-jurisdiction"]) {
+    return true;
+  }
+  if (!state.sys.retrieveStyleModule || !MODULE_MACROS[macroName] || !Item.jurisdiction) {
+    return false;
+  }
+  const jurisdictionList = state.getJurisdictionList(Item.jurisdiction);
+  if (!state.opt.jurisdictions_seen[jurisdictionList[0]]) {
+    const res = state.retrieveAllStyleModules(jurisdictionList);
+    for (const jurisdiction in res) {
+      const fallback = state.loadStyleModule(jurisdiction, res[jurisdiction]);
+      if (fallback) {
+        if (!res[fallback]) {
+          Object.assign(res, state.retrieveAllStyleModules([fallback]));
+          state.loadStyleModule(fallback, res[fallback], true);
+        }
+      }
+    }
+  }
+  if (state.opt.parallel.enable) {
+    if (!state.parallel) {
+      state.parallel = new Parallel(state);
+    }
+  }
+  for (let i = 0, ilen = jurisdictionList.length; i < ilen; i++) {
+    const jurisdiction = jurisdictionList[i];
+    if (item) {
+      if (state.juris[jurisdiction] && !item["best-jurisdiction"] && state.juris[jurisdiction].types.locator) {
+        Item["best-jurisdiction"] = jurisdiction;
+      }
+    }
+    if (state.juris[jurisdiction] && state.juris[jurisdiction].types[Item.type]) {
+      Item["best-jurisdiction"] = jurisdiction;
+      return true;
+    }
+  }
+  return false;
+}
+
+// src/util/disambig.ts
+function ambigConfigDiff(a, b) {
+  let pos, len, ppos, llen;
+  if (a.names.length !== b.names.length) {
+    return 1;
+  } else {
+    for (let pos2 = 0, len2 = a.names.length; pos2 < len2; pos2 += 1) {
+      if (a.names[pos2] !== b.names[pos2]) {
+        return 1;
+      } else {
+        for (let ppos2 = 0, llen2 = a.givens[pos2]; ppos2 < llen2; ppos2 += 1) {
+          if (a.givens[pos2][ppos2] !== b.givens[pos2][ppos2]) {
+            return 1;
+          }
+        }
+      }
+    }
+  }
+  if (a.disambiguate != b.disambiguate) {
+    return 1;
+  }
+  if (a.year_suffix !== b.year_suffix) {
+    return 1;
+  }
+  return 0;
+}
+function cloneAmbigConfig(config, oldconfig) {
+  let i, ilen, j, jlen, param;
+  let ret = {};
+  ret.names = [];
+  ret.givens = [];
+  ret.year_suffix = false;
+  ret.disambiguate = false;
+  for (let i2 = 0, ilen2 = config.names.length; i2 < ilen2; i2 += 1) {
+    param = config.names[i2];
+    ret.names[i2] = param;
+  }
+  for (let i2 = 0, ilen2 = config.givens.length; i2 < ilen2; i2 += 1) {
+    param = [];
+    for (let j2 = 0, jlen2 = config.givens[i2].length; j2 < jlen2; j2 += 1) {
+      param.push(config.givens[i2][j2]);
+    }
+    ret.givens.push(param);
+  }
+  if (oldconfig) {
+    ret.year_suffix = oldconfig.year_suffix;
+    ret.disambiguate = oldconfig.disambiguate;
+  } else {
+    ret.year_suffix = config.year_suffix;
+    ret.disambiguate = config.disambiguate;
+  }
+  return ret;
+}
+function getAmbigConfig() {
+  let config, ret;
+  config = this.tmp.disambig_request;
+  if (!config) {
+    config = this.tmp.disambig_settings;
+  }
+  const ret2 = cloneAmbigConfig(config);
+  return ret2;
+}
+function getMaxVals() {
+  return this.tmp.names_max.mystack.slice();
+}
+function getMinVal() {
+  return this.tmp["et-al-min"];
+}
+
+// src/obj/token.ts
+var Token = class {
+  constructor(name, tokentype, conditional) {
+    __publicField(this, "name");
+    __publicField(this, "strings");
+    __publicField(this, "decorations");
+    __publicField(this, "variables");
+    __publicField(this, "execs");
+    __publicField(this, "tokentype");
+    // Conditional branching fields (populated at runtime)
+    __publicField(this, "evaluator");
+    __publicField(this, "tests");
+    __publicField(this, "test");
+    __publicField(this, "succeed");
+    __publicField(this, "fail");
+    __publicField(this, "next");
+    __publicField(this, "juris");
+    __publicField(this, "dateparts");
+    __publicField(this, "postponed_macro");
+    __publicField(this, "range_prefix");
+    __publicField(this, "successor_prefix");
+    __publicField(this, "splice_prefix");
+    __publicField(this, "formatter");
+    __publicField(this, "gender");
+    __publicField(this, "default_locale");
+    __publicField(this, "requireMatch");
+    __publicField(this, "isJurisLocatorLabel");
+    this.name = name;
+    this.strings = {};
+    this.strings.delimiter = void 0;
+    this.strings.prefix = "";
+    this.strings.suffix = "";
+    this.decorations = [];
+    this.variables = [];
+    this.execs = [];
+    this.tokentype = tokentype;
+    this.evaluator = false;
+    this.tests = [];
+    this.succeed = false;
+    this.fail = false;
+    this.next = false;
+  }
+};
+function Util_cloneToken(token) {
+  let newtok, key, pos, len;
+  if ("string" === typeof token) {
+    return token;
+  }
+  newtok = new Token(token.name, token.tokentype);
+  for (let key2 in token.strings) {
+    if (token.strings.hasOwnProperty(key2)) {
+      newtok.strings[key2] = token.strings[key2];
+    }
+  }
+  if (token.decorations) {
+    newtok.decorations = [];
+    for (let pos2 = 0, len2 = token.decorations.length; pos2 < len2; pos2 += 1) {
+      newtok.decorations.push(token.decorations[pos2].slice());
+    }
+  }
+  if (token.variables) {
+    newtok.variables = token.variables.slice();
+  }
+  if (token.execs) {
+    newtok.execs = token.execs.slice();
+    if (token.tests) {
+      newtok.tests = token.tests.slice();
+    }
+  }
+  return newtok;
+}
+
+// src/obj/blob.ts
+var Blob = class {
+  constructor(str, token, levelname) {
+    __publicField(this, "levelname");
+    __publicField(this, "strings");
+    __publicField(this, "decorations");
+    __publicField(this, "blobs");
+    __publicField(this, "alldecor");
+    __publicField(this, "num");
+    __publicField(this, "particle");
+    __publicField(this, "status");
+    __publicField(this, "formatter");
+    __publicField(this, "gender");
+    __publicField(this, "successor_prefix");
+    __publicField(this, "range_prefix");
+    __publicField(this, "splice_prefix");
+    __publicField(this, "punctuation_in_quote");
+    __publicField(this, "new_locale");
+    __publicField(this, "old_locale");
+    __publicField(this, "isInstitution");
+    __publicField(this, "suppress_splice_prefix");
+    __publicField(this, "UGLY_DELIMITER_SUPPRESS_HACK");
+    __publicField(this, "checkNext");
+    __publicField(this, "checkLast");
+    __publicField(this, "params");
+    this.levelname = levelname;
+    if (token) {
+      this.strings = { "prefix": "", "suffix": "", "delimiter": "" };
+      for (const key in token.strings) {
+        if (token.strings.hasOwnProperty(key)) {
+          this.strings[key] = token.strings[key];
+        }
+      }
+      this.decorations = [];
+      let len;
+      if (token.decorations === void 0) {
+        len = 0;
+      } else {
+        len = token.decorations.length;
+      }
+      for (let pos = 0; pos < len; pos += 1) {
+        this.decorations.push(token.decorations[pos].slice());
+      }
+    } else {
+      this.strings = { prefix: "", suffix: "", delimiter: "" };
+      this.decorations = [];
+    }
+    if ("string" === typeof str) {
+      this.blobs = str;
+    } else if (str) {
+      this.blobs = [str];
+    } else {
+      this.blobs = [];
+    }
+    this.alldecor = [this.decorations];
+  }
+  push(blob) {
+    if ("string" === typeof this.blobs) {
+      error("Attempt to push blob onto string object");
+    } else if (false !== blob) {
+      blob.alldecor = blob.alldecor.concat(this.alldecor);
+      this.blobs.push(blob);
+    }
+  }
+};
+
+// src/stack.ts
+var Stack = class {
+  constructor(val, literal) {
+    __publicField(this, "mystack");
+    __publicField(this, "tip");
+    this.mystack = [];
+    if (literal || val !== void 0) {
+      this.mystack.push(val);
+    }
+    this.tip = this.mystack[0];
+  }
+  /** Push a value onto the stack. */
+  push(val, literal) {
+    if (literal || val !== void 0) {
+      this.mystack.push(val);
+    } else {
+      this.mystack.push("");
+    }
+    this.tip = this.mystack[this.mystack.length - 1];
+  }
+  /** Clear the stack */
+  clear() {
+    this.mystack = [];
+    this.tip = {};
+  }
+  /**
+   * Replace the top value on the stack.
+   * <p>This removes some ugly syntax from the
+   * main code.</p>
+   */
+  replace(val, literal) {
+    if (this.mystack.length === 0) {
+      error("Internal CSL processor error: attempt to replace nonexistent stack item with " + val);
+    }
+    if (literal || val !== void 0) {
+      this.mystack[this.mystack.length - 1] = val;
+    } else {
+      this.mystack[this.mystack.length - 1] = "";
+    }
+    this.tip = this.mystack[this.mystack.length - 1];
+  }
+  /** Remove the top value from the stack. */
+  pop() {
+    const ret = this.mystack.pop();
+    if (this.mystack.length) {
+      this.tip = this.mystack[this.mystack.length - 1];
+    } else {
+      this.tip = {};
+    }
+    return ret;
+  }
+  /** Return the top value on the stack. */
+  value() {
+    return this.mystack.slice(-1)[0];
+  }
+  /** Return length (depth) of stack. */
+  length() {
+    return this.mystack.length;
+  }
+};
+
+// src/output/queue.ts
+var _Queue = class _Queue {
+  constructor(state) {
+    __publicField(this, "levelname");
+    __publicField(this, "state");
+    __publicField(this, "queue");
+    __publicField(this, "empty");
+    __publicField(this, "formats");
+    __publicField(this, "current");
+    __publicField(this, "last_char_rendered");
+    __publicField(this, "checkNestedBrace");
+    this.levelname = ["top"];
+    this.state = state;
+    this.queue = [];
+    this.empty = new Token("empty");
+    const tokenstore = {};
+    tokenstore.empty = this.empty;
+    this.formats = new Stack(tokenstore);
+    this.current = new Stack(this.queue);
+  }
+  pop() {
+    const drip = this.current.value();
+    if (drip.length) {
+      return drip.pop();
+    } else {
+      return drip.blobs.pop();
+    }
+  }
+  getToken(name) {
+    const ret = this.formats.value()[name];
+    return ret;
+  }
+  mergeTokenStrings(base, modifier) {
+    let base_token, modifier_token, ret, key;
+    base_token = this.formats.value()[base];
+    modifier_token = this.formats.value()[modifier];
+    ret = base_token;
+    if (modifier_token) {
+      if (!base_token) {
+        base_token = new Token(base, SINGLETON);
+        base_token.decorations = [];
+      }
+      ret = new Token(base, SINGLETON);
+      let key2 = "";
+      for (let key3 in base_token.strings) {
+        if (base_token.strings.hasOwnProperty(key3)) {
+          ret.strings[key3] = base_token.strings[key3];
+        }
+      }
+      for (let key3 in modifier_token.strings) {
+        if (modifier_token.strings.hasOwnProperty(key3)) {
+          ret.strings[key3] = modifier_token.strings[key3];
+        }
+      }
+      ret.decorations = base_token.decorations.concat(modifier_token.decorations);
+    }
+    return ret;
+  }
+  addToken(name, modifier, token) {
+    let newtok, attr;
+    newtok = new Token("output");
+    if ("string" === typeof token) {
+      token = this.formats.value()[token];
+    }
+    if (token && token.strings) {
+      for (let attr2 in token.strings) {
+        if (token.strings.hasOwnProperty(attr2)) {
+          newtok.strings[attr2] = token.strings[attr2];
+        }
+      }
+      newtok.decorations = token.decorations;
+    }
+    if ("string" === typeof modifier) {
+      newtok.strings.delimiter = modifier;
+    }
+    this.formats.value()[name] = newtok;
+  }
+  pushFormats(tokenstore) {
+    if (!tokenstore) {
+      tokenstore = {};
+    }
+    tokenstore.empty = this.empty;
+    this.formats.push(tokenstore);
+  }
+  popFormats() {
+    this.formats.pop();
+  }
+  startTag(name, token) {
+    const tokenstore = {};
+    if (this.state.tmp["doing-macro-with-date"] && this.state.tmp.extension) {
+      token = this.empty;
+      name = "empty";
+    }
+    tokenstore[name] = token;
+    this.pushFormats(tokenstore);
+    this.openLevel(name);
+  }
+  endTag(name) {
+    this.closeLevel(name);
+    this.popFormats();
+  }
+  openLevel(token) {
+    let blob, curr;
+    if ("object" === typeof token) {
+      blob = new Blob(void 0, token);
+    } else if ("undefined" === typeof token) {
+      blob = new Blob(void 0, this.formats.value().empty, "empty");
+    } else {
+      if (!this.formats.value() || !this.formats.value()[token]) {
+        error('CSL processor error: call to nonexistent format token "' + token + '"');
+      }
+      blob = new Blob(void 0, this.formats.value()[token], token);
+    }
+    curr = this.current.value();
+    if (!this.state.tmp.just_looking && this.checkNestedBrace) {
+      blob.strings.prefix = this.checkNestedBrace.update(blob.strings.prefix);
+    }
+    curr.push(blob);
+    this.current.push(blob);
+  }
+  closeLevel(name) {
+    if (name && name !== this.current.value().levelname) {
+      error("Level mismatch error:  wanted " + name + " but found " + this.current.value().levelname);
+    }
+    const blob = this.current.pop();
+    if (!this.state.tmp.just_looking && this.checkNestedBrace) {
+      blob.strings.suffix = this.checkNestedBrace.update(blob.strings.suffix);
+    }
+  }
+  append(str, tokname, notSerious, ignorePredecessor, noStripPeriods) {
+    let token, blob, curr;
+    let useblob = true;
+    if (notSerious) {
+      ignorePredecessor = true;
+    }
+    if (this.state.tmp["doing-macro-with-date"] && !notSerious) {
+      if (tokname !== "macro-with-date") {
+        return false;
+      }
+      if (tokname === "macro-with-date") {
+        tokname = "empty";
+      }
+    }
+    if ("undefined" === typeof str) {
+      return false;
+    }
+    if ("number" === typeof str) {
+      str = "" + str;
+    }
+    if (!notSerious && this.state.tmp.element_trace && this.state.tmp.element_trace.value() === "suppress-me") {
+      return false;
+    }
+    blob = false;
+    if (!tokname) {
+      token = this.formats.value().empty;
+    } else if (tokname === "literal") {
+      token = true;
+      useblob = false;
+    } else if ("string" === typeof tokname) {
+      token = this.formats.value()[tokname];
+    } else {
+      token = tokname;
+    }
+    if (!token) {
+      error("CSL processor error: unknown format token name: " + tokname);
+    }
+    if (token.strings && "undefined" === typeof token.strings.delimiter) {
+      token.strings.delimiter = "";
+    }
+    if ("string" === typeof str && str.length) {
+      str = str.replace(/ ([:;?!\u00bb])/g, "\u202F$1").replace(/\u00ab /g, "\xAB\u202F");
+      this.last_char_rendered = str.slice(-1);
+      str = str.replace(/\s+'/g, " '");
+      if (!notSerious) {
+        str = str.replace(/^'/g, " '");
+      }
+      if (!ignorePredecessor) {
+        this.state.tmp.term_predecessor = true;
+        this.state.tmp.in_cite_predecessor = true;
+      } else if (notSerious) {
+        this.state.tmp.term_predecessor_name = true;
+      }
+    }
+    blob = new Blob(str, token);
+    curr = this.current.value();
+    if ("undefined" === typeof curr && this.current.mystack.length === 0) {
+      this.current.mystack.push([]);
+      curr = this.current.value();
+    }
+    if ("string" === typeof blob.blobs) {
+      if (!ignorePredecessor) {
+        this.state.tmp.term_predecessor = true;
+        this.state.tmp.in_cite_predecessor = true;
+      } else if (notSerious) {
+        this.state.tmp.term_predecessor_name = true;
+      }
+    }
+    if ("string" === typeof str) {
+      if ("string" === typeof blob.blobs) {
+        if (blob.blobs.slice(0, 1) !== " ") {
+          let blobPrefix = "";
+          let blobBlobs = blob.blobs;
+          while (TERMINAL_PUNCTUATION.indexOf(blobBlobs.slice(0, 1)) > -1) {
+            blobPrefix = blobPrefix + blobBlobs.slice(0, 1);
+            blobBlobs = blobBlobs.slice(1);
+          }
+          if (blobBlobs && blobPrefix) {
+            blob.strings.prefix = blob.strings.prefix + blobPrefix;
+            blob.blobs = blobBlobs;
+          }
+        }
+      }
+      if (blob.strings["text-case"]) {
+        blob.blobs = Output_formatters[blob.strings["text-case"]](this.state, str);
+      }
+      if (this.state.tmp.strip_periods && !noStripPeriods) {
+        blob.blobs = blob.blobs.replace(/\.([^a-z]|$)/g, "$1");
+      }
+      for (let i = blob.decorations.length - 1; i > -1; i += -1) {
+        if (blob.decorations[i][0] === "@quotes" && blob.decorations[i][1] !== "false") {
+          blob.punctuation_in_quote = this.state.getOpt("punctuation-in-quote");
+        }
+        if (!blob.blobs.match(ROMANESQUE_REGEXP)) {
+          if (blob.decorations[i][0] === "@font-style") {
+            blob.decorations = blob.decorations.slice(0, i).concat(blob.decorations.slice(i + 1));
+          }
+        }
+      }
+      curr.push(blob);
+      this.state.fun.flipflopper.processTags(blob);
+    } else if (useblob) {
+      curr.push(blob);
+    } else {
+      curr.push(str);
+    }
+    return true;
+  }
+  string(state, myblobs, blob) {
+    let i, ilen, j, jlen, b;
+    const txt_esc = getSafeEscape(this.state);
+    const blobs = myblobs.slice();
+    let ret = [];
+    if (blobs.length === 0) {
+      return ret;
+    }
+    let blob_delimiter = "";
+    if (blob) {
+      blob_delimiter = blob.strings.delimiter;
+    } else {
+      state.tmp.count_offset_characters = false;
+      state.tmp.offset_characters = 0;
+    }
+    if (blob && blob.new_locale) {
+      blob.old_locale = state.opt.lang;
+      state.opt.lang = blob.new_locale;
+    }
+    let blobjr, use_suffix, use_prefix, params;
+    for (let i2 = 0, ilen2 = blobs.length; i2 < ilen2; i2 += 1) {
+      blobjr = blobs[i2];
+      if (blobjr.strings.first_blob) {
+        state.tmp.count_offset_characters = blobjr.strings.first_blob;
+      }
+      if ("string" === typeof blobjr.blobs) {
+        if ("number" === typeof blobjr.num) {
+          ret.push(blobjr);
+        } else if (blobjr.blobs) {
+          if (blobjr.particle) {
+            blobjr.blobs = blobjr.particle + blobjr.blobs;
+            blobjr.particle = "";
+          }
+          b = txt_esc(blobjr.blobs);
+          const blen = b.length;
+          if (!state.tmp.suppress_decorations) {
+            for (let j2 = 0, jlen2 = blobjr.decorations.length; j2 < jlen2; j2 += 1) {
+              params = blobjr.decorations[j2];
+              if (params[0] === "@showid") {
+                continue;
+              }
+              if (state.normalDecorIsOrphan(blobjr, params)) {
+                continue;
+              }
+              b = state.fun.decorate[params[0]][params[1]].call(blobjr, state, b, params[2]);
+            }
+          }
+          if (b && b.length) {
+            b = txt_esc(blobjr.strings.prefix) + b + txt_esc(blobjr.strings.suffix);
+            if (state.opt.development_extensions.csl_reverse_lookup_support && !state.tmp.suppress_decorations) {
+              for (let j2 = 0, jlen2 = blobjr.decorations.length; j2 < jlen2; j2 += 1) {
+                params = blobjr.decorations[j2];
+                if (params[0] === "@showid") {
+                  b = state.fun.decorate[params[0]][params[1]].call(blobjr, state, b, params[2]);
+                }
+              }
+            }
+            ret.push(b);
+            if (state.tmp.count_offset_characters) {
+              state.tmp.offset_characters += blen + blobjr.strings.suffix.length + blobjr.strings.prefix.length;
+            }
+          }
+        }
+      } else if (blobjr.blobs.length) {
+        const addtoret = state.output.string(state, blobjr.blobs, blobjr);
+        if (blob) {
+          if ("string" !== addtoret && addtoret.length > 1 && blobjr.strings.delimiter) {
+            let numberSeen = false;
+            for (let j2 = 0, jlen2 = addtoret.length; j2 < jlen2; j2++) {
+              if ("string" !== typeof addtoret[j2]) {
+                numberSeen = true;
+              } else if (numberSeen) {
+                addtoret[j2] = blobjr.strings.delimiter + addtoret[j2];
+              }
+            }
+          }
+        }
+        ret = ret.concat(addtoret);
+      }
+      if (blobjr.strings.first_blob && state.registry.registry[blobjr.strings.first_blob]) {
+        state.registry.registry[blobjr.strings.first_blob].offset = state.tmp.offset_characters;
+        state.tmp.count_offset_characters = false;
+      }
+    }
+    for (let i2 = 0, ilen2 = ret.length - 1; i2 < ilen2; i2 += 1) {
+      if ("number" === typeof ret[i2].num && "number" === typeof ret[i2 + 1].num && !ret[i2 + 1].UGLY_DELIMITER_SUPPRESS_HACK) {
+        ret[i2].strings.suffix = ret[i2].strings.suffix + (blob_delimiter ? blob_delimiter : "");
+        ret[i2 + 1].successor_prefix = "";
+        ret[i2 + 1].UGLY_DELIMITER_SUPPRESS_HACK = true;
+      }
+    }
+    let span_split = 0;
+    for (let i2 = 0, ilen2 = ret.length; i2 < ilen2; i2 += 1) {
+      if ("string" === typeof ret[i2]) {
+        span_split = i2 + 1;
+        if (i2 < ret.length - 1 && "object" === typeof ret[i2 + 1]) {
+          if (blob_delimiter && !ret[i2 + 1].UGLY_DELIMITER_SUPPRESS_HACK) {
+            ret[i2] += txt_esc(blob_delimiter);
+          }
+          ret[i2 + 1].UGLY_DELIMITER_SUPPRESS_HACK = true;
+        }
+      }
+    }
+    if (blob && (blob.decorations.length || blob.strings.suffix)) {
+      span_split = ret.length;
+    } else if (blob && blob.strings.prefix) {
+      for (let i2 = 0, ilen2 = ret.length; i2 < ilen2; i2++) {
+        if ("undefined" !== typeof ret[i2].num) {
+          span_split = i2;
+          if (i2 === 0) {
+            ret[i2].strings.prefix = blob.strings.prefix + ret[i2].strings.prefix;
+          }
+          break;
+        }
+      }
+    }
+    let blobs_start = state.output.renderBlobs(ret.slice(0, span_split), blob_delimiter, false, blob);
+    if (blobs_start && blob && (blob.decorations.length || blob.strings.suffix || blob.strings.prefix)) {
+      if (!state.tmp.suppress_decorations) {
+        for (let i2 = 0, ilen2 = blob.decorations.length; i2 < ilen2; i2 += 1) {
+          params = blob.decorations[i2];
+          if (["@cite", "@bibliography", "@display", "@showid"].indexOf(params[0]) > -1) {
+            continue;
+          }
+          if (state.normalDecorIsOrphan(blobjr, params)) {
+            continue;
+          }
+          if (!params[0]) continue;
+          if ("string" === typeof blobs_start) {
+            blobs_start = state.fun.decorate[params[0]][params[1]].call(blob, state, blobs_start, params[2]);
+          }
+        }
+      }
+      b = blobs_start;
+      use_suffix = blob.strings.suffix;
+      if (b && b.length) {
+        use_prefix = blob.strings.prefix;
+        b = txt_esc(use_prefix) + b + txt_esc(use_suffix);
+        if (state.tmp.count_offset_characters) {
+          state.tmp.offset_characters += use_prefix.length + use_suffix.length;
+        }
+      }
+      blobs_start = b;
+      if (!state.tmp.suppress_decorations) {
+        for (let i2 = 0, ilen2 = blob.decorations.length; i2 < ilen2; i2 += 1) {
+          params = blob.decorations[i2];
+          if (["@cite", "@bibliography", "@display", "@showid"].indexOf(params[0]) === -1) {
+            continue;
+          }
+          if ("string" === typeof blobs_start) {
+            blobs_start = state.fun.decorate[params[0]][params[1]].call(blob, state, blobs_start, params[2]);
+          }
+        }
+      }
+    }
+    const blobs_end = ret.slice(span_split, ret.length);
+    if (!blobs_end.length && blobs_start) {
+      ret = [blobs_start];
+    } else if (blobs_end.length && !blobs_start) {
+      ret = blobs_end;
+    } else if (blobs_start && blobs_end.length) {
+      ret = [blobs_start].concat(blobs_end);
+    }
+    if ("undefined" === typeof blob) {
+      this.queue = [];
+      this.current.mystack = [];
+      this.current.mystack.push(this.queue);
+      if (state.tmp.suppress_decorations) {
+        ret = state.output.renderBlobs(ret, void 0, false);
+      }
+    } else if ("boolean" === typeof blob) {
+      ret = state.output.renderBlobs(ret, void 0, true);
+    }
+    if (blob && blob.new_locale) {
+      state.opt.lang = blob.old_locale;
+    }
+    return ret;
+  }
+  clearlevel() {
+    let blob, pos, len;
+    blob = this.current.value();
+    len = blob.blobs.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      blob.blobs.pop();
+    }
+  }
+  renderBlobs(blobs, delim, in_cite, parent) {
+    let state, ret, ret_last_char, use_delim, blob, pos, len, ppos, llen, str, params, txt_esc;
+    txt_esc = getSafeEscape(this.state);
+    if (!delim) {
+      delim = "";
+    }
+    state = this.state;
+    ret = "";
+    ret_last_char = [];
+    use_delim = "";
+    len = blobs.length;
+    if (this.state.tmp.area === "citation" && !this.state.tmp.just_looking && len === 1 && typeof blobs[0] === "object" && parent) {
+      blobs[0].strings.prefix = parent.strings.prefix + blobs[0].strings.prefix;
+      blobs[0].strings.suffix = blobs[0].strings.suffix + parent.strings.suffix;
+      blobs[0].decorations = blobs[0].decorations.concat(parent.decorations);
+      blobs[0].params = parent.params;
+      return blobs[0];
+    }
+    let start = true;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      if (blobs[pos2].checkNext) {
+        blobs[pos2].checkNext(blobs[pos2 + 1], start);
+        start = false;
+      } else if (blobs[pos2 + 1] && blobs[pos2 + 1].splice_prefix) {
+        start = false;
+      } else {
+        start = true;
+      }
+    }
+    let doit = true;
+    for (let pos2 = blobs.length - 1; pos2 > 0; pos2 += -1) {
+      if (blobs[pos2].checkLast) {
+        if (doit && blobs[pos2].checkLast(blobs[pos2 - 1])) {
+          doit = false;
+        }
+      } else {
+        doit = true;
+      }
+    }
+    len = blobs.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      blob = blobs[pos2];
+      if (ret) {
+        use_delim = delim;
+      }
+      if ("string" === typeof blob) {
+        ret += txt_esc(use_delim);
+        ret += blob;
+        if (state.tmp.count_offset_characters) {
+          state.tmp.offset_characters += use_delim.length;
+        }
+      } else if (in_cite) {
+        if (ret) {
+          ret = [ret, blob];
+        } else {
+          ret = [blob];
+        }
+      } else if (blob.status !== SUPPRESS) {
+        if (blob.particle) {
+          str = blob.particle + blob.num;
+        } else {
+          str = blob.formatter.format(blob.num, blob.gender);
+        }
+        const strlen = str.replace(/<[^>]*>/g, "").length;
+        this.append(str, "empty", true);
+        const str_blob = this.pop();
+        const count_offset_characters = state.tmp.count_offset_characters;
+        str = this.string(state, [str_blob], false);
+        state.tmp.count_offset_characters = count_offset_characters;
+        if (blob.strings["text-case"]) {
+          str = Output_formatters[blob.strings["text-case"]](this.state, str);
+        }
+        if (str && this.state.tmp.strip_periods) {
+          str = str.replace(/\.([^a-z]|$)/g, "$1");
+        }
+        if (!state.tmp.suppress_decorations) {
+          llen = blob.decorations.length;
+          for (let ppos2 = 0; ppos2 < llen; ppos2 += 1) {
+            params = blob.decorations[ppos2];
+            if (state.normalDecorIsOrphan(blob, params)) {
+              continue;
+            }
+            str = state.fun.decorate[params[0]][params[1]].call(blob, state, str, params[2]);
+          }
+        }
+        str = txt_esc(blob.strings.prefix) + str + txt_esc(blob.strings.suffix);
+        let addme = "";
+        if (blob.status === END) {
+          addme = txt_esc(blob.range_prefix);
+        } else if (blob.status === SUCCESSOR) {
+          addme = txt_esc(blob.successor_prefix);
+        } else if (blob.status === START) {
+          if (pos2 > 0 && !blob.suppress_splice_prefix) {
+            addme = txt_esc(blob.splice_prefix);
+          } else {
+            addme = "";
+          }
+        } else if (blob.status === SEEN) {
+          addme = txt_esc(blob.splice_prefix);
+        }
+        ret += addme;
+        ret += str;
+        if (state.tmp.count_offset_characters) {
+          state.tmp.offset_characters += addme.length + blob.strings.prefix.length + strlen + blob.strings.suffix.length;
+        }
+      }
+    }
+    return ret;
+  }
+  static purgeEmptyBlobs(parent) {
+    if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+      return;
+    }
+    const parentBlobs = parent.blobs;
+    for (let i = parentBlobs.length - 1; i > -1; i--) {
+      _Queue.purgeEmptyBlobs(parentBlobs[i]);
+      const child = parentBlobs[i];
+      if (!child || !child.blobs || !child.blobs.length) {
+        const buf = [];
+        while (parentBlobs.length - 1 > i) {
+          buf.push(parentBlobs.pop());
+        }
+        parentBlobs.pop();
+        while (buf.length) {
+          parentBlobs.push(buf.pop());
+        }
+      }
+    }
+  }
+};
+__publicField(_Queue, "adjust", function(punctInQuote) {
+  const NO_SWAP_IN = {
+    ";": true,
+    ":": true
+  };
+  const NO_SWAP_OUT = {
+    ".": true,
+    "!": true,
+    "?": true
+  };
+  const LtoR_MAP = {
+    "!": {
+      ".": "!",
+      "?": "!?",
+      ":": "!",
+      ",": "!,",
+      ";": "!;"
+    },
+    "?": {
+      "!": "?!",
+      ".": "?",
+      ":": "?",
+      ",": "?,",
+      ";": "?;"
+    },
+    ".": {
+      "!": ".!",
+      "?": ".?",
+      ":": ".:",
+      ",": ".,",
+      ";": ".;"
+    },
+    ":": {
+      "!": "!",
+      "?": "?",
+      ".": ":",
+      ",": ":,",
+      ";": ":;"
+    },
+    ",": {
+      "!": ",!",
+      "?": ",?",
+      ":": ",:",
+      ".": ",.",
+      ";": ",;"
+    },
+    ";": {
+      "!": "!",
+      "?": "?",
+      ":": ";",
+      ",": ";,",
+      ".": ";"
+    }
+  };
+  const SWAP_IN = {};
+  const SWAP_OUT = {};
+  const PUNCT = {};
+  const PUNCT_OR_SPACE = {};
+  for (let key in LtoR_MAP) {
+    PUNCT[key] = true;
+    PUNCT_OR_SPACE[key] = true;
+    if (!NO_SWAP_IN[key]) {
+      SWAP_IN[key] = true;
+    }
+    if (!NO_SWAP_OUT[key]) {
+      SWAP_OUT[key] = true;
+    }
+  }
+  PUNCT_OR_SPACE[" "] = true;
+  PUNCT_OR_SPACE["\xA0"] = true;
+  const RtoL_MAP = {};
+  for (let key in LtoR_MAP) {
+    for (let subkey in LtoR_MAP[key]) {
+      if (!RtoL_MAP[subkey]) {
+        RtoL_MAP[subkey] = {};
+      }
+      RtoL_MAP[subkey][key] = LtoR_MAP[key][subkey];
+    }
+  }
+  function blobIsNumber(blob) {
+    return "number" === typeof blob.num || blob.blobs.length === 1 && "number" === typeof blob.blobs[0].num;
+  }
+  function blobEndsInNumber(blob) {
+    if ("number" === typeof blob.num) {
+      return true;
+    }
+    if (!blob.blobs || "object" !== typeof blob.blobs) {
+      return false;
+    }
+    const blobs = blob.blobs;
+    if (blobEndsInNumber(blobs[blobs.length - 1])) {
+      return true;
+    }
+  }
+  function blobHasDecorations(blob, includeQuotes) {
+    let ret = false;
+    const decorlist = ["@font-style", "@font-variant", "@font-weight", "@text-decoration", "@vertical-align"];
+    if (includeQuotes) {
+      decorlist.push("@quotes");
+    }
+    if (blob.decorations) {
+      for (let i = 0, ilen = blob.decorations.length; i < ilen; i++) {
+        if (decorlist.indexOf(blob.decorations[i][0]) > -1) {
+          ret = true;
+          break;
+        }
+      }
+    }
+    return ret;
+  }
+  function blobHasDescendantQuotes(blob) {
+    if (blob.decorations) {
+      for (let i = 0, ilen = blob.decorations.length; i < ilen; i++) {
+        if (blob.decorations[i][0] === "@quotes" && blob.decorations[i][1] !== "false") {
+          return true;
+        }
+      }
+    }
+    if ("object" !== typeof blob.blobs) {
+      return false;
+    }
+    const blobs = blob.blobs;
+    return blobHasDescendantQuotes(blobs[blobs.length - 1]);
+  }
+  function blobHasDescendantMergingPunctuation(parentChar, blob) {
+    let childChar = blob.strings.suffix.slice(-1);
+    if (!childChar && "string" === typeof blob.blobs) {
+      childChar = blob.blobs.slice(-1);
+    }
+    const mergedChars = RtoL_MAP[parentChar][childChar];
+    if (mergedChars && mergedChars.length === 1) {
+      return true;
+    }
+    if ("object" !== typeof blob.blobs) {
+      return false;
+    }
+    const blobs = blob.blobs;
+    if (blobHasDescendantMergingPunctuation(parentChar, blobs[blobs.length - 1])) {
+      return true;
+    }
+    return false;
+  }
+  function matchLastChar(blob, chr) {
+    if (!PUNCT[chr]) {
+      return false;
+    }
+    if ("string" === typeof blob.blobs) {
+      if (blob.blobs.slice(-1) === chr) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      const child = blob.blobs[blob.blobs.length - 1];
+      if (child) {
+        let childChar = child.strings.suffix.slice(-1);
+        if (!childChar) {
+          return matchLastChar(child, chr);
+        } else if (child.strings.suffix.slice(-1) == chr) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+  function mergeChars(First, first, Second, second, merge_right) {
+    const FirstStrings = "blobs" === first ? First : First.strings;
+    const SecondStrings = "blobs" === second ? Second : Second.strings;
+    const firstChar = FirstStrings[first].slice(-1);
+    const secondChar = SecondStrings[second].slice(0, 1);
+    function cullRight() {
+      SecondStrings[second] = SecondStrings[second].slice(1);
+    }
+    function cullLeft() {
+      FirstStrings[first] = FirstStrings[first].slice(0, -1);
+    }
+    function addRight(chr) {
+      SecondStrings[second] = chr + SecondStrings[second];
+    }
+    function addLeft(chr) {
+      FirstStrings[first] += chr;
+    }
+    const cull = merge_right ? cullLeft : cullRight;
+    function matchOnRight() {
+      return RtoL_MAP[secondChar];
+    }
+    function matchOnLeft() {
+      return LtoR_MAP[firstChar];
+    }
+    const match = merge_right ? matchOnLeft : matchOnRight;
+    function mergeToRight() {
+      const chr = LtoR_MAP[firstChar][secondChar];
+      if ("string" === typeof chr) {
+        cullLeft();
+        cullRight();
+        addRight(chr);
+      } else {
+        addRight(firstChar);
+        cullLeft();
+      }
+    }
+    function mergeToLeft() {
+      const chr = RtoL_MAP[secondChar][firstChar];
+      if ("string" === typeof chr) {
+        cullLeft();
+        cullRight();
+        addLeft(chr);
+      } else {
+        addLeft(secondChar);
+        cullRight();
+      }
+    }
+    const merge = merge_right ? mergeToRight : mergeToLeft;
+    const isDuplicate = firstChar === secondChar;
+    if (isDuplicate) {
+      cull();
+    } else {
+      if (match()) {
+        merge();
+      }
+    }
+  }
+  function upward(parent) {
+    if (parent.blobs && "string" == typeof parent.blobs) {
+      if (PUNCT[parent.strings.suffix.slice(0, 1)] && parent.strings.suffix.slice(0, 1) === parent.blobs.slice(-1)) {
+        parent.strings.suffix = parent.strings.suffix.slice(1);
+      }
+      return;
+    } else if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+      return;
+    }
+    const parentDecorations = blobHasDecorations(parent, true);
+    for (let i = parent.blobs.length - 1; i > -1; i--) {
+      this.upward(parent.blobs[i]);
+      const parentStrings = parent.strings;
+      const childStrings = parent.blobs[i].strings;
+      if (i === 0) {
+        if (" " === parentStrings.prefix.slice(-1) && " " === childStrings.prefix.slice(0, 1)) {
+          childStrings.prefix = childStrings.prefix.slice(1);
+        }
+        let childChar = childStrings.prefix.slice(0, 1);
+        if (!parentDecorations && PUNCT_OR_SPACE[childChar] && !parentStrings.prefix) {
+          parentStrings.prefix += childChar;
+          childStrings.prefix = childStrings.prefix.slice(1);
+        }
+      }
+      if (i === parent.blobs.length - 1) {
+        let childChar = childStrings.suffix.slice(-1);
+        if (!parentDecorations && [" "].indexOf(childChar) > -1) {
+          if (parentStrings.suffix.slice(0, 1) !== childChar) {
+            parentStrings.suffix = childChar + parentStrings.suffix;
+          }
+          childStrings.suffix = childStrings.suffix.slice(0, -1);
+        }
+      }
+      if (parentStrings.delimiter && i > 0) {
+        if (PUNCT_OR_SPACE[parentStrings.delimiter.slice(-1)] && parentStrings.delimiter.slice(-1) === childStrings.prefix.slice(0, 1)) {
+          childStrings.prefix = childStrings.prefix.slice(1);
+        }
+      }
+    }
+  }
+  function leftward(parent) {
+    if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+      return;
+    }
+    for (let i = parent.blobs.length - 1; i > -1; i--) {
+      this.leftward(parent.blobs[i]);
+      if (i < parent.blobs.length - 1 && !parent.strings.delimiter) {
+        const child = parent.blobs[i];
+        let childChar = child.strings.suffix.slice(-1);
+        const sibling = parent.blobs[i + 1];
+        const siblingChar = sibling.strings.prefix.slice(0, 1);
+        const hasDecorations = blobHasDecorations(child) || blobHasDecorations(sibling);
+        const hasNumber = "number" === typeof childChar || "number" === typeof siblingChar;
+        if (!hasDecorations && !hasNumber && PUNCT[siblingChar] && !hasNumber) {
+          const suffixAndPrefixMatch = siblingChar === child.strings.suffix.slice(-1);
+          const suffixAndFieldMatch = !child.strings.suffix && "string" === typeof child.blobs && child.blobs.slice(-1) === siblingChar;
+          if (!suffixAndPrefixMatch && !suffixAndFieldMatch) {
+            mergeChars(child, "suffix", sibling, "prefix");
+          } else {
+            sibling.strings.prefix = sibling.strings.prefix.slice(1);
+          }
+        }
+      }
+    }
+  }
+  function downward(parent) {
+    if (parent.blobs && "string" == typeof parent.blobs) {
+      if (PUNCT[parent.strings.suffix.slice(0, 1)] && parent.strings.suffix.slice(0, 1) === parent.blobs.slice(-1)) {
+        parent.strings.suffix = parent.strings.suffix.slice(1);
+      }
+      return;
+    } else if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+      return;
+    }
+    const parentStrings = parent.strings;
+    let someChildrenAreNumbers = false;
+    for (let i = 0, ilen = parent.blobs.length; i < ilen; i++) {
+      if (blobIsNumber(parent.blobs[i])) {
+        someChildrenAreNumbers = true;
+        break;
+      }
+    }
+    if (true) {
+      if (parentStrings.delimiter && PUNCT[parentStrings.delimiter.slice(0, 1)]) {
+        const delimChar = parentStrings.delimiter.slice(0, 1);
+        for (let i = parent.blobs.length - 2; i > -1; i--) {
+          const childStrings = parent.blobs[i].strings;
+          if (childStrings.suffix.slice(-1) !== delimChar) {
+            childStrings.suffix += delimChar;
+          }
+        }
+        parentStrings.delimiter = parentStrings.delimiter.slice(1);
+      }
+    }
+    for (let i = parent.blobs.length - 1; i > -1; i--) {
+      const child = parent.blobs[i];
+      const childStrings = parent.blobs[i].strings;
+      const childDecorations = blobHasDecorations(child, true);
+      const childIsNumber = blobIsNumber(child);
+      if (i === parent.blobs.length - 1) {
+        if (true) {
+          const parentChar = parentStrings.suffix.slice(0, 1);
+          let allowMigration = false;
+          if (PUNCT[parentChar]) {
+            allowMigration = blobHasDescendantMergingPunctuation(parentChar, child);
+            if (!allowMigration && punctInQuote) {
+              allowMigration = blobHasDescendantQuotes(child);
+            }
+          }
+          if (allowMigration) {
+            if (PUNCT[parentChar]) {
+              if (!blobEndsInNumber(child)) {
+                if ("string" === typeof child.blobs) {
+                  mergeChars(child, "blobs", parent, "suffix");
+                } else {
+                  mergeChars(child, "suffix", parent, "suffix");
+                }
+                if (parentStrings.suffix.slice(0, 1) === ".") {
+                  childStrings.suffix += parentStrings.suffix.slice(0, 1);
+                  parentStrings.suffix = parentStrings.suffix.slice(1);
+                }
+              }
+            }
+          }
+          if (childStrings.suffix.slice(-1) === "\xA0" && parentStrings.suffix.slice(0, 1) === " ") {
+            parentStrings.suffix = parentStrings.suffix.slice(1);
+          }
+          if (PUNCT_OR_SPACE[childStrings.suffix.slice(0, 1)]) {
+            if ("string" === typeof child.blobs && child.blobs.slice(-1) === childStrings.suffix.slice(0, 1)) {
+              childStrings.suffix = childStrings.suffix.slice(1);
+            }
+            if (childStrings.suffix.slice(-1) === parentStrings.suffix.slice(0, 1)) {
+              parentStrings.suffix = parentStrings.suffix.slice(0, -1);
+            }
+          }
+        }
+        if (matchLastChar(parent, parent.strings.suffix.slice(0, 1))) {
+          parent.strings.suffix = parent.strings.suffix.slice(1);
+        }
+      } else if (parentStrings.delimiter) {
+        if (PUNCT_OR_SPACE[parentStrings.delimiter.slice(0, 1)] && parentStrings.delimiter.slice(0, 1) === childStrings.suffix.slice(-1)) {
+          parent.blobs[i].strings.suffix = parent.blobs[i].strings.suffix.slice(0, -1);
+        }
+      } else {
+        const siblingStrings = parent.blobs[i + 1].strings;
+        if (!blobIsNumber(child) && !childDecorations && PUNCT_OR_SPACE[childStrings.suffix.slice(-1)] && childStrings.suffix.slice(-1) === siblingStrings.prefix.slice(0, 1)) {
+          siblingStrings.prefix = siblingStrings.prefix.slice(1);
+        }
+      }
+      if (!childIsNumber && !childDecorations && PUNCT[childStrings.suffix.slice(0, 1)] && "string" === typeof child.blobs) {
+        mergeChars(child, "blobs", child, "suffix");
+      }
+      this.downward(parent.blobs[i]);
+    }
+  }
+  function swapToTheLeft(child) {
+    let childChar = child.strings.suffix.slice(0, 1);
+    if ("string" === typeof child.blobs) {
+      while (SWAP_IN[childChar]) {
+        mergeChars(child, "blobs", child, "suffix");
+        childChar = child.strings.suffix.slice(0, 1);
+      }
+    } else {
+      while (SWAP_IN[childChar]) {
+        mergeChars(child.blobs[child.blobs.length - 1], "suffix", child, "suffix");
+        childChar = child.strings.suffix.slice(0, 1);
+      }
+    }
+  }
+  function swapToTheRight(child) {
+    if ("string" === typeof child.blobs) {
+      let childChar = child.blobs.slice(-1);
+      while (SWAP_OUT[childChar]) {
+        mergeChars(child, "blobs", child, "suffix", true);
+        childChar = child.blobs.slice(-1);
+      }
+    } else {
+      let childChar = child.blobs[child.blobs.length - 1].strings.suffix.slice(-1);
+      while (SWAP_OUT[childChar]) {
+        mergeChars(child.blobs[child.blobs.length - 1], "suffix", child, "suffix", true);
+        childChar = child.blobs[child.blobs.length - 1].strings.suffix.slice(-1);
+      }
+    }
+  }
+  function fix(parent) {
+    if ("object" !== typeof parent || "object" !== typeof parent.blobs || !parent.blobs.length) {
+      return;
+    }
+    let lastChar;
+    for (let i = 0, ilen = parent.blobs.length; i < ilen; i++) {
+      const child = parent.blobs[i];
+      let quoteSwap = false;
+      for (let j = 0, jlen = child.decorations.length; j < jlen; j++) {
+        const decoration = child.decorations[j];
+        if (decoration[0] === "@quotes" && decoration[1] !== "false") {
+          quoteSwap = true;
+        }
+      }
+      if (quoteSwap) {
+        if (punctInQuote) {
+          swapToTheLeft(child);
+        } else {
+          swapToTheRight(child);
+        }
+      }
+      lastChar = this.fix(parent.blobs[i]);
+      if (child.blobs && "string" === typeof child.blobs) {
+        lastChar = child.blobs.slice(-1);
+      }
+    }
+    return lastChar;
+  }
+  this.upward = upward;
+  this.leftward = leftward;
+  this.downward = downward;
+  this.fix = fix;
+});
+var Queue = _Queue;
+
+// src/xml/xmljson.ts
+var _XmlJSON = class _XmlJSON {
+  constructor(dataObj) {
+    __publicField(this, "dataObj");
+    __publicField(this, "institution");
+    __publicField(this, "jsonStringWalker");
+    this.dataObj = dataObj;
+    this.institution = {
+      name: "institution",
+      attrs: { "institution-parts": "long" },
+      children: [
+        {
+          name: "institution-part",
+          attrs: { name: "long" },
+          children: []
+        }
+      ]
+    };
+  }
+  clean(json) {
+    return json;
+  }
+  getStyleId(myjson, styleName) {
+    let tagName = "id";
+    if (styleName) {
+      tagName = "title";
+    }
+    let ret = "";
+    const children = myjson.children;
+    for (let i = 0, ilen = children.length; i < ilen; i++) {
+      const child = children[i];
+      if (typeof child !== "string" && child.name === "info") {
+        const grandkids = child.children;
+        for (let j = 0, jlen = grandkids.length; j < jlen; j++) {
+          const grandchild = grandkids[j];
+          if (typeof grandchild !== "string" && grandchild.name === tagName) {
+            const val = grandchild.children[0];
+            ret = typeof val === "string" ? val : "";
+          }
+        }
+      }
+    }
+    return ret;
+  }
+  children(myjson) {
+    if (myjson && myjson.children.length) {
+      return myjson.children.filter((c) => typeof c !== "string");
+    }
+    return false;
+  }
+  nodename(myjson) {
+    return myjson ? myjson.name : null;
+  }
+  attributes(myjson) {
+    const ret = {};
+    for (const attrname in myjson.attrs) {
+      ret["@" + attrname] = myjson.attrs[attrname];
+    }
+    return ret;
+  }
+  content(myjson) {
+    let ret = "";
+    if (!myjson || !myjson.children) {
+      return ret;
+    }
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if ("string" === typeof myjson.children[i]) {
+        ret += myjson.children[i];
+      }
+    }
+    return ret;
+  }
+  numberofnodes(myjson) {
+    if (myjson && "number" == typeof myjson.length) {
+      return myjson.length;
+    }
+    return 0;
+  }
+  getAttributeValue(myjson, name, namespace) {
+    let ret = "";
+    if (namespace) {
+      name = namespace + ":" + name;
+    }
+    if (myjson) {
+      if (myjson.attrs) {
+        if (myjson.attrs[name]) {
+          ret = myjson.attrs[name];
+        } else {
+          ret = "";
+        }
+      }
+    }
+    return ret;
+  }
+  getNodeValue(myjson, name) {
+    let ret = "";
+    if (name) {
+      for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+        const child = myjson.children[i];
+        if (typeof child !== "string" && child.name === name) {
+          if (child.children.length) {
+            ret = child;
+          } else {
+            ret = "";
+          }
+        }
+      }
+    } else if (myjson) {
+      ret = myjson;
+    }
+    if (typeof ret !== "string" && ret && ret.children && ret.children.length == 1 && "string" === typeof ret.children[0]) {
+      ret = ret.children[0];
+    }
+    return ret;
+  }
+  setAttributeOnNodeIdentifiedByNameAttribute(myjson, nodename, partname, attrname, val) {
+    if (attrname.slice(0, 1) === "@") {
+      attrname = attrname.slice(1);
+    }
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      const child = myjson.children[i];
+      if (typeof child === "string") continue;
+      if (child.name === nodename && child.attrs.name === partname) {
+        child.attrs[attrname] = val;
+      }
+    }
+  }
+  deleteNodeByNameAttribute(myjson, val) {
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if (!myjson.children[i] || "string" === typeof myjson.children[i]) {
+        continue;
+      }
+      if (myjson.children[i].attrs.name == val) {
+        myjson.children = myjson.children.slice(0, i).concat(myjson.children.slice(i + 1));
+      }
+    }
+  }
+  deleteAttribute(myjson, attrname) {
+    if ("undefined" !== typeof myjson.attrs[attrname]) {
+      delete myjson.attrs[attrname];
+    }
+  }
+  setAttribute(myjson, attr, val) {
+    myjson.attrs[attr] = val;
+    return false;
+  }
+  nodeCopy(myjson, clone) {
+    if (!clone) {
+      clone = {};
+    }
+    if ("object" === typeof clone && "undefined" === typeof clone.length) {
+      for (const key in myjson) {
+        if ("string" === typeof myjson[key]) {
+          clone[key] = myjson[key];
+        } else if ("object" === typeof myjson[key]) {
+          if ("undefined" === typeof myjson[key].length) {
+            clone[key] = this.nodeCopy(myjson[key], {});
+          } else {
+            clone[key] = this.nodeCopy(myjson[key], []);
+          }
+        }
+      }
+    } else {
+      for (let i = 0, ilen = myjson.length; i < ilen; i += 1) {
+        if ("string" === typeof myjson[i]) {
+          clone[i] = myjson[i];
+        } else {
+          clone[i] = this.nodeCopy(myjson[i], {});
+        }
+      }
+    }
+    return clone;
+  }
+  getNodesByName(myjson, name, nameattrval) {
+    if (!myjson || !myjson.children) {
+      return [];
+    }
+    const getCache = (myjson2) => {
+      if (_XmlJSON._nodesByNameCaches.has(myjson2)) {
+        return _XmlJSON._nodesByNameCaches.get(myjson2);
+      }
+      const cache2 = /* @__PURE__ */ new Map();
+      _XmlJSON._nodesByNameCaches.set(myjson2, cache2);
+      const nodeName = myjson2.name;
+      if (!cache2.has(nodeName)) {
+        cache2.set(nodeName, []);
+      }
+      cache2.get(nodeName).push(myjson2);
+      for (const child of myjson2.children) {
+        if (typeof child !== "object") continue;
+        const childCache = getCache(child);
+        for (const [cacheKey, nodes2] of childCache) {
+          if (!cache2.has(cacheKey)) {
+            cache2.set(cacheKey, []);
+          }
+          cache2.get(cacheKey).push(...nodes2);
+        }
+      }
+      return cache2;
+    };
+    const cache = getCache(myjson);
+    const nodes = cache.get(name);
+    if (!nodes) {
+      return [];
+    }
+    if (nameattrval) {
+      return nodes.filter((node) => node.attrs.name === nameattrval);
+    }
+    return Array.from(nodes);
+  }
+  nodeNameIs(myjson, name) {
+    if (typeof myjson === "undefined") {
+      return false;
+    }
+    return name == myjson.name;
+  }
+  makeXml(myjson) {
+    if ("string" === typeof myjson) {
+      if (myjson.slice(0, 1) === "<") {
+        return this.jsonStringWalker.walkToObject(myjson);
+      } else {
+        return JSON.parse(myjson);
+      }
+    }
+    return myjson;
+  }
+  insertChildNodeAfter(parent, node, _pos, datejson) {
+    for (let i = 0, ilen = parent.children.length; i < ilen; i += 1) {
+      if (node === parent.children[i]) {
+        parent.children = parent.children.slice(0, i).concat([datejson]).concat(parent.children.slice(i + 1));
+        break;
+      }
+    }
+    return parent;
+  }
+  insertPublisherAndPlace(myjson) {
+    if (myjson.name === "group") {
+      let useme = true;
+      let mustHaves = ["publisher", "publisher-place"];
+      for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+        const child = myjson.children[i];
+        if (typeof child === "string") continue;
+        const haveVarname = mustHaves.indexOf(child.attrs.variable);
+        const isText = child.name === "text";
+        if (isText && haveVarname > -1 && !child.attrs.prefix && !child.attrs.suffix) {
+          mustHaves = mustHaves.slice(0, haveVarname).concat(mustHaves.slice(haveVarname + 1));
+        } else {
+          useme = false;
+          break;
+        }
+      }
+      if (useme && !mustHaves.length) {
+        myjson.attrs["has-publisher-and-publisher-place"] = "true";
+      }
+    }
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if ("object" === typeof myjson.children[i]) {
+        this.insertPublisherAndPlace(myjson.children[i]);
+      }
+    }
+  }
+  isChildOfSubstitute(parents) {
+    if (parents.length > 0) {
+      const myparents = parents.slice();
+      const parent = myparents.pop();
+      if (parent === "substitute") {
+        return true;
+      }
+      return this.isChildOfSubstitute(myparents);
+    }
+    return false;
+  }
+  addMissingNameNodes(myjson, parents) {
+    if (!parents) {
+      parents = [];
+    }
+    if (myjson.name === "names") {
+      if (!this.isChildOfSubstitute(parents)) {
+        let addName = true;
+        for (let i = 0, ilen = myjson.children.length; i < ilen; i++) {
+          const child = myjson.children[i];
+          if (typeof child !== "string" && child.name === "name") {
+            addName = false;
+            break;
+          }
+        }
+        if (addName) {
+          myjson.children = [{ name: "name", attrs: {}, children: [] }].concat(myjson.children);
+        }
+      }
+    }
+    parents.push(myjson.name);
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if ("object" === typeof myjson.children[i]) {
+        this.addMissingNameNodes(myjson.children[i], parents);
+      }
+    }
+    parents.pop();
+  }
+  addInstitutionNodes(myjson) {
+    if (myjson.name === "names") {
+      const attributes = {};
+      let insertPos = -1;
+      for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+        const child = myjson.children[i];
+        if (typeof child === "string") continue;
+        if (child.name == "name") {
+          for (const key in child.attrs) {
+            attributes[key] = child.attrs[key];
+          }
+          insertPos = i;
+          for (let k = 0, klen = child.children.length; k < klen; k += 1) {
+            const grandchild = child.children[k];
+            if (typeof grandchild === "string") continue;
+            if (grandchild.attrs.name !== "family") {
+              continue;
+            }
+            for (const key in grandchild.attrs) {
+              attributes[key] = grandchild.attrs[key];
+            }
+          }
+        }
+        if (child.name == "institution") {
+          insertPos = -1;
+          break;
+        }
+      }
+      if (insertPos > -1) {
+        const institution = this.nodeCopy(this.institution);
+        for (let i = 0, ilen = NAME_ATTRIBUTES.length; i < ilen; i += 1) {
+          const attrname = NAME_ATTRIBUTES[i];
+          if ("undefined" !== typeof attributes[attrname]) {
+            institution.attrs[attrname] = attributes[attrname];
+          }
+        }
+        for (let i = 0, ilen = INSTITUTION_KEYS.length; i < ilen; i += 1) {
+          const attrname = INSTITUTION_KEYS[i];
+          if ("undefined" !== typeof attributes[attrname]) {
+            institution.children[0].attrs[attrname] = attributes[attrname];
+          }
+        }
+        myjson.children = myjson.children.slice(0, insertPos + 1).concat([institution]).concat(myjson.children.slice(insertPos + 1));
+      }
+    }
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if ("string" === typeof myjson.children[i]) {
+        continue;
+      }
+      this.addInstitutionNodes(myjson.children[i]);
+    }
+  }
+  flagDateMacros(myjson) {
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      const child = myjson.children[i];
+      if (typeof child === "string") continue;
+      if (child.name === "macro") {
+        if (this.inspectDateMacros(child)) {
+          child.attrs["macro-has-date"] = "true";
+        }
+      }
+    }
+  }
+  inspectDateMacros(myjson) {
+    if (!myjson || !myjson.children) {
+      return false;
+    }
+    if (myjson.name === "date") {
+      return true;
+    }
+    for (let i = 0, ilen = myjson.children.length; i < ilen; i += 1) {
+      if (this.inspectDateMacros(myjson.children[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+__publicField(_XmlJSON, "_nodesByNameCaches", /* @__PURE__ */ new WeakMap());
+var XmlJSON = _XmlJSON;
+
+// src/xml/parse.ts
+function stripXmlProcessingInstruction(xml) {
+  if (!xml) {
+    return xml;
+  }
+  xml = xml.replace(/^<\?[^?]+\?>/, "");
+  xml = xml.replace(/<!--[^>]+-->/g, "");
+  xml = xml.replace(/^\s+/g, "");
+  xml = xml.replace(/\s+$/g, "");
+  return xml;
+}
+function parseXml(str) {
+  const _obj = { children: [] };
+  const _stack = [_obj.children];
+  function _listifyString(str2) {
+    str2 = str2.split(/(?:\r\n|\n|\r)/).join(" ").replace(/>[ \t]+</g, "><").replace(/<!--.*?-->/g, "");
+    let lst2 = str2.split("><");
+    let stylePos = null;
+    for (let i = 0, ilen = lst2.length; i < ilen; i++) {
+      if (i > 0) {
+        lst2[i] = "<" + lst2[i];
+      }
+      if (i < lst2.length - 1) {
+        lst2[i] = lst2[i] + ">";
+      }
+      if (typeof stylePos !== "number") {
+        if (lst2[i].slice(0, 7) === "<style " || lst2[i].slice(0, 8) == "<locale ") {
+          stylePos = i;
+        }
+      }
+    }
+    lst2 = lst2.slice(stylePos);
+    for (let i = lst2.length - 2; i > -1; i--) {
+      if (lst2[i].slice(1).indexOf("<") === -1) {
+        const stub = lst2[i].slice(0, 5);
+        if (lst2[i].slice(-2) !== "/>") {
+          if (stub === "<term") {
+            if (lst2[i + 1].slice(0, 6) === "</term") {
+              lst2[i] = lst2[i] + lst2[i + 1];
+              lst2 = lst2.slice(0, i + 1).concat(lst2.slice(i + 2));
+            }
+          } else if (["<sing", "<mult"].indexOf(stub) > -1) {
+            if (lst2[i].slice(-2) !== "/>" && lst2[i + 1].slice(0, 1) === "<") {
+              lst2[i] = lst2[i] + lst2[i + 1];
+              lst2 = lst2.slice(0, i + 1).concat(lst2.slice(i + 2));
+            }
+          }
+        }
+      }
+    }
+    return lst2;
+  }
+  function _decodeHtmlEntities(str2) {
+    return str2.split("&amp;").join("&").split("&quot;").join('"').split("&gt;").join(">").split("&lt;").join("<").replace(/&#([0-9]{1,6});/gi, function(_match, numStr) {
+      const num = parseInt(numStr, 10);
+      return String.fromCharCode(num);
+    }).replace(/&#x([a-f0-9]{1,6});/gi, function(_match, numStr) {
+      const num = parseInt(numStr, 16);
+      return String.fromCharCode(num);
+    });
+  }
+  function _getAttributes(elem) {
+    const m = elem.match(/([^'"= \t]+)=(?:"[^"]*"|'[^']*')/g);
+    if (m) {
+      for (let i = 0, ilen = m.length; i < ilen; i++) {
+        m[i] = m[i].replace(/=.*/, "");
+      }
+    }
+    return m;
+  }
+  function _getAttribute(elem, attr) {
+    const rex = new RegExp("^.*[ 	]+" + attr + `=("(?:[^"]*)"|'(?:[^']*)').*$`);
+    const m = elem.match(rex);
+    return m ? m[1].slice(1, -1) : null;
+  }
+  function _getTagName(elem) {
+    const rex = new RegExp("^<([^ 	/>]+)");
+    const m = elem.match(rex);
+    return m ? m[1] : null;
+  }
+  function _castObjectFromOpeningTag(elem) {
+    const obj = {};
+    obj.name = _getTagName(elem);
+    obj.attrs = {};
+    const attributes = _getAttributes(elem);
+    if (attributes) {
+      for (let i = 0, ilen = attributes.length; i < ilen; i++) {
+        const attr = {
+          name: attributes[i],
+          value: _getAttribute(elem, attributes[i])
+        };
+        obj.attrs[attr.name] = _decodeHtmlEntities(attr.value);
+      }
+    }
+    obj.children = [];
+    return obj;
+  }
+  function _extractTextFromCompositeElement(elem) {
+    const m = elem.match(/^.*>([^<]*)<.*$/);
+    return _decodeHtmlEntities(m[1]);
+  }
+  function _appendToChildren(obj) {
+    _stack.slice(-1)[0].push(obj);
+  }
+  function _extendStackWithNewChildren(obj) {
+    _stack.push(obj.children);
+  }
+  function processElement(elem) {
+    let obj;
+    if (elem.slice(1).indexOf("<") > -1) {
+      const tag = elem.slice(0, elem.indexOf(">") + 1);
+      obj = _castObjectFromOpeningTag(tag);
+      obj.children = [_extractTextFromCompositeElement(elem)];
+      _appendToChildren(obj);
+    } else if (elem.slice(-2) === "/>") {
+      obj = _castObjectFromOpeningTag(elem);
+      if (_getTagName(elem) === "term") {
+        obj.children.push("");
+      }
+      _appendToChildren(obj);
+    } else if (elem.slice(0, 2) === "</") {
+      _stack.pop();
+    } else {
+      obj = _castObjectFromOpeningTag(elem);
+      _appendToChildren(obj);
+      _extendStackWithNewChildren(obj);
+    }
+  }
+  const lst = _listifyString(str);
+  for (let i = 0, ilen = lst.length; i < ilen; i++) {
+    const elem = lst[i];
+    processElement(elem);
+  }
+  return _obj.children[0];
+}
+
+// src/xml/xmldom.ts
+var XmlDOM = class {
+  constructor(dataObj) {
+    __publicField(this, "dataObj");
+    __publicField(this, "parser");
+    __publicField(this, "institution");
+    __publicField(this, "institutionpart");
+    __publicField(this, "ns");
+    this.dataObj = dataObj;
+    this.parser = new DOMParser();
+    let str = '<docco><institution institution-parts="long" delimiter=", " substitute-use-first="1" use-last="1"><institution-part name="long"/></institution></docco>';
+    const inst_doc = this.parser.parseFromString(str, "text/xml");
+    const inst_node = inst_doc.getElementsByTagName("institution");
+    this.institution = inst_node.item(0);
+    const inst_part_node = inst_doc.getElementsByTagName("institution-part");
+    this.institutionpart = inst_part_node.item(0);
+    this.ns = "http://purl.org/net/xbiblio/csl";
+  }
+  hasAttributes(node) {
+    let ret;
+    if (node.attributes && node.attributes.length) {
+      ret = true;
+    } else {
+      ret = false;
+    }
+    return ret;
+  }
+  importNode(doc, srcElement) {
+    return doc.importNode(srcElement, true);
+  }
+  clean(xml) {
+    xml = xml.replace(/<\?[^?]+\?>/g, "");
+    xml = xml.replace(/<![^>]+>/g, "");
+    xml = xml.replace(/^\s+/, "");
+    xml = xml.replace(/\s+$/, "");
+    xml = xml.replace(/^\n*/, "");
+    return xml;
+  }
+  getStyleId(myxml, styleName) {
+    let text = "";
+    let tagName = "id";
+    if (styleName) {
+      tagName = "title";
+    }
+    let node = myxml.getElementsByTagName(tagName);
+    if (node && node.length) {
+      node = node.item(0);
+    }
+    if (node) {
+      text = node.textContent;
+    }
+    if (!text) {
+      text = node.innerHTML;
+    }
+    return text;
+  }
+  children(myxml) {
+    let children, pos, len, ret;
+    if (myxml) {
+      ret = [];
+      children = myxml.childNodes;
+      for (let pos2 = 0, len2 = children.length; pos2 < len2; pos2 += 1) {
+        if (children[pos2].nodeName != "#text") {
+          ret.push(children[pos2]);
+        }
+      }
+      return ret;
+    } else {
+      return [];
+    }
+  }
+  nodename(myxml) {
+    let ret = myxml.nodeName;
+    return ret;
+  }
+  attributes(myxml) {
+    let ret, attrs, attr, key, xml, pos, len;
+    ret = new Object();
+    if (myxml && this.hasAttributes(myxml)) {
+      attrs = myxml.attributes;
+      for (let pos2 = 0, len2 = attrs.length; pos2 < len2; pos2 += 1) {
+        attr = attrs[pos2];
+        ret["@" + attr.name] = attr.value;
+      }
+    }
+    return ret;
+  }
+  content(myxml) {
+    return myxml.textContent;
+  }
+  numberofnodes(myxml) {
+    if (myxml) {
+      return myxml.length;
+    } else {
+      return 0;
+    }
+  }
+  getAttributeName(attr) {
+    let ret = attr.name;
+    return ret;
+  }
+  getAttributeValue(myxml, name, namespace) {
+    let ret = "";
+    if (namespace) {
+      name = namespace + ":" + name;
+    }
+    if (myxml && this.hasAttributes(myxml) && myxml.getAttribute(name)) {
+      ret = myxml.getAttribute(name);
+    }
+    return ret;
+  }
+  getNodeValue(myxml, name) {
+    let ret = null;
+    if (name) {
+      const vals = myxml.getElementsByTagName(name);
+      if (vals.length > 0) {
+        ret = vals[0].textContent;
+      }
+    }
+    if (ret === null && myxml && myxml.childNodes && (myxml.childNodes.length == 0 || myxml.childNodes.length == 1 && myxml.firstChild.nodeName == "#text")) {
+      ret = myxml.textContent;
+    }
+    if (ret === null) {
+      ret = myxml;
+    }
+    return ret;
+  }
+  setAttributeOnNodeIdentifiedByNameAttribute(myxml, nodename, partname, attrname, val) {
+    let pos, len, xml, nodes, node;
+    if (attrname.slice(0, 1) === "@") {
+      attrname = attrname.slice(1);
+    }
+    nodes = myxml.getElementsByTagName(nodename);
+    for (let pos2 = 0, len2 = nodes.length; pos2 < len2; pos2 += 1) {
+      node = nodes[pos2];
+      if (node.getAttribute("name") != partname) {
+        continue;
+      }
+      node.setAttribute(attrname, val);
+    }
+  }
+  deleteNodeByNameAttribute(myxml, val) {
+    let pos, len, node, nodes;
+    nodes = myxml.childNodes;
+    for (let pos2 = 0, len2 = nodes.length; pos2 < len2; pos2 += 1) {
+      node = nodes[pos2];
+      if (!node || node.nodeType == node.TEXT_NODE) {
+        continue;
+      }
+      if (this.hasAttributes(node) && node.getAttribute("name") == val) {
+        myxml.removeChild(nodes[pos2]);
+      }
+    }
+  }
+  deleteAttribute(myxml, attr) {
+    myxml.removeAttribute(attr);
+  }
+  setAttribute(myxml, attr, val) {
+    if (!myxml.ownerDocument) {
+      myxml = myxml.firstChild;
+    }
+    if (["function", "unknown"].indexOf(typeof myxml.setAttribute) > -1) {
+      myxml.setAttribute(attr, val);
+    }
+    return false;
+  }
+  nodeCopy(myxml) {
+    const cloned_node = myxml.cloneNode(true);
+    return cloned_node;
+  }
+  getNodesByName(myxml, name, nameattrval) {
+    let ret, nodes, node, pos, len;
+    ret = [];
+    nodes = myxml.getElementsByTagName(name);
+    for (let pos2 = 0, len2 = nodes.length; pos2 < len2; pos2 += 1) {
+      node = nodes.item(pos2);
+      if (nameattrval && !(this.hasAttributes(node) && node.getAttribute("name") == nameattrval)) {
+        continue;
+      }
+      ret.push(node);
+    }
+    return ret;
+  }
+  nodeNameIs(myxml, name) {
+    if (name == myxml.nodeName) {
+      return true;
+    }
+    return false;
+  }
+  makeXml(myxml) {
+    let ret, topnode;
+    if (!myxml) {
+      myxml = "<docco><bogus/></docco>";
+    }
+    myxml = myxml.replace(/\s*<\?[^>]*\?>\s*\n*/g, "");
+    const nodetree = this.parser.parseFromString(myxml, "application/xml");
+    return nodetree.firstChild;
+  }
+  insertChildNodeAfter(parent, node, pos, datexml) {
+    let myxml, xml;
+    myxml = this.importNode(node.ownerDocument, datexml);
+    parent.replaceChild(myxml, node);
+    return parent;
+  }
+  insertPublisherAndPlace(myxml) {
+    const group = myxml.getElementsByTagName("group");
+    for (let i = 0, ilen = group.length; i < ilen; i += 1) {
+      let node = group.item(i);
+      const skippers = [];
+      for (let j = 0, jlen = node.childNodes.length; j < jlen; j += 1) {
+        if (node.childNodes.item(j).nodeType !== 1) {
+          skippers.push(j);
+        }
+      }
+      if (node.childNodes.length - skippers.length === 2) {
+        let twovars = [];
+        for (let j = 0, jlen = 2; j < jlen; j += 1) {
+          if (skippers.indexOf(j) > -1) {
+            continue;
+          }
+          const child = node.childNodes.item(j);
+          const subskippers = [];
+          for (let k = 0, klen = child.childNodes.length; k < klen; k += 1) {
+            if (child.childNodes.item(k).nodeType !== 1) {
+              subskippers.push(k);
+            }
+          }
+          if (child.childNodes.length - subskippers.length === 0) {
+            twovars.push(child.getAttribute("variable"));
+            if (child.getAttribute("suffix") || child.getAttribute("prefix")) {
+              twovars = [];
+              break;
+            }
+          }
+        }
+        if (twovars.indexOf("publisher") > -1 && twovars.indexOf("publisher-place") > -1) {
+          node.setAttribute("has-publisher-and-publisher-place", true);
+        }
+      }
+    }
+  }
+  isChildOfSubstitute(node) {
+    if (node.parentNode) {
+      if (node.parentNode.tagName.toLowerCase() === "substitute") {
+        return true;
+      } else {
+        return this.isChildOfSubstitute(node.parentNode);
+      }
+    }
+    return false;
+  }
+  addMissingNameNodes(myxml) {
+    const nameslist = myxml.getElementsByTagName("names");
+    for (let i = 0, ilen = nameslist.length; i < ilen; i += 1) {
+      let names = nameslist.item(i);
+      const namelist = names.getElementsByTagName("name");
+      if ((!namelist || namelist.length === 0) && !this.isChildOfSubstitute(names)) {
+        const doc = names.ownerDocument;
+        let name = doc.createElement("name");
+        names.appendChild(name);
+      }
+    }
+  }
+  addInstitutionNodes(myxml) {
+    let names, thenames, institution, theinstitution, theinstitutionpart, name, thename, xml, pos, len;
+    names = myxml.getElementsByTagName("names");
+    for (let pos2 = 0, len2 = names.length; pos2 < len2; pos2 += 1) {
+      thenames = names.item(pos2);
+      name = thenames.getElementsByTagName("name");
+      if (name.length == 0) {
+        continue;
+      }
+      institution = thenames.getElementsByTagName("institution");
+      if (institution.length == 0) {
+        theinstitution = this.importNode(myxml.ownerDocument, this.institution);
+        theinstitutionpart = theinstitution.getElementsByTagName("institution-part").item(0);
+        thename = name.item(0);
+        thenames.insertBefore(theinstitution, thename.nextSibling);
+        for (let j = 0, jlen = INSTITUTION_KEYS.length; j < jlen; j += 1) {
+          const attrname = INSTITUTION_KEYS[j];
+          const attrval = thename.getAttribute(attrname);
+          if (attrval) {
+            theinstitutionpart.setAttribute(attrname, attrval);
+          }
+        }
+        const nameparts = thename.getElementsByTagName("name-part");
+        for (let j = 0, jlen = nameparts.length; j < jlen; j += 1) {
+          if ("family" === nameparts[j].getAttribute("name")) {
+            for (let k = 0, klen = INSTITUTION_KEYS.length; k < klen; k += 1) {
+              const attrname = INSTITUTION_KEYS[k];
+              const attrval = nameparts[j].getAttribute(attrname);
+              if (attrval) {
+                theinstitutionpart.setAttribute(attrname, attrval);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  flagDateMacros(myxml) {
+    let pos, len, thenode, thedate;
+    let nodes = myxml.getElementsByTagName("macro");
+    for (let pos2 = 0, len2 = nodes.length; pos2 < len2; pos2 += 1) {
+      thenode = nodes.item(pos2);
+      thedate = thenode.getElementsByTagName("date");
+      if (thedate.length) {
+        thenode.setAttribute("macro-has-date", "true");
+      }
+    }
+  }
+};
+
+// src/system.ts
+function setupXml(xmlObject) {
+  let dataObj = {};
+  let parser = null;
+  if ("undefined" !== typeof xmlObject) {
+    if ("string" === typeof xmlObject) {
+      xmlObject = xmlObject.replace("^\uFEFF", "").replace(/^\s+/, "");
+      if (xmlObject.slice(0, 1) === "<") {
+        dataObj = parseXml(xmlObject);
+      } else {
+        dataObj = JSON.parse(xmlObject);
+      }
+      parser = new XmlJSON(dataObj);
+    } else if ("undefined" !== typeof xmlObject.getAttribute) {
+      parser = new XmlDOM(xmlObject);
+    } else {
+      parser = new XmlJSON(xmlObject);
+    }
+  } else {
+    error("unable to parse XML input");
+  }
+  if (!parser) {
+    error("citeproc-js error: unable to parse CSL style or locale object");
+  }
+  return parser;
+}
+
+// src/util/locale.ts
+function localeResolve(langstr, defaultLocale) {
+  let ret, langlst;
+  if (!defaultLocale) {
+    defaultLocale = "en-US";
+  }
+  if (!langstr) {
+    langstr = defaultLocale;
+  }
+  ret = {};
+  langlst = langstr.split(/[\-_]/);
+  ret.base = LANG_BASES[langlst[0]];
+  if ("undefined" === typeof ret.base) {
+    return { base: defaultLocale, best: langstr, bare: langlst[0] };
+  }
+  if (langlst.length === 1) {
+    ret.generic = true;
+  }
+  if (langlst.length === 1 || langlst[1] === "x") {
+    ret.best = ret.base.replace("_", "-");
+  } else {
+    ret.best = langlst.slice(0, 2).join("-");
+  }
+  ret.base = ret.base.replace("_", "-");
+  ret.bare = langlst[0];
+  return ret;
+}
+function localeConfigure(langspec, beShy) {
+  let localexml;
+  if (beShy && this.locale[langspec.best]) {
+    return;
+  }
+  if (langspec.best === "en-US") {
+    localexml = setupXml(this.sys.retrieveLocale("en-US"));
+    this.localeSet(localexml, "en-US", langspec.best);
+  } else if (langspec.best !== "en-US") {
+    if (langspec.base !== langspec.best) {
+      localexml = setupXml(this.sys.retrieveLocale(langspec.base));
+      this.localeSet(localexml, langspec.base, langspec.best);
+    }
+    localexml = setupXml(this.sys.retrieveLocale(langspec.best));
+    this.localeSet(localexml, langspec.best, langspec.best);
+  }
+  this.localeSet(this.cslXml, "", langspec.best);
+  this.localeSet(this.cslXml, langspec.bare, langspec.best);
+  if (langspec.base !== langspec.best) {
+    this.localeSet(this.cslXml, langspec.base, langspec.best);
+  }
+  this.localeSet(this.cslXml, langspec.best, langspec.best);
+  if ("undefined" === typeof this.locale[langspec.best].terms["page-range-delimiter"]) {
+    if (["fr", "pt"].indexOf(langspec.best.slice(0, 2).toLowerCase()) > -1) {
+      this.locale[langspec.best].terms["page-range-delimiter"] = "-";
+    } else {
+      this.locale[langspec.best].terms["page-range-delimiter"] = "\u2013";
+    }
+  }
+  if ("undefined" === typeof this.locale[langspec.best].terms["year-range-delimiter"]) {
+    this.locale[langspec.best].terms["year-range-delimiter"] = "\u2013";
+  }
+  if ("undefined" === typeof this.locale[langspec.best].terms["citation-range-delimiter"]) {
+    this.locale[langspec.best].terms["citation-range-delimiter"] = "\u2013";
+  }
+  if (this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
+    const localeLists = ["default-locale", "locale-sort", "locale-translit", "locale-translat"];
+    for (let i = 0, ilen = localeLists.length; i < ilen; i += 1) {
+      for (let j = 0, jlen = this.opt[localeLists[i]].length; j < jlen; j += 1) {
+        this.opt[localeLists[i]][j] = this.opt[localeLists[i]][j].toLowerCase();
+      }
+    }
+    this.opt.lang = this.opt.lang.toLowerCase();
+  }
+}
+function localeSet(myxml, lang_in, lang_out) {
+  let blob, locale, nodes, attributes, pos, term, form, termname, styleopts, date, attrname, len, genderform, target, i, ilen;
+  lang_in = lang_in.replace("_", "-");
+  lang_out = lang_out.replace("_", "-");
+  if (this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
+    lang_in = lang_in.toLowerCase();
+    lang_out = lang_out.toLowerCase();
+  }
+  if (!this.locale[lang_out]) {
+    this.locale[lang_out] = {};
+    this.locale[lang_out].terms = {};
+    this.locale[lang_out].opts = {};
+    this.locale[lang_out].opts["skip-words"] = SKIP_WORDS;
+    if (!this.locale[lang_out].opts["leading-noise-words"]) {
+      this.locale[lang_out].opts["leading-noise-words"] = [];
+    }
+    this.locale[lang_out].dates = {};
+    this.locale[lang_out].ord = { "1.0.1": false, keys: {} };
+    this.locale[lang_out]["noun-genders"] = {};
+  }
+  locale = myxml.makeXml();
+  if (myxml.nodeNameIs(myxml.dataObj, "locale")) {
+    locale = myxml.dataObj;
+  } else {
+    nodes = myxml.getNodesByName(myxml.dataObj, "locale");
+    let foundLocale = false;
+    for (let pos2 = 0, len2 = myxml.numberofnodes(nodes); pos2 < len2; pos2 += 1) {
+      blob = nodes[pos2];
+      if (!foundLocale && myxml.getAttributeValue(blob, "lang", "xml") === lang_in) {
+        locale = blob;
+        foundLocale = true;
+      } else {
+        const lang = myxml.getAttributeValue(blob, "lang", "xml");
+        const style_options = myxml.getNodesByName(blob, "style-options");
+        if (lang && style_options && style_options.length) {
+          const jurispref = myxml.getAttributeValue(style_options[0], "jurisdiction-preference");
+          if (jurispref) {
+            if (!this.locale[lang]) {
+              this.locale[lang] = {
+                opts: {}
+              };
+            }
+            this.locale[lang].opts["jurisdiction-preference"] = jurispref.split(/\s+/);
+          }
+        }
+      }
+    }
+  }
+  nodes = myxml.getNodesByName(locale, "type");
+  for (let i2 = 0, ilen2 = myxml.numberofnodes(nodes); i2 < ilen2; i2 += 1) {
+    const typenode = nodes[i2];
+    const type = myxml.getAttributeValue(typenode, "name");
+    const gender = myxml.getAttributeValue(typenode, "gender");
+    this.opt.gender[type] = gender;
+  }
+  const hasCslOrdinals101 = myxml.getNodesByName(locale, "term", "ordinal").length;
+  if (hasCslOrdinals101) {
+    for (let key in this.locale[lang_out].ord.keys) {
+      delete this.locale[lang_out].terms[key];
+    }
+    this.locale[lang_out].ord = { "1.0.1": false, keys: {} };
+  }
+  nodes = myxml.getNodesByName(locale, "term");
+  const ordinals101 = { "last-digit": {}, "last-two-digits": {}, "whole-number": {} };
+  let ordinals101_toggle = false;
+  const genderized_terms = {};
+  for (let pos2 = 0, len2 = myxml.numberofnodes(nodes); pos2 < len2; pos2 += 1) {
+    term = nodes[pos2];
+    termname = myxml.getAttributeValue(term, "name");
+    if (termname === "sub verbo") {
+      termname = "sub-verbo";
+    }
+    if (termname.slice(0, 7) === "ordinal") {
+      if (termname === "ordinal") {
+        ordinals101_toggle = true;
+      } else {
+        let match = myxml.getAttributeValue(term, "match");
+        let termstub = termname.slice(8);
+        let genderform2 = myxml.getAttributeValue(term, "gender-form");
+        if (!genderform2) {
+          genderform2 = "neuter";
+        }
+        if (!match) {
+          match = "last-two-digits";
+          if (termstub.slice(0, 1) === "0") {
+            match = "last-digit";
+          }
+        }
+        if (termstub.slice(0, 1) === "0") {
+          termstub = termstub.slice(1);
+        }
+        if (!ordinals101[match][termstub]) {
+          ordinals101[match][termstub] = {};
+        }
+        ordinals101[match][termstub][genderform2] = termname;
+      }
+      this.locale[lang_out].ord.keys[termname] = true;
+    }
+    if ("undefined" === typeof this.locale[lang_out].terms[termname]) {
+      this.locale[lang_out].terms[termname] = {};
+    }
+    form = "long";
+    genderform = false;
+    if (myxml.getAttributeValue(term, "form")) {
+      form = myxml.getAttributeValue(term, "form");
+    }
+    if (myxml.getAttributeValue(term, "gender-form")) {
+      genderform = myxml.getAttributeValue(term, "gender-form");
+    }
+    if (myxml.getAttributeValue(term, "gender")) {
+      this.locale[lang_out]["noun-genders"][termname] = myxml.getAttributeValue(term, "gender");
+    }
+    if (genderform) {
+      this.locale[lang_out].terms[termname][genderform] = {};
+      this.locale[lang_out].terms[termname][genderform][form] = [];
+      target = this.locale[lang_out].terms[termname][genderform];
+      genderized_terms[termname] = true;
+    } else {
+      this.locale[lang_out].terms[termname][form] = [];
+      target = this.locale[lang_out].terms[termname];
+    }
+    if (myxml.numberofnodes(myxml.getNodesByName(term, "multiple"))) {
+      target[form][0] = myxml.getNodeValue(term, "single");
+      if (target[form][0].indexOf("%s") > -1) {
+        this.opt.hasPlaceholderTerm = true;
+      }
+      target[form][1] = myxml.getNodeValue(term, "multiple");
+      if (target[form][1].indexOf("%s") > -1) {
+        this.opt.hasPlaceholderTerm = true;
+      }
+    } else {
+      target[form] = myxml.getNodeValue(term);
+      if (target[form].indexOf("%s") > -1) {
+        this.opt.hasPlaceholderTerm = true;
+      }
+    }
+  }
+  if (!this.locale[lang_out].terms.supplement) {
+    this.locale[lang_out].terms.supplement = {};
+  }
+  if (!this.locale[lang_out].terms.supplement["long"]) {
+    this.locale[lang_out].terms.supplement["long"] = ["supplement", "supplements"];
+  }
+  if (ordinals101_toggle) {
+    for (let ikey in genderized_terms) {
+      const gender_segments = {};
+      let form_segments = 0;
+      for (let jkey in this.locale[lang_out].terms[ikey]) {
+        if (["masculine", "feminine"].indexOf(jkey) > -1) {
+          gender_segments[jkey] = this.locale[lang_out].terms[ikey][jkey];
+        } else {
+          form_segments += 1;
+        }
+      }
+      if (!form_segments) {
+        if (gender_segments.feminine) {
+          for (let jkey in gender_segments.feminine) {
+            this.locale[lang_out].terms[ikey][jkey] = gender_segments.feminine[jkey];
+          }
+        } else if (gender_segments.masculine) {
+          for (let jkey in gender_segments.masculine) {
+            this.locale[lang_out].terms[ikey][jkey] = gender_segments.masculine[jkey];
+          }
+        }
+      }
+    }
+    this.locale[lang_out].ord["1.0.1"] = ordinals101;
+  }
+  for (let termname2 in this.locale[lang_out].terms) {
+    for (let i2 = 0, ilen2 = 2; i2 < ilen2; i2 += 1) {
+      genderform = GENDERS[i2];
+      if (this.locale[lang_out].terms[termname2][genderform]) {
+        for (let form2 in this.locale[lang_out].terms[termname2]) {
+          if (!this.locale[lang_out].terms[termname2][genderform][form2]) {
+            this.locale[lang_out].terms[termname2][genderform][form2] = this.locale[lang_out].terms[termname2][form2];
+          }
+        }
+      }
+    }
+  }
+  nodes = myxml.getNodesByName(locale, "style-options");
+  for (let pos2 = 0, len2 = myxml.numberofnodes(nodes); pos2 < len2; pos2 += 1) {
+    if (true) {
+      styleopts = nodes[pos2];
+      attributes = myxml.attributes(styleopts);
+      for (let attrname2 in attributes) {
+        if (attributes.hasOwnProperty(attrname2)) {
+          if (attrname2 === "@punctuation-in-quote" || attrname2 === "@limit-day-ordinals-to-day-1") {
+            if (attributes[attrname2] === "true") {
+              this.locale[lang_out].opts[attrname2.slice(1)] = true;
+            } else {
+              this.locale[lang_out].opts[attrname2.slice(1)] = false;
+            }
+          } else if (attrname2 === "@jurisdiction-preference") {
+            const jurisdiction_preference = attributes[attrname2].split(/\s+/);
+            this.locale[lang_out].opts[attrname2.slice(1)] = jurisdiction_preference;
+          } else if (attrname2 === "@skip-words") {
+            const skip_words = attributes[attrname2].split(/\s*,\s*/);
+            this.locale[lang_out].opts[attrname2.slice(1)] = skip_words;
+          } else if (attrname2 === "@leading-noise-words") {
+            const val = attributes[attrname2].split(/\s*,\s*/);
+            this.locale[lang_out].opts["leading-noise-words"] = val;
+          } else if (attrname2 === "@name-as-sort-order") {
+            this.locale[lang_out].opts["name-as-sort-order"] = {};
+            const lst = attributes[attrname2].split(/\s+/);
+            for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+              this.locale[lang_out].opts["name-as-sort-order"][lst[i2]] = true;
+            }
+          } else if (attrname2 === "@name-as-reverse-order") {
+            this.locale[lang_out].opts["name-as-reverse-order"] = {};
+            const lst = attributes[attrname2].split(/\s+/);
+            for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+              this.locale[lang_out].opts["name-as-reverse-order"][lst[i2]] = true;
+            }
+          } else if (attrname2 === "@name-never-short") {
+            this.locale[lang_out].opts["name-never-short"] = {};
+            const lst = attributes[attrname2].split(/\s+/);
+            for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+              this.locale[lang_out].opts["name-never-short"][lst[i2]] = true;
+            }
+          }
+        }
+      }
+    }
+  }
+  nodes = myxml.getNodesByName(locale, "date");
+  for (let pos2 = 0, len2 = myxml.numberofnodes(nodes); pos2 < len2; pos2 += 1) {
+    if (true) {
+      const date2 = nodes[pos2];
+      this.locale[lang_out].dates[myxml.getAttributeValue(date2, "form")] = date2;
+    }
+  }
+  SET_COURT_CLASSES(this, lang_out, myxml, locale);
+}
+
+// src/util/names/common.ts
+function checkCommonAuthor(requireMatch) {
+  if (!requireMatch) {
+    return false;
+  }
+  let common_term = false;
+  if (this.variables.length === 2) {
+    const variables = this.variables;
+    const varnames = variables.slice();
+    varnames.sort();
+    common_term = varnames.join("");
+  }
+  if (!common_term) {
+    return false;
+  }
+  let has_term = false;
+  if (this.state.locale[this.state.opt.lang].terms[common_term]) {
+    has_term = true;
+  }
+  if (!has_term) {
+    this.state.tmp.done_vars.push(this.variables[0]);
+    this.state.tmp.done_vars.push(this.variables[1]);
+    return false;
+  }
+  const firstSet = this.Item[this.variables[0]];
+  const secondSet = this.Item[this.variables[1]];
+  const perfectMatch = this._compareNamesets(firstSet, secondSet);
+  if (perfectMatch === true) {
+    this.state.tmp.done_vars.push(this.variables[0]);
+    this.state.tmp.done_vars.push(this.variables[1]);
+  }
+  return !perfectMatch;
+}
+function setCommonTerm() {
+  const variables = this.variables;
+  const varnames = variables.slice();
+  varnames.sort();
+  this.common_term = varnames.join("");
+  if (!this.common_term) {
+    return;
+  }
+  let has_term = false;
+  if (this.label && this.label[this.variables[0]]) {
+    if (this.label[this.variables[0]].before) {
+      has_term = this.state.getTerm(this.common_term, this.label[this.variables[0]].before.strings.form, 0);
+    } else if (this.label[this.variables[0]].after) {
+      has_term = this.state.getTerm(this.common_term, this.label[this.variables[0]].after.strings.form, 0);
+    }
+  }
+  if (!this.state.locale[this.state.opt.lang].terms[this.common_term] || !has_term || this.variables.length < 2) {
+    this.common_term = false;
+    return;
+  }
+  let freeters_offset = 0;
+  for (let i = 0, ilen = this.variables.length - 1; i < ilen; i += 1) {
+    const v = this.variables[i];
+    const vv = this.variables[i + 1];
+    if (this.freeters[v].length || this.freeters[vv].length) {
+      if (this.etal_spec[v].freeters !== this.etal_spec[vv].freeters || !this._compareNamesets(this.freeters[v], this.freeters[vv])) {
+        this.common_term = false;
+        return;
+      }
+      freeters_offset += 1;
+    }
+    if (this.persons[v].length !== this.persons[vv].length) {
+      this.common_term = false;
+      return;
+    }
+    for (let j = 0, jlen = this.persons[v].length; j < jlen; j += 1) {
+      if (this.etal_spec[v].persons[j] !== this.etal_spec[vv].persons[j] || !this._compareNamesets(this.persons[v][j], this.persons[vv][j])) {
+        this.common_term = false;
+        return;
+      }
+    }
+  }
+}
+function _compareNamesets(base_nameset, nameset) {
+  if (!base_nameset || !nameset || base_nameset.length !== nameset.length) {
+    return false;
+  }
+  for (let i = 0, ilen = nameset.length; i < ilen; i += 1) {
+    for (let j = 0, jlen = NAME_PARTS.length; j < jlen; j += 1) {
+      const part = NAME_PARTS[j];
+      if (!base_nameset[i] || base_nameset[i][part] != nameset[i][part]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// src/util/names/index.ts
+var Util_Names = {};
+Util_Names.compareNamesets = _compareNamesets;
+Util_Names.unInitialize = function(state, name) {
+  let i, ilen, namelist, punctlist, ret;
+  if (!name) {
+    return "";
+  }
+  namelist = name.split(/(?:\-|\s+)/);
+  punctlist = name.match(/(\-|\s+)/g);
+  ret = "";
+  for (let i2 = 0, ilen2 = namelist.length; i2 < ilen2; i2 += 1) {
+    ret += namelist[i2];
+    if (i2 < ilen2 - 1) {
+      ret += punctlist[i2];
+    }
+  }
+  return ret;
+};
+Util_Names.initializeWith = function(state, name, terminator, normalizeOnly) {
+  let i, ilen, mm, lst, ret;
+  if (!name) {
+    return "";
+  }
+  if (!terminator) {
+    terminator = "";
+  }
+  if (["Lord", "Lady"].indexOf(name) > -1 || !name.replace(/^(?:<[^>]+>)*/, "").match(STARTSWITH_ROMANESQUE_REGEXP) && !terminator.match("%s")) {
+    return name;
+  }
+  if (state.opt["initialize-with-hyphen"] === false) {
+    name = name.replace(/\-/g, " ");
+  }
+  name = name.replace(/\s*\-\s*/g, "-").replace(/\s+/g, " ");
+  name = name.replace(/-([a-z])/g, "\u2013$1");
+  for (let i2 = name.length - 2; i2 > -1; i2 += -1) {
+    if (name.slice(i2, i2 + 1) === "." && name.slice(i2 + 1, i2 + 2) !== " ") {
+      name = name.slice(0, i2) + ". " + name.slice(i2 + 1);
+    }
+  }
+  const nameSplits = Output_formatters.nameDoppel.split(name);
+  let namelist = [];
+  namelist = [nameSplits.strings[0]];
+  if (nameSplits.tags.length === 0) {
+    const mmm = namelist[0].match(/[^\.]+$/);
+    if (mmm && mmm[0].length === 1 && mmm[0] !== mmm[0].toLowerCase()) {
+      namelist[0] += ".";
+    }
+  }
+  for (let i2 = 1, ilen2 = nameSplits.strings.length; i2 < ilen2; i2 += 1) {
+    namelist.push(nameSplits.tags[i2 - 1]);
+    namelist.push(nameSplits.strings[i2]);
+  }
+  if (normalizeOnly) {
+    ret = this.doNormalize(state, namelist, terminator);
+  } else {
+    ret = this.doInitialize(state, namelist, terminator);
+  }
+  ret = ret.replace(/\u2013([a-z])/g, "-$1");
+  return ret;
+};
+Util_Names.notag = function(str) {
+  return str.replace(/^(?:<[^>]+>)*/, "");
+};
+Util_Names.mergetag = function(state, tagstr, newstr) {
+  let m = tagstr.match(/(?:-*<[^>]+>-*)/g);
+  if (!m) {
+    return newstr;
+  } else {
+    tagstr = m.join("");
+  }
+  m = newstr.match(/^(.*[^\s])*(\s+)$/);
+  if (m) {
+    m[1] = m[1] ? m[1] : "";
+    newstr = m[1] + tagstr + m[2];
+  } else {
+    newstr = newstr + tagstr;
+  }
+  return newstr;
+};
+Util_Names.tagonly = function(state, str) {
+  let m = str.match(/(?:<[^>]+>)+/);
+  if (!m) {
+    return str;
+  } else {
+    return m.join("");
+  }
+};
+Util_Names.doNormalize = function(state, namelist, terminator) {
+  let i, ilen;
+  terminator = terminator ? terminator : "";
+  const isAbbrev = [];
+  for (let i2 = 0, ilen2 = namelist.length; i2 < ilen2; i2 += 1) {
+    if (this.notag(namelist[i2]).length > 1 && this.notag(namelist[i2]).slice(-1) === ".") {
+      namelist[i2] = namelist[i2].replace(/^(.*)\.(.*)$/, "$1$2");
+      isAbbrev.push(true);
+    } else if (namelist[i2].length === 1 && namelist[i2].toUpperCase() === namelist[i2]) {
+      isAbbrev.push(true);
+    } else {
+      isAbbrev.push(false);
+    }
+  }
+  for (let i2 = 0, ilen2 = namelist.length; i2 < ilen2; i2 += 2) {
+    if (isAbbrev[i2]) {
+      if (i2 < namelist.length - 2) {
+        namelist[i2 + 1] = this.tagonly(state, namelist[i2 + 1]);
+        if (!isAbbrev[i2 + 2]) {
+          namelist[i2 + 1] = this.tagonly(state, namelist[i2 + 1]) + " ";
+        }
+        if (namelist[i2 + 2].length > 1) {
+          namelist[i2 + 1] = terminator.replace(/\ufeff$/, "") + namelist[i2 + 1];
+        } else {
+          namelist[i2 + 1] = this.mergetag(state, namelist[i2 + 1], terminator);
+        }
+      }
+      if (i2 === namelist.length - 1) {
+        namelist[i2] = namelist[i2] + terminator;
+      }
+    }
+  }
+  return namelist.join("").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020\ufeff\u00a0]+$/, "").replace(/\s*\-\s*/g, "-").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020]+/g, " ");
+};
+Util_Names.doInitialize = function(state, namelist, terminator) {
+  let i, ilen, m, j, jlen, lst, n;
+  for (let i2 = 0, ilen2 = namelist.length; i2 < ilen2; i2 += 2) {
+    n = namelist[i2];
+    if (!n) {
+      continue;
+    }
+    m = n.match(NAME_INITIAL_REGEXP);
+    if (!m && (!n.match(STARTSWITH_ROMANESQUE_REGEXP) && n.length > 1 && terminator.match("%s"))) {
+      m = n.match(/(.)(.*)/);
+    }
+    if (m && m[2] && m[3]) {
+      m[1] = m[1] + m[2];
+      m[2] = "";
+    }
+    if (m && m[1].slice(0, 1) === m[1].slice(0, 1).toUpperCase()) {
+      let extra = "";
+      if (m[2]) {
+        let s = "";
+        lst = m[2].split("");
+        for (let j2 = 0, jlen2 = lst.length; j2 < jlen2; j2 += 1) {
+          const c = lst[j2];
+          if (c === c.toUpperCase()) {
+            s += c;
+          } else {
+            break;
+          }
+        }
+        if (s.length < m[2].length) {
+          extra = toLocaleLowerCase(state, s);
+        }
+      }
+      namelist[i2] = m[1] + extra;
+      if (i2 < ilen2 - 1) {
+        if (terminator.match("%s")) {
+          namelist[i2] = terminator.replace("%s", namelist[i2]);
+        } else {
+          if (namelist[i2 + 1].indexOf("-") > -1) {
+            namelist[i2 + 1] = this.mergetag(state, namelist[i2 + 1].replace("-", ""), terminator) + "-";
+          } else {
+            namelist[i2 + 1] = this.mergetag(state, namelist[i2 + 1], terminator);
+          }
+        }
+      } else {
+        if (terminator.match("%s")) {
+          namelist[i2] = terminator.replace("%s", namelist[i2]);
+        } else {
+          namelist.push(terminator);
+        }
+      }
+    } else if (n.match(ROMANESQUE_REGEXP) && (!m || !m[3])) {
+      namelist[i2] = " " + n;
+    }
+  }
+  let ret = namelist.join("");
+  ret = ret.replace(/[\u0009\u000a\u000b\u000c\u000d\u0020\ufeff\u00a0]+$/, "").replace(/\s*\-\s*/g, "-").replace(/[\u0009\u000a\u000b\u000c\u000d\u0020]+/g, " ");
+  return ret;
+};
+function getRawName(name) {
+  let ret = [];
+  if (name.literal) {
+    ret.push(name.literal);
+  } else {
+    if (name.given) {
+      ret.push(name.given);
+    }
+    if (name.family) {
+      ret.push(name.family);
+    }
+  }
+  return ret.join(" ");
+}
+Util_Names.getRawName = getRawName;
+
+// src/util/label.ts
+function evaluateLabel(node, state, Item, item) {
+  let myterm;
+  if ("locator" === node.strings.term) {
+    if (item && item.label) {
+      if (item.label === "sub verbo") {
+        myterm = "sub-verbo";
+      } else {
+        myterm = item.label;
+      }
+    }
+    if (!myterm) {
+      myterm = "page";
+    }
+  } else {
+    myterm = node.strings.term;
+  }
+  let plural = node.strings.plural;
+  if ("number" !== typeof plural) {
+    const theItem = item && node.strings.term === "locator" ? item : Item;
+    if (theItem[node.strings.term]) {
+      state.processNumber(false, theItem, node.strings.term, Item.type);
+      plural = state.tmp.shadow_numbers[node.strings.term].plural;
+      if (!state.tmp.shadow_numbers[node.strings.term].labelForm && !state.tmp.shadow_numbers[node.strings.term].labelDecorations) {
+        if (node.strings.form) {
+          state.tmp.shadow_numbers[node.strings.term].labelForm = node.strings.form;
+        } else if (state.tmp.group_context.tip.label_form) {
+          state.tmp.shadow_numbers[node.strings.term].labelForm = state.tmp.group_context.tip.label_form;
+        }
+        state.tmp.shadow_numbers[node.strings.term].labelCapitalizeIfFirst = node.strings.capitalize_if_first;
+        state.tmp.shadow_numbers[node.strings.term].labelDecorations = node.decorations.slice();
+      }
+      if (["locator", "number", "page"].indexOf(node.strings.term) > -1 && state.tmp.shadow_numbers[node.strings.term].label) {
+        myterm = state.tmp.shadow_numbers[node.strings.term].label;
+      }
+      if (node.decorations && state.opt.development_extensions.csl_reverse_lookup_support) {
+        node.decorations.reverse();
+        node.decorations.push(["@showid", "true", node.cslid]);
+        node.decorations.reverse();
+      }
+    }
+  }
+  return castLabel(state, node, myterm, plural, TOLERANT);
+}
+function castLabel(state, node, term, plural, mode) {
+  let label_form = node.strings.form;
+  let label_capitalize_if_first = node.strings.capitalize_if_first;
+  if (state.tmp.group_context.tip.label_form) {
+    if (label_form === "static") {
+      state.tmp.group_context.tip.label_static = true;
+    } else {
+      label_form = state.tmp.group_context.tip.label_form;
+    }
+  }
+  if (state.tmp.group_context.tip.label_capitalize_if_first) {
+    label_capitalize_if_first = state.tmp.group_context.tip.label_capitalize_if_first;
+  }
+  let ret = state.getTerm(term, label_form, plural, false, mode, node.default_locale);
+  if (label_capitalize_if_first) {
+    ret = Output_formatters["capitalize-first"](state, ret);
+  }
+  if (state.tmp.strip_periods) {
+    ret = ret.replace(/\./g, "");
+  } else {
+    for (let i = 0, ilen = node.decorations.length; i < ilen; i += 1) {
+      if ("@strip-periods" === node.decorations[i][0] && "true" === node.decorations[i][1]) {
+        ret = ret.replace(/\./g, "");
+        break;
+      }
+    }
+  }
+  return ret;
+}
+
+// src/util/names/output.ts
+var NameOutput = class {
+  constructor(state, Item, item) {
+    __publicField(this, "debug");
+    __publicField(this, "state");
+    __publicField(this, "Item");
+    __publicField(this, "item");
+    __publicField(this, "nameset_base");
+    __publicField(this, "etal_spec");
+    __publicField(this, "_first_creator_variable");
+    __publicField(this, "_please_chop");
+    __publicField(this, "names");
+    __publicField(this, "variables");
+    __publicField(this, "name");
+    __publicField(this, "family");
+    __publicField(this, "given");
+    __publicField(this, "family_decor");
+    __publicField(this, "given_decor");
+    __publicField(this, "institution");
+    __publicField(this, "label");
+    __publicField(this, "labelVariable");
+    __publicField(this, "requireMatch");
+    __publicField(this, "variables_offset");
+    __publicField(this, "freeters");
+    __publicField(this, "institutions");
+    __publicField(this, "persons");
+    __publicField(this, "freeters_count");
+    __publicField(this, "institutions_count");
+    __publicField(this, "persons_count");
+    __publicField(this, "names_count");
+    __publicField(this, "common_term");
+    __publicField(this, "variable_offset");
+    this.debug = false;
+    this.state = state;
+    if (this.debug) {
+      this.state.sys.print("(1)");
+    }
+    this.Item = Item;
+    this.item = item;
+    this.nameset_base = 0;
+    this.etal_spec = {};
+    this._first_creator_variable = false;
+    this._please_chop = false;
+  }
+  init(names) {
+    this.requireMatch = names.requireMatch;
+    if (this.state.tmp.term_predecessor) {
+      this.state.tmp.subsequent_author_substitute_ok = false;
+    }
+    if (this.nameset_offset) {
+      this.nameset_base = this.nameset_base + this.nameset_offset;
+    }
+    this.nameset_offset = 0;
+    this.names = names;
+    this.variables = names.variables;
+    this.state.tmp.value = [];
+    this.state.tmp.rendered_name = [];
+    this.state.tmp.label_blob = false;
+    this.state.tmp.etal_node = false;
+    this.state.tmp.etal_term = false;
+    for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+      if (this.Item[this.variables[i]] && this.Item[this.variables[i]].length) {
+        this.state.tmp.value = this.state.tmp.value.concat(this.Item[this.variables[i]]);
+      }
+    }
+    this["et-al"] = void 0;
+    this["with"] = void 0;
+    this.name = void 0;
+    this.institutionpart = {};
+    this.state.tmp.group_context.tip.variable_attempt = true;
+    this.labelVariable = this.variables[0];
+    if (!this.state.tmp.value.length) {
+      return;
+    }
+    const checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
+    if (checkCommonTerm) {
+      this.state.tmp.can_substitute.pop();
+      this.state.tmp.can_substitute.push(true);
+      for (let i in this.variables) {
+        const idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
+        if (idx > -1) {
+          this.state.tmp.done_vars = this.state.tmp.done_vars.slice(0, idx).concat(this.state.tmp.done_vars.slice(i + 1));
+        }
+      }
+      this.state.tmp.common_term_match_fail = true;
+      this.variables = [];
+    }
+  }
+  reinit(names, labelVariable) {
+    this.requireMatch = names.requireMatch;
+    this.labelVariable = labelVariable;
+    if (this.state.tmp.can_substitute.value()) {
+      this.nameset_offset = 0;
+      this.variables = names.variables;
+      const oldval = this.state.tmp.value.slice();
+      this.state.tmp.value = [];
+      for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+        if (this.Item[this.variables[i]] && this.Item[this.variables[i]].length) {
+          this.state.tmp.value = this.state.tmp.value.concat(this.Item[this.variables[i]]);
+        }
+      }
+      if (this.state.tmp.value.length) {
+        this.state.tmp.can_substitute.replace(false, LITERAL);
+      }
+      this.state.tmp.value = oldval;
+    }
+    const checkCommonTerm = this.checkCommonAuthor(this.requireMatch);
+    if (checkCommonTerm) {
+      this.state.tmp.can_substitute.pop();
+      this.state.tmp.can_substitute.push(true);
+      for (let i in this.variables) {
+        const idx = this.state.tmp.done_vars.indexOf(this.variables[i]);
+        if (idx > -1) {
+          this.state.tmp.done_vars = this.state.tmp.done_vars.slice(0, idx).concat(this.state.tmp.done_vars.slice(i + 1));
+        }
+      }
+      this.variables = [];
+    }
+  }
+  outputNames() {
+    let i, ilen;
+    const variables = this.variables;
+    if (this.institution.and) {
+      if (!this.institution.and.single.blobs || !this.institution.and.single.blobs.length) {
+        this.institution.and.single.blobs = this.name.and.single.blobs;
+      }
+      if (!this.institution.and.multiple.blobs || !this.institution.and.multiple.blobs.length) {
+        this.institution.and.multiple.blobs = this.name.and.multiple.blobs;
+      }
+    }
+    this.variable_offset = {};
+    if (this.family) {
+      this.family_decor = Util_cloneToken(this.family);
+      this.family_decor.strings.prefix = "";
+      this.family_decor.strings.suffix = "";
+      for (let i2 = 0, ilen2 = this.family.execs.length; i2 < ilen2; i2 += 1) {
+        this.family.execs[i2].call(this.family_decor, this.state, this.Item);
+      }
+    } else {
+      this.family_decor = false;
+    }
+    if (this.given) {
+      this.given_decor = Util_cloneToken(this.given);
+      this.given_decor.strings.prefix = "";
+      this.given_decor.strings.suffix = "";
+      for (let i2 = 0, ilen2 = this.given.execs.length; i2 < ilen2; i2 += 1) {
+        this.given.execs[i2].call(this.given_decor, this.state, this.Item);
+      }
+    } else {
+      this.given_decor = false;
+    }
+    if (this.debug) {
+      this.state.sys.print("(2)");
+    }
+    this.getEtAlConfig();
+    if (this.debug) {
+      this.state.sys.print("(3)");
+    }
+    this.divideAndTransliterateNames();
+    if (this.debug) {
+      this.state.sys.print("(4)");
+    }
+    this.truncatePersonalNameLists();
+    if (this.debug) {
+      this.state.sys.print("(5)");
+    }
+    if (this.debug) {
+      this.state.sys.print("(6)");
+    }
+    this.disambigNames();
+    this.constrainNames();
+    if (this.debug) {
+      this.state.sys.print("(7)");
+    }
+    if (this.name.strings.form === "count") {
+      if (this.state.tmp.extension || this.names_count != 0) {
+        this.state.output.append(this.names_count, "empty");
+        this.state.tmp.group_context.tip.variable_success = true;
+      }
+      return;
+    }
+    if (this.debug) {
+      this.state.sys.print("(8)");
+    }
+    this.setEtAlParameters();
+    if (this.debug) {
+      this.state.sys.print("(9)");
+    }
+    this.setCommonTerm(this.requireMatch);
+    if (this.debug) {
+      this.state.sys.print("(10)");
+    }
+    this.renderAllNames();
+    if (this.debug) {
+      this.state.sys.print("(11)");
+    }
+    const blob_list = [];
+    for (let i2 = 0, ilen2 = variables.length; i2 < ilen2; i2 += 1) {
+      const v = variables[i2];
+      const institution_sets = [];
+      let institutions = false;
+      let varblob = null;
+      if (!this.state.opt.development_extensions.spoof_institutional_affiliations) {
+        varblob = this._join([this.freeters[v]], "");
+      } else {
+        if (this.debug) {
+          this.state.sys.print("(11a)");
+        }
+        for (let j = 0, jlen = this.institutions[v].length; j < jlen; j += 1) {
+          institution_sets.push(this.joinPersonsAndInstitutions([this.persons[v][j], this.institutions[v][j]]));
+        }
+        if (this.debug) {
+          this.state.sys.print("(11b)");
+        }
+        if (this.institutions[v].length) {
+          let pos = this.nameset_base + this.variable_offset[v];
+          if (this.freeters[v].length) {
+            pos += 1;
+          }
+          institutions = this.joinInstitutionSets(institution_sets, pos);
+        }
+        if (this.debug) {
+          this.state.sys.print("(11c)");
+        }
+        let varblob2 = this.joinFreetersAndInstitutionSets([this.freeters[v], institutions]);
+        if (this.debug) {
+          this.state.sys.print("(11d)");
+        }
+      }
+      if (varblob) {
+        if (!this.state.tmp.extension) {
+          varblob = this._applyLabels(varblob, v);
+        }
+        blob_list.push(varblob);
+      }
+      if (this.debug) {
+        this.state.sys.print("(11e)");
+      }
+      if (this.common_term) {
+        break;
+      }
+    }
+    if (this.debug) {
+      this.state.sys.print("(12)");
+    }
+    this.state.output.openLevel("empty");
+    this.state.output.current.value().strings.delimiter = this.state.inheritOpt(this.names, "delimiter", "names-delimiter");
+    if (this.debug) {
+      this.state.sys.print("(13)");
+    }
+    for (let i2 = 0, ilen2 = blob_list.length; i2 < ilen2; i2 += 1) {
+      this.state.output.append(blob_list[i2], "literal", true);
+    }
+    if (!this.state.tmp.just_looking && blob_list.length > 0) {
+      this.state.tmp.probably_rendered_something = true;
+    }
+    if (this.debug) {
+      this.state.sys.print("(14)");
+    }
+    this.state.output.closeLevel("empty");
+    if (this.debug) {
+      this.state.sys.print("(15)");
+    }
+    let blob = this.state.output.pop();
+    this.state.tmp.name_node.top = blob;
+    if (this.debug) {
+      this.state.sys.print("(16)");
+    }
+    const namesToken = Util_cloneToken(this.names);
+    if (this.state.tmp.group_context.tip.condition) {
+      UPDATE_GROUP_CONTEXT_CONDITION(this.state, this.names.strings.prefix, null, this.names);
+    }
+    this.state.output.append(blob, namesToken);
+    if (this.state.tmp.term_predecessor_name) {
+      this.state.tmp.term_predecessor = true;
+    }
+    if (this.debug) {
+      this.state.sys.print("(17)");
+    }
+    if (this.debug) {
+      this.state.sys.print("(18)");
+    }
+    if (variables[0] !== "authority") {
+      let name_node_string = [];
+      const nameobjs = this.Item[variables[0]];
+      if (nameobjs) {
+        for (let i2 = 0, ilen2 = nameobjs.length; i2 < ilen2; i2 += 1) {
+          const substring = getRawName(nameobjs[i2]);
+          if (substring) {
+            name_node_string.push(substring);
+          }
+        }
+      }
+      name_node_string = name_node_string.join(", ");
+      if (name_node_string) {
+        this.state.tmp.name_node.string = name_node_string;
+      }
+    }
+    if (this.state.tmp.name_node.string && !this.state.tmp.first_name_string) {
+      this.state.tmp.first_name_string = this.state.tmp.name_node.string;
+    }
+    if ("classic" === this.Item.type) {
+      if (this.state.tmp.first_name_string) {
+        let author_title = [];
+        author_title.push(this.state.tmp.first_name_string);
+        if (this.Item.title) {
+          author_title.push(this.Item.title);
+        }
+        author_title = author_title.join(", ");
+        if (author_title && this.state.sys.getAbbreviation) {
+          if (this.state.sys.normalizeAbbrevsKey) {
+            author_title = this.state.sys.normalizeAbbrevsKey("classic", author_title);
+          }
+          this.state.transform.loadAbbreviation("default", "classic", author_title, this.Item.language);
+          if (this.state.transform.abbrevs["default"].classic[author_title]) {
+            this.state.tmp.done_vars.push("title");
+            this.state.output.append(this.state.transform.abbrevs["default"].classic[author_title], "empty", true);
+            blob = this.state.output.pop();
+            this.state.tmp.name_node.top.blobs.pop();
+            this.state.tmp.name_node.top.blobs.push(blob);
+          }
+        }
+      }
+    }
+    this._collapseAuthor();
+    this.variables = [];
+    this.state.tmp.authority_stop_last = 0;
+    if (this.debug) {
+      this.state.sys.print("(19)");
+    }
+  }
+  _applyLabels(blob, v) {
+    let txt;
+    if (!this.label || !this.label[this.labelVariable]) {
+      return blob;
+    }
+    let plural = 0;
+    let num = this.freeters_count[v] + this.institutions_count[v];
+    if (num > 1) {
+      plural = 1;
+    } else {
+      for (let i = 0, ilen = this.persons[v].length; i < ilen; i += 1) {
+        num += this.persons_count[v][i];
+      }
+      if (num > 1) {
+        plural = 1;
+      }
+    }
+    if (this.label[this.labelVariable].before) {
+      if ("number" === typeof this.label[this.labelVariable].before.strings.plural) {
+        plural = this.label[this.labelVariable].before.strings.plural;
+      }
+      txt = this._buildLabel(v, plural, "before", this.labelVariable);
+      this.state.output.openLevel("empty");
+      this.state.output.append(txt, this.label[this.labelVariable].before, true);
+      this.state.output.append(blob, "literal", true);
+      this.state.output.closeLevel("empty");
+      blob = this.state.output.pop();
+    } else if (this.label[this.labelVariable].after) {
+      if ("number" === typeof this.label[this.labelVariable].after.strings.plural) {
+        plural = this.label[this.labelVariable].after.strings.plural;
+      }
+      txt = this._buildLabel(v, plural, "after", this.labelVariable);
+      this.state.output.openLevel("empty");
+      this.state.output.append(blob, "literal", true);
+      this.state.output.append(txt, this.label[this.labelVariable].after, true);
+      this.state.tmp.label_blob = this.state.output.pop();
+      this.state.output.append(this.state.tmp.label_blob, "literal", true);
+      this.state.output.closeLevel("empty");
+      blob = this.state.output.pop();
+    }
+    return blob;
+  }
+  _buildLabel(term, plural, position, v) {
+    if (this.common_term) {
+      term = this.common_term;
+    }
+    const node = this.label[v][position];
+    if (node) {
+      return castLabel(this.state, node, term, plural, TOLERANT);
+    }
+    return false;
+  }
+  _collapseAuthor() {
+    let myqueue, mystr, oldchars;
+    if (this.state.tmp.name_node.top.blobs.length === 0) {
+      return;
+    }
+    if (this.nameset_base === 0 && this.Item[this.variables[0]] && !this._first_creator_variable) {
+      this._first_creator_variable = this.variables[0];
+    }
+    if (this.state[this.state.tmp.area].opt.collapse && this.state[this.state.tmp.area].opt.collapse.length || this.state[this.state.tmp.area].opt.cite_group_delimiter && this.state[this.state.tmp.area].opt.cite_group_delimiter.length) {
+      if (this.state.tmp.authorstring_request) {
+        mystr = "";
+        myqueue = this.state.tmp.name_node.top.blobs.slice(-1)[0].blobs;
+        oldchars = this.state.tmp.offset_characters;
+        if (myqueue) {
+          mystr = this.state.output.string(this.state, myqueue, false);
+        }
+        this.state.tmp.offset_characters = oldchars;
+        this.state.registry.authorstrings[this.Item.id] = mystr;
+      } else if (!this.state.tmp.just_looking && !this.state.tmp.suppress_decorations && (this.state[this.state.tmp.area].opt.collapse && this.state[this.state.tmp.area].opt.collapse.length || this.state[this.state.tmp.area].opt.cite_group_delimiter && this.state[this.state.tmp.area].opt.cite_group_delimiter)) {
+        mystr = "";
+        myqueue = this.state.tmp.name_node.top.blobs.slice(-1)[0].blobs;
+        oldchars = this.state.tmp.offset_characters;
+        if (myqueue) {
+          mystr = this.state.output.string(this.state, myqueue, false);
+        }
+        if (mystr === this.state.tmp.last_primary_names_string) {
+          if (this.item["suppress-author"] || this.state[this.state.tmp.area].opt.collapse && this.state[this.state.tmp.area].opt.collapse.length) {
+            this.state.tmp.name_node.top.blobs.pop();
+            this.state.tmp.name_node.children = [];
+            this.state.tmp.offset_characters = oldchars;
+          }
+          if (this.state[this.state.tmp.area].opt.cite_group_delimiter && this.state[this.state.tmp.area].opt.cite_group_delimiter) {
+            this.state.tmp.use_cite_group_delimiter = true;
+          }
+        } else {
+          this.state.tmp.last_primary_names_string = mystr;
+          if (this.variables.indexOf(this._first_creator_variable) > -1 && this.item && this.item["suppress-author"] && this.Item.type !== "legal_case") {
+            this.state.tmp.name_node.top.blobs.pop();
+            this.state.tmp.name_node.children = [];
+            this.state.tmp.offset_characters = oldchars;
+            this.state.tmp.term_predecessor = false;
+          }
+          this.state.tmp.have_collapsed = false;
+          if (this.state[this.state.tmp.area].opt.cite_group_delimiter && this.state[this.state.tmp.area].opt.cite_group_delimiter) {
+            this.state.tmp.use_cite_group_delimiter = false;
+          }
+        }
+      }
+    }
+  }
+  /* snip
+  suppressNames() {
+      suppress_condition = suppress_min && display_names.length >= suppress_min;
+      if (suppress_condition) {
+          continue;
+      }
+  }
+  */
+  renderAllNames() {
+    let pos;
+    for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+      const v = this.variables[i];
+      if (this.freeters[v].length || this.institutions[v].length) {
+        if (!this.state.tmp.group_context.tip.condition) {
+          this.state.tmp.just_did_number = false;
+        }
+      }
+      pos = this.nameset_base + i;
+      if (this.freeters[v].length) {
+        this.freeters[v] = this._renderNames(v, this.freeters[v], pos);
+      }
+      for (let j = 0, jlen = this.institutions[v].length; j < jlen; j += 1) {
+        this.persons[v][j] = this._renderNames(v, this.persons[v][j], pos, j);
+      }
+    }
+    this.renderInstitutionNames();
+  }
+  renderInstitutionNames() {
+    for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+      const v = this.variables[i];
+      for (let j = 0, jlen = this.institutions[v].length; j < jlen; j += 1) {
+        let institution;
+        let name = this.institutions[v][j];
+        let localesets;
+        if (this.state.tmp.extension) {
+          localesets = ["sort"];
+        } else if (name.isInstitution || name.literal) {
+          localesets = this.state.opt["cite-lang-prefs"].institutions;
+        } else {
+          localesets = this.state.opt["cite-lang-prefs"].persons;
+        }
+        const slot = { primary: "locale-orig", secondary: false, tertiary: false };
+        if (localesets) {
+          const slotnames = ["primary", "secondary", "tertiary"];
+          for (let k = 0, klen = slotnames.length; k < klen; k += 1) {
+            if (localesets.length - 1 < k) {
+              break;
+            }
+            if (localesets[k]) {
+              slot[slotnames[k]] = "locale-" + localesets[k];
+            }
+          }
+        } else {
+          slot.primary = "locale-translat";
+        }
+        if (this.state.tmp.area !== "bibliography" && !(this.state.tmp.area === "citation" && this.state.opt.xclass === "note" && this.item && !this.item.position)) {
+          slot.secondary = false;
+          slot.tertiary = false;
+        }
+        this.setRenderedName(name);
+        institution = this._renderInstitutionName(v, name, slot, j);
+        this.institutions[v][j] = institution;
+      }
+    }
+  }
+  _renderInstitutionName(v, name, slot, j) {
+    let secondary, tertiary, long_style, short_style, institution, institution_short, institution_long;
+    let res = this.getName(name, slot.primary, true);
+    let primary = res.name;
+    let usedOrig = res.usedOrig;
+    if (primary) {
+      primary = this.fixupInstitution(primary, v, j);
+    }
+    secondary = false;
+    if (slot.secondary) {
+      res = this.getName(name, slot.secondary, false, usedOrig);
+      let secondary2 = res.name;
+      usedOrig = res.usedOrig;
+      if (secondary2) {
+        secondary2 = this.fixupInstitution(secondary2, v, j);
+      }
+    }
+    tertiary = false;
+    if (slot.tertiary) {
+      res = this.getName(name, slot.tertiary, false, usedOrig);
+      tertiary = res.name;
+      if (tertiary) {
+        tertiary = this.fixupInstitution(tertiary, v, j);
+      }
+    }
+    const n = {
+      l: {
+        pri: false,
+        sec: false,
+        ter: false
+      },
+      s: {
+        pri: false,
+        sec: false,
+        ter: false
+      }
+    };
+    if (primary) {
+      n.l.pri = primary["long"];
+      n.s.pri = primary["short"].length ? primary["short"] : primary["long"];
+    }
+    if (secondary) {
+      n.l.sec = secondary["long"];
+      n.s.sec = secondary["short"].length ? secondary["short"] : secondary["long"];
+    }
+    if (tertiary) {
+      n.l.ter = tertiary["long"];
+      n.s.ter = tertiary["short"].length ? tertiary["short"] : tertiary["long"];
+    }
+    switch (this.institution.strings["institution-parts"]) {
+      case "short":
+        if (primary["short"].length) {
+          short_style = this._getShortStyle();
+          institution = [this._composeOneInstitutionPart([n.s.pri, n.s.sec, n.s.ter], slot, short_style, v)];
+        } else {
+          long_style = this._getLongStyle(primary, v, j);
+          institution = [this._composeOneInstitutionPart([n.l.pri, n.l.sec, n.l.ter], slot, long_style, v)];
+        }
+        break;
+      case "short-long":
+        long_style = this._getLongStyle(primary, v, j);
+        short_style = this._getShortStyle();
+        institution_short = this._renderOneInstitutionPart(primary["short"], short_style);
+        institution_long = this._composeOneInstitutionPart([n.l.pri, n.l.sec, n.l.ter], slot, long_style, v);
+        institution = [institution_short, institution_long];
+        break;
+      case "long-short":
+        long_style = this._getLongStyle(primary, v, j);
+        short_style = this._getShortStyle();
+        institution_short = this._renderOneInstitutionPart(primary["short"], short_style);
+        institution_long = this._composeOneInstitutionPart([n.l.pri, n.l.sec, n.l.ter], slot, long_style, v);
+        institution = [institution_long, institution_short];
+        break;
+      default:
+        long_style = this._getLongStyle(primary, v, j);
+        institution = [this._composeOneInstitutionPart([n.l.pri, n.l.sec, n.l.ter], slot, long_style, v)];
+        break;
+    }
+    let blob = this._join(institution, " ");
+    if (blob) {
+      blob.isInstitution = true;
+    }
+    this.state.tmp.name_node.children.push(blob);
+    return blob;
+  }
+  _composeOneInstitutionPart(names, slot, style, v) {
+    let primary = false, secondary = false, tertiary = false, primary_tok, secondary_tok, tertiary_tok;
+    if (names[0]) {
+      primary_tok = Util_cloneToken(style);
+      if (this.state.opt.citeAffixes[slot.primary]) {
+        if ("<i>" === this.state.opt.citeAffixes.institutions[slot.primary].prefix) {
+          let hasItalic = false;
+          for (let i = 0, ilen = primary_tok.decorations.length; i < ilen; i += 1) {
+            if (style.decorations[i][0] === "@font-style" && primary_tok.decorations[i][1] === "italic") {
+              hasItalic = true;
+            }
+          }
+          if (!hasItalic) {
+            primary_tok.decorations.push(["@font-style", "italic"]);
+          }
+        }
+      }
+      primary = this._renderOneInstitutionPart(names[0], primary_tok);
+    }
+    if (names[1]) {
+      secondary = this._renderOneInstitutionPart(names[1], style);
+    }
+    if (names[2]) {
+      tertiary = this._renderOneInstitutionPart(names[2], style);
+    }
+    let institutionblob;
+    if (secondary || tertiary) {
+      this.state.output.openLevel("empty");
+      this.state.output.append(primary);
+      secondary_tok = Util_cloneToken(style);
+      if (slot.secondary) {
+        secondary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.secondary].prefix;
+        secondary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.secondary].suffix;
+        if (!secondary_tok.strings.prefix) {
+          secondary_tok.strings.prefix = " ";
+        }
+      }
+      const secondary_outer = new Token();
+      secondary_outer.decorations.push(["@font-style", "normal"]);
+      secondary_outer.decorations.push(["@font-weight", "normal"]);
+      this.state.output.openLevel(secondary_outer);
+      this.state.output.append(secondary, secondary_tok);
+      this.state.output.closeLevel();
+      tertiary_tok = Util_cloneToken(style);
+      if (slot.tertiary) {
+        tertiary_tok.strings.prefix = this.state.opt.citeAffixes.institutions[slot.tertiary].prefix;
+        tertiary_tok.strings.suffix = this.state.opt.citeAffixes.institutions[slot.tertiary].suffix;
+        if (!tertiary_tok.strings.prefix) {
+          tertiary_tok.strings.prefix = " ";
+        }
+      }
+      const tertiary_outer = new Token();
+      tertiary_outer.decorations.push(["@font-style", "normal"]);
+      tertiary_outer.decorations.push(["@font-weight", "normal"]);
+      this.state.output.openLevel(tertiary_outer);
+      this.state.output.append(tertiary, tertiary_tok);
+      this.state.output.closeLevel();
+      this.state.output.closeLevel();
+      institutionblob = this.state.output.pop();
+    } else {
+      institutionblob = primary;
+    }
+    return institutionblob;
+  }
+  _renderOneInstitutionPart(blobs, style) {
+    for (let i = 0, ilen = blobs.length; i < ilen; i += 1) {
+      if (blobs[i]) {
+        let str = blobs[i];
+        if (this.state.tmp.strip_periods) {
+          str = str.replace(/\./g, "");
+        } else {
+          for (let j = 0, jlen = style.decorations.length; j < jlen; j += 1) {
+            if ("@strip-periods" === style.decorations[j][0] && "true" === style.decorations[j][1]) {
+              str = str.replace(/\./g, "");
+              break;
+            }
+          }
+        }
+        this.state.tmp.group_context.tip.variable_success = true;
+        this.state.tmp.can_substitute.replace(false, LITERAL);
+        if (str === "!here>>>") {
+          blobs[i] = false;
+        } else {
+          this.state.output.append(str, style, true);
+          blobs[i] = this.state.output.pop();
+        }
+      }
+    }
+    if ("undefined" === typeof this.institution.strings["part-separator"]) {
+      this.institution.strings["part-separator"] = this.state.tmp.name_delimiter;
+    }
+    return this._join(blobs, this.institution.strings["part-separator"]);
+  }
+  _renderNames(v, values, pos, j) {
+    let ret = false;
+    if (values.length) {
+      const names = [];
+      for (let i = 0, ilen = values.length; i < ilen; i += 1) {
+        let name = values[i];
+        let ret2, localesets;
+        if (this.state.tmp.extension) {
+          localesets = ["sort"];
+        } else if (name.isInstitution || name.literal) {
+          localesets = this.state.opt["cite-lang-prefs"].institutions;
+        } else {
+          localesets = this.state.opt["cite-lang-prefs"].persons;
+        }
+        const slot = { primary: "locale-orig", secondary: false, tertiary: false };
+        if (localesets) {
+          const slotnames = ["primary", "secondary", "tertiary"];
+          for (let k = 0, klen = slotnames.length; k < klen; k += 1) {
+            if (localesets.length - 1 < k) {
+              break;
+            }
+            slot[slotnames[k]] = "locale-" + localesets[k];
+          }
+        } else {
+          slot.primary = "locale-translat";
+        }
+        if (this.state.tmp.sort_key_flag || this.state.tmp.area !== "bibliography" && !(this.state.tmp.area === "citation" && this.state.opt.xclass === "note" && this.item && !this.item.position)) {
+          slot.secondary = false;
+          slot.tertiary = false;
+        }
+        this.setRenderedName(name);
+        if (!name.literal && !name.isInstitution) {
+          const nameBlob = this._renderPersonalName(v, name, slot, pos, i, j);
+          const nameToken = Util_cloneToken(this.name);
+          this.state.output.append(nameBlob, nameToken, true);
+          names.push(this.state.output.pop());
+        } else {
+          names.push(this._renderInstitutionName(v, name, slot, j));
+        }
+      }
+      ret = this.joinPersons(names, pos, j);
+    }
+    return ret;
+  }
+  _renderPersonalName(v, name, slot, pos, i, j) {
+    let res = this.getName(name, slot.primary, true);
+    let primary = this._renderOnePersonalName(res.name, pos, i, j);
+    let secondary = false;
+    if (slot.secondary) {
+      res = this.getName(name, slot.secondary, false, res.usedOrig);
+      if (res.name) {
+        secondary = this._renderOnePersonalName(res.name, pos, i, j);
+      }
+    }
+    let tertiary = false;
+    if (slot.tertiary) {
+      res = this.getName(name, slot.tertiary, false, res.usedOrig);
+      if (res.name) {
+        tertiary = this._renderOnePersonalName(res.name, pos, i, j);
+      }
+    }
+    let personblob;
+    if (secondary || tertiary) {
+      this.state.output.openLevel("empty");
+      this.state.output.append(primary);
+      let secondary_tok = new Token();
+      if (slot.secondary) {
+        secondary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.secondary].prefix;
+        secondary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.secondary].suffix;
+        if (!secondary_tok.strings.prefix) {
+          secondary_tok.strings.prefix = " ";
+        }
+      }
+      this.state.output.append(secondary, secondary_tok);
+      let tertiary_tok = new Token();
+      if (slot.tertiary) {
+        tertiary_tok.strings.prefix = this.state.opt.citeAffixes.persons[slot.tertiary].prefix;
+        tertiary_tok.strings.suffix = this.state.opt.citeAffixes.persons[slot.tertiary].suffix;
+        if (!tertiary_tok.strings.prefix) {
+          tertiary_tok.strings.prefix = " ";
+        }
+      }
+      this.state.output.append(tertiary, tertiary_tok);
+      this.state.output.closeLevel();
+      personblob = this.state.output.pop();
+    } else {
+      personblob = primary;
+    }
+    return personblob;
+  }
+  /** Japanese */
+  _isJapanese(name) {
+    let ret = 0;
+    let top_locale;
+    if (name.multi && name.multi.main) {
+      top_locale = name.multi.main.slice(0, 2);
+    } else if (this.Item.language) {
+      top_locale = this.Item.language.slice(0, 2);
+    }
+    if (top_locale === "ja") {
+      ret = 1;
+    }
+    return ret;
+  }
+  _isKatakana(name) {
+    let ret = 0;
+    let fullname = name.family.replace(/\"/g, "");
+    if (name.given) {
+      fullname = name.family.replace(/\"/g, "") + name.given.replace(/\"/g, "");
+    }
+    if (fullname.match(KATAKANA_REGEXP)) {
+      ret = 1;
+    } else if (name.family.replace(/\"/g, "").match(KATAKANA_REGEXP) && name.given.match(STARTSWITH_KATAKANA_REGEXP)) {
+      ret = 1;
+    }
+    return ret;
+  }
+  /***/
+  _isRomanesque(name) {
+    let ret = 2;
+    if (!name.family.replace(/\"/g, "").match(ROMANESQUE_REGEXP)) {
+      ret = 0;
+    }
+    if (!ret && name.given && name.given.match(STARTSWITH_ROMANESQUE_REGEXP)) {
+      ret = 1;
+    }
+    let top_locale;
+    if (ret == 2) {
+      if (name.multi && name.multi.main) {
+        top_locale = name.multi.main.slice(0, 2);
+      } else if (this.Item.language) {
+        top_locale = this.Item.language.slice(0, 2);
+      }
+      if (["ja", "zh"].indexOf(top_locale) > -1) {
+        ret = 1;
+      }
+    }
+    return ret;
+  }
+  /**
+  It would be great if this function was renamed something like _renderCJK(language, name, non_dropping_particle, given, family, sort_sep) in the future. Japanese should work as long as family and given are provided.
+  */
+  _renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep) {
+    let blob;
+    this.name.and.single.strings.prefix = "";
+    this.name.and.single.strings.suffix = "";
+    this.name.and.single.blobs = this.name.strings.delimiter;
+    this.name.and.multiple.blobs = this.name.strings.delimiter;
+    this.name.and.multiple.strings.prefix = "";
+    this.name.and.multiple.strings.suffix = "";
+    if (katakana === 1 && this.state.opt["katakana-display"] !== "legacy-order") {
+      if (this.state.inheritOpt(this.name, "name-as-sort-order") === "all" || this.state.inheritOpt(this.name, "name-as-sort-order") === "first" && i === 0 && (j === 0 || "undefined" === typeof j)) {
+        blob = this._join([family, given], sort_sep);
+      } else {
+        blob = this._join([given, family], "\u30FB");
+      }
+    } else if (japanese === 1) {
+      if (this.family && this.family.strings) {
+        family.strings.prefix = this.family.strings.prefix;
+        family.strings.suffix = this.family.strings.suffix;
+      }
+      if (this.given && this.given.strings) {
+        given.strings.prefix = this.given.strings.prefix;
+        given.strings.suffix = this.given.strings.suffix;
+      }
+      blob = this._join([family, given], "");
+    }
+    return blob;
+  }
+  _renderOnePersonalName(value, pos, i, j) {
+    let name = value;
+    let dropping_particle = this._droppingParticle(name, pos, j);
+    let family = this._familyName(name);
+    const non_dropping_particle = this._nonDroppingParticle(name);
+    const givenInfo = this._givenName(name, pos, i);
+    const given = givenInfo.blob;
+    let suffix = this._nameSuffix(name);
+    if (given === false) {
+      dropping_particle = false;
+      suffix = false;
+    }
+    let sort_sep = this.state.inheritOpt(this.name, "sort-separator");
+    if (!sort_sep) {
+      sort_sep = "";
+    }
+    let suffix_sep;
+    if (name["comma-suffix"]) {
+      suffix_sep = ", ";
+    } else {
+      suffix_sep = " ";
+    }
+    let romanesque = this._isRomanesque(name);
+    const katakana = this._isKatakana(name);
+    let japanese = this._isJapanese(name);
+    function hasJoiningPunctuation(blob2) {
+      if (!blob2) {
+        return false;
+      } else if ("string" === typeof blob2.blobs) {
+        if (["\u2019", "'", "-", " "].indexOf(blob2.blobs.slice(-1)) > -1) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return hasJoiningPunctuation(blob2.blobs[blob2.blobs.length - 1]);
+      }
+    }
+    const has_hyphenated_non_dropping_particle = hasJoiningPunctuation(non_dropping_particle);
+    let nbspace;
+    if (["fr", "ru", "cs"].indexOf(this.state.opt["default-locale"][0].slice(0, 2)) > -1) {
+      nbspace = "\xA0";
+    } else {
+      nbspace = " ";
+    }
+    if ((romanesque === 2 || romanesque === 1) && japanese === 1) {
+      japanese = 0;
+      romanesque = 2;
+    }
+    let blob, merged, first, second;
+    if (romanesque === 0) {
+      if (katakana === 1 && this.state.opt["katakana-display"] !== "legacy-order" || japanese === 1) {
+        blob = this._renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep);
+      } else {
+        blob = this._join([non_dropping_particle, family, given], "");
+      }
+    } else if (katakana === 1 && this.state.opt["katakana-display"] !== "legacy-order" || japanese === 1) {
+      blob = this._renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep);
+    } else if (romanesque === 1 || name["static-ordering"]) {
+      merged = this._join([non_dropping_particle, family], nbspace);
+      blob = this._join([merged, given], " ");
+    } else if (name["reverse-ordering"]) {
+      merged = this._join([non_dropping_particle, family], nbspace);
+      blob = this._join([given, merged], " ");
+    } else if (this.state.tmp.sort_key_flag) {
+      if (this.state.opt["demote-non-dropping-particle"] === "never") {
+        merged = this._join([non_dropping_particle, family], nbspace);
+        merged = this._join([merged, dropping_particle], " ");
+        merged = this._join([merged, given], this.state.opt.sort_sep);
+        blob = this._join([merged, suffix], " ");
+      } else {
+        second = this._join([given, dropping_particle, non_dropping_particle], " ");
+        merged = this._join([family, second], this.state.opt.sort_sep);
+        blob = this._join([merged, suffix], " ");
+      }
+    } else if (this.state.inheritOpt(this.name, "name-as-sort-order") === "all" || this.state.inheritOpt(this.name, "name-as-sort-order") === "first" && i === 0 && (j === 0 || "undefined" === typeof j)) {
+      if (["Lord", "Lady"].indexOf(name.given) > -1) {
+        sort_sep = ", ";
+      }
+      if (["always", "display-and-sort"].indexOf(this.state.opt["demote-non-dropping-particle"]) > -1) {
+        second = this._join([given, dropping_particle], name["comma-dropping-particle"] + " ");
+        second = this._join([second, non_dropping_particle], " ");
+        if (second && this.given) {
+          second.strings.prefix = this.given.strings.prefix;
+          second.strings.suffix = this.given.strings.suffix;
+        }
+        if (family && this.family) {
+          family.strings.prefix = this.family.strings.prefix;
+          family.strings.suffix = this.family.strings.suffix;
+        }
+        merged = this._join([family, second], sort_sep);
+        blob = this._join([merged, suffix], sort_sep);
+      } else {
+        if (has_hyphenated_non_dropping_particle) {
+          first = this._join([non_dropping_particle, family], "");
+        } else {
+          first = this._join([non_dropping_particle, family], nbspace);
+        }
+        if (first && this.family) {
+          first.strings.prefix = this.family.strings.prefix;
+          first.strings.suffix = this.family.strings.suffix;
+        }
+        second = this._join([given, dropping_particle], name["comma-dropping-particle"] + " ");
+        if (second && this.given) {
+          second.strings.prefix = this.given.strings.prefix;
+          second.strings.suffix = this.given.strings.suffix;
+        }
+        merged = this._join([first, second], sort_sep);
+        blob = this._join([merged, suffix], sort_sep);
+      }
+      blob.isInverted = true;
+    } else {
+      if (name["dropping-particle"] && name.family && !name["non-dropping-particle"]) {
+        let dp = name["dropping-particle"];
+        const apostrophes = ["'", "\u02BC", "\u2019", "-"];
+        if (apostrophes.indexOf(dp.slice(-1)) > -1 && dp.slice(0, -1) !== "de") {
+          family = this._join([dropping_particle, family], "");
+          dropping_particle = false;
+        }
+      }
+      if (has_hyphenated_non_dropping_particle) {
+        second = this._join([non_dropping_particle, family], "");
+        second = this._join([dropping_particle, second], nbspace);
+      } else {
+        second = this._join([dropping_particle, non_dropping_particle, family], nbspace);
+      }
+      second = this._join([second, suffix], suffix_sep);
+      if (second && this.family) {
+        second.strings.prefix = this.family.strings.prefix;
+        second.strings.suffix = this.family.strings.suffix;
+      }
+      if (given && this.given) {
+        given.strings.prefix = this.given.strings.prefix;
+        given.strings.suffix = this.given.strings.suffix;
+      }
+      if (second.strings.prefix) {
+        name["comma-dropping-particle"] = "";
+      }
+      let space;
+      if (this.state.inheritOpt(this.name, "initialize-with") && this.state.inheritOpt(this.name, "initialize-with").match(/[\u00a0\ufeff]/) && givenInfo.initializationLevel === 1) {
+        space = nbspace;
+      } else {
+        space = " ";
+      }
+      blob = this._join([given, second], name["comma-dropping-particle"] + space);
+    }
+    this.state.tmp.group_context.tip.variable_success = true;
+    this.state.tmp.can_substitute.replace(false, LITERAL);
+    this.state.tmp.term_predecessor = true;
+    this.state.tmp.name_node.children.push(blob);
+    return blob;
+  }
+  /*
+              // Do not include given name, dropping particle or suffix in strict short form of name
+  
+              // initialize if appropriate
+      */
+  // Input names should be touched by _normalizeNameInput()
+  // exactly once: this is not idempotent.
+  _normalizeNameInput(value) {
+    let name = {
+      literal: value.literal,
+      family: value.family,
+      isInstitution: value.isInstitution,
+      given: value.given,
+      suffix: value.suffix,
+      "comma-suffix": value["comma-suffix"],
+      "non-dropping-particle": value["non-dropping-particle"],
+      "dropping-particle": value["dropping-particle"],
+      "static-ordering": value["static-ordering"],
+      "static-particles": value["static-particles"],
+      "reverse-ordering": value["reverse-ordering"],
+      "full-form-always": value["full-form-always"],
+      "parse-names": value["parse-names"],
+      "comma-dropping-particle": "",
+      block_initialize: value.block_initialize,
+      multi: value.multi
+    };
+    this._parseName(name);
+    return name;
+  }
+  // _transformNameset() replaced with enhanced transform.name().
+  _stripPeriods(tokname, str) {
+    const decor_tok = this[tokname + "_decor"];
+    if (str) {
+      if (this.state.tmp.strip_periods) {
+        str = str.replace(/\./g, "");
+      } else if (decor_tok) {
+        for (let i = 0, ilen = decor_tok.decorations.length; i < ilen; i += 1) {
+          if ("@strip-periods" === decor_tok.decorations[i][0] && "true" === decor_tok.decorations[i][1]) {
+            str = str.replace(/\./g, "");
+            break;
+          }
+        }
+      }
+    }
+    return str;
+  }
+  _nonDroppingParticle(name) {
+    let ndp = name["non-dropping-particle"];
+    if (ndp && this.state.tmp.sort_key_flag) {
+      ndp = ndp.replace(/[\'\u2019]/, "");
+    }
+    let str = this._stripPeriods("family", ndp);
+    if (this.state.output.append(str, this.family_decor, true)) {
+      return this.state.output.pop();
+    }
+    return false;
+  }
+  _droppingParticle(name, pos, j) {
+    let dp = name["dropping-particle"];
+    if (dp && this.state.tmp.sort_key_flag) {
+      dp = dp.replace(/[\'\u2019]/, "");
+    }
+    let str = this._stripPeriods("given", dp);
+    if (name["dropping-particle"] && name["dropping-particle"].match(/^et.?al[^a-z]$/)) {
+      if (this.state.inheritOpt(this.name, "et-al-use-last")) {
+        if ("undefined" === typeof j) {
+          this.etal_spec[pos].freeters = 2;
+        } else {
+          this.etal_spec[pos].persons = 2;
+        }
+      } else {
+        if ("undefined" === typeof j) {
+          this.etal_spec[pos].freeters = 1;
+        } else {
+          this.etal_spec[pos].persons = 1;
+        }
+      }
+      name["comma-dropping-particle"] = "";
+    } else if (this.state.output.append(str, this.given_decor, true)) {
+      return this.state.output.pop();
+    }
+    return false;
+  }
+  _familyName(name) {
+    let str = this._stripPeriods("family", name.family);
+    if (this.state.output.append(str, this.family_decor, true)) {
+      return this.state.output.pop();
+    }
+    return false;
+  }
+  _givenName(name, pos, i) {
+    let ret;
+    const formIsShort = this.state.inheritOpt(this.name, "form", "name-form", "long") !== "long";
+    const initializeIsTurnedOn = this.state.inheritOpt(this.name, "initialize") !== false;
+    let hasInitializeWith = "string" === typeof this.state.inheritOpt(this.name, "initialize-with") && !name.block_initialize;
+    let defaultLevel;
+    let useLevel;
+    if (name["full-form-always"]) {
+      useLevel = 2;
+    } else {
+      if (formIsShort) {
+        defaultLevel = 0;
+      } else if (hasInitializeWith) {
+        defaultLevel = 1;
+      } else {
+        defaultLevel = 2;
+      }
+      const requestedLevel = this.state.tmp.disambig_settings.givens[pos][i];
+      if (requestedLevel > defaultLevel) {
+        useLevel = requestedLevel;
+      } else {
+        useLevel = defaultLevel;
+      }
+    }
+    const gdropt = this.state.citation.opt["givenname-disambiguation-rule"];
+    if (gdropt && gdropt.slice(-14) === "-with-initials") {
+      hasInitializeWith = true;
+    }
+    if (name.family && useLevel === 1) {
+      if (hasInitializeWith) {
+        const initialize_with = this.state.inheritOpt(this.name, "initialize-with", false, "");
+        name.given = Util_Names.initializeWith(this.state, name.given, initialize_with, !initializeIsTurnedOn);
+      } else {
+        name.given = Util_Names.unInitialize(this.state, name.given);
+      }
+    } else if (useLevel === 0) {
+      return {
+        blob: false
+      };
+    } else if (useLevel === 2) {
+      name.given = Util_Names.unInitialize(this.state, name.given);
+    }
+    let str = this._stripPeriods("given", name.given);
+    const rendered = this.state.output.append(str, this.given_decor, true);
+    if (rendered) {
+      ret = this.state.output.pop();
+      return {
+        blob: ret,
+        initializationLevel: useLevel
+      };
+    }
+    return {
+      blob: false
+    };
+  }
+  _nameSuffix(name) {
+    let str = name.suffix, ret;
+    if (str && "string" === typeof this.state.inheritOpt(this.name, "initialize-with")) {
+      str = Util_Names.initializeWith(this.state, str, this.state.inheritOpt(this.name, "initialize-with"), true);
+    }
+    str = this._stripPeriods("family", str);
+    let toSuffix = "";
+    if (str && str.slice(-1) === ".") {
+      str = str.slice(0, -1);
+      toSuffix = ".";
+    }
+    const rendered = this.state.output.append(str, "empty", true);
+    if (rendered) {
+      ret = this.state.output.pop();
+      ret.strings.suffix = toSuffix + ret.strings.suffix;
+      return ret;
+    }
+    return false;
+  }
+  _getLongStyle(name, v, j) {
+    let long_style;
+    if (name["short"].length) {
+      if (this.institutionpart["long-with-short"]) {
+        long_style = this.institutionpart["long-with-short"];
+      } else {
+        long_style = this.institutionpart["long"];
+      }
+    } else {
+      long_style = this.institutionpart["long"];
+    }
+    if (!long_style) {
+      long_style = new Token();
+    }
+    return long_style;
+  }
+  _getShortStyle() {
+    let short_style;
+    if (this.institutionpart["short"]) {
+      short_style = this.institutionpart["short"];
+    } else {
+      short_style = new Token();
+    }
+    return short_style;
+  }
+  _parseName(name) {
+    if (!name["parse-names"] && "undefined" !== typeof name["parse-names"]) {
+      return name;
+    }
+    if (name.family && !name.given && name.isInstitution) {
+      name.literal = name.family;
+      name.family = void 0;
+      name.isInstitution = void 0;
+    }
+    let noparse;
+    if (name.family && (name.family.slice(0, 1) === '"' && name.family.slice(-1) === '"') || !name["parse-names"] && "undefined" !== typeof name["parse-names"]) {
+      name.family = name.family.slice(1, -1);
+      noparse = true;
+      name["parse-names"] = 0;
+    } else {
+      noparse = false;
+    }
+    if (this.state.opt.development_extensions.parse_names) {
+      if (!name["non-dropping-particle"] && name.family && !noparse && name.given) {
+        if (!name["static-particles"]) {
+          parseParticles(name);
+        }
+      }
+    }
+  }
+  /*
+   * Return a single name object
+    */
+  // The interface is a mess, but this should serve.
+  getName(name, slotLocaleset, fallback, stopOrig) {
+    if (stopOrig && slotLocaleset === "locale-orig") {
+      return { name: false, usedOrig: stopOrig };
+    }
+    if (!name.family) {
+      name.family = "";
+    }
+    if (!name.given) {
+      name.given = "";
+    }
+    let name_params = {};
+    name_params["static-ordering"] = this.getStaticOrder(name);
+    let foundTag = true;
+    let langTag;
+    if (slotLocaleset !== "locale-orig") {
+      foundTag = false;
+      if (name.multi) {
+        const langTags = this.state.opt[slotLocaleset];
+        for (let i = 0, ilen = langTags.length; i < ilen; i += 1) {
+          langTag = langTags[i];
+          if (name.multi._key[langTag]) {
+            foundTag = true;
+            const isInstitution = name.isInstitution;
+            name = name.multi._key[langTag];
+            name.isInstitution = isInstitution;
+            name_params = this.getNameParams(langTag);
+            name_params.transliterated = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!foundTag) {
+      langTag = false;
+      if (name.multi && name.multi.main) {
+        langTag = name.multi.main;
+      } else if (this.Item.language) {
+        langTag = this.Item.language;
+      }
+      if (langTag) {
+        name_params = this.getNameParams(langTag);
+      }
+    }
+    if (!fallback && !foundTag) {
+      return { name: false, usedOrig: stopOrig };
+    }
+    if (!name.family) {
+      name.family = "";
+    }
+    if (!name.given) {
+      name.given = "";
+    }
+    if (name.literal) {
+      delete name.family;
+      delete name.given;
+    }
+    name = {
+      family: name.family,
+      given: name.given,
+      "non-dropping-particle": name["non-dropping-particle"],
+      "dropping-particle": name["dropping-particle"],
+      suffix: name.suffix,
+      "static-ordering": name_params["static-ordering"],
+      "static-particles": name["static-particles"],
+      "reverse-ordering": name_params["reverse-ordering"],
+      "full-form-always": name_params["full-form-always"],
+      "parse-names": name["parse-names"],
+      "comma-suffix": name["comma-suffix"],
+      "comma-dropping-particle": name["comma-dropping-particle"],
+      transliterated: name_params.transliterated,
+      block_initialize: name_params["block-initialize"],
+      literal: name.literal,
+      isInstitution: name.isInstitution,
+      multi: name.multi
+    };
+    if (!name.literal && (!name.given && name.family && name.isInstitution)) {
+      name.literal = name.family;
+    }
+    if (name.literal) {
+      delete name.family;
+      delete name.given;
+    }
+    name = this._normalizeNameInput(name);
+    let usedOrig;
+    if (stopOrig) {
+      usedOrig = stopOrig;
+    } else {
+      usedOrig = !foundTag;
+    }
+    return { name, usedOrig };
+  }
+  getNameParams(langTag) {
+    let ret = {};
+    const langspec = localeResolve(this.Item.language, this.state.opt["default-locale"][0]);
+    const try_locale = this.state.locale[langspec.best] ? langspec.best : this.state.opt["default-locale"][0];
+    const name_as_sort_order = this.state.locale[try_locale].opts["name-as-sort-order"];
+    const name_as_reverse_order = this.state.locale[try_locale].opts["name-as-reverse-order"];
+    const name_never_short = this.state.locale[try_locale].opts["name-never-short"];
+    const field_lang_bare = langTag.split("-")[0];
+    if (name_as_sort_order && name_as_sort_order[field_lang_bare]) {
+      ret["static-ordering"] = true;
+      ret["reverse-ordering"] = false;
+    }
+    if (name_as_reverse_order && name_as_reverse_order[field_lang_bare]) {
+      ret["reverse-ordering"] = true;
+      ret["static-ordering"] = false;
+    }
+    if (name_never_short && name_never_short[field_lang_bare]) {
+      ret["full-form-always"] = true;
+    }
+    if (ret["static-ordering"]) {
+      ret["block-initialize"] = true;
+    }
+    return ret;
+  }
+  setRenderedName(name) {
+    if (this.state.tmp.area === "bibliography") {
+      let strname = "";
+      for (let j = 0, jlen = NAME_PARTS.length; j < jlen; j += 1) {
+        if (name[NAME_PARTS[j]]) {
+          strname += name[NAME_PARTS[j]];
+        }
+      }
+      this.state.tmp.rendered_name.push(strname);
+    }
+  }
+  fixupInstitution(name, varname, listpos) {
+    if (!name.literal && name.family) {
+      name.literal = name.family;
+      delete name.family;
+    }
+    let longNameStr = name.literal;
+    let shortNameStr = longNameStr;
+    let ret = {
+      "long": longNameStr.split(/\s*\|\s*/),
+      "short": shortNameStr.split(/\s*\|\s*/)
+    };
+    if (this.state.sys.getAbbreviation) {
+      if (this.institution.strings.form === "short") {
+        let jurisdiction = this.Item.jurisdiction;
+        jurisdiction = this.state.transform.loadAbbreviation(jurisdiction, "institution-entire", longNameStr, this.Item.language);
+        if (this.state.transform.abbrevs[jurisdiction]["institution-entire"][longNameStr]) {
+          longNameStr = this.state.transform.abbrevs[jurisdiction]["institution-entire"][longNameStr];
+        } else {
+          jurisdiction = this.Item.jurisdiction;
+          jurisdiction = this.state.transform.loadAbbreviation(jurisdiction, "institution-part", longNameStr, this.Item.language);
+          if (this.state.transform.abbrevs[jurisdiction]["institution-part"][longNameStr]) {
+            longNameStr = this.state.transform.abbrevs[jurisdiction]["institution-part"][longNameStr];
+          }
+        }
+        longNameStr = this._quashChecks(jurisdiction, longNameStr);
+      }
+      if (["short", "short-long", "long-short"].indexOf(this.institution.strings["institution-parts"]) > -1) {
+        let jurisdiction = this.Item.jurisdiction;
+        jurisdiction = this.state.transform.loadAbbreviation(jurisdiction, "institution-part", shortNameStr, this.Item.language);
+        if (this.state.transform.abbrevs[jurisdiction]["institution-part"][shortNameStr]) {
+          shortNameStr = this.state.transform.abbrevs[jurisdiction]["institution-part"][shortNameStr];
+        }
+        shortNameStr = this._quashChecks(jurisdiction, shortNameStr);
+        if (["short-long", "long-short"].indexOf(this.institution.strings["institution-parts"]) > -1) {
+          if (shortNameStr === longNameStr) {
+            shortNameStr = "";
+          }
+        }
+      }
+      ret["long"] = longNameStr.split(/\s*\|\s*/);
+      ret["short"] = shortNameStr.split(/\s*\|\s*/);
+      if (["short", "short-long", "long-short"].indexOf(this.institution.strings["institution-parts"]) > -1) {
+        for (let j = ret["short"].length - 1; j > -1; j--) {
+          let jurisdiction = this.Item.jurisdiction;
+          const abbrevKey = ret["short"][j];
+          jurisdiction = this.state.transform.loadAbbreviation(jurisdiction, "institution-part", abbrevKey, this.Item.language);
+          if (this.state.transform.abbrevs[jurisdiction]["institution-part"][abbrevKey]) {
+            ret["short"][j] = this.state.transform.abbrevs[jurisdiction]["institution-part"][abbrevKey];
+          }
+          if (ret["short"][j].indexOf("|") > -1) {
+            let retShort = ret["short"];
+            let splitShort = retShort[j].split(/\s*\|\s*/);
+            ret["short"] = retShort.slice(0, j).concat(splitShort).concat(retShort.slice(j + 1));
+          }
+        }
+      }
+      if (this.state.opt.development_extensions.legacy_institution_name_ordering) {
+        ret["short"].reverse();
+      }
+      ret["short"] = this._trimInstitution(ret["short"]);
+      if (this.institution.strings["reverse-order"]) {
+        ret["short"].reverse();
+      }
+      if (!this.state.tmp.just_looking) {
+        if (this.Item.jurisdiction) {
+          let jurisdiction = this.Item.jurisdiction;
+          const trimmer = this.state.tmp.abbrev_trimmer;
+          if (trimmer && trimmer[jurisdiction] && trimmer[jurisdiction][varname]) {
+            for (let i = 0, ilen = ret["short"].length; i < ilen; i++) {
+              const frag = ret["short"][i];
+              ret["short"][i] = frag.replace(trimmer[jurisdiction][varname], "").trim();
+            }
+          }
+        }
+      }
+    }
+    if (this.state.opt.development_extensions.legacy_institution_name_ordering) {
+      ret["long"].reverse();
+    }
+    ret["long"] = this._trimInstitution(ret["long"]);
+    if (this.institution.strings["reverse-order"]) {
+      ret["long"].reverse();
+    }
+    return ret;
+  }
+  getStaticOrder(name, refresh) {
+    let static_ordering_val = false;
+    if (!refresh && name["static-ordering"]) {
+      static_ordering_val = true;
+    } else if (this._isRomanesque(name) === 0) {
+      static_ordering_val = true;
+    } else if ((!name.multi || !name.multi.main) && this.Item.language && ["vi", "hu"].indexOf(this.Item.language) > -1) {
+      static_ordering_val = true;
+    } else if (name.multi && name.multi.main && ["vi", "hu"].indexOf(name.multi.main.slice(0, 2)) > -1) {
+      static_ordering_val = true;
+    } else {
+      if (this.state.opt["auto-vietnamese-names"] && (VIETNAMESE_NAMES.exec(name.family + " " + name.given) && VIETNAMESE_SPECIALS.exec(name.family + name.given))) {
+        static_ordering_val = true;
+      }
+    }
+    return static_ordering_val;
+  }
+  _quashChecks(jurisdiction, str) {
+    str = this.state.transform.quashCheck(jurisdiction, str);
+    const lst = str.split(/>>[0-9]{4}>>/);
+    let m = str.match(/>>([0-9]{4})>>/);
+    str = lst.pop();
+    let date = this.Item["original-date"] ? this.Item["original-date"] : this.Item["issued"];
+    if (date) {
+      date = parseInt(date.year, 10);
+      date = isNaN(date) ? false : date;
+    }
+    if (date) {
+      if (lst.length > 0) {
+        for (let k = m.length - 1; k > 0; k--) {
+          if (date >= parseInt(m[k], 10)) {
+            break;
+          }
+          str = lst.pop();
+        }
+      }
+      str = str.replace(/\s*\|\s*/g, "|");
+    }
+    return str;
+  }
+  _trimInstitution(subunits) {
+    let use_first = false;
+    let stop_last = false;
+    let use_last = false;
+    let stop_first = false;
+    let s = subunits.slice();
+    if (this.institution) {
+      if ("undefined" !== typeof this.institution.strings["use-first"]) {
+        use_first = this.institution.strings["use-first"];
+      }
+      if ("undefined" !== typeof this.institution.strings["use-last"]) {
+        use_last = this.institution.strings["use-last"];
+      }
+      if ("undefined" !== typeof this.institution.strings["stop-first"]) {
+        stop_first = this.institution.strings["stop-first"];
+      }
+      if ("undefined" !== typeof this.institution.strings["stop-last"]) {
+        stop_last = this.institution.strings["stop-last"];
+      }
+      if (use_first) {
+        if (stop_last) {
+          s = s.slice(0, stop_last * -1);
+        }
+        s = s.slice(0, use_first);
+      }
+      if (use_last) {
+        let ss = subunits.slice();
+        if (use_first) {
+          stop_first = use_first;
+        } else {
+          s = [];
+        }
+        if (stop_first) {
+          ss = ss.slice(stop_first);
+        }
+        ss = ss.slice(use_last * -1);
+        s = s.concat(ss);
+      }
+      subunits = s;
+    }
+    return subunits;
+  }
+};
+
+// src/util/util.ts
+var Match = class {
+  constructor() {
+    this["undefined"] = this.all;
+  }
+  any(token, state, tests) {
+    return (Item, item) => {
+      for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+        if (tests[i](Item, item)) {
+          return true;
+        }
+      }
+      return false;
+    };
+  }
+  none(token, state, tests) {
+    return (Item, item) => {
+      for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+        if (tests[i](Item, item)) {
+          return false;
+        }
+      }
+      return true;
+    };
+  }
+  all(token, state, tests) {
+    return (Item, item) => {
+      for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+        if (!tests[i](Item, item)) {
+          return false;
+        }
+      }
+      return true;
+    };
+  }
+  nand(token, state, tests) {
+    return (Item, item) => {
+      for (let i = 0, ilen = tests.length; i < ilen; i += 1) {
+        if (!tests[i](Item, item)) {
+          return true;
+        }
+      }
+      return false;
+    };
+  }
+};
+function encodeDoiForUrl(doi) {
+  return doi.replace(/[\u0000-\u0020"#%<>?[\\\]^`{|}\u007F-\u009F]/g, encodeURIComponent);
+}
+
+// src/sort.ts
+function getSortCompare(default_locale) {
+  if (internals.stringCompare) {
+    return internals.stringCompare;
+  }
+  const me = this;
+  const strcmp_opts = {
+    sensitivity: "base",
+    ignorePunctuation: true,
+    numeric: true
+  };
+  if (!default_locale) {
+    default_locale = "en-US";
+  }
+  const strcmp = function(a, b) {
+    return toLocaleLowerCase(me, a).localeCompare(toLocaleLowerCase(me, b), default_locale, strcmp_opts);
+  };
+  const stripPunct = function(str) {
+    return str.replace(/^[\[\]\'\"]*/g, "");
+  };
+  const getBracketPreSort = function() {
+    if (!strcmp("[x", "x")) {
+      return false;
+    } else {
+      return function(a, b) {
+        return strcmp(stripPunct(a), stripPunct(b));
+      };
+    }
+  };
+  const bracketPreSort = getBracketPreSort();
+  return function(a, b) {
+    if (bracketPreSort) {
+      return bracketPreSort(a, b);
+    } else {
+      return strcmp(a, b);
+    }
+  };
+}
+
+// src/util/sort.ts
+var Util_Sort = {};
+Util_Sort.strip_prepositions = function(str) {
+  let m = null;
+  if ("string" === typeof str) {
+    m = str.match(/^(([aA]|[aA][nN]|[tT][hH][eE])\s+)/);
+  }
+  if (m) {
+    str = str.substr(m[1].length);
+  }
+  return str;
+};
+
+// src/disambig/names.ts
+function NameReg(state) {
+  let pkey, ikey, skey;
+  this.state = state;
+  this.namereg = {};
+  this.nameind = {};
+  this.nameindpkeys = {};
+  this.itemkeyreg = {};
+  const strip_periods = function(str) {
+    if (!str) {
+      str = "";
+    }
+    return str.replace(/\./g, " ").replace(/\s+/g, " ").replace(/\s+$/, "");
+  };
+  const set_keys = function(state2, itemid, nameobj) {
+    pkey = strip_periods(nameobj.family);
+    if (state2.opt["demote-non-dropping-particle"] === "never" && nameobj["non-dropping-particle"] && nameobj["family"]) {
+      pkey = `${pkey} ${nameobj["non-dropping-particle"]}`;
+    }
+    skey = strip_periods(nameobj.given);
+    let m = skey.match(/[,\!]* ([^,]+)$/);
+    if (m && m[1] === m[1].toLowerCase()) {
+      skey = skey.replace(/[,\!]* [^,]+$/, "");
+    }
+    ikey = Util_Names.initializeWith(state2, skey, "%s");
+    if (state2.citation.opt["givenname-disambiguation-rule"] === "by-cite") {
+      pkey = "" + itemid + pkey;
+    }
+  };
+  const evalname = function(item_id, nameobj, namenum, request_base, form, initials) {
+    let param;
+    if (state.tmp.area.slice(0, 12) === "bibliography" && !form) {
+      if ("string" === typeof initials) {
+        return 1;
+      } else {
+        return 2;
+      }
+    }
+    const res = state.nameOutput.getName(nameobj, "locale-translit", true);
+    nameobj = res.name;
+    set_keys(this.state, "" + item_id, nameobj);
+    param = 2;
+    const dagopt = state.opt["disambiguate-add-givenname"];
+    let gdropt = state.citation.opt["givenname-disambiguation-rule"];
+    const gdropt_orig = gdropt;
+    if (gdropt === "by-cite") {
+      gdropt = "all-names";
+    }
+    if ("short" === form) {
+      param = 0;
+    } else if ("string" === typeof initials) {
+      param = 1;
+    }
+    if ("undefined" === typeof this.namereg[pkey] || "undefined" === typeof this.namereg[pkey].ikey[ikey]) {
+      return param;
+    }
+    if (gdropt_orig === "by-cite" && param <= request_base) {
+      return request_base;
+    }
+    if (!dagopt) {
+      return param;
+    }
+    if ("string" === typeof gdropt && gdropt.slice(0, 12) === "primary-name" && namenum > 0) {
+      return param;
+    }
+    if (!gdropt || gdropt === "all-names" || gdropt === "primary-name") {
+      if (this.namereg[pkey].count > 1) {
+        param = 1;
+      }
+      if (this.namereg[pkey].ikey && this.namereg[pkey].ikey[ikey].count > 1 || this.namereg[pkey].count > 1 && "string" !== typeof initials) {
+        param = 2;
+      }
+    } else if (gdropt === "all-names-with-initials" || gdropt === "primary-name-with-initials") {
+      if (this.namereg[pkey].count > 1) {
+        param = 1;
+      } else {
+        param = 0;
+      }
+    }
+    if (!state.registry.registry[item_id]) {
+      if (form == "short") {
+        return 0;
+      } else if ("string" == typeof initials) {
+        return 1;
+      }
+    } else {
+      return param;
+    }
+  };
+  const delitems = function(ids) {
+    let pos, len, posB, id, fullkey, items;
+    if ("string" === typeof ids || "number" === typeof ids) {
+      ids = ["" + ids];
+    }
+    let ret = {};
+    len = ids.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      id = "" + ids[pos2];
+      if (!this.nameind[id]) {
+        continue;
+      }
+      for (let fullkey2 in this.nameind[id]) {
+        if (this.nameind[id].hasOwnProperty(fullkey2)) {
+          let key = fullkey2.split("::");
+          pkey = key[0];
+          ikey = key[1];
+          skey = key[2];
+          if ("undefined" === typeof this.namereg[pkey]) {
+            continue;
+          }
+          items = this.namereg[pkey].items;
+          if (skey && this.namereg[pkey].ikey[ikey] && this.namereg[pkey].ikey[ikey].skey[skey]) {
+            const myitems = this.namereg[pkey].ikey[ikey].skey[skey].items;
+            posB = myitems.indexOf("" + id);
+            if (posB > -1) {
+              this.namereg[pkey].ikey[ikey].skey[skey].items = myitems.slice(0, posB).concat(myitems.slice([posB + 1]));
+            }
+            if (this.namereg[pkey].ikey[ikey].skey[skey].items.length === 0) {
+              delete this.namereg[pkey].ikey[ikey].skey[skey];
+              this.namereg[pkey].ikey[ikey].count += -1;
+              if (this.namereg[pkey].ikey[ikey].count < 2) {
+                for (let i = 0, ilen = this.namereg[pkey].ikey[ikey].items.length; i < ilen; i += 1) {
+                  state.tmp.taintedItemIDs[this.namereg[pkey].ikey[ikey].items[i]] = true;
+                }
+              }
+            }
+          }
+          if (ikey && this.namereg[pkey].ikey[ikey]) {
+            posB = this.namereg[pkey].ikey[ikey].items.indexOf("" + id);
+            if (posB > -1) {
+              items = this.namereg[pkey].ikey[ikey].items.slice();
+              this.namereg[pkey].ikey[ikey].items = items.slice(0, posB).concat(items.slice([posB + 1]));
+            }
+            if (this.namereg[pkey].ikey[ikey].items.length === 0) {
+              delete this.namereg[pkey].ikey[ikey];
+              this.namereg[pkey].count += -1;
+              if (this.namereg[pkey].count < 2) {
+                for (let i = 0, ilen = this.namereg[pkey].items.length; i < ilen; i += 1) {
+                  state.tmp.taintedItemIDs[this.namereg[pkey].items[i]] = true;
+                }
+              }
+            }
+          }
+          if (pkey) {
+            posB = this.namereg[pkey].items.indexOf("" + id);
+            if (posB > -1) {
+              items = this.namereg[pkey].items.slice();
+              this.namereg[pkey].items = items.slice(0, posB).concat(items.slice([posB + 1], items.length));
+            }
+            if (this.namereg[pkey].items.length < 2) {
+              delete this.namereg[pkey];
+            }
+          }
+          delete this.nameind[id][fullkey2];
+        }
+      }
+      delete this.nameind[id];
+      delete this.nameindpkeys[id];
+    }
+    return ret;
+  };
+  const addname = function(item_id, nameobj, pos) {
+    let i, ilen;
+    const res = state.nameOutput.getName(nameobj, "locale-translit", true);
+    nameobj = res.name;
+    if (state.citation.opt["givenname-disambiguation-rule"] && state.citation.opt["givenname-disambiguation-rule"].slice(0, 8) === "primary-" && pos !== 0) {
+      return;
+    }
+    set_keys(this.state, "" + item_id, nameobj);
+    if (pkey) {
+      if ("undefined" === typeof this.namereg[pkey]) {
+        this.namereg[pkey] = {};
+        this.namereg[pkey].count = 0;
+        this.namereg[pkey].ikey = {};
+        this.namereg[pkey].items = [item_id];
+      } else if (this.namereg[pkey].items.indexOf(item_id) === -1) {
+        this.namereg[pkey].items.push(item_id);
+      }
+    }
+    if (pkey && ikey) {
+      if ("undefined" === typeof this.namereg[pkey].ikey[ikey]) {
+        this.namereg[pkey].ikey[ikey] = {};
+        this.namereg[pkey].ikey[ikey].count = 0;
+        this.namereg[pkey].ikey[ikey].skey = {};
+        this.namereg[pkey].ikey[ikey].items = [item_id];
+        this.namereg[pkey].count += 1;
+        if (this.namereg[pkey].count === 2) {
+          for (let i2 = 0, ilen2 = this.namereg[pkey].items.length; i2 < ilen2; i2 += 1) {
+            state.tmp.taintedItemIDs[this.namereg[pkey].items[i2]] = true;
+          }
+        }
+      } else if (this.namereg[pkey].ikey[ikey].items.indexOf(item_id) === -1) {
+        this.namereg[pkey].ikey[ikey].items.push(item_id);
+      }
+    }
+    if (pkey && ikey && skey) {
+      if ("undefined" === typeof this.namereg[pkey].ikey[ikey].skey[skey]) {
+        this.namereg[pkey].ikey[ikey].skey[skey] = {};
+        this.namereg[pkey].ikey[ikey].skey[skey].items = [item_id];
+        this.namereg[pkey].ikey[ikey].count += 1;
+        if (this.namereg[pkey].ikey[ikey].count === 2) {
+          for (let i2 = 0, ilen2 = this.namereg[pkey].ikey[ikey].items.length; i2 < ilen2; i2 += 1) {
+            state.tmp.taintedItemIDs[this.namereg[pkey].ikey[ikey].items[i2]] = true;
+          }
+        }
+      } else if (this.namereg[pkey].ikey[ikey].skey[skey].items.indexOf(item_id) === -1) {
+        this.namereg[pkey].ikey[ikey].skey[skey].items.push(item_id);
+      }
+    }
+    if ("undefined" === typeof this.nameind[item_id]) {
+      this.nameind[item_id] = {};
+      this.nameindpkeys[item_id] = {};
+    }
+    if (pkey) {
+      this.nameind[item_id][pkey + "::" + ikey + "::" + skey] = true;
+      this.nameindpkeys[item_id][pkey] = this.namereg[pkey];
+    }
+  };
+  this.addname = addname;
+  this.delitems = delitems;
+  this.evalname = evalname;
+}
+
+// src/disambig/citations.ts
+function CitationReg(state) {
+  this.citationById = {};
+  this.citationByIndex = [];
+}
+
+// src/obj/ambigconfig.ts
+var AmbigConfig = class {
+  constructor() {
+    __publicField(this, "maxvals");
+    __publicField(this, "minval");
+    __publicField(this, "names");
+    __publicField(this, "givens");
+    __publicField(this, "year_suffix");
+    __publicField(this, "disambiguate");
+    this.maxvals = [];
+    this.minval = 1;
+    this.names = [];
+    this.givens = [];
+    this.year_suffix = false;
+    this.disambiguate = 0;
+  }
+};
+
+// src/registry/registry.ts
+var Registry = class {
+  constructor(state) {
+    __publicField(this, "debug");
+    __publicField(this, "state");
+    __publicField(this, "registry");
+    __publicField(this, "reflist");
+    __publicField(this, "refhash");
+    __publicField(this, "namereg");
+    __publicField(this, "citationreg");
+    __publicField(this, "authorstrings");
+    __publicField(this, "masterMap");
+    __publicField(this, "mylist");
+    __publicField(this, "myhash");
+    __publicField(this, "deletes");
+    __publicField(this, "inserts");
+    __publicField(this, "uncited");
+    __publicField(this, "refreshes");
+    __publicField(this, "akeys");
+    __publicField(this, "oldseq");
+    __publicField(this, "return_data");
+    __publicField(this, "ambigcites");
+    __publicField(this, "ambigresets");
+    __publicField(this, "sorter");
+    __publicField(this, "touched");
+    __publicField(this, "ambigsTouched");
+    __publicField(this, "reflist_inserts");
+    this.debug = false;
+    this.state = state;
+    this.registry = {};
+    this.reflist = [];
+    this.refhash = {};
+    this.namereg = new NameReg(state);
+    this.citationreg = new CitationReg(state);
+    this.authorstrings = {};
+    this.masterMap = {};
+    this.mylist = [];
+    this.myhash = {};
+    this.deletes = [];
+    this.inserts = [];
+    this.uncited = {};
+    this.refreshes = {};
+    this.akeys = {};
+    this.oldseq = {};
+    this.return_data = {};
+    this.ambigcites = {};
+    this.ambigresets = {};
+    this.sorter = new Comparifier(state, "bibliography_sort");
+  }
+  getSortedIds() {
+    let ret = [];
+    for (let i = 0, ilen = this.reflist.length; i < ilen; i += 1) {
+      ret.push("" + this.reflist[i].id);
+    }
+    return ret;
+  }
+  getSortedRegistryItems() {
+    let ret = [];
+    for (let i = 0, ilen = this.reflist.length; i < ilen; i += 1) {
+      ret.push(this.reflist[i]);
+    }
+    return ret;
+  }
+  //
+  // Here's the sequence of operations to be performed on
+  // update:
+  //
+  //  1.  (o) [init] Receive list as function argument, store as hash and as list.
+  //  2.  (o) [init] Initialize refresh list.  Never needs sorting, only hash required.
+  //  3.  (o) [dodeletes] Delete loop.
+  //  3a. (o) [dodeletes] Delete names in items to be deleted from names reg.
+  //  3b. (o) [dodeletes] Complement refreshes list with items affected by
+  //      possible name changes.  We'll actually perform the refresh once
+  //      all of the necessary data and parameters have been established
+  //      in the registry.
+  //  3c. (o) [dodeletes] Delete all items to be deleted from their disambig pools.
+  //  3d. (o) [dodeletes] Delete all items in deletion list from hash.
+  //  4.  (o) [doinserts] Insert loop.
+  //  4a. (o) [doinserts] Retrieve entries for items to insert.
+  //  4b. (o) [doinserts] Generate ambig key.
+  //  4c. (o) [doinserts] Add names in items to be inserted to names reg
+  //      (implicit in getAmbiguousCite).
+  //  4d. (o) [doinserts] Record ambig pool key on akey list (used for updating further
+  //      down the chain).
+  //  4e. (o) [doinserts] Create registry token.
+  //  4f. (o) [doinserts] Add item ID to hash.
+  //  4g. (o) [doinserts] Set and record the base token to hold disambiguation
+  //      results ("disambig" in the object above).
+  //  5.  (o) [rebuildlist] Create "new" list of hash pointers, in the order given
+  //          in the argument to the update function.
+  //  6.  (o) [rebuildlist] Apply citation numbers to new list.
+  //  7.  (o) [dorefreshes] Refresh items requiring update.
+  //  5. (o) [delnames] Delete names in items to be deleted from names reg, and obtain IDs
+  //         of other items that would be affected by changes around that surname.
+  //  6. (o) [delnames] Complement delete and insert lists with items affected by
+  //         possible name changes.
+  //  7. (o) [delambigs] Delete all items to be deleted from their disambig pools.
+  //  8. (o) [delhash] Delete all items in deletion list from hash.
+  //  9. (o) [addtohash] Retrieve entries for items to insert.
+  // 10. (o) [addtohash] Add items to be inserted to their disambig pools.
+  // 11. (o) [addtohash] Add names in items to be inserted to names reg
+  //         (implicit in getAmbiguousCite).
+  // 12. (o) [addtohash] Create registry token for each item to be inserted.
+  // 13. (o) [addtohash] Add items for insert to hash.
+  // 14. (o) [buildlist] Create "new" list of hash pointers, in the order given in the argument
+  //         to the update function.
+  // 15. (o) [renumber] Apply citation numbers to new list.
+  // 16. (o) [setdisambigs] Set disambiguation parameters on each inserted item token.
+  // 17. (o) [setsortkeys] Set sort keys on each item token.
+  // 18. (o) [sorttokens] Resort token list
+  // 19. (o) [renumber] Reset citation numbers on list items
+  //
+  init(itemIDs, uncited_flag) {
+    let i, ilen;
+    this.oldseq = {};
+    if (uncited_flag) {
+      this.uncited = {};
+      for (let i2 = 0, ilen2 = itemIDs.length; i2 < ilen2; i2 += 1) {
+        if (!this.myhash[itemIDs[i2]]) {
+          this.mylist.push("" + itemIDs[i2]);
+        }
+        this.uncited[itemIDs[i2]] = true;
+        this.myhash[itemIDs[i2]] = true;
+      }
+    } else {
+      for (let key in this.uncited) {
+        itemIDs.push(key);
+      }
+      let myhash = {};
+      for (let i2 = itemIDs.length - 1; i2 > -1; i2 += -1) {
+        if (myhash[itemIDs[i2]]) {
+          itemIDs = itemIDs.slice(0, i2).concat(itemIDs.slice(i2 + 1));
+        } else {
+          myhash[itemIDs[i2]] = true;
+        }
+      }
+      this.mylist = itemIDs;
+      this.myhash = myhash;
+    }
+    this.refreshes = {};
+    this.touched = {};
+    this.ambigsTouched = {};
+    this.ambigresets = {};
+  }
+  dopurge(myhash) {
+    for (let i = this.mylist.length - 1; i > -1; i += -1) {
+      if (this.citationreg.citationsByItemId) {
+        if ((!this.citationreg.citationsByItemId || !this.citationreg.citationsByItemId[this.mylist[i]]) && !myhash[this.mylist[i]]) {
+          delete this.myhash[this.mylist[i]];
+          delete this.uncited[this.mylist[i]];
+          this.mylist = this.mylist.slice(0, i).concat(this.mylist.slice(i + 1));
+        }
+      }
+    }
+    this.dodeletes(this.myhash);
+  }
+  dodeletes(myhash) {
+    let otheritems, key, ambig, pos, len, items, kkey, mypos, id;
+    if ("string" === typeof myhash) {
+      let key2 = myhash;
+      myhash = {};
+      myhash[key2] = true;
+    }
+    for (let key2 in this.registry) {
+      if (!myhash[key2]) {
+        if (this.uncited[key2]) {
+          continue;
+        }
+        otheritems = this.namereg.delitems(key2);
+        for (let kkey2 in otheritems) {
+          this.refreshes[kkey2] = true;
+        }
+        ambig = this.registry[key2].ambig;
+        mypos = this.ambigcites[ambig].indexOf(key2);
+        if (mypos > -1) {
+          items = this.ambigcites[ambig].slice();
+          this.ambigcites[ambig] = items.slice(0, mypos).concat(items.slice(mypos + 1, items.length));
+          this.ambigresets[ambig] = this.ambigcites[ambig].length;
+        }
+        len = this.ambigcites[ambig].length;
+        for (let pos2 = 0; pos2 < len; pos2 += 1) {
+          id = "" + this.ambigcites[ambig][pos2];
+          this.refreshes[id] = true;
+        }
+        if (this.registry[key2].siblings) {
+          if (this.registry[key2].siblings.length == 1) {
+            const loneSiblingID = this.registry[key2].siblings[0];
+            if (this.registry[loneSiblingID].siblings) {
+              this.registry[loneSiblingID].siblings.pop();
+              this.registry[loneSiblingID].master = true;
+            }
+          } else if (this.registry[key2].siblings.length > 1) {
+            const removeIDs = [key2];
+            if (this.registry[key2].master) {
+              const newmasterID = this.registry[key2].siblings[0];
+              const newmaster = this.registry[newmasterID];
+              newmaster.master = true;
+              removeIDs.push(newmasterID);
+            }
+            const buffer = [];
+            for (let k = this.registry[key2].siblings.length - 1; k > -1; k += -1) {
+              const siblingID = this.registry[key2].siblings.pop();
+              if (removeIDs.indexOf(siblingID) === -1) {
+                buffer.push(siblingID);
+              }
+            }
+            for (let k = buffer.length - 1; k > -1; k += -1) {
+              this.registry[key2].siblings.push(buffer[k]);
+            }
+          }
+        }
+        for (let i = this.reflist.length - 1; i > -1; i--) {
+          if (this.reflist[i].id === key2) {
+            this.reflist = this.reflist.slice(0, i).concat(this.reflist.slice(i + 1));
+          }
+        }
+        delete this.registry[key2];
+        delete this.refhash[key2];
+        this.return_data.bibchange = true;
+      }
+    }
+  }
+  doinserts(mylist) {
+    let item, Item, akey, newitem, abase, i, ilen;
+    if ("string" === typeof mylist) {
+      mylist = [mylist];
+    }
+    for (let i2 = 0, ilen2 = mylist.length; i2 < ilen2; i2 += 1) {
+      item = mylist[i2];
+      if (!this.registry[item]) {
+        Item = this.state.retrieveItem(item);
+        akey = internals.getAmbiguousCite.call(this.state, Item);
+        this.ambigsTouched[akey] = true;
+        if (!Item.legislation_id) {
+          this.akeys[akey] = true;
+        }
+        newitem = {
+          "id": "" + item,
+          "seq": 0,
+          "offset": 0,
+          "sortkeys": false,
+          "ambig": false,
+          "rendered": false,
+          "disambig": false,
+          "ref": Item,
+          "newItem": true
+        };
+        this.registry[item] = newitem;
+        if (this.citationreg.citationsByItemId && this.citationreg.citationsByItemId[item]) {
+          this.registry[item]["first-reference-note-number"] = this.citationreg.citationsByItemId[item][0].properties.noteIndex;
+        }
+        abase = getAmbigConfig.call(this.state);
+        this.registerAmbigToken(akey, item, abase);
+        this.touched[item] = true;
+        this.return_data.bibchange = true;
+      }
+    }
+  }
+  /*
+  // No longer required.
+  douncited = function () {
+      var pos, len;
+      var cited_len = this.mylist.length - this.uncited.length;
+      for (let pos = 0, len = cited_len; pos < len; pos += 1) {
+          this.registry[this.mylist[pos]].uncited = false;
+      }
+      for (let pos = cited_len, len = this.mylist.length; pos < len; pos += 1) {
+          this.registry[this.mylist[pos]].uncited = true;
+      }
+  };
+  */
+  rebuildlist(nosort) {
+    let len, pos, item, Item;
+    if (!nosort) {
+      this.reflist_inserts = [];
+      len = this.mylist.length;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        item = this.mylist[pos2];
+        Item = this.registry[item];
+        if (Item.newItem) {
+          this.reflist_inserts.push(Item);
+        }
+        this.oldseq[item] = this.registry[item].seq;
+        this.registry[item].seq = pos2 + 1;
+      }
+    } else {
+      this.reflist = [];
+      len = this.mylist.length;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        item = this.mylist[pos2];
+        Item = this.registry[item];
+        this.reflist.push(Item);
+        this.oldseq[item] = this.registry[item].seq;
+        this.registry[item].seq = pos2 + 1;
+      }
+    }
+  }
+  /*
+   * Okay, at this point we should have a numbered list
+   * of registry tokens in the notional order requested,
+   * with sequence numbers to reconstruct the ordering
+   * if the list is remangled.  So far so good.
+   */
+  dorefreshes() {
+    let key, regtoken, Item, akey, abase;
+    for (let key2 in this.refreshes) {
+      regtoken = this.registry[key2];
+      if (!regtoken) {
+        continue;
+      }
+      regtoken.sortkeys = void 0;
+      Item = this.state.refetchItem(key2);
+      akey = regtoken.ambig;
+      if ("undefined" === typeof akey) {
+        this.state.tmp.disambig_settings = false;
+        akey = internals.getAmbiguousCite.call(this.state, Item);
+        abase = getAmbigConfig.call(this.state);
+        this.registerAmbigToken(akey, key2, abase);
+      }
+      for (let akkey in this.ambigresets) {
+        if (this.ambigresets[akkey] === 1) {
+          const loneKey = this.ambigcites[akey][0];
+          Item = this.state.refetchItem(loneKey);
+          this.registry[loneKey].disambig = new AmbigConfig();
+          this.state.tmp.disambig_settings = false;
+          akey = internals.getAmbiguousCite.call(this.state, Item);
+          abase = getAmbigConfig.call(this.state);
+          this.registerAmbigToken(akey, loneKey, abase);
+        }
+      }
+      this.state.tmp.taintedItemIDs[key2] = true;
+      this.ambigsTouched[akey] = true;
+      if (!Item.legislation_id) {
+        this.akeys[akey] = true;
+      }
+      this.touched[key2] = true;
+    }
+  }
+  /*
+   * Main disambiguation  += -1 can everything for disambiguation be
+   * crunched into this function?
+   */
+  setdisambigs() {
+    for (let akey in this.ambigsTouched) {
+      this.state.disambiguate.run(akey);
+    }
+    this.ambigsTouched = {};
+    this.akeys = {};
+  }
+  renumber() {
+    let len, pos, item;
+    if (this.state.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
+      this.state.bibliography_sort.tmp.citation_number_map = {};
+    }
+    len = this.reflist.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      item = this.reflist[pos2];
+      item.seq = pos2 + 1;
+      if (this.state.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
+        this.state.bibliography_sort.tmp.citation_number_map[item.seq] = this.reflist.length - item.seq + 1;
+      }
+      if (this.state.opt.update_mode === NUMERIC && item.seq != this.oldseq[item.id]) {
+        this.state.tmp.taintedItemIDs[item.id] = true;
+      }
+      if (item.seq != this.oldseq[item.id]) {
+        this.return_data.bibchange = true;
+      }
+    }
+  }
+  setsortkeys() {
+    let key;
+    for (let i = 0, ilen = this.mylist.length; i < ilen; i += 1) {
+      let key2 = this.mylist[i];
+      if (this.touched[key2] || this.state.tmp.taintedItemIDs[key2] || !this.registry[key2].sortkeys) {
+        this.registry[key2].sortkeys = getSortKeys.call(this.state, this.state.retrieveItem(key2), "bibliography_sort");
+      }
+    }
+  }
+  _insertItem(element, array) {
+    array.splice(this._locationOf(element, array) + 1, 0, element);
+    return array;
+  }
+  _locationOf(element, array, start, end) {
+    if (array.length === 0) {
+      return -1;
+    }
+    start = start || 0;
+    end = end || array.length;
+    const pivot = start + end >> 1;
+    const c = this.sorter.compareKeys(element, array[pivot]);
+    if (end - start <= 1) {
+      return c == -1 ? pivot - 1 : pivot;
+    }
+    switch (c) {
+      case -1:
+        return this._locationOf(element, array, start, pivot);
+      case 0:
+        return pivot;
+      case 1:
+        return this._locationOf(element, array, pivot, end);
+    }
+  }
+  sorttokens(nosort) {
+    let len, item, Item, pos;
+    if (!nosort) {
+      this.reflist_inserts = [];
+      len = this.mylist.length;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        item = this.mylist[pos2];
+        Item = this.registry[item];
+        if (Item.newItem) {
+          this.reflist_inserts.push(Item);
+        }
+      }
+      for (let key in this.state.tmp.taintedItemIDs) {
+        if (this.registry[key] && !this.registry[key].newItem) {
+          for (let i = this.reflist.length - 1; i > -1; i--) {
+            if (this.reflist[i].id === key) {
+              this.reflist_inserts.push(this.reflist[i]);
+              this.reflist = this.reflist.slice(0, i).concat(this.reflist.slice(i + 1));
+            }
+          }
+        }
+      }
+      for (let i = 0, ilen = this.reflist_inserts.length; i < ilen; i++) {
+        let Item2 = this.reflist_inserts[i];
+        delete Item2.newItem;
+        this.reflist = this._insertItem(Item2, this.reflist);
+      }
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        item = this.mylist[pos2];
+        Item = this.registry[item];
+        this.registry[item].seq = pos2 + 1;
+      }
+    }
+  }
+  /**
+   * Compare two disambiguation tokens by their registry sort order
+   * <p>Disambiguation lists need to be sorted this way, to
+   * obtain the correct year-suffix when that's used.</p>
+   */
+  compareRegistryTokens(a, b) {
+    if (a.seq > b.seq) {
+      return 1;
+    } else if (a.seq < b.seq) {
+      return -1;
+    }
+    return 0;
+  }
+  registerAmbigToken(akey, id, ambig_config) {
+    if (!this.registry[id]) {
+      debug("Warning: unregistered item: itemID=(" + id + "), akey=(" + akey + ")");
+    }
+    const oldDisambig = this.registry[id] ? this.registry[id].disambig : null;
+    let disambiguateOverride = false;
+    if (oldDisambig && oldDisambig.disambiguate) {
+      disambiguateOverride = oldDisambig.disambiguate;
+    }
+    if (this.registry[id] && this.registry[id].disambig && this.registry[id].disambig.names) {
+      for (let i = 0, ilen = ambig_config.names.length; i < ilen; i += 1) {
+        const new_names_params = ambig_config.names[i];
+        const old_names_params = this.registry[id].disambig.names[i];
+        if (new_names_params !== old_names_params) {
+          this.state.tmp.taintedItemIDs[id] = true;
+        } else if (ambig_config.givens[i]) {
+          for (let j = 0, jlen = ambig_config.givens[i].length; j < jlen; j += 1) {
+            const new_gnames_params = ambig_config.givens[i][j];
+            const old_gnames_params = this.registry[id].disambig.givens[i][j];
+            if (new_gnames_params !== old_gnames_params) {
+              this.state.tmp.taintedItemIDs[id] = true;
+            }
+          }
+        }
+      }
+    }
+    if (!this.ambigcites[akey]) {
+      this.ambigcites[akey] = [];
+    }
+    if (this.ambigcites[akey].indexOf("" + id) === -1) {
+      this.ambigcites[akey].push("" + id);
+    }
+    this.registry[id].ambig = akey;
+    this.registry[id].disambig = cloneAmbigConfig(ambig_config);
+    if (disambiguateOverride) {
+      this.registry[id].disambig.disambiguate = disambiguateOverride;
+    }
+  }
+};
+var Comparifier = class {
+  constructor(state, keyset) {
+    __publicField(this, "compareKeys");
+    __publicField(this, "compareCompositeKeys");
+    let sort_directions, len, pos, compareKeys;
+    const sortCompare = getSortCompare.call(state, state.opt["default-locale-sort"]);
+    sort_directions = state[keyset].opt.sort_directions;
+    this.compareKeys = function(a, b) {
+      len = a.sortkeys ? a.sortkeys.length : 0;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        let cmp = 0;
+        if (a.sortkeys[pos2] === b.sortkeys[pos2]) {
+          cmp = 0;
+        } else if ("undefined" === typeof a.sortkeys[pos2]) {
+          cmp = sort_directions[pos2][1];
+        } else if ("undefined" === typeof b.sortkeys[pos2]) {
+          cmp = sort_directions[pos2][0];
+        } else {
+          cmp = sortCompare(a.sortkeys[pos2], b.sortkeys[pos2]);
+        }
+        if (0 < cmp) {
+          return sort_directions[pos2][1];
+        } else if (0 > cmp) {
+          return sort_directions[pos2][0];
+        }
+      }
+      if (a.seq > b.seq) {
+        return 1;
+      } else if (a.seq < b.seq) {
+        return -1;
+      }
+      return 0;
+    };
+    compareKeys = this.compareKeys;
+    this.compareCompositeKeys = function(a, b) {
+      return compareKeys(a[1], b[1]);
+    };
+  }
+};
+function getSortKeys(Item, key_type) {
+  let area, root, extension, strip_prepositions, len, pos;
+  if (false) {
+    debug("KEY TYPE: " + key_type);
+  }
+  area = this.tmp.area;
+  root = this.tmp.root;
+  extension = this.tmp.extension;
+  strip_prepositions = Util_Sort.strip_prepositions;
+  this.tmp.area = key_type;
+  this.tmp.root = key_type.indexOf("_") > -1 ? key_type.slice(0, -5) : key_type;
+  this.tmp.extension = "_sort";
+  this.tmp.disambig_override = true;
+  this.tmp.disambig_request = false;
+  this.tmp.suppress_decorations = true;
+  internals.getCite.call(this, Item);
+  this.tmp.suppress_decorations = false;
+  this.tmp.disambig_override = false;
+  len = this[key_type].keys.length;
+  for (let pos2 = 0; pos2 < len; pos2 += 1) {
+    this[key_type].keys[pos2] = strip_prepositions(this[key_type].keys[pos2]);
+  }
+  if (false) {
+    debug("sort keys (" + key_type + "): " + this[key_type].keys);
+  }
+  this.tmp.area = area;
+  this.tmp.root = root;
+  this.tmp.extension = extension;
+  return this[key_type].keys;
+}
+
+// src/obj/number.ts
+var NumericBlob = class {
+  constructor(state, particle, num, mother_token, id) {
+    __publicField(this, "id");
+    __publicField(this, "alldecor");
+    __publicField(this, "num");
+    __publicField(this, "particle");
+    __publicField(this, "blobs");
+    __publicField(this, "status");
+    __publicField(this, "strings");
+    __publicField(this, "gender");
+    __publicField(this, "decorations");
+    __publicField(this, "successor_prefix");
+    __publicField(this, "range_prefix");
+    __publicField(this, "splice_prefix");
+    __publicField(this, "formatter");
+    __publicField(this, "type");
+    __publicField(this, "UGLY_DELIMITER_SUPPRESS_HACK");
+    __publicField(this, "suppress_splice_prefix");
+    this.id = id;
+    this.alldecor = [];
+    this.num = num;
+    this.particle = particle;
+    this.blobs = num.toString();
+    this.status = START;
+    this.strings = {};
+    if (mother_token) {
+      if (mother_token.strings["text-case"]) {
+        const textCase = mother_token.strings["text-case"];
+        this.particle = Output_formatters[textCase](state, this.particle);
+        this.blobs = Output_formatters[textCase](state, this.blobs);
+      }
+      this.gender = mother_token.gender;
+      this.decorations = mother_token.decorations;
+      this.strings.prefix = mother_token.strings.prefix;
+      this.strings.suffix = mother_token.strings.suffix;
+      this.strings["text-case"] = mother_token.strings["text-case"];
+      this.successor_prefix = mother_token.successor_prefix;
+      this.range_prefix = mother_token.range_prefix;
+      this.splice_prefix = mother_token.splice_prefix;
+      this.formatter = mother_token.formatter;
+      if (!this.formatter) {
+        this.formatter = new Output_DefaultFormatter();
+      }
+      if (this.formatter) {
+        this.type = this.formatter.format(1);
+      }
+    } else {
+      this.decorations = [];
+      this.strings.prefix = "";
+      this.strings.suffix = "";
+      this.successor_prefix = "";
+      this.range_prefix = "";
+      this.splice_prefix = "";
+      this.formatter = new Output_DefaultFormatter();
+    }
+  }
+  setFormatter(formatter) {
+    this.formatter = formatter;
+    this.type = this.formatter.format(1);
+  }
+  checkNext(next, start) {
+    if (start) {
+      this.status = START;
+      if ("object" === typeof next) {
+        if (next.num === this.num + 1) {
+          next.status = SUCCESSOR;
+        } else {
+          next.status = SEEN;
+        }
+      }
+    } else if (!next || !next.num || this.type !== next.type || next.num !== this.num + 1) {
+      if (this.status === SUCCESSOR_OF_SUCCESSOR) {
+        this.status = END;
+      }
+      if ("object" === typeof next) {
+        next.status = SEEN;
+      }
+    } else {
+      if (this.status === START || this.status === SEEN) {
+        next.status = SUCCESSOR;
+      } else if (this.status === SUCCESSOR || this.status === SUCCESSOR_OF_SUCCESSOR) {
+        if (this.range_prefix) {
+          next.status = SUCCESSOR_OF_SUCCESSOR;
+          this.status = SUPPRESS;
+        } else {
+          next.status = SUCCESSOR;
+        }
+      }
+    }
+  }
+  checkLast(last) {
+    if (this.status === SEEN || last.num !== this.num - 1 && this.status === SUCCESSOR) {
+      this.status = SUCCESSOR;
+      return true;
+    }
+    return false;
+  }
+};
+var Output_DefaultFormatter = class {
+  format(num) {
+    return num.toString();
+  }
+};
+
+// src/util/number.ts
+function padding(num) {
+  let m = num.match(/\s*(-{0,1}[0-9]+)/);
+  if (m) {
+    let n = parseInt(m[1], 10);
+    if (n < 0) {
+      n = 1e20 + n;
+    }
+    num = "" + n;
+    while (num.length < 20) {
+      num = "0" + num;
+    }
+  }
+  return num;
+}
+var LongOrdinalizer = class {
+  constructor() {
+    __publicField(this, "state");
+  }
+  init(state) {
+    this.state = state;
+  }
+  format(num, gender) {
+    if (typeof num === "number" && num < 10) {
+      num = "0" + num;
+    }
+    let ret = Engine.getField(
+      LOOSE,
+      this.state.locale[this.state.opt.lang].terms,
+      "long-ordinal-" + num,
+      "long",
+      0,
+      gender
+    );
+    if (!ret) {
+      ret = this.state.fun.ordinalizer.format(num, gender);
+    }
+    this.state.tmp.cite_renders_content = true;
+    return ret;
+  }
+};
+var Ordinalizer = class {
+  constructor(state) {
+    __publicField(this, "state");
+    __publicField(this, "suffixes");
+    this.state = state;
+    this.suffixes = {};
+  }
+  init() {
+    if (!this.suffixes[this.state.opt.lang]) {
+      this.suffixes[this.state.opt.lang] = {};
+      for (let i = 0, ilen = 3; i < ilen; i += 1) {
+        let gender = [void 0, "masculine", "feminine"][i];
+        this.suffixes[this.state.opt.lang][gender] = [];
+        for (let j = 1; j < 5; j += 1) {
+          const ordinal = this.state.getTerm("ordinal-0" + j, "long", false, gender);
+          if ("undefined" === typeof ordinal) {
+            delete this.suffixes[this.state.opt.lang][gender];
+            break;
+          }
+          this.suffixes[this.state.opt.lang][gender].push(ordinal);
+        }
+      }
+    }
+  }
+  format(num, gender) {
+    let str;
+    num = parseInt("" + num, 10);
+    str = "" + num;
+    let suffix = "";
+    const trygenders = [];
+    if (gender) {
+      trygenders.push(gender);
+    }
+    trygenders.push("neuter");
+    if (this.state.locale[this.state.opt.lang].ord["1.0.1"]) {
+      suffix = this.state.getTerm("ordinal", void 0, 0, gender);
+      let trygender;
+      for (let i = 0, ilen = trygenders.length; i < ilen; i += 1) {
+        trygender = trygenders[i];
+        const ordinfo = this.state.locale[this.state.opt.lang].ord["1.0.1"];
+        if (ordinfo["whole-number"][str] && ordinfo["whole-number"][str][trygender]) {
+          suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["whole-number"][str][trygender], void 0, 0, gender);
+        } else if (ordinfo["last-two-digits"][str.slice(str.length - 2)] && ordinfo["last-two-digits"][str.slice(str.length - 2)][trygender]) {
+          suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-two-digits"][str.slice(str.length - 2)][trygender], void 0, 0, gender);
+        } else if (ordinfo["last-digit"][str.slice(str.length - 1)] && ordinfo["last-digit"][str.slice(str.length - 1)][trygender]) {
+          suffix = this.state.getTerm(this.state.locale[this.state.opt.lang].ord["1.0.1"]["last-digit"][str.slice(str.length - 1)][trygender], void 0, 0, gender);
+        }
+        if (suffix) {
+          break;
+        }
+      }
+    } else {
+      if (!gender) {
+        gender = void 0;
+      }
+      const genderKey = gender;
+      this.state.fun.ordinalizer.init();
+      if (num / 10 % 10 === 1 || num > 10 && num < 20) {
+        suffix = this.suffixes[this.state.opt.lang][genderKey][3];
+      } else if (num % 10 === 1 && num % 100 !== 11) {
+        suffix = this.suffixes[this.state.opt.lang][genderKey][0];
+      } else if (num % 10 === 2 && num % 100 !== 12) {
+        suffix = this.suffixes[this.state.opt.lang][genderKey][1];
+      } else if (num % 10 === 3 && num % 100 !== 13) {
+        suffix = this.suffixes[this.state.opt.lang][genderKey][2];
+      } else {
+        suffix = this.suffixes[this.state.opt.lang][genderKey][3];
+      }
+    }
+    str = str += suffix;
+    return str;
+  }
+};
+var Romanizer = class {
+  format(num) {
+    let ret, pos, n, numstr, len;
+    ret = "";
+    if (num < 6e3) {
+      numstr = num.toString().split("");
+      numstr.reverse();
+      pos = 0;
+      n = 0;
+      len = numstr.length;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        n = parseInt(numstr[pos2], 10);
+        ret = ROMAN_NUMERALS[pos2][n] + ret;
+      }
+    }
+    return ret;
+  }
+};
+var Suffixator = class {
+  constructor(slist) {
+    __publicField(this, "slist");
+    if (!slist) {
+      slist = SUFFIX_CHARS;
+    }
+    this.slist = slist.split(",");
+  }
+  format(N) {
+    let X;
+    N += 1;
+    let key = "";
+    do {
+      X = N % 26 === 0 ? 26 : N % 26;
+      key = this.slist[X - 1] + key;
+      N = (N - X) / 26;
+    } while (N !== 0);
+    return key;
+  }
+};
+function processNumber(node, ItemObject, variable) {
+  let val;
+  const me = this;
+  const realVariable = variable;
+  variable = variable === "page-first" ? "page" : variable;
+  let fullformAnd = ",\\s+and\\s+|\\s+and\\s+";
+  if (this.opt.lang.slice(0, 2) !== "en") {
+    fullformAnd += "|,\\s+" + this.getTerm("and") + "\\s+|\\s+" + this.getTerm("and") + "\\s+";
+  }
+  const symbolAnd = "\\s*&\\s*";
+  const andRex = new RegExp("^" + symbolAnd + "$");
+  const joinerMatchRex = new RegExp("(" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)", "g");
+  const joinerSplitRex = new RegExp("(?:" + symbolAnd + "|" + fullformAnd + "|;\\s+|,\\s+|\\s*\\\\*[\\-\\u2013]+\\s*)");
+  const localeAnd = this.getTerm("and");
+  let localeAmpersand = this.getTerm("and", "symbol");
+  if (localeAnd === localeAmpersand) {
+    localeAmpersand = "&";
+  }
+  function normalizeFieldValue(str, defaultLabel) {
+    str = str.trim();
+    let m = str.match(/^([^ ]+)/);
+    if (m && !STATUTE_SUBDIV_STRINGS[m[1]]) {
+      let embeddedLabel = null;
+      if (["locator", "locator-extra", "page"].indexOf(variable) > -1) {
+        if (ItemObject.label) {
+          embeddedLabel = STATUTE_SUBDIV_STRINGS_REVERSE[ItemObject.label];
+        } else {
+          embeddedLabel = "p.";
+        }
+      } else {
+        embeddedLabel = STATUTE_SUBDIV_STRINGS_REVERSE[variable];
+      }
+      if (embeddedLabel) {
+        str = embeddedLabel + " " + str;
+      }
+    }
+    return str;
+  }
+  function composeNumberInfo(origLabel, label, val2, joiningSuffix, parsePosition) {
+    joiningSuffix = joiningSuffix ? joiningSuffix : "";
+    const info = {};
+    if (!label && !STATUTE_SUBDIV_STRINGS_REVERSE[variable]) {
+      label = "var:" + variable;
+    }
+    if (label) {
+      let m2 = label.match(/(\s*)([^\s]+)(\s*)/);
+      if (realVariable === "page" && parsePosition === 0 && ["p.", "pp."].indexOf(m2[2]) === -1) {
+        info.gotosleepability = true;
+        info.labelVisibility = true;
+      } else {
+        info.labelVisibility = false;
+      }
+      info.label = m2[2];
+      info.origLabel = origLabel;
+      info.labelSuffix = m2[3] ? m2[3] : "";
+      info.plural = 0;
+    }
+    let m = val2.match(/^([0-9]*[a-zA-Z]+0*)?([0-9]+(?:[a-zA-Z]*|[-,a-zA-Z]+))$/);
+    if (m) {
+      info.particle = m[1] ? m[1] : "";
+      info.value = m[2];
+    } else {
+      info.particle = "";
+      info.value = val2;
+    }
+    info.joiningSuffix = joiningSuffix.replace(/\s*-\s*/, "-");
+    return info;
+  }
+  function fixupSubsections(elems) {
+    for (let i = elems.length - 2; i > -1; i -= 2) {
+      if (elems[i] === "-" && elems[i - 1].match(/^(?:(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z])\.  *)*[0-9]+[,a-zA-Z]+$/) && elems[i + 1].match(/^[,a-zA-Z]+$/)) {
+        elems[i - 1] = elems.slice(i - 1, i + 2).join("");
+        elems = elems.slice(0, i).concat(elems.slice(i + 2));
+      }
+    }
+    return elems;
+  }
+  function parseString(str, defaultLabel) {
+    defaultLabel = defaultLabel ? defaultLabel : "";
+    str = normalizeFieldValue(str, defaultLabel);
+    let jmrex, jsrex, mystr;
+    if ("page" === variable) {
+      if (str.indexOf("\u2013") > -1) {
+        str = str.replace(/\u2013/g, "-");
+      }
+    }
+    if (str.indexOf("\\-") > -1) {
+      jmrex = new RegExp(joinerMatchRex.source.replace("\\-", ""));
+      jsrex = new RegExp(joinerSplitRex.source.replace("\\-", ""));
+      let lst = str.split("\\-");
+      for (let i = 0, ilen = lst.length; i < ilen; i++) {
+        lst[i] = lst[i].replace(/\-/g, "\u2013");
+      }
+      mystr = lst.join("\\-");
+      mystr = mystr.replace(/\\/g, "");
+    } else {
+      jmrex = joinerMatchRex;
+      jsrex = joinerSplitRex;
+      mystr = str;
+    }
+    let elems = [];
+    let m = mystr.match(jmrex);
+    if (m) {
+      let lst = mystr.split(jsrex);
+      for (let i = 0, ilen = m.length; i < ilen; i++) {
+        if (m[i].match(andRex)) {
+          if (lst[i].match(/[a-zA-Z]$/) && lst[i].match(/^[a-zA-Z]/)) {
+            m[i] = localeAmpersand;
+          } else {
+            m[i] = " " + localeAmpersand + " ";
+          }
+        }
+      }
+      const recombine = false;
+      for (let i in lst) {
+        if (("" + lst[i]).replace(/^[a-z]\.\s+/, "").match(/[^\s0-9ivxlcmIVXLCM]/)) {
+          break;
+        }
+      }
+      if (recombine) {
+        elems = [mystr];
+      } else {
+        for (let i = 0, ilen = lst.length - 1; i < ilen; i++) {
+          elems.push(lst[i]);
+          elems.push(m[i]);
+        }
+        elems.push(lst[lst.length - 1]);
+        elems = fixupSubsections(elems);
+      }
+    } else {
+      elems = [mystr];
+    }
+    let values = [];
+    let label = defaultLabel;
+    let origLabel = "";
+    for (let i = 0, ilen = elems.length; i < ilen; i += 2) {
+      let m2 = elems[i].match(/((?:^| )(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z]|subpara|subch|amend|bibliog|annot|illus|princ|intro|sched|subdiv|subsec)(?:\.| ) *)/g);
+      if (m2) {
+        let lst = elems[i].split(/(?:(?:^| )(?:[a-z]|[a-z][a-z]|[a-z][a-z][a-z]|[a-z][a-z][a-z][a-z]|subpara|subch|amend|bibliog|annot|illus|princ|intro|sched|subdiv|subsec)(?:\.| ) *)/);
+        for (let j = lst.length - 1; j > 0; j--) {
+          if (lst[j - 1] && (!lst[j].match(/^[0-9]+([-;,:a-zA-Z]*)$/) || !lst[j - 1].match(/^[0-9]+([-;,:a-zA-Z]*)$/))) {
+            lst[j - 1] = lst[j - 1] + m2[j - 1] + lst[j];
+            lst = lst.slice(0, j).concat(lst.slice(j + 1));
+            m2 = m2.slice(0, j - 1).concat(m2.slice(j));
+          }
+        }
+        if (m2.length > 0) {
+          const slug = m2[0].trim();
+          const notAlabel = !STATUTE_SUBDIV_STRINGS[slug] || "undefined" === typeof me.getTerm(STATUTE_SUBDIV_STRINGS[slug]) || ["locator", "number", "locator-extra", "page"].indexOf(variable) === -1 && STATUTE_SUBDIV_STRINGS[slug] !== variable;
+          if (notAlabel) {
+            if (i === 0) {
+              m2 = m2.slice(1);
+              lst[0] = lst[0] + " " + slug + " " + lst[1];
+              lst = lst.slice(0, 1).concat(lst.slice(2));
+            }
+          } else {
+            origLabel = slug;
+          }
+        }
+        for (let j = 0, jlen = lst.length; j < jlen; j++) {
+          if (lst[j] || j === lst.length - 1) {
+            let filteredOrigLabel;
+            label = m2[j - 1] ? m2[j - 1] : label;
+            if (origLabel === label.trim()) {
+              filteredOrigLabel = "";
+            } else {
+              filteredOrigLabel = origLabel;
+            }
+            mystr = lst[j] ? lst[j].trim() : "";
+            if (j === lst.length - 1) {
+              values.push(composeNumberInfo(filteredOrigLabel, label, mystr, elems[i + 1], i));
+            } else {
+              values.push(composeNumberInfo(filteredOrigLabel, label, mystr, null, i));
+            }
+          }
+        }
+      } else {
+        let filteredOrigLabel;
+        if (origLabel === label.trim()) {
+          filteredOrigLabel = "";
+        } else {
+          filteredOrigLabel = origLabel;
+        }
+        values.push(composeNumberInfo(filteredOrigLabel, label, elems[i], elems[i + 1]));
+      }
+    }
+    return values;
+  }
+  function setSpaces(values) {
+    for (let i = 0, ilen = values.length - 1; i < ilen; i++) {
+      if (!values[i].joiningSuffix && values[i + 1].label) {
+        values[i].joiningSuffix = " ";
+      }
+    }
+  }
+  function fixNumericAndCount(values, i, currentLabelInfo) {
+    const master = values[currentLabelInfo.pos];
+    let val2 = values[i].value;
+    const isEscapedHyphen = master.joiningSuffix === "\\-";
+    if (val2.particle && val2.particle !== master.particle) {
+      currentLabelInfo.collapsible = false;
+    }
+    const mVal = val2.match(/^[0-9]+([-,:a-zA-Z]*)$/);
+    const mCurrentLabel = master.value.match(/^(?:[0-9]+|[ixv]+)([-,:a-zA-Z]*|\-[\-0-9]+)$/);
+    if (!val2 || !mVal || !mCurrentLabel || isEscapedHyphen) {
+      currentLabelInfo.collapsible = false;
+      if (!val2 || !mCurrentLabel) {
+        currentLabelInfo.numeric = false;
+      }
+      if (isEscapedHyphen) {
+        currentLabelInfo.count--;
+      }
+    }
+    if (mVal && mVal[1] || mCurrentLabel && mCurrentLabel[1]) {
+      currentLabelInfo.collapsible = false;
+    }
+    if (void 0 === values[i].collapsible) {
+      for (let j = i, jlen = i + currentLabelInfo.count; j < jlen; j++) {
+        if (isNaN(parseInt(values[j].value)) && !values[j].value.match(/^[ivxlcmIVXLCM]+$/)) {
+          values[j].collapsible = false;
+        } else {
+          values[j].collapsible = true;
+        }
+      }
+      currentLabelInfo.collapsible = values[i].collapsible;
+    }
+    const isCollapsible = currentLabelInfo.collapsible;
+    for (let j = currentLabelInfo.pos, jlen = currentLabelInfo.pos + currentLabelInfo.count; j < jlen; j++) {
+      if (currentLabelInfo.count > 1 && isCollapsible) {
+        values[j].plural = 1;
+      }
+      values[j].numeric = currentLabelInfo.numeric;
+      values[j].collapsible = currentLabelInfo.collapsible;
+    }
+  }
+  function fixLabelVisibility(values, groupStartPos, currentLabelInfo) {
+    if (currentLabelInfo.label.slice(0, 4) !== "var:") {
+      if (currentLabelInfo.pos === 0) {
+        if (["locator", "number", "locator-extra", "page"].indexOf(variable) > -1) {
+          if ("undefined" === typeof me.getTerm(STATUTE_SUBDIV_STRINGS[currentLabelInfo.label])) {
+            values[currentLabelInfo.pos].labelVisibility = true;
+          }
+        }
+        if (["locator", "number", "locator-extra", "page"].indexOf(variable) === -1) {
+          if (STATUTE_SUBDIV_STRINGS[currentLabelInfo.label] !== variable) {
+            values[0].labelVisibility = true;
+          }
+        }
+      } else {
+        values[currentLabelInfo.pos].labelVisibility = true;
+      }
+    }
+  }
+  function setPluralsAndNumerics(values) {
+    if (values.length === 0) {
+      return;
+    }
+    let groupStartPos = 0;
+    let groupCount = 1;
+    for (let i = 1, ilen = values.length; i < ilen; i++) {
+      const lastVal = values[i - 1];
+      const thisVal = values[i];
+      if (lastVal.label === thisVal.label && lastVal.particle === lastVal.particle) {
+        groupCount++;
+      } else {
+        const currentLabelInfo2 = JSON.parse(JSON.stringify(values[groupStartPos]));
+        currentLabelInfo2.pos = groupStartPos;
+        currentLabelInfo2.count = groupCount;
+        currentLabelInfo2.numeric = true;
+        fixNumericAndCount(values, groupStartPos, currentLabelInfo2);
+        if (lastVal.label !== thisVal.label) {
+          fixLabelVisibility(values, groupStartPos, currentLabelInfo2);
+        }
+        groupStartPos = i;
+        groupCount = 1;
+      }
+    }
+    const currentLabelInfo = JSON.parse(JSON.stringify(values[groupStartPos]));
+    currentLabelInfo.pos = groupStartPos;
+    currentLabelInfo.count = groupCount;
+    currentLabelInfo.numeric = true;
+    fixNumericAndCount(values, groupStartPos, currentLabelInfo);
+    fixLabelVisibility(values, groupStartPos, currentLabelInfo);
+    if (values.length && values[0].numeric && variable.slice(0, 10) === "number-of-") {
+      if (parseInt(ItemObject[realVariable], 10) > 1) {
+        values[0].plural = 1;
+      }
+    }
+  }
+  function stripHyphenBackslash(joiningSuffix) {
+    return joiningSuffix.replace("\\-", "-");
+  }
+  function setStyling(values) {
+    const masterNode = Util_cloneToken(node);
+    const masterStyling = new Token();
+    if (!me.tmp.just_looking) {
+      masterStyling.decorations = masterNode.decorations;
+      masterNode.decorations = [];
+      masterStyling.strings.prefix = masterNode.strings.prefix;
+      masterNode.strings.prefix = "";
+      masterStyling.strings.suffix = masterNode.strings.suffix;
+      masterNode.strings.suffix = "";
+    }
+    const masterLabel = values.length ? values[0].label : null;
+    if (values.length) {
+      for (let i = 0, ilen = values.length; i < ilen; i++) {
+        let val2 = values[i];
+        const newnode = Util_cloneToken(masterNode);
+        newnode.gender = node.gender;
+        if (masterLabel === val2.label) {
+          newnode.formatter = node.formatter;
+        }
+        if (val2.numeric) {
+          newnode.successor_prefix = val2.successor_prefix;
+        }
+        newnode.strings.suffix = newnode.strings.suffix + stripHyphenBackslash(val2.joiningSuffix);
+        val2.styling = newnode;
+      }
+      if (!me.tmp.just_looking) {
+        if (values[0].value.slice(0, 1) === '"' && values[values.length - 1].value.slice(-1) === '"') {
+          values[0].value = values[0].value.slice(1);
+          values[values.length - 1].value = values[values.length - 1].value.slice(0, -1);
+          masterStyling.decorations.push(["@quotes", true]);
+        }
+      }
+    }
+    return masterStyling;
+  }
+  function checkTerm(variable2, val2) {
+    let ret = true;
+    if (["locator", "locator-extra", "page"].indexOf(variable2) > -1) {
+      let label;
+      if (val2.origLabel) {
+        label = val2.origLabel;
+      } else {
+        label = val2.label;
+      }
+      ret = !!me.getTerm(STATUTE_SUBDIV_STRINGS[label]);
+    }
+    return ret;
+  }
+  function checkPage(variable2, val2) {
+    return "page" === variable2 || ["locator", "locator-extra"].indexOf(variable2) > -1 && (["p."].indexOf(val2.label) > -1 || ["p."].indexOf(val2.origLabel) > -1);
+  }
+  function fixupRangeDelimiter(variable2, val2, rangeDelimiter, isNumeric) {
+    const isPage = checkPage(variable2, val2);
+    const hasTerm = checkTerm(variable2, val2);
+    if (hasTerm && rangeDelimiter === "-") {
+      if (isNumeric) {
+        if (isPage || ["locator", "locator-extra", "issue", "volume", "edition", "number"].indexOf(variable2) > -1) {
+          rangeDelimiter = me.getTerm("page-range-delimiter");
+          if (!rangeDelimiter) {
+            rangeDelimiter = "\u2013";
+          }
+        }
+        if (variable2 === "collection-number") {
+          rangeDelimiter = me.getTerm("year-range-delimiter");
+          if (!rangeDelimiter) {
+            rangeDelimiter = "\u2013";
+          }
+        }
+      }
+    }
+    return rangeDelimiter;
+  }
+  function manglePageNumbers(values, i, currentInfo) {
+    if (i < 1) {
+      return;
+    }
+    if (currentInfo.count !== 2) {
+      return;
+    }
+    if (values[i - 1].particle !== values[i].particle) {
+      return;
+    }
+    if (values[i - 1].joiningSuffix !== "-") {
+      currentInfo.count = 1;
+      return;
+    }
+    if (!me.opt["page-range-format"] && parseInt(values[i - 1].value, 10) > parseInt(values[i].value, 10)) {
+      values[i - 1].joiningSuffix = fixupRangeDelimiter(variable, values[i], values[i - 1].joiningSuffix, true);
+      return;
+    }
+    let val2 = values[i];
+    const isPage = checkPage(variable, val2);
+    let str;
+    if (isPage && !isNaN(parseInt(values[i - 1].value)) && !isNaN(parseInt(values[i].value))) {
+      str = values[i - 1].particle + values[i - 1].value + " - " + values[i].particle + values[i].value;
+      str = me.fun.page_mangler(str);
+    } else {
+      if (("" + values[i - 1].value).match(/^([0-9]+|[ivxlcmIVXLCM]+)$/) && ("" + values[i].value).match(/^([0-9]+|[ivxlcmIVXLCM]+)$/)) {
+        values[i - 1].joiningSuffix = me.getTerm("page-range-delimiter");
+      }
+      str = values[i - 1].value + stripHyphenBackslash(values[i - 1].joiningSuffix) + values[i].value;
+    }
+    let m = str.match(/^((?:[0-9]*[a-zA-Z]+0*))?([0-9]+[a-z]*)(\s*[^0-9]+\s*)([-,a-zA-Z]?0*)([0-9]+[a-z]*)$/);
+    if (m) {
+      let rangeDelimiter = m[3];
+      rangeDelimiter = fixupRangeDelimiter(variable, val2, rangeDelimiter, values[i].numeric);
+      values[i - 1].particle = m[1];
+      values[i - 1].value = m[2];
+      values[i - 1].joiningSuffix = rangeDelimiter;
+      values[i].particle = m[4];
+      values[i].value = m[5];
+    }
+    currentInfo.count = 0;
+  }
+  function fixRanges(values) {
+    if (!node) {
+      return;
+    }
+    if (["page", "chapter-number", "collection-number", "edition", "issue", "number", "number-of-pages", "number-of-volumes", "volume", "locator", "locator-extra"].indexOf(variable) === -1) {
+      return;
+    }
+    const currentInfo = {
+      count: 0,
+      label: null,
+      lastHadRangeDelimiter: false
+    };
+    for (let i = 0, ilen = values.length; i < ilen; i++) {
+      let val2 = values[i];
+      if (!val2.collapsible) {
+        currentInfo.count = 0;
+        currentInfo.label = null;
+        const isNumeric = val2.numeric;
+        val2.joiningSuffix = fixupRangeDelimiter(variable, val2, val2.joiningSuffix, isNumeric);
+      } else if (currentInfo.label === val2.label && val2.joiningSuffix === "-") {
+        currentInfo.count = 1;
+      } else if (currentInfo.label === val2.label && val2.joiningSuffix !== "-") {
+        currentInfo.count++;
+        if (currentInfo.count === 2) {
+          manglePageNumbers(values, i, currentInfo);
+        }
+      } else if (currentInfo.label !== val2.label) {
+        currentInfo.label = val2.label;
+        currentInfo.count = 1;
+      } else {
+        currentInfo.count = 1;
+        currentInfo.label = val2.label;
+      }
+    }
+    if (currentInfo.count === 2) {
+      manglePageNumbers(values, values.length - 1, currentInfo);
+    }
+  }
+  function setVariableParams(shadow_numbers, realVariable2, values) {
+    const obj = shadow_numbers[realVariable2];
+    if (values.length) {
+      obj.numeric = values[0].numeric;
+      obj.collapsible = values[0].collapsible;
+      obj.plural = values[0].plural;
+      obj.label = STATUTE_SUBDIV_STRINGS[values[0].label];
+      if (variable === "number" && obj.label === "issue" && me.getTerm("number")) {
+        obj.label = "number";
+      }
+    }
+  }
+  if (node && this.tmp.shadow_numbers[realVariable] && this.tmp.shadow_numbers[realVariable].values.length) {
+    let values = this.tmp.shadow_numbers[realVariable].values;
+    fixRanges(values);
+    this.tmp.shadow_numbers[realVariable].masterStyling = setStyling(values);
+    return;
+  }
+  if (!this.tmp.shadow_numbers[realVariable]) {
+    this.tmp.shadow_numbers[realVariable] = {
+      values: []
+    };
+  }
+  if (!ItemObject) {
+    return;
+  }
+  const languageRole = LangPrefsMap[variable];
+  if (languageRole) {
+    const localeType = this.opt["cite-lang-prefs"][languageRole][0];
+    val = this.transform.getTextSubField(ItemObject, realVariable, "locale-" + localeType, true);
+    val = val.name;
+  } else {
+    val = ItemObject[realVariable];
+  }
+  if (val && realVariable === "number" && ItemObject.type === "legal_case") {
+    val = val.replace(/[\\]*-/g, "\\-");
+  }
+  if (val && this.sys.getAbbreviation) {
+    let normval;
+    if (this.sys.normalizeAbbrevsKey) {
+      normval = this.sys.normalizeAbbrevsKey(realVariable, val);
+    } else {
+      normval = val;
+    }
+    const jurisdiction = this.transform.loadAbbreviation(ItemObject.jurisdiction, "number", normval, ItemObject.language);
+    if (this.transform.abbrevs[jurisdiction].number) {
+      if (this.transform.abbrevs[jurisdiction].number[normval]) {
+        val = this.transform.abbrevs[jurisdiction].number[normval];
+      } else {
+        if ("undefined" !== typeof this.transform.abbrevs[jurisdiction].number[normval]) {
+          delete this.transform.abbrevs[jurisdiction].number[normval];
+        }
+      }
+    }
+  }
+  if ("undefined" !== typeof val && ("string" === typeof val || "number" === typeof val)) {
+    if ("number" === typeof val) {
+      val = "" + val;
+    }
+    const defaultLabel = STATUTE_SUBDIV_STRINGS_REVERSE[variable];
+    if (this.tmp.shadow_numbers[realVariable].values.length === 0) {
+      let values = parseString(val, defaultLabel);
+      setSpaces(values);
+      setPluralsAndNumerics(values);
+      for (let obj of values) {
+        if (!obj.numeric && obj.label) {
+          this.tmp.shadow_numbers[realVariable].labelForm = obj.labelForm;
+        }
+      }
+      this.tmp.shadow_numbers[realVariable].values = values;
+      if (node) {
+        fixRanges(values);
+        this.tmp.shadow_numbers[realVariable].masterStyling = setStyling(values);
+      }
+      setVariableParams(this.tmp.shadow_numbers, realVariable, values);
+    }
+    const info = this.tmp.shadow_numbers[realVariable];
+    if (variable === "number") {
+      if (info.values.length === 1 && info.values[0].value.indexOf("|") > -1) {
+        info.values[0].value = info.values[0].value.replace(/\|/g, ", ");
+        info.values[0].numeric = true;
+        info.values[0].plural = 1;
+        info.values[0].collapsible = false;
+        info.numeric = true;
+        info.plural = 1;
+        info.collapsible = false;
+      }
+    }
+    if (info.values.length === 1) {
+      if (info.values[0].value.match(/^[0-9]+(?:\/[0-9]+)+$/)) {
+        info.values[0].numeric = true;
+        info.values[0].plural = 0;
+        info.values[0].collapsible = false;
+        info.numeric = true;
+        info.plural = 0;
+        info.collapsible = false;
+      }
+    }
+    if (variable === "page") {
+      if (info.values.length > 0) {
+        if (info.values[0].gotosleepability) {
+          info.labelForm = "short";
+        }
+      }
+    }
+  }
+}
+function outputNumericField(state, varname, itemID) {
+  state.output.openLevel(state.tmp.shadow_numbers[varname].masterStyling);
+  const masterStyling = state.tmp.shadow_numbers[varname].masterStyling;
+  const nums = state.tmp.shadow_numbers[varname].values;
+  const masterLabel = nums.length ? nums[0].label : null;
+  const labelForm = state.tmp.shadow_numbers[varname].labelForm;
+  const tryStatic = state.tmp.group_context.tip.label_static;
+  let embeddedLabelForm;
+  if (labelForm) {
+    embeddedLabelForm = labelForm;
+  } else {
+    embeddedLabelForm = "short";
+  }
+  const labelCapitalizeIfFirst = state.tmp.shadow_numbers[varname].labelCapitalizeIfFirst;
+  const labelDecorations = state.tmp.shadow_numbers[varname].labelDecorations;
+  let lastLabelName = null;
+  for (let i = 0, ilen = nums.length; i < ilen; i++) {
+    const num = nums[i];
+    let label = "";
+    let labelName;
+    if (num.label) {
+      if ("var:" === num.label.slice(0, 4)) {
+        labelName = num.label.slice(4);
+      } else {
+        labelName = STATUTE_SUBDIV_STRINGS[num.label];
+      }
+      if (labelName) {
+        if (num.label === masterLabel) {
+          if (tryStatic) {
+            label = state.getTerm(labelName, "static", num.plural);
+            if (label.indexOf("%s") === -1) {
+              label = "";
+            }
+          }
+          if (!label) {
+            label = state.getTerm(labelName, labelForm, num.plural);
+          }
+        } else {
+          if (tryStatic) {
+            label = state.getTerm(labelName, "static", num.plural);
+            if (label.indexOf("%s") === -1) {
+              label = "";
+            }
+          }
+          if (!label) {
+            label = state.getTerm(labelName, embeddedLabelForm, num.plural);
+          }
+        }
+        if (labelCapitalizeIfFirst) {
+          label = Output_formatters["capitalize-first"](state, label);
+        }
+      }
+    }
+    let labelPlaceholderPos = -1;
+    if (label) {
+      labelPlaceholderPos = label.indexOf("%s");
+    }
+    const numStyling = Util_cloneToken(num.styling);
+    numStyling.formatter = num.styling.formatter;
+    numStyling.type = num.styling.type;
+    numStyling.num = num.styling.num;
+    numStyling.gender = num.styling.gender;
+    if (labelPlaceholderPos > 0 && labelPlaceholderPos < label.length - 2) {
+      numStyling.strings.prefix += label.slice(0, labelPlaceholderPos);
+      numStyling.strings.suffix = label.slice(labelPlaceholderPos + 2) + numStyling.strings.suffix;
+    } else if (num.labelVisibility) {
+      if (!label) {
+        label = num.label;
+        labelName = num.label;
+      }
+      if (labelPlaceholderPos > 0) {
+        const prefixLabelStyling = new Token();
+        prefixLabelStyling.decorations = labelDecorations;
+        state.output.append(label.slice(0, labelPlaceholderPos), prefixLabelStyling);
+      } else if (labelPlaceholderPos === label.length - 2 || labelPlaceholderPos === -1) {
+        state.output.append(label + num.labelSuffix, "empty");
+      }
+    }
+    UPDATE_GROUP_CONTEXT_CONDITION(state, masterStyling.strings.prefix, null, masterStyling, `${num.particle}${num.value}`);
+    if (num.collapsible) {
+      let blob;
+      if (num.value.match(/^[1-9][0-9]*$/) && Number.isSafeInteger(parseInt(num.value, 10))) {
+        blob = new NumericBlob(state, num.particle, parseInt(num.value, 10), numStyling, itemID);
+      } else {
+        blob = new NumericBlob(state, num.particle, num.value, numStyling, itemID);
+      }
+      if ("undefined" === typeof blob.gender) {
+        blob.gender = state.locale[state.opt.lang]["noun-genders"][varname];
+      }
+      state.output.append(blob, "literal");
+    } else {
+      state.output.append(num.particle + num.value, numStyling);
+    }
+    if (labelPlaceholderPos === 0 && labelPlaceholderPos < label.length - 2) {
+      if (lastLabelName === null) {
+        lastLabelName = labelName;
+      }
+      if (labelName !== lastLabelName || i === nums.length - 1) {
+        const suffixLabelStyling = new Token();
+        suffixLabelStyling.decorations = labelDecorations;
+        state.output.append(label.slice(labelPlaceholderPos + 2), suffixLabelStyling);
+      }
+    }
+    lastLabelName = labelName;
+    state.tmp.term_predecessor = true;
+  }
+  state.output.closeLevel();
+}
+
+// src/engine/state.ts
+var Opt = class {
+  constructor() {
+    __publicField(this, "parallel");
+    __publicField(this, "has_disambiguate");
+    __publicField(this, "mode");
+    __publicField(this, "dates");
+    __publicField(this, "jurisdictions_seen");
+    __publicField(this, "suppressedJurisdictions");
+    __publicField(this, "inheritedAttributes");
+    __publicField(this, "locale-sort");
+    __publicField(this, "locale-translit");
+    __publicField(this, "locale-translat");
+    __publicField(this, "citeAffixes");
+    __publicField(this, "default-locale");
+    __publicField(this, "update_mode");
+    __publicField(this, "bib_mode");
+    __publicField(this, "sort_citations");
+    __publicField(this, "et-al-min");
+    __publicField(this, "et-al-use-first");
+    __publicField(this, "et-al-use-last");
+    __publicField(this, "et-al-subsequent-min");
+    __publicField(this, "et-al-subsequent-use-first");
+    __publicField(this, "demote-non-dropping-particle");
+    __publicField(this, "parse-names");
+    __publicField(this, "katakana-display");
+    __publicField(this, "citation_number_slug");
+    __publicField(this, "trigraph");
+    __publicField(this, "nodenames");
+    __publicField(this, "gender");
+    __publicField(this, "cite-lang-prefs");
+    __publicField(this, "has_layout_locale");
+    __publicField(this, "disable_duplicate_year_suppression");
+    __publicField(this, "use_context_condition");
+    __publicField(this, "jurisdiction_fallbacks");
+    __publicField(this, "development_extensions");
+    __publicField(this, "xclass");
+    __publicField(this, "styleID");
+    __publicField(this, "availableAbbrevDomains");
+    __publicField(this, "require_comma_on_symbol");
+    __publicField(this, "default-locale-sort");
+    __publicField(this, "lang");
+    __publicField(this, "citation_number_sort");
+    __publicField(this, "grouped_sort");
+    __publicField(this, "use_parallel_delimiter");
+    __publicField(this, "area");
+    this.parallel = {
+      enable: false
+    }, this.has_disambiguate = false;
+    this.mode = "html";
+    this.dates = {};
+    this.jurisdictions_seen = {};
+    this.suppressedJurisdictions = {};
+    this.inheritedAttributes = {};
+    this["locale-sort"] = [];
+    this["locale-translit"] = [];
+    this["locale-translat"] = [];
+    this.citeAffixes = {
+      persons: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      },
+      institutions: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      },
+      titles: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      },
+      journals: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      },
+      publishers: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      },
+      places: {
+        "locale-orig": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translit": {
+          prefix: "",
+          suffix: ""
+        },
+        "locale-translat": {
+          prefix: "",
+          suffix: ""
+        }
+      }
+    };
+    this["default-locale"] = [];
+    this.update_mode = NONE;
+    this.bib_mode = NONE;
+    this.sort_citations = false;
+    this["et-al-min"] = 0;
+    this["et-al-use-first"] = 1;
+    this["et-al-use-last"] = false;
+    this["et-al-subsequent-min"] = false;
+    this["et-al-subsequent-use-first"] = false;
+    this["demote-non-dropping-particle"] = "display-and-sort";
+    this["parse-names"] = true;
+    this["katakana-display"] = "normal-order";
+    this.citation_number_slug = false;
+    this.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00";
+    this.nodenames = [];
+    this.gender = {};
+    this["cite-lang-prefs"] = {
+      persons: ["orig"],
+      institutions: ["orig"],
+      titles: ["orig"],
+      journals: ["orig"],
+      publishers: ["orig"],
+      places: ["orig"],
+      number: ["orig"]
+    };
+    this.has_layout_locale = false;
+    this.disable_duplicate_year_suppression = [];
+    this.use_context_condition = false;
+    this.jurisdiction_fallbacks = {};
+    this.development_extensions = {};
+    this.development_extensions.field_hack = true;
+    this.development_extensions.allow_field_hack_date_override = true;
+    this.development_extensions.locator_date_and_revision = true;
+    this.development_extensions.locator_label_parse = true;
+    this.development_extensions.raw_date_parsing = true;
+    this.development_extensions.clean_up_csl_flaws = true;
+    this.development_extensions.consolidate_legal_items = false;
+    this.development_extensions.csl_reverse_lookup_support = false;
+    this.development_extensions.wrap_url_and_doi = false;
+    this.development_extensions.thin_non_breaking_space_html_hack = false;
+    this.development_extensions.apply_citation_wrapper = false;
+    this.development_extensions.main_title_from_short_title = false;
+    this.development_extensions.uppercase_subtitles = false;
+    this.development_extensions.normalize_lang_keys_to_lowercase = false;
+    this.development_extensions.strict_text_case_locales = false;
+    this.development_extensions.expect_and_symbol_form = false;
+    this.development_extensions.require_explicit_legal_case_title_short = false;
+    this.development_extensions.spoof_institutional_affiliations = false;
+    this.development_extensions.force_jurisdiction = false;
+    this.development_extensions.parse_names = true;
+    this.development_extensions.hanging_indent_legacy_number = false;
+    this.development_extensions.throw_on_empty = false;
+    this.development_extensions.strict_inputs = true;
+    this.development_extensions.prioritize_disambiguate_condition = false;
+    this.development_extensions.force_short_title_casing_alignment = true;
+    this.development_extensions.implicit_short_title = false;
+    this.development_extensions.force_title_abbrev_fallback = false;
+    this.development_extensions.split_container_title = false;
+    this.development_extensions.legacy_institution_name_ordering = false;
+    this.development_extensions.etal_min_etal_usefirst_hack = false;
+  }
+};
+var Tmp = class {
+  constructor() {
+    __publicField(this, "names_max");
+    __publicField(this, "names_base");
+    __publicField(this, "givens_base");
+    __publicField(this, "value");
+    __publicField(this, "namepart_decorations");
+    __publicField(this, "namepart_type");
+    __publicField(this, "area");
+    __publicField(this, "root");
+    __publicField(this, "extension");
+    __publicField(this, "can_substitute");
+    __publicField(this, "element_rendered_ok");
+    __publicField(this, "element_trace");
+    __publicField(this, "nameset_counter");
+    __publicField(this, "group_context");
+    __publicField(this, "term_predecessor");
+    __publicField(this, "in_cite_predecessor");
+    __publicField(this, "jump");
+    __publicField(this, "decorations");
+    __publicField(this, "tokenstore_stack");
+    __publicField(this, "last_suffix_used");
+    __publicField(this, "last_names_used");
+    __publicField(this, "last_years_used");
+    __publicField(this, "years_used");
+    __publicField(this, "names_used");
+    __publicField(this, "taintedItemIDs");
+    __publicField(this, "taintedCitationIDs");
+    __publicField(this, "initialize_with");
+    __publicField(this, "disambig_request");
+    __publicField(this, "name-as-sort-order");
+    __publicField(this, "suppress_decorations");
+    __publicField(this, "disambig_settings");
+    __publicField(this, "bib_sort_keys");
+    __publicField(this, "prefix");
+    __publicField(this, "suffix");
+    __publicField(this, "delimiter");
+    __publicField(this, "cite_locales");
+    __publicField(this, "cite_affixes");
+    __publicField(this, "strip_periods");
+    __publicField(this, "shadow_numbers");
+    __publicField(this, "authority_stop_last");
+    __publicField(this, "loadedItemIDs");
+    __publicField(this, "condition_counter");
+    __publicField(this, "condition_lang_val_arr");
+    __publicField(this, "condition_lang_counter_arr");
+    __publicField(this, "just_looking");
+    __publicField(this, "just_did_number");
+    __publicField(this, "first_name_string");
+    __publicField(this, "name_node");
+    __publicField(this, "done_vars");
+    __publicField(this, "last_primary_names_string");
+    __publicField(this, "have_collapsed");
+    __publicField(this, "use_cite_group_delimiter");
+    __publicField(this, "sort_key_flag");
+    __publicField(this, "label_blob");
+    __publicField(this, "etal_node");
+    __publicField(this, "etal_term");
+    __publicField(this, "rendered_name");
+    __publicField(this, "offset_characters");
+    __publicField(this, "count_offset_characters");
+    __publicField(this, "term_predecessor_name");
+    __publicField(this, "name_delimiter");
+    __publicField(this, "probably_rendered_something");
+    __publicField(this, "authorstring_request");
+    __publicField(this, "lang_array");
+    __publicField(this, "multi_layout");
+    __publicField(this, "publisher-list");
+    __publicField(this, "publisher-token");
+    __publicField(this, "publisher-place-token");
+    __publicField(this, "doing-macro-with-date");
+    __publicField(this, "citation_pos");
+    __publicField(this, "citation_note_index");
+    __publicField(this, "citation_id");
+    __publicField(this, "citation_errors");
+    __publicField(this, "splice_delimiter");
+    __publicField(this, "can_block_substitute");
+    __publicField(this, "subsequent_author_substitute_ok");
+    __publicField(this, "common_term_match_fail");
+    __publicField(this, "disambig_override");
+    __publicField(this, "abort_output");
+    __publicField(this, "abbrev_trimmer");
+    __publicField(this, "strip_periods_tag");
+    this.names_max = new Stack();
+    this.names_base = new Stack();
+    this.givens_base = new Stack();
+    this.value = [];
+    this.namepart_decorations = {};
+    this.namepart_type = false;
+    this.area = "citation";
+    this.root = "citation";
+    this.extension = "";
+    this.can_substitute = new Stack(0, LITERAL);
+    this.element_rendered_ok = false;
+    this.element_trace = new Stack("style");
+    this.nameset_counter = 0;
+    this.group_context = new Stack({
+      term_intended: false,
+      variable_attempt: false,
+      variable_success: false,
+      output_tip: void 0,
+      label_form: void 0,
+      parallel_first: void 0,
+      parallel_last: void 0,
+      parallel_delimiter_override: void 0,
+      condition: false,
+      force_suppress: false,
+      done_vars: []
+    });
+    this.term_predecessor = false;
+    this.in_cite_predecessor = false;
+    this.jump = new Stack(0, LITERAL);
+    this.decorations = new Stack();
+    this.tokenstore_stack = new Stack();
+    this.last_suffix_used = "";
+    this.last_names_used = [];
+    this.last_years_used = [];
+    this.years_used = [];
+    this.names_used = [];
+    this.taintedItemIDs = {};
+    this.taintedCitationIDs = {};
+    this.initialize_with = new Stack();
+    this.disambig_request = false;
+    this["name-as-sort-order"] = false;
+    this.suppress_decorations = false;
+    this.disambig_settings = new AmbigConfig();
+    this.bib_sort_keys = [];
+    this.prefix = new Stack("", LITERAL);
+    this.suffix = new Stack("", LITERAL);
+    this.delimiter = new Stack("", LITERAL);
+    this.cite_locales = [];
+    this.cite_affixes = {
+      citation: false,
+      bibliography: false,
+      citation_sort: false,
+      bibliography_sort: false
+    };
+    this.strip_periods = 0;
+    this.shadow_numbers = {};
+    this.authority_stop_last = 0;
+    this.loadedItemIDs = {};
+    this.condition_counter = 0;
+    this.condition_lang_val_arr = [];
+    this.condition_lang_counter_arr = [];
+  }
+};
+var Fun = class {
+  constructor(state) {
+    __publicField(this, "match");
+    __publicField(this, "suffixator");
+    __publicField(this, "romanizer");
+    __publicField(this, "ordinalizer");
+    __publicField(this, "long_ordinalizer");
+    __publicField(this, "dateparser");
+    __publicField(this, "flipflopper");
+    __publicField(this, "decorate");
+    this.match = new Match();
+    this.suffixator = new Suffixator(SUFFIX_CHARS);
+    this.romanizer = new Romanizer();
+    this.ordinalizer = new Ordinalizer(state);
+    this.long_ordinalizer = new LongOrdinalizer();
+  }
+};
+var Build = class {
+  constructor() {
+    __publicField(this, "alternate-term");
+    __publicField(this, "in_bibliography");
+    __publicField(this, "in_style");
+    __publicField(this, "skip");
+    __publicField(this, "postponed_macro");
+    __publicField(this, "layout_flag");
+    __publicField(this, "name");
+    __publicField(this, "names_variables");
+    __publicField(this, "name_label");
+    __publicField(this, "form");
+    __publicField(this, "term");
+    __publicField(this, "macro");
+    __publicField(this, "macro_stack");
+    __publicField(this, "text");
+    __publicField(this, "lang");
+    __publicField(this, "area");
+    __publicField(this, "root");
+    __publicField(this, "extension");
+    __publicField(this, "substitute_level");
+    __publicField(this, "names_level");
+    __publicField(this, "render_nesting_level");
+    __publicField(this, "render_seen");
+    __publicField(this, "bibliography_key_pos");
+    this["alternate-term"] = false;
+    this.in_bibliography = false;
+    this.in_style = false;
+    this.skip = false;
+    this.postponed_macro = false;
+    this.layout_flag = false;
+    this.name = false;
+    this.names_variables = [[]];
+    this.name_label = [{}];
+    this.form = false;
+    this.term = false;
+    this.macro = {};
+    this.macro_stack = [];
+    this.text = false;
+    this.lang = false;
+    this.area = "citation";
+    this.root = "citation";
+    this.extension = "";
+    this.substitute_level = new Stack(0, LITERAL);
+    this.names_level = 0;
+    this.render_nesting_level = 0;
+    this.render_seen = false;
+    this.bibliography_key_pos = 0;
+  }
+};
+var Configure = class {
+  constructor() {
+    this.tests = [];
+    this.fail = [];
+    this.succeed = [];
+  }
+};
+var Citation = class {
+  constructor(state) {
+    this.opt = {
+      inheritedAttributes: {}
+    };
+    this.tokens = [];
+    this.srt = new Comparifier(state, "citation_sort");
+    this.opt.collapse = [];
+    this.opt["disambiguate-add-names"] = false;
+    this.opt["disambiguate-add-givenname"] = false;
+    this.opt["disambiguate-add-year-suffix"] = false;
+    this.opt["givenname-disambiguation-rule"] = "by-cite";
+    this.opt["near-note-distance"] = 5;
+    this.opt.topdecor = [];
+    this.opt.layout_decorations = [];
+    this.opt.layout_prefix = "";
+    this.opt.layout_suffix = "";
+    this.opt.layout_delimiter = "";
+    this.opt.sort_locales = [];
+    this.opt.max_number_of_names = 0;
+    this.root = "citation";
+  }
+};
+var Bibliography = class {
+  constructor() {
+    this.opt = {
+      inheritedAttributes: {}
+    };
+    this.tokens = [];
+    this.opt.collapse = [];
+    this.opt.topdecor = [];
+    this.opt.layout_decorations = [];
+    this.opt.layout_prefix = "";
+    this.opt.layout_suffix = "";
+    this.opt.layout_delimiter = "";
+    this.opt["line-spacing"] = 1;
+    this.opt["entry-spacing"] = 1;
+    this.opt.sort_locales = [];
+    this.opt.max_number_of_names = 0;
+    this.root = "bibliography";
+  }
+};
+var BibliographySort = class {
+  constructor() {
+    this.tokens = [];
+    this.opt = {};
+    this.opt.sort_directions = [];
+    this.opt.topdecor = [];
+    this.opt.citation_number_sort_direction = ASCENDING;
+    this.opt.citation_number_secondary = false;
+    this.tmp = {};
+    this.keys = [];
+    this.root = "bibliography";
+  }
+};
+var CitationSort = class {
+  constructor() {
+    this.tokens = [];
+    this.opt = {};
+    this.opt.sort_directions = [];
+    this.keys = [];
+    this.opt.topdecor = [];
+    this.root = "citation";
+  }
+};
+var InText = class {
+  constructor() {
+    this.opt = {
+      inheritedAttributes: {}
+    };
+    this.tokens = [];
+    this.opt.collapse = [];
+    this.opt["disambiguate-add-names"] = false;
+    this.opt["disambiguate-add-givenname"] = false;
+    this.opt["disambiguate-add-year-suffix"] = false;
+    this.opt["givenname-disambiguation-rule"] = "by-cite";
+    this.opt["near-note-distance"] = 5;
+    this.opt.topdecor = [];
+    this.opt.layout_decorations = [];
+    this.opt.layout_prefix = "";
+    this.opt.layout_suffix = "";
+    this.opt.layout_delimiter = "";
+    this.opt.sort_locales = [];
+    this.opt.max_number_of_names = 0;
+    this.root = "intext";
+  }
+};
+
+// src/disambig/cites.ts
+var Disambiguation = class {
+  constructor(state) {
+    __publicField(this, "state");
+    __publicField(this, "sys");
+    __publicField(this, "registry");
+    __publicField(this, "ambigcites");
+    __publicField(this, "debug");
+    __publicField(this, "akey");
+    __publicField(this, "modes");
+    __publicField(this, "modeindex");
+    __publicField(this, "lists");
+    __publicField(this, "base");
+    __publicField(this, "betterbase");
+    __publicField(this, "Item");
+    __publicField(this, "ItemCite");
+    __publicField(this, "scanlist");
+    __publicField(this, "partners");
+    __publicField(this, "nonpartners");
+    __publicField(this, "clashes");
+    __publicField(this, "gnameset");
+    __publicField(this, "gname");
+    __publicField(this, "initGivens");
+    __publicField(this, "givensMax");
+    __publicField(this, "namesMax");
+    __publicField(this, "namesetsMax");
+    __publicField(this, "maxNamesByItemId");
+    __publicField(this, "listpos");
+    this.state = state;
+    this.sys = this.state.sys;
+    this.registry = state.registry.registry;
+    this.ambigcites = state.registry.ambigcites;
+    this.configModes();
+    this.debug = false;
+  }
+  run(akey) {
+    if (!this.modes.length) {
+      return;
+    }
+    if (this.debug) {
+      this.state.sys.print("[A] === RUN ===");
+    }
+    this.akey = akey;
+    if (this.initVars(akey)) {
+      this.runDisambig();
+    }
+  }
+  runDisambig() {
+    let ismax;
+    if (this.debug) {
+      this.state.sys.print("[C] === runDisambig() ===");
+    }
+    this.initGivens = true;
+    while (this.lists.length) {
+      this.gnameset = 0;
+      this.gname = 0;
+      this.clashes = [1, 0];
+      let loopGuard = 0;
+      const loopGuardMax = (this.lists[0][1].length + 2) * 1e3;
+      while (this.lists[0][1].length) {
+        this.listpos = 0;
+        if (!this.base) {
+          this.base = this.lists[0][0];
+        }
+        ismax = this.incrementDisambig();
+        this.scanItems(this.lists[0]);
+        this.evalScan(ismax);
+        loopGuard += 1;
+        if (loopGuard > loopGuardMax) {
+          const giveupBase = this.betterbase || this.base;
+          const remaining = this.lists[0][1];
+          for (let gi = 0, gilen = remaining.length; gi < gilen; gi += 1) {
+            this.state.registry.registerAmbigToken(this.akey, "" + remaining[gi].id, giveupBase);
+          }
+          this.lists[0] = [giveupBase, []];
+          break;
+        }
+      }
+      this.lists = this.lists.slice(1);
+    }
+  }
+  scanItems(list) {
+    let pos, len, otherItem;
+    if (this.debug) {
+      this.state.sys.print("[2] === scanItems() ===");
+    }
+    this.Item = list[1][0];
+    this.ItemCite = getAmbiguousCite.call(this.state, this.Item, this.base, true);
+    this.scanlist = list[1];
+    this.partners = [];
+    this.partners.push(this.Item);
+    this.nonpartners = [];
+    let clashes = 0;
+    for (let pos2 = 1, len2 = list[1].length; pos2 < len2; pos2 += 1) {
+      otherItem = list[1][pos2];
+      const otherItemCite = getAmbiguousCite.call(this.state, otherItem, this.base, true);
+      if (this.debug) {
+        if (pos2 > 1) {
+          this.state.sys.print("  -----------");
+        }
+      }
+      if (this.ItemCite === otherItemCite) {
+        if (this.debug) {
+          this.state.sys.print("  [CLASH]--> " + this.Item.id + ": " + this.ItemCite);
+          this.state.sys.print("             " + otherItem.id + ": " + otherItemCite);
+        }
+        clashes += 1;
+        this.partners.push(otherItem);
+      } else {
+        if (this.debug) {
+          this.state.sys.print("  [clear]--> " + this.Item.id + ": " + this.ItemCite);
+          this.state.sys.print("             " + otherItem.id + ": " + otherItemCite);
+        }
+        this.nonpartners.push(otherItem);
+      }
+    }
+    this.clashes[0] = this.clashes[1];
+    this.clashes[1] = clashes;
+  }
+  evalScan(maxed) {
+    this[this.modes[this.modeindex]](maxed);
+    if (maxed) {
+      if (this.modeindex < this.modes.length - 1) {
+        this.modeindex += 1;
+      } else {
+        this.lists[this.listpos + 1] = [this.base, []];
+      }
+    }
+  }
+  disNames(ismax) {
+    let i, ilen;
+    if (this.debug) {
+      this.state.sys.print("[3] == disNames() ==");
+    }
+    if (this.clashes[1] === 0 && this.nonpartners.length === 1) {
+      this.captureStepToBase();
+      if (this.debug) {
+        this.state.sys.print("  ** RESOLUTION [a]: lone partner, one nonpartner");
+        this.state.sys.print("  registering " + this.partners[0].id + " and " + this.nonpartners[0].id);
+      }
+      this.state.registry.registerAmbigToken(this.akey, "" + this.nonpartners[0].id, this.betterbase);
+      this.state.registry.registerAmbigToken(this.akey, "" + this.partners[0].id, this.betterbase);
+      this.lists[this.listpos] = [this.betterbase, []];
+    } else if (this.clashes[1] === 0) {
+      this.captureStepToBase();
+      if (this.debug) {
+        this.state.sys.print("  ** RESOLUTION [b]: lone partner, unknown number of remaining nonpartners");
+        this.state.sys.print("  registering " + this.partners[0].id);
+      }
+      this.state.registry.registerAmbigToken(this.akey, "" + this.partners[0].id, this.betterbase);
+      this.lists[this.listpos] = [this.betterbase, this.nonpartners];
+      if (this.nonpartners.length) {
+        this.initGivens = true;
+      }
+    } else if (this.nonpartners.length === 1) {
+      this.captureStepToBase();
+      if (this.debug) {
+        this.state.sys.print("  ** RESOLUTION [c]: lone nonpartner, unknown number of partners remaining");
+        this.state.sys.print("  registering " + this.nonpartners[0].id);
+      }
+      this.state.registry.registerAmbigToken(this.akey, "" + this.nonpartners[0].id, this.betterbase);
+      this.lists[this.listpos] = [this.betterbase, this.partners];
+    } else if (this.clashes[1] < this.clashes[0]) {
+      this.captureStepToBase();
+      if (this.debug) {
+        this.state.sys.print("  ** RESOLUTION [d]: better result, but no entries safe to register");
+      }
+      this.lists[this.listpos] = [this.betterbase, this.partners];
+      this.lists.push([this.betterbase, this.nonpartners]);
+    } else {
+      if (this.debug) {
+        this.state.sys.print("  ** RESOLUTION [e]: no improvement, and clashes remain");
+      }
+      if (ismax) {
+        this.lists[this.listpos] = [this.betterbase, this.nonpartners];
+        this.lists.push([this.betterbase, this.partners]);
+        if (this.modeindex === this.modes.length - 1) {
+          if (this.debug) {
+            this.state.sys.print("     (registering clashing entries because we've run out of options)");
+          }
+          for (let i2 = 0, ilen2 = this.partners.length; i2 < ilen2; i2 += 1) {
+            this.state.registry.registerAmbigToken(this.akey, "" + this.partners[i2].id, this.betterbase);
+          }
+          this.lists[this.listpos] = [this.betterbase, []];
+        }
+      }
+    }
+  }
+  disExtraText() {
+    if (this.debug) {
+      this.state.sys.print("[3] === disExtraText ==");
+    }
+    let done = false;
+    if (this.clashes[1] === 0 && this.nonpartners.length < 2) {
+      done = true;
+    }
+    if (!done && (!this.base.disambiguate || this.state.tmp.disambiguate_count !== this.state.tmp.disambiguate_maxMax)) {
+      this.modeindex = 0;
+      this.base.disambiguate = this.state.tmp.disambiguate_count;
+      this.betterbase.disambiguate = this.state.tmp.disambiguate_count;
+      if (!this.base.disambiguate) {
+        this.initGivens = true;
+        this.base.disambiguate = 1;
+        for (let i = 0, ilen = this.lists[this.listpos][1].length; i < ilen; i += 1) {
+          this.state.tmp.taintedItemIDs[this.lists[this.listpos][1][i].id] = true;
+        }
+      } else {
+        this.disNames();
+      }
+    } else if (done || this.state.tmp.disambiguate_count === this.state.tmp.disambiguate_maxMax) {
+      if (done || this.modeindex === this.modes.length - 1) {
+        let base = this.lists[this.listpos][0];
+        for (let i = 0, ilen = this.lists[this.listpos][1].length; i < ilen; i += 1) {
+          this.state.tmp.taintedItemIDs[this.lists[this.listpos][1][i].id] = true;
+          this.state.registry.registerAmbigToken(this.akey, "" + this.lists[this.listpos][1][i].id, base);
+        }
+        this.lists[this.listpos] = [this.betterbase, []];
+      } else {
+        this.modeindex = this.modes.length - 1;
+        let base = this.lists[this.listpos][0];
+        base.disambiguate = true;
+        for (let i = 0, ilen = this.lists[this.listpos][1].length; i < ilen; i += 1) {
+          this.state.tmp.taintedItemIDs[this.lists[this.listpos][1][i].id] = true;
+          this.state.registry.registerAmbigToken(this.akey, "" + this.lists[this.listpos][1][i].id, base);
+        }
+      }
+    }
+  }
+  disYears() {
+    let pos, len, tokens, token;
+    if (this.debug) {
+      this.state.sys.print("[3] === disYears ==");
+    }
+    tokens = [];
+    let base = this.lists[this.listpos][0];
+    if (this.clashes[1]) {
+      for (let i = 0, ilen = this.state.registry.mylist.length; i < ilen; i += 1) {
+        const origid = this.state.registry.mylist[i];
+        for (let j = 0, jlen = this.lists[this.listpos][1].length; j < jlen; j += 1) {
+          const token2 = this.lists[this.listpos][1][j];
+          if (token2.id == origid) {
+            tokens.push(this.registry[token2.id]);
+            break;
+          }
+        }
+      }
+    }
+    tokens.sort(this.state.registry.sorter.compareKeys);
+    for (let pos2 = 0, len2 = tokens.length; pos2 < len2; pos2 += 1) {
+      base.year_suffix = "" + pos2;
+      const oldBase = this.state.registry.registry[tokens[pos2].id].disambig;
+      this.state.registry.registerAmbigToken(this.akey, "" + tokens[pos2].id, base);
+      if (ambigConfigDiff(oldBase, base)) {
+        this.state.tmp.taintedItemIDs[tokens[pos2].id] = true;
+      }
+    }
+    this.lists[this.listpos] = [this.betterbase, []];
+  }
+  incrementDisambig() {
+    if (this.debug) {
+      this.state.sys.print("\n[1] === incrementDisambig() ===");
+    }
+    if (this.initGivens) {
+      this.initGivens = false;
+      return false;
+    }
+    let maxed = false;
+    let increment_names = true;
+    if ("disNames" === this.modes[this.modeindex]) {
+      increment_names = false;
+      if ("number" !== typeof this.givensMax) {
+        increment_names = true;
+      }
+      let increment_namesets = false;
+      if ("number" !== typeof this.namesMax) {
+        increment_namesets = true;
+      }
+      if ("number" === typeof this.givensMax) {
+        if (this.base.givens.length && this.base.givens[this.gnameset][this.gname] < this.givensMax) {
+          this.base.givens[this.gnameset][this.gname] += 1;
+        } else {
+          increment_names = true;
+        }
+      }
+      if ("number" === typeof this.namesMax && increment_names) {
+        if (this.state.opt["disambiguate-add-names"]) {
+          increment_namesets = false;
+          if (this.gname < this.namesMax) {
+            this.base.names[this.gnameset] += 1;
+            this.gname += 1;
+          } else {
+            increment_namesets = true;
+          }
+        } else {
+          increment_namesets = true;
+        }
+      }
+      if ("number" === typeof this.namesetsMax && increment_namesets) {
+        if (this.gnameset < this.namesetsMax) {
+          this.gnameset += 1;
+          this.base.names[this.gnameset] = 1;
+          this.gname = 0;
+        }
+      }
+      if (this.debug) {
+        this.state.sys.print("    ------------------");
+        this.state.sys.print("    incremented values");
+        this.state.sys.print("    ------------------");
+        this.state.sys.print("    | gnameset: " + this.gnameset);
+        this.state.sys.print("    | gname: " + this.gname);
+        this.state.sys.print("    | names value: " + this.base.names[this.gnameset]);
+        if (this.base.givens.length) {
+          this.state.sys.print("    | givens value: " + this.base.givens[this.gnameset][this.gname]);
+        } else {
+          this.state.sys.print("    | givens value: nil");
+        }
+        this.state.sys.print("    | namesetsMax: " + this.namesetsMax);
+        this.state.sys.print("    | namesMax: " + this.namesMax);
+        this.state.sys.print("    | givensMax: " + this.givensMax);
+      }
+      if (("number" !== typeof this.namesetsMax || this.namesetsMax === -1 || this.gnameset === this.namesetsMax) && (!this.state.opt["disambiguate-add-names"] || "number" !== typeof this.namesMax || this.gname === this.namesMax) && ("number" != typeof this.givensMax || "undefined" === typeof this.base.givens[this.gnameset] || "undefined" === typeof this.base.givens[this.gnameset][this.gname] || this.base.givens[this.gnameset][this.gname] === this.givensMax)) {
+        maxed = true;
+        if (this.debug) {
+          this.state.sys.print("    MAXED");
+        }
+      }
+    } else if ("disExtraText" === this.modes[this.modeindex]) {
+      this.base.disambiguate += 1;
+      this.betterbase.disambiguate += 1;
+    }
+    return maxed;
+  }
+  initVars(akey) {
+    let i, ilen, myIds, myItemBundles, myItems;
+    if (this.debug) {
+      this.state.sys.print("[B] === initVars() ===");
+    }
+    this.lists = [];
+    this.base = false;
+    this.betterbase = false;
+    this.akey = akey;
+    this.maxNamesByItemId = {};
+    myItemBundles = [];
+    myIds = this.ambigcites[akey];
+    if (!myIds || !myIds.length) {
+      return false;
+    }
+    let myItem = this.state.refetchItem("" + myIds[0]);
+    this.getCiteData(myItem);
+    this.base = getAmbigConfig.call(this.state);
+    if (myIds && myIds.length > 1) {
+      myItemBundles.push([this.maxNamesByItemId[myItem.id], myItem]);
+      for (let i2 = 1, ilen2 = myIds.length; i2 < ilen2; i2 += 1) {
+        myItem = this.state.refetchItem("" + myIds[i2]);
+        this.getCiteData(myItem, this.base);
+        myItemBundles.push([this.maxNamesByItemId[myItem.id], myItem]);
+      }
+      myItemBundles.sort(
+        function(a, b) {
+          if (a[0] > b[0]) {
+            return 1;
+          } else if (a[0] < b[0]) {
+            return -1;
+          } else {
+            if (a[1].id > b[1].id) {
+              return 1;
+            } else if (a[1].id < b[1].id) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        }
+      );
+      myItems = [];
+      for (let i2 = 0, ilen2 = myItemBundles.length; i2 < ilen2; i2 += 1) {
+        myItems.push(myItemBundles[i2][1]);
+      }
+      this.lists.push([this.base, myItems]);
+      this.Item = this.lists[0][1][0];
+    } else {
+      this.Item = this.state.refetchItem("" + myIds[0]);
+    }
+    this.modeindex = 0;
+    if (this.state.citation.opt["disambiguate-add-names"] || true) {
+      this.namesMax = this.maxNamesByItemId[this.Item.id][0];
+    } else {
+      let namesMax = this.base.names[0];
+      for (let i2 = 1, ilen2 = this.base.names.length; i2 < ilen2; i2 += 1) {
+        namesMax = Math.max(namesMax, this.base.names.names[i2]);
+      }
+    }
+    this.padBase(this.base);
+    this.padBase(this.betterbase);
+    this.base.year_suffix = false;
+    this.base.disambiguate = false;
+    this.betterbase.year_suffix = false;
+    this.betterbase.disambiguate = false;
+    if (this.state.citation.opt["givenname-disambiguation-rule"] === "by-cite" && this.state.opt["disambiguate-add-givenname"]) {
+      this.givensMax = 2;
+    }
+    return true;
+  }
+  padBase(base) {
+    for (let i = 0, ilen = base.names.length; i < ilen; i += 1) {
+      if (!base.givens[i]) {
+        base.givens[i] = [];
+      }
+      for (let j = 0, jlen = base.names[i]; j < jlen; j += 1) {
+        if (!base.givens[i][j]) {
+          base.givens[i][j] = 0;
+        }
+      }
+    }
+  }
+  configModes() {
+    let dagopt, gdropt;
+    this.modes = [];
+    dagopt = this.state.opt["disambiguate-add-givenname"];
+    gdropt = this.state.citation.opt["givenname-disambiguation-rule"];
+    if (this.state.opt["disambiguate-add-names"] || dagopt && gdropt === "by-cite") {
+      this.modes.push("disNames");
+    }
+    if (this.state.opt.development_extensions.prioritize_disambiguate_condition) {
+      if (this.state.opt.has_disambiguate) {
+        this.modes.push("disExtraText");
+      }
+      if (this.state.opt["disambiguate-add-year-suffix"]) {
+        this.modes.push("disYears");
+      }
+    } else {
+      if (this.state.opt["disambiguate-add-year-suffix"]) {
+        this.modes.push("disYears");
+      }
+      if (this.state.opt.has_disambiguate) {
+        this.modes.push("disExtraText");
+      }
+    }
+  }
+  getCiteData(Item, base) {
+    if (!this.maxNamesByItemId[Item.id]) {
+      getAmbiguousCite.call(this.state, Item, base);
+      base = getAmbigConfig.call(this.state);
+      this.maxNamesByItemId[Item.id] = getMaxVals.call(this.state);
+      this.state.registry.registry[Item.id].disambig.givens = this.state.tmp.disambig_settings.givens.slice();
+      for (let i = 0, ilen = this.state.registry.registry[Item.id].disambig.givens.length; i < ilen; i += 1) {
+        this.state.registry.registry[Item.id].disambig.givens[i] = this.state.tmp.disambig_settings.givens[i].slice();
+      }
+      this.namesetsMax = this.state.registry.registry[Item.id].disambig.names.length - 1;
+      if (!this.base) {
+        this.base = base;
+        this.betterbase = cloneAmbigConfig(base);
+      }
+      if (base.names.length < this.base.names.length) {
+        this.base = base;
+      }
+      for (let i = 0, ilen = base.names.length; i < ilen; i += 1) {
+        if (base.names[i] > this.base.names[i]) {
+          this.base.givens[i] = base.givens[i].slice();
+          this.base.names[i] = base.names[i];
+          this.betterbase.names = this.base.names.slice();
+          this.betterbase.givens = this.base.givens.slice();
+          this.padBase(this.base);
+          this.padBase(this.betterbase);
+        }
+      }
+      this.betterbase.givens = this.base.givens.slice();
+      for (let j = 0, jlen = this.base.givens.length; j < jlen; j += 1) {
+        this.betterbase.givens[j] = this.base.givens[j].slice();
+      }
+    }
+  }
+  captureStepToBase() {
+    if (this.state.citation.opt["givenname-disambiguation-rule"] === "by-cite" && this.base.givens && this.base.givens.length) {
+      if ("undefined" !== typeof this.base.givens[this.gnameset][this.gname]) {
+        if (this.betterbase.givens.length < this.base.givens.length) {
+          this.betterbase.givens = JSON.parse(JSON.stringify(this.base.givens));
+        }
+        this.betterbase.givens[this.gnameset][this.gname] = this.base.givens[this.gnameset][this.gname];
+      }
+    }
+    this.betterbase.names[this.gnameset] = this.base.names[this.gnameset];
+  }
+};
+
+// src/util/flipflop.ts
+function Util_FlipFlopper(state) {
+  const _nestingState = [];
+  const _nestingData = {
+    '<span class="nocase">': {
+      type: "nocase",
+      opener: '<span class="nocase">',
+      closer: "</span>",
+      attr: null,
+      outer: null,
+      flipflop: null
+    },
+    '<span class="nodecor">': {
+      type: "nodecor",
+      opener: '<span class="nodecor">',
+      closer: "</span>",
+      attr: "@class",
+      outer: "nodecor",
+      flipflop: {
+        "nodecor": "nodecor"
+      }
+    },
+    '<span style="font-variant:small-caps;">': {
+      type: "tag",
+      opener: '<span style="font-variant:small-caps;">',
+      closer: "</span>",
+      attr: "@font-variant",
+      outer: "small-caps",
+      flipflop: {
+        "small-caps": "normal",
+        "normal": "small-caps"
+      }
+    },
+    "<sc>": {
+      type: "tag",
+      opener: "<sc>",
+      closer: "</sc>",
+      attr: "@font-variant",
+      outer: "small-caps",
+      flipflop: {
+        "small-caps": "normal",
+        "normal": "small-caps"
+      }
+    },
+    "<i>": {
+      type: "tag",
+      opener: "<i>",
+      closer: "</i>",
+      attr: "@font-style",
+      outer: "italic",
+      flipflop: {
+        "italic": "normal",
+        "normal": "italic"
+      }
+    },
+    "<b>": {
+      type: "tag",
+      opener: "<b>",
+      closer: "</b>",
+      attr: "@font-weight",
+      outer: "bold",
+      flipflop: {
+        "bold": "normal",
+        "normal": "bold"
+      }
+    },
+    "<sup>": {
+      type: "tag",
+      opener: "<sup>",
+      closer: "</sup>",
+      attr: "@vertical-align",
+      outer: "sup",
+      flipflop: {
+        "sub": "sup",
+        "sup": "sup"
+      }
+    },
+    "<sub>": {
+      type: "tag",
+      opener: "<sub>",
+      closer: "</sub>",
+      attr: "@vertical-align",
+      outer: "sub",
+      flipflop: {
+        "sup": "sub",
+        "sub": "sub"
+      }
+    },
+    ' "': {
+      type: "quote",
+      opener: ' "',
+      closer: '"',
+      attr: "@quotes",
+      outer: "true",
+      flipflop: {
+        "true": "inner",
+        "inner": "true",
+        "false": "true"
+      }
+    },
+    " '": {
+      type: "quote",
+      opener: " '",
+      closer: "'",
+      attr: "@quotes",
+      outer: "inner",
+      flipflop: {
+        "true": "inner",
+        "inner": "true",
+        "false": "true"
+      }
+    }
+  };
+  _nestingData['("'] = _nestingData[' "'];
+  _nestingData["('"] = _nestingData[" '"];
+  const localeOpenQuote = state.getTerm("open-quote");
+  const localeCloseQuote = state.getTerm("close-quote");
+  const localeOpenInnerQuote = state.getTerm("open-inner-quote");
+  const localeCloseInnerQuote = state.getTerm("close-inner-quote");
+  if (localeOpenQuote && localeCloseQuote && [' "', " '", '"', "'"].indexOf(localeOpenQuote) === -1) {
+    _nestingData[localeOpenQuote] = JSON.parse(JSON.stringify(_nestingData[' "']));
+    _nestingData[localeOpenQuote].opener = localeOpenQuote;
+    _nestingData[localeOpenQuote].closer = localeCloseQuote;
+  }
+  if (localeOpenInnerQuote && localeCloseInnerQuote && [' "', " '", '"', "'"].indexOf(localeOpenInnerQuote) === -1) {
+    _nestingData[localeOpenInnerQuote] = JSON.parse(JSON.stringify(_nestingData[" '"]));
+    _nestingData[localeOpenInnerQuote].opener = localeOpenInnerQuote;
+    _nestingData[localeOpenInnerQuote].closer = localeCloseInnerQuote;
+  }
+  function _setOuterQuoteForm(quot) {
+    const flip = {
+      " '": ' "',
+      ' "': " '",
+      '("': "('",
+      "('": '("'
+    };
+    _nestingData[quot].outer = "true";
+    _nestingData[flip[quot]].outer = "inner";
+  }
+  function _getNestingOpenerParams(opener) {
+    const openers = [];
+    const keys = Object.keys(_nestingData);
+    for (let i = 0, l = keys.length; i < l; i++) {
+      let key = keys[i];
+      if (_nestingData[opener].type !== "quote" || !_nestingData[opener]) {
+        openers.push(key);
+      }
+    }
+    let ret = _nestingData[opener];
+    ret.opener = new RegExp("^(?:" + openers.map(function(str) {
+      return str.replace("(", "\\(");
+    }).join("|") + ")");
+    return ret;
+  }
+  const _nestingParams = (function() {
+    let ret = {};
+    const keys = Object.keys(_nestingData);
+    for (let i = 0, l = keys.length; i < l; i++) {
+      let key = keys[i];
+      ret[key] = _getNestingOpenerParams(key);
+    }
+    return ret;
+  })();
+  const _tagRex = (function() {
+    const openers = [];
+    const closers = [];
+    const vals = {};
+    for (let opener in _nestingParams) {
+      openers.push(opener);
+      vals[_nestingParams[opener].closer] = true;
+    }
+    const keys = Object.keys(vals);
+    for (let i = 0, l = keys.length; i < l; i++) {
+      const closer = keys[i];
+      closers.push(closer);
+    }
+    const all = openers.concat(closers).map(function(str) {
+      return str.replace("(", "\\(");
+    }).join("|");
+    return {
+      matchAll: new RegExp("((?:" + all + "))", "g"),
+      splitAll: new RegExp("(?:" + all + ")", "g"),
+      open: new RegExp("(^(?:" + openers.map(function(str) {
+        return str.replace("(", "\\(");
+      }).join("|") + ")$)"),
+      close: new RegExp("(^(?:" + closers.join("|") + ")$)")
+    };
+  })();
+  function _tryOpen(tag, pos) {
+    const params = _nestingState[_nestingState.length - 1];
+    if (!params || tag.match(params.opener)) {
+      _nestingState.push({
+        type: _nestingParams[tag].type,
+        opener: _nestingParams[tag].opener,
+        closer: _nestingParams[tag].closer,
+        pos
+      });
+      return false;
+    } else {
+      _nestingState.pop();
+      _nestingState.push({
+        type: _nestingParams[tag].type,
+        opener: _nestingParams[tag].opener,
+        closer: _nestingParams[tag].closer,
+        pos
+      });
+      return {
+        fixtag: params.pos
+      };
+    }
+  }
+  function _tryClose(tag, pos) {
+    const params = _nestingState[_nestingState.length - 1];
+    if (params && tag === params.closer) {
+      _nestingState.pop();
+      if (params.type === "nocase") {
+        return {
+          nocase: {
+            open: params.pos,
+            close: pos
+          }
+        };
+      } else {
+        return false;
+      }
+    } else {
+      if (params) {
+        return {
+          fixtag: params.pos
+        };
+      } else {
+        return {
+          fixtag: pos
+        };
+      }
+    }
+  }
+  function _pushNestingState(tag, pos) {
+    if (tag.match(_tagRex.open)) {
+      return _tryOpen(tag, pos);
+    } else {
+      return _tryClose(tag, pos);
+    }
+  }
+  function _doppelString(str) {
+    const forcedSpaces = [];
+    str = str.replace(/(<span)\s+(style=\"font-variant:)\s*(small-caps);?\"[^>]*(>)/g, '$1 $2$3;"$4');
+    str = str.replace(/(<span)\s+(class=\"no(?:case|decor)\")[^>]*(>)/g, "$1 $2$3");
+    const match = str.match(_tagRex.matchAll);
+    if (!match) {
+      return {
+        tags: [],
+        strings: [str],
+        forcedSpaces: []
+      };
+    }
+    const split = str.split(_tagRex.splitAll);
+    for (let i = 0, ilen = match.length - 1; i < ilen; i++) {
+      if (_nestingData[match[i]]) {
+        if (split[i + 1] === "" && ['"', "'"].indexOf(match[i + 1]) > -1) {
+          match[i + 1] = " " + match[i + 1];
+          forcedSpaces.push(true);
+        } else {
+          forcedSpaces.push(false);
+        }
+      }
+    }
+    return {
+      tags: match,
+      strings: split,
+      forcedSpaces
+    };
+  }
+  const TagReg = function(blob) {
+    const _stack = [];
+    this.set = function(tag) {
+      const attr = _nestingData[tag].attr;
+      let decor = null;
+      for (let i = _stack.length - 1; i > -1; i--) {
+        const _decor = _stack[i];
+        if (_decor[0] === attr) {
+          decor = _decor;
+          break;
+        }
+      }
+      if (!decor) {
+        const allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(blob.alldecor);
+        outer:
+          for (let i = allTheDecor.length - 1; i > -1; i--) {
+            const decorset = allTheDecor[i];
+            if (!decorset) {
+              continue;
+            }
+            for (let j = decorset.length - 1; j > -1; j--) {
+              const _decor = decorset[j];
+              if (_decor[0] === attr) {
+                decor = _decor;
+                break outer;
+              }
+            }
+          }
+      }
+      if (!decor) {
+        decor = [attr, _nestingData[tag].outer];
+      } else {
+        decor = [attr, _nestingData[tag].flipflop[decor[1]]];
+      }
+      _stack.push(decor);
+    };
+    this.pair = function() {
+      return _stack[_stack.length - 1];
+    };
+    this.pop = function() {
+      _stack.pop();
+    };
+  };
+  function _apostropheForce(tag, str) {
+    if (tag === "'") {
+      if (str && str.match(/^[^\,\.\?\:\;\ ]/)) {
+        return "\u2019";
+      }
+    } else if (tag === " '" && str && str.match(/^[\ ]/)) {
+      return " \u2019";
+    }
+    return false;
+  }
+  function _undoppelToQueue(blob, doppel, leadingSpace) {
+    let firstString = true;
+    const tagReg = new TagReg(blob);
+    blob.blobs = [];
+    function Stack2(blob2) {
+      this.stack = [blob2];
+      this.latest = blob2;
+      this.addStyling = function(str, decor) {
+        if (firstString) {
+          if (str.slice(0, 1) === " ") {
+            str = str.slice(1);
+          }
+          if (str.slice(0, 1) === " ") {
+            str = str.slice(1);
+          }
+          firstString = false;
+        }
+        this.latest = this.stack[this.stack.length - 1];
+        if (decor) {
+          if ("string" === typeof this.latest.blobs) {
+            const child = new Blob();
+            child.blobs = this.latest.blobs;
+            child.alldecor = this.latest.alldecor.slice();
+            this.latest.blobs = [child];
+          }
+          const tok = new Token();
+          const newblob = new Blob(null, tok);
+          newblob.alldecor = this.latest.alldecor.slice();
+          if (decor[0] === "@class" && decor[1] === "nodecor") {
+            const newdecorset = [];
+            const seen = {};
+            const allTheDecor = [state[state.tmp.area].opt.layout_decorations].concat(newblob.alldecor);
+            for (let i = allTheDecor.length - 1; i > -1; i--) {
+              const _decorset = allTheDecor[i];
+              if (!_decorset) {
+                continue;
+              }
+              for (let j = _decorset.length - 1; j > -1; j--) {
+                const _olddecor = _decorset[j];
+                if (["@font-weight", "@font-style", "@font-variant"].indexOf(_olddecor[0]) > -1 && !seen[_olddecor[0]]) {
+                  if (decor[1] !== "normal") {
+                    newblob.decorations.push([_olddecor[0], "normal"]);
+                    newdecorset.push([_olddecor[0], "normal"]);
+                  }
+                  seen[_olddecor[0]] = true;
+                }
+              }
+            }
+            newblob.alldecor.push(newdecorset);
+          } else {
+            newblob.decorations.push(decor);
+            newblob.alldecor.push([decor]);
+          }
+          this.latest.blobs.push(newblob);
+          this.stack.push(newblob);
+          this.latest = newblob;
+          if (str) {
+            const tok2 = new Token();
+            const newblob2 = new Blob(null, tok2);
+            newblob2.blobs = str;
+            newblob2.alldecor = this.latest.alldecor.slice();
+            this.latest.blobs.push(newblob2);
+          }
+        } else {
+          if (str) {
+            const child = new Blob();
+            child.blobs = str;
+            child.alldecor = this.latest.alldecor.slice();
+            this.latest.blobs.push(child);
+          }
+        }
+      };
+      this.popStyling = function() {
+        this.stack.pop();
+      };
+    }
+    const stack = new Stack2(blob);
+    if (doppel.strings.length) {
+      let str = doppel.strings[0];
+      if (leadingSpace) {
+        str = " " + str;
+      }
+      stack.addStyling(str);
+    }
+    for (let i = 0, ilen = doppel.tags.length; i < ilen; i++) {
+      const tag = doppel.tags[i];
+      let str = doppel.strings[i + 1];
+      if (tag.match(_tagRex.open)) {
+        tagReg.set(tag);
+        stack.addStyling(str, tagReg.pair());
+      } else {
+        tagReg.pop();
+        stack.popStyling();
+        stack.addStyling(str);
+      }
+    }
+  }
+  this.processTags = function(blob) {
+    let str = blob.blobs;
+    let leadingSpace = false;
+    if (str.slice(0, 1) === " " && !str.match(/^\s+[\'\"]/)) {
+      leadingSpace = true;
+    }
+    const rex = new RegExp("(" + ROMANESQUE_REGEXP.source + ")\u2019(" + ROMANESQUE_REGEXP.source + ")", "g");
+    str = " " + str.replace(rex, "$1'$2");
+    const doppel = _doppelString(str);
+    if (doppel.tags.length === 0) {
+      return;
+    }
+    let quoteFormSeen = false;
+    for (let i = 0, ilen = doppel.tags.length; i < ilen; i++) {
+      const tag = doppel.tags[i];
+      let str2 = doppel.strings[i + 1];
+      const apostrophe = _apostropheForce(tag, str2);
+      if (apostrophe) {
+        doppel.strings[i + 1] = apostrophe + doppel.strings[i + 1];
+        doppel.tags[i] = "";
+      } else {
+        let tagInfo;
+        while (true) {
+          tagInfo = _pushNestingState(tag, i);
+          if (tagInfo) {
+            if (Object.keys(tagInfo).indexOf("fixtag") > -1) {
+              if (tag.match(_tagRex.close) && tag === "'") {
+                doppel.strings[i + 1] = "\u2019" + doppel.strings[i + 1];
+                doppel.tags[i] = "";
+              } else {
+                let failedTag = doppel.tags[tagInfo.fixtag];
+                if (doppel.forcedSpaces[tagInfo.fixtag - 1]) {
+                  failedTag = failedTag.slice(1);
+                }
+                doppel.strings[tagInfo.fixtag + 1] = failedTag + doppel.strings[tagInfo.fixtag + 1];
+                doppel.tags[tagInfo.fixtag] = "";
+              }
+              if (_nestingState.length > 0) {
+                if (tag !== "'") {
+                  _nestingState.pop();
+                } else {
+                  break;
+                }
+              } else {
+                break;
+              }
+            } else if (tagInfo.nocase) {
+              doppel.tags[tagInfo.nocase.open] = "";
+              doppel.tags[tagInfo.nocase.close] = "";
+              break;
+            } else {
+              break;
+            }
+          } else {
+            break;
+          }
+        }
+        if (tagInfo && (tagInfo.fixtag || tagInfo.fixtag === 0)) {
+          doppel.strings[i + 1] = doppel.tags[i] + doppel.strings[i + 1];
+          doppel.tags[i] = "";
+        }
+      }
+    }
+    for (let i = _nestingState.length - 1; i > -1; i--) {
+      const tagPos = _nestingState[i].pos;
+      const tag = doppel.tags[tagPos];
+      if (tag === " '" || tag === "'") {
+        doppel.strings[tagPos + 1] = " \u2019" + doppel.strings[tagPos + 1];
+      } else {
+        doppel.strings[tagPos + 1] = doppel.tags[tagPos] + doppel.strings[tagPos + 1];
+      }
+      doppel.tags[tagPos] = "";
+      _nestingState.pop();
+    }
+    for (let i = doppel.tags.length - 1; i > -1; i--) {
+      if (!doppel.tags[i]) {
+        doppel.tags = doppel.tags.slice(0, i).concat(doppel.tags.slice(i + 1));
+        doppel.strings[i] = doppel.strings[i] + doppel.strings[i + 1];
+        doppel.strings = doppel.strings.slice(0, i + 1).concat(doppel.strings.slice(i + 2));
+      }
+    }
+    for (let i = 0, ilen = doppel.tags.length; i < ilen; i++) {
+      const tag = doppel.tags[i];
+      const forcedSpace = doppel.forcedSpaces[i - 1];
+      if ([' "', " '", '("', "('"].indexOf(tag) > -1) {
+        if (!quoteFormSeen) {
+          _setOuterQuoteForm(tag);
+          quoteFormSeen = true;
+        }
+        if (!forcedSpace) {
+          doppel.strings[i] += tag.slice(0, 1);
+        }
+      }
+    }
+    _undoppelToQueue(blob, doppel, leadingSpace);
+  };
+}
+
+// src/util/page.ts
+var Util_PageRangeMangler = {};
+Util_PageRangeMangler.getFunction = function(state, rangeType) {
+  let rangerex, pos, len, stringify, listify, expand, minimize, minimize_internal, chicago15, chicago16, lst, m, b, e, ret, begin, end, ret_func;
+  const range_delimiter = state.getTerm(rangeType + "-range-delimiter");
+  rangerex = /([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)\s*(?:\u2013|-)\s*([0-9]*[a-zA-Z]+0*)?([0-9]+[a-z]*)/;
+  stringify = function(lst2) {
+    len = lst2.length;
+    for (let pos2 = 1; pos2 < len; pos2 += 2) {
+      if ("object" === typeof lst2[pos2]) {
+        lst2[pos2] = lst2[pos2].join("");
+      }
+    }
+    let ret2 = lst2.join("");
+    ret2 = ret2.replace(/([^\\])\-/g, "$1" + state.getTerm(rangeType + "-range-delimiter"));
+    return ret2;
+  };
+  listify = function(str) {
+    let m2, lst2, ret2;
+    const hyphens = "\\s+\\-\\s+";
+    const this_range_delimiter = range_delimiter === "-" ? "" : range_delimiter;
+    const delimRex = new RegExp("([^\\\\])[-" + this_range_delimiter + "\\u2013]", "g");
+    str = str.replace(delimRex, "$1 - ").replace(/\s+-\s+/g, " - ");
+    const rexm = new RegExp("((?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*)", "g");
+    const rexlst = new RegExp("(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*" + hyphens + "(?:[0-9]*[a-zA-Z]+0*)?[0-9]+[a-z]*");
+    m2 = str.match(rexm);
+    lst2 = str.split(rexlst);
+    if (lst2.length === 0) {
+      ret2 = m2;
+    } else {
+      ret2 = [lst2[0]];
+      for (let pos2 = 1, len2 = lst2.length; pos2 < len2; pos2 += 1) {
+        ret2.push(m2[pos2 - 1].replace(/\s*\-\s*/g, "-"));
+        ret2.push(lst2[pos2]);
+      }
+    }
+    return ret2;
+  };
+  expand = function(str) {
+    str = "" + str;
+    lst = listify(str);
+    len = lst.length;
+    for (let pos2 = 1; pos2 < len; pos2 += 2) {
+      m = lst[pos2].match(rangerex);
+      if (m) {
+        if (!m[3] || m[1] === m[3]) {
+          if (m[4].length < m[2].length) {
+            m[4] = m[2].slice(0, m[2].length - m[4].length) + m[4];
+          }
+          if (parseInt(m[2], 10) < parseInt(m[4], 10)) {
+            m[3] = range_delimiter + (m[1] ? m[1] : "");
+            lst[pos2] = m.slice(1);
+          }
+        }
+      }
+      if ("string" === typeof lst[pos2]) {
+        lst[pos2] = lst[pos2].replace(/\-/g, range_delimiter);
+      }
+    }
+    return lst;
+  };
+  minimize = function(lst2, minchars, isyear) {
+    len = lst2.length;
+    for (let i = 1, ilen = lst2.length; i < ilen; i += 2) {
+      if ("object" === typeof lst2[i]) {
+        lst2[i][3] = minimize_internal(lst2[i][1], lst2[i][3], minchars, isyear);
+        if (lst2[i][2].slice(1) === lst2[i][0]) {
+          lst2[i][2] = range_delimiter;
+        }
+      }
+    }
+    return stringify(lst2);
+  };
+  minimize_internal = function(begin2, end2, minchars, isyear) {
+    if (!minchars) {
+      minchars = 0;
+    }
+    b = ("" + begin2).split("");
+    e = ("" + end2).split("");
+    ret = e.slice();
+    ret.reverse();
+    if (b.length === e.length) {
+      for (let i = 0, ilen = b.length; i < ilen; i += 1) {
+        if (b[i] === e[i] && ret.length > minchars) {
+          ret.pop();
+        } else {
+          if (minchars && isyear && ret.length === 3) {
+            const front = b.slice(0, i);
+            front.reverse();
+            ret = ret.concat(front);
+          }
+          break;
+        }
+      }
+    }
+    ret.reverse();
+    return ret.join("");
+  };
+  chicago15 = function(lst2) {
+    len = lst2.length;
+    for (let pos2 = 1; pos2 < len; pos2 += 2) {
+      if ("object" === typeof lst2[pos2]) {
+        m = lst2[pos2];
+        begin = parseInt(m[1], 10);
+        end = parseInt(m[3], 10);
+        if (begin > 100 && begin % 100 && parseInt("" + begin / 100, 10) === parseInt("" + end / 100, 10)) {
+          m[3] = "" + end % 100;
+        } else if (begin >= 1e4) {
+          e = "" + end;
+          for (let i = 3; i < e.length; i += 1) {
+            const divisor = Math.pow(10, i);
+            if (Math.floor(begin / divisor) === Math.floor(end / divisor)) {
+              m[3] = "" + end % divisor;
+              break;
+            }
+          }
+        }
+      }
+      if (m[2].slice(1) === m[0]) {
+        m[2] = range_delimiter;
+      }
+    }
+    return stringify(lst2);
+  };
+  chicago16 = function(lst2) {
+    len = lst2.length;
+    for (let pos2 = 1; pos2 < len; pos2 += 2) {
+      if ("object" === typeof lst2[pos2]) {
+        m = lst2[pos2];
+        begin = parseInt(m[1], 10);
+        end = parseInt(m[3], 10);
+        e = "" + end;
+        if (begin > 100 && begin % 100) {
+          for (let i = 2; i < e.length; i += 1) {
+            const divisor = Math.pow(10, i);
+            if (Math.floor(begin / divisor) === Math.floor(end / divisor)) {
+              m[3] = "" + end % divisor;
+              break;
+            }
+          }
+        }
+      }
+      if (m[2].slice(1) === m[0]) {
+        m[2] = range_delimiter;
+      }
+    }
+    return stringify(lst2);
+  };
+  const sniff = function(str, func, minchars, isyear) {
+    str = "" + str;
+    let lst2 = expand(str);
+    let ret2 = func(lst2, minchars, isyear);
+    return ret2;
+  };
+  if (!state.opt[rangeType + "-range-format"]) {
+    ret_func = function(str) {
+      return sniff(str, stringify);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "expanded") {
+    ret_func = function(str) {
+      return sniff(str, stringify);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "minimal") {
+    ret_func = function(str) {
+      return sniff(str, minimize);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "minimal-two") {
+    ret_func = function(str, isyear) {
+      return sniff(str, minimize, 2, isyear);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "chicago") {
+    ret_func = function(str) {
+      return sniff(str, chicago15);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "chicago-15") {
+    ret_func = function(str) {
+      return sniff(str, chicago15);
+    };
+  } else if (state.opt[rangeType + "-range-format"] === "chicago-16") {
+    ret_func = function(str) {
+      return sniff(str, chicago16);
+    };
+  }
+  return ret_func;
+};
+
+// src/util/datenode.ts
+function Util_fixDateNode(parent, pos, node) {
+  const lingo = this.cslXml.getAttributeValue(node, "lingo");
+  const default_locale = this.cslXml.getAttributeValue(node, "default-locale");
+  this.build.date_key = true;
+  let lingo2;
+  if (default_locale) {
+    lingo2 = this.opt["default-locale"][0];
+  } else {
+    lingo2 = this.cslXml.getAttributeValue(node, "lingo");
+  }
+  const form = this.cslXml.getAttributeValue(node, "form");
+  if (!this.getDate(form, default_locale)) {
+    return parent;
+  }
+  const dateparts = this.cslXml.getAttributeValue(node, "date-parts");
+  const variable = this.cslXml.getAttributeValue(node, "variable");
+  const prefix = this.cslXml.getAttributeValue(node, "prefix");
+  const suffix = this.cslXml.getAttributeValue(node, "suffix");
+  const display = this.cslXml.getAttributeValue(node, "display");
+  const cslid = this.cslXml.getAttributeValue(node, "cslid");
+  const datexml = this.cslXml.nodeCopy(this.getDate(form, default_locale));
+  this.cslXml.setAttribute(datexml, "lingo", this.opt.lang);
+  this.cslXml.setAttribute(datexml, "form", form);
+  this.cslXml.setAttribute(datexml, "date-parts", dateparts);
+  this.cslXml.setAttribute(datexml, "cslid", cslid);
+  this.cslXml.setAttribute(datexml, "variable", variable);
+  this.cslXml.setAttribute(datexml, "default-locale", default_locale);
+  if (prefix) {
+    this.cslXml.setAttribute(datexml, "prefix", prefix);
+  }
+  if (suffix) {
+    this.cslXml.setAttribute(datexml, "suffix", suffix);
+  }
+  if (display) {
+    this.cslXml.setAttribute(datexml, "display", display);
+  }
+  let children = this.cslXml.children(datexml);
+  for (let key in children) {
+    const subnode = children[key];
+    if ("date-part" === this.cslXml.nodename(subnode)) {
+      const partname = this.cslXml.getAttributeValue(subnode, "name");
+      if (default_locale) {
+        this.cslXml.setAttributeOnNodeIdentifiedByNameAttribute(datexml, "date-part", partname, "@default-locale", "true");
+      }
+    }
+  }
+  children = this.cslXml.children(node);
+  for (let key2 in children) {
+    const subnode = children[key2];
+    if ("date-part" === this.cslXml.nodename(subnode)) {
+      const partname = this.cslXml.getAttributeValue(subnode, "name");
+      const subchildren = this.cslXml.attributes(subnode);
+      for (let attr in subchildren) {
+        if ("@name" === attr) {
+          continue;
+        }
+        if (lingo2 && lingo2 !== this.opt.lang) {
+          if (["@suffix", "@prefix", "@form"].indexOf(attr) > -1) {
+            continue;
+          }
+        }
+        const val = subchildren[attr];
+        this.cslXml.setAttributeOnNodeIdentifiedByNameAttribute(datexml, "date-part", partname, attr, val);
+      }
+    }
+  }
+  if ("year" === this.cslXml.getAttributeValue(node, "date-parts")) {
+    this.cslXml.deleteNodeByNameAttribute(datexml, "month");
+    this.cslXml.deleteNodeByNameAttribute(datexml, "day");
+  } else if ("year-month" === this.cslXml.getAttributeValue(node, "date-parts")) {
+    this.cslXml.deleteNodeByNameAttribute(datexml, "day");
+  } else if ("month-day" === this.cslXml.getAttributeValue(node, "date-parts")) {
+    const childNodes = this.cslXml.children(datexml);
+    for (let i = 1, ilen = this.cslXml.numberofnodes(childNodes); i < ilen; i += 1) {
+      if (this.cslXml.getAttributeValue(childNodes[i], "name") === "year") {
+        this.cslXml.setAttribute(childNodes[i - 1], "suffix", "");
+        break;
+      }
+    }
+    this.cslXml.deleteNodeByNameAttribute(datexml, "year");
+  }
+  return this.cslXml.insertChildNodeAfter(parent, node, pos, datexml);
+}
+
+// src/attributes/attributes.ts
+var Attributes = {};
+Attributes["@disambiguate"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  if (arg === "true") {
+    state.opt.has_disambiguate = true;
+    let func = function(Item) {
+      if (state.tmp.area === "bibliography") {
+        if (state.tmp.disambiguate_count < state.registry.registry[Item.id].disambig.disambiguate) {
+          state.tmp.disambiguate_count += 1;
+          return true;
+        }
+      } else {
+        state.tmp.disambiguate_maxMax += 1;
+        if (state.tmp.disambig_settings.disambiguate && state.tmp.disambiguate_count < state.tmp.disambig_settings.disambiguate) {
+          state.tmp.disambiguate_count += 1;
+          return true;
+        }
+      }
+      return false;
+    };
+    this.tests.push(func);
+  } else if (arg === "check-ambiguity-and-backreference") {
+    let func = function(Item) {
+      if (state.registry.registry[Item.id].disambig.disambiguate && state.registry.registry[Item.id]["citation-count"] > 1) {
+        return true;
+      }
+      return false;
+    };
+    this.tests.push(func);
+  }
+};
+Attributes["@is-numeric"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const variables = arg.split(/\s+/);
+  const maketest = function(variable) {
+    return function(Item, item) {
+      let myitem = Item;
+      if (item && ["locator", "locator-extra"].indexOf(variable) > -1) {
+        myitem = item;
+      }
+      if (!myitem[variable]) {
+        return false;
+      }
+      if (NUMERIC_VARIABLES.indexOf(variable) > -1) {
+        if (!state.tmp.shadow_numbers[variable]) {
+          state.processNumber(false, myitem, variable, Item.type);
+        }
+        if (state.tmp.shadow_numbers[variable].numeric) {
+          return true;
+        }
+      } else if (["title", "version"].indexOf(variable) > -1) {
+        if (myitem[variable].slice(-1) === "" + parseInt(myitem[variable].slice(-1), 10)) {
+          return true;
+        }
+      }
+      return false;
+    };
+  };
+  for (let i = 0; i < variables.length; i += 1) {
+    this.tests.push(maketest(variables[i]));
+  }
+};
+Attributes["@is-uncertain-date"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const variables = arg.split(/\s+/);
+  const maketest = function(myvariable) {
+    return function(Item) {
+      if (Item[myvariable] && Item[myvariable].circa) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  for (let i = 0, ilen = variables.length; i < ilen; i += 1) {
+    this.tests.push(maketest(variables[i]));
+  }
+};
+Attributes["@locator"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let trylabels = arg.replace("sub verbo", "sub-verbo");
+  trylabels = trylabels.split(/\s+/);
+  const maketest = function(trylabel) {
+    if (trylabel === "article") {
+      trylabel = "article-locator";
+    } else if (trylabel === "title") {
+      trylabel = "title-locator";
+    }
+    return function(Item, item) {
+      let label;
+      state.processNumber(false, item, "locator");
+      label = state.tmp.shadow_numbers.locator.label;
+      if (!label) {
+        label = item && item.label ? item.label : "page";
+      }
+      if (label && trylabel === label) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  for (let i = 0, ilen = trylabels.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trylabels[i]));
+  }
+};
+Attributes["@position"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let tryposition;
+  state.opt.update_mode = POSITION;
+  const trypositions = arg.split(/\s+/);
+  const testSubsequentNear = function(Item, item) {
+    if (item && POSITION_MAP[item.position] >= POSITION_MAP[POSITION_SUBSEQUENT] && item["near-note"]) {
+      return true;
+    }
+    return false;
+  };
+  const testSubsequentNotNear = function(Item, item) {
+    if (item && POSITION_MAP[item.position] == POSITION_MAP[POSITION_SUBSEQUENT] && !item["near-note"]) {
+      return true;
+    }
+    return false;
+  };
+  const maketest = function(tryposition2) {
+    return function(Item, item) {
+      if (state.tmp.area === "bibliography") {
+        return false;
+      }
+      if (item && "undefined" === typeof item.position) {
+        item.position = 0;
+      }
+      if (item && typeof item.position === "number") {
+        if (item.position === 0 && tryposition2 === 0) {
+          return true;
+        } else if (tryposition2 > 0 && POSITION_MAP[item.position] >= POSITION_MAP[tryposition2]) {
+          return true;
+        }
+      } else if (tryposition2 === 0) {
+        return true;
+      }
+      return false;
+    };
+  };
+  for (let i = 0, ilen = trypositions.length; i < ilen; i += 1) {
+    let tryposition2 = trypositions[i];
+    if (tryposition2 === "first") {
+      tryposition2 = POSITION_FIRST;
+    } else if (tryposition2 === "container-subsequent") {
+      tryposition2 = POSITION_CONTAINER_SUBSEQUENT;
+    } else if (tryposition2 === "subsequent") {
+      tryposition2 = POSITION_SUBSEQUENT;
+    } else if (tryposition2 === "ibid") {
+      tryposition2 = POSITION_IBID;
+    } else if (tryposition2 === "ibid-with-locator") {
+      tryposition2 = POSITION_IBID_WITH_LOCATOR;
+    }
+    if ("near-note" === tryposition2) {
+      this.tests.push(testSubsequentNear);
+    } else if ("far-note" === tryposition2) {
+      this.tests.push(testSubsequentNotNear);
+    } else {
+      this.tests.push(maketest(tryposition2));
+    }
+  }
+};
+Attributes["@type"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const types = arg.split(/\s+/);
+  const maketest = function(mytype) {
+    return function(Item) {
+      let ret = Item.type === mytype;
+      if (ret) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  const tests = [];
+  for (let i = 0, ilen = types.length; i < ilen; i += 1) {
+    tests.push(maketest(types[i]));
+  }
+  this.tests.push(state.fun.match.any(this, state, tests));
+};
+Attributes["@variable"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let func;
+  this.variables = arg.split(/\s+/);
+  this.variables_real = this.variables.slice();
+  if ("label" === this.name && this.variables[0]) {
+    this.strings.term = this.variables[0];
+  } else if (["names", "date", "text", "number"].indexOf(this.name) > -1) {
+    func = function(state2, Item, item) {
+      for (let i = this.variables.length - 1; i > -1; i += -1) {
+        this.variables.pop();
+      }
+      for (let i = 0, ilen = this.variables_real.length; i < ilen; i++) {
+        if (state2.tmp.done_vars.indexOf(this.variables_real[i]) === -1) {
+          this.variables.push(this.variables_real[i]);
+        }
+        if (state2.tmp.can_block_substitute) {
+          state2.tmp.done_vars.push(this.variables_real[i]);
+        }
+      }
+    };
+    this.execs.push(func);
+    func = function(state2, Item, item) {
+      let output = false;
+      for (let i = 0, ilen = this.variables.length; i < ilen; i++) {
+        let variable = this.variables[i];
+        if (["authority", "committee"].indexOf(variable) > -1 && "string" === typeof Item[variable] && "names" === this.name) {
+          let isValid = true;
+          let rawNames = Item[variable].split(/\s*;\s*/);
+          let rawMultiNames = {};
+          if (Item.multi && Item.multi._keys[variable]) {
+            for (let langTag in Item.multi._keys[variable]) {
+              rawMultiNames[langTag] = Item.multi._keys[variable][langTag].split(/\s*;\s*/);
+              if (rawMultiNames[langTag].length !== rawNames.length) {
+                isValid = false;
+                break;
+              }
+            }
+          }
+          if (!isValid) {
+            rawNames = [Item[variable]];
+            rawMultiNames = Item.multi._keys[variable];
+          }
+          for (let j = 0, jlen = rawNames.length; j < jlen; j++) {
+            const creatorParent = {
+              literal: rawNames[j],
+              multi: {
+                _key: {}
+              }
+            };
+            for (let langTag in rawMultiNames) {
+              const creatorChild = {
+                literal: rawMultiNames[langTag][j]
+              };
+              creatorParent.multi._key[langTag] = creatorChild;
+            }
+            rawNames[j] = creatorParent;
+          }
+          Item[variable] = rawNames;
+        }
+        if (this.strings.form === "short" && !Item[variable]) {
+          if (variable === "title") {
+            variable = "title-short";
+          } else if (variable === "container-title") {
+            variable = "container-title-short";
+          }
+        }
+        if (variable === "year-suffix") {
+          output = true;
+          break;
+        } else if (DATE_VARIABLES.indexOf(variable) > -1) {
+          if (state2.opt.development_extensions.locator_date_and_revision && "locator-date" === variable) {
+            output = true;
+            break;
+          }
+          if (Item[variable]) {
+            for (let key in Item[variable]) {
+              if (this.dateparts.indexOf(key) === -1 && "literal" !== key) {
+                continue;
+              }
+              if (Item[variable][key]) {
+                output = true;
+                break;
+              }
+            }
+            if (output) {
+              break;
+            }
+          }
+        } else if ("locator" === variable) {
+          if (item && item.locator) {
+            output = true;
+          }
+          break;
+        } else if ("locator-extra" === variable) {
+          if (item && item["locator-extra"]) {
+            output = true;
+          }
+          break;
+        } else if (["citation-number", "citation-label"].indexOf(variable) > -1) {
+          output = true;
+          break;
+        } else if ("first-reference-note-number" === variable) {
+          if (item && item["first-reference-note-number"]) {
+            output = true;
+          }
+          break;
+        } else if ("first-container-reference-note-number" === variable) {
+          if (item && item["first-container-reference-note-number"]) {
+            output = true;
+          }
+          break;
+        } else if ("hereinafter" === variable) {
+          if (state2.transform.abbrevs["default"].hereinafter[Item.id] && state2.sys.getAbbreviation && Item.id) {
+            output = true;
+          }
+          break;
+        } else if ("object" === typeof Item[variable]) {
+          break;
+        } else if ("string" === typeof Item[variable] && Item[variable]) {
+          output = true;
+          break;
+        } else if ("number" === typeof Item[variable]) {
+          output = true;
+          break;
+        }
+        if (output) {
+          break;
+        }
+      }
+      if (output) {
+        for (let i = 0, ilen = this.variables_real.length; i < ilen; i++) {
+          let variable = this.variables_real[i];
+          if (variable !== "citation-number" || state2.tmp.area !== "bibliography") {
+            state2.tmp.cite_renders_content = true;
+          }
+          state2.tmp.group_context.tip.variable_success = true;
+          if (state2.tmp.can_substitute.value() && state2.tmp.area === "bibliography" && "string" === typeof Item[variable]) {
+            state2.tmp.name_node.top = state2.output.current.value();
+            state2.tmp.rendered_name.push(Item[variable]);
+          }
+        }
+        state2.tmp.can_substitute.replace(false, LITERAL);
+      } else {
+        state2.tmp.group_context.tip.variable_attempt = true;
+      }
+    };
+    this.execs.push(func);
+  } else if (["if", "else-if", "condition"].indexOf(this.name) > -1) {
+    const maketest = function(variable) {
+      return function(Item, item) {
+        let myitem = Item;
+        if (item && ["locator", "locator-extra", "first-reference-note-number", "first-container-reference-note-number", "locator-date"].indexOf(variable) > -1) {
+          myitem = item;
+        }
+        if (variable === "hereinafter" && state.sys.getAbbreviation && myitem.id) {
+          if (state.transform.abbrevs["default"].hereinafter[myitem.id]) {
+            return true;
+          }
+        } else if (myitem[variable]) {
+          if ("number" === typeof myitem[variable] || "string" === typeof myitem[variable]) {
+            return true;
+          } else if ("object" === typeof myitem[variable]) {
+            for (let key in myitem[variable]) {
+              if (myitem[variable][key]) {
+                return true;
+              }
+            }
+          }
+        }
+        return false;
+      };
+    };
+    for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+      this.tests.push(maketest(this.variables[i]));
+    }
+  }
+};
+Attributes["@page"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let trylabels = arg.replace("sub verbo", "sub-verbo");
+  trylabels = trylabels.split(/\s+/);
+  const maketest = function(trylabel) {
+    return function(Item) {
+      let label;
+      state.processNumber(false, Item, "page", Item.type);
+      if (!state.tmp.shadow_numbers.page.label) {
+        label = "page";
+      } else if (state.tmp.shadow_numbers.page.label === "sub verbo") {
+        label = "sub-verbo";
+      } else {
+        label = state.tmp.shadow_numbers.page.label;
+      }
+      if (state.tmp.shadow_numbers.page.values.length > 0) {
+        if (state.tmp.shadow_numbers.page.values[0].gotosleepability) {
+          state.tmp.shadow_numbers.page.values[0].labelVisibility = false;
+        }
+      }
+      if (trylabel === label) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  for (let i = 0, ilen = trylabels.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trylabels[i]));
+  }
+};
+Attributes["@number"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let trylabels = arg.split(/\s+/);
+  const maketest = function(trylabel) {
+    return function(Item) {
+      let label;
+      state.processNumber(false, Item, "number", Item.type);
+      if (!state.tmp.shadow_numbers.number.label) {
+        label = "number";
+      } else {
+        label = state.tmp.shadow_numbers.number.label;
+      }
+      if (trylabel === label) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  for (let i = 0, ilen = trylabels.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trylabels[i]));
+  }
+};
+Attributes["@jurisdiction"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const tryjurisdictions = arg.split(/\s+/);
+  const maketests = function(tryjurisdictions2) {
+    return function(Item) {
+      if (!Item.jurisdiction) {
+        return false;
+      }
+      const jurisdiction = Item.jurisdiction;
+      for (let i = 0, ilen = tryjurisdictions2.length; i < ilen; i++) {
+        if (jurisdiction === tryjurisdictions2[i]) {
+          return true;
+        }
+      }
+      return false;
+    };
+  };
+  this.tests.push(maketests(tryjurisdictions));
+};
+Attributes["@country"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const trycountries = arg.split(/\s+/);
+  const maketests = function(trycountries2) {
+    return function(Item) {
+      if (!Item.country) {
+        return false;
+      }
+      const country = Item.country;
+      for (let i = 0, ilen = trycountries2.length; i < ilen; i++) {
+        if (country === trycountries2[i]) {
+          return true;
+        }
+      }
+      return false;
+    };
+  };
+  this.tests.push(maketests(trycountries));
+};
+Attributes["@context"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let func = function() {
+    if (["bibliography", "citation"].indexOf(arg) > -1) {
+      const area = state.tmp.area.slice(0, arg.length);
+      if (area === arg) {
+        return true;
+      }
+      return false;
+    } else if ("alternative" === arg) {
+      return !!state.tmp.abort_alternative;
+    }
+  };
+  this.tests.push(func);
+};
+Attributes["@has-year-only"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const trydates = arg.split(/\s+/);
+  const maketest = function(trydate) {
+    return function(Item) {
+      const date = Item[trydate];
+      if (!date || date.month || date.season) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+  };
+  for (let i = 0, ilen = trydates.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trydates[i]));
+  }
+};
+Attributes["@has-to-month-or-season"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const trydates = arg.split(/\s+/);
+  const maketest = function(trydate) {
+    return function(Item) {
+      const date = Item[trydate];
+      if (!date || !date.month && !date.season || date.day) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+  };
+  for (let i = 0, ilen = trydates.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trydates[i]));
+  }
+};
+Attributes["@has-day"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const trydates = arg.split(/\s+/);
+  const maketest = function(trydate) {
+    return function(Item) {
+      const date = Item[trydate];
+      if (!date || !date.day) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+  };
+  for (let i = 0, ilen = trydates.length; i < ilen; i += 1) {
+    this.tests.push(maketest(trydates[i]));
+  }
+};
+Attributes["@is-plural"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let func = function(Item) {
+    const nameList = Item[arg];
+    if (nameList && nameList.length) {
+      let persons = 0;
+      let institutions = 0;
+      let last_is_person = false;
+      for (let i = 0, ilen = nameList.length; i < ilen; i += 1) {
+        if (state.opt.development_extensions.spoof_institutional_affiliations && (nameList[i].literal || nameList[i].isInstitution && nameList[i].family && !nameList[i].given)) {
+          institutions += 1;
+          last_is_person = false;
+        } else {
+          persons += 1;
+          last_is_person = true;
+        }
+      }
+      if (persons > 1) {
+        return true;
+      } else if (institutions > 1) {
+        return true;
+      } else if (institutions && last_is_person) {
+        return true;
+      }
+    }
+    return false;
+  };
+  this.tests.push(func);
+};
+Attributes["@is-multiple"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let func = function(Item) {
+    const val = "" + Item[arg];
+    let lst = val.split(/(?:,\s|\s(?:tot\sen\smet|līdz|oraz|and|bis|έως|και|och|až|do|en|et|in|ir|ja|og|sa|to|un|und|és|și|i|u|y|à|e|a|и|-|–)\s|—|\&)/);
+    if (lst.length > 1) {
+      return true;
+    }
+    return false;
+  };
+  this.tests.push(func);
+};
+Attributes["@locale"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let ret, langspec, lang, lst, i, ilen;
+  const locale_default = state.opt["default-locale"][0];
+  if (this.name === "layout") {
+    this.locale_raw = arg;
+    if (this.tokentype === START) {
+      if (!state.opt.multi_layout) {
+        state.opt.multi_layout = [];
+      }
+      const locale_data = [];
+      const locales = arg.split(/\s+/);
+      const sort_locale = {};
+      const localeMaster = localeResolve(locales[0], locale_default);
+      locale_data.push(localeMaster);
+      if (localeMaster.generic) {
+        sort_locale[localeMaster.generic] = localeMaster.best;
+      } else {
+        sort_locale[localeMaster.best] = localeMaster.best;
+      }
+      for (let i2 = 1, ilen2 = locales.length; i2 < ilen2; i2 += 1) {
+        const localeServant = localeResolve(locales[i2], locale_default);
+        locale_data.push(localeServant);
+        if (localeServant.generic) {
+          sort_locale[localeServant.generic] = localeMaster.best;
+        } else {
+          sort_locale[localeServant.best] = localeMaster.best;
+        }
+      }
+      state[state.build.area].opt.sort_locales.push(sort_locale);
+      state.opt.multi_layout.push(locale_data);
+    }
+    state.opt.has_layout_locale = true;
+  } else {
+    lst = arg.split(/\s+/);
+    const locale_bares = [];
+    for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+      lang = lst[i2];
+      langspec = localeResolve(lang, locale_default);
+      if (lst[i2].length === 2) {
+        locale_bares.push(langspec.bare);
+      }
+      state.localeConfigure(langspec, true);
+      lst[i2] = langspec;
+    }
+    const locale_list = lst.slice();
+    const maketest = function(locale_list2, locale_default2, locale_bares2) {
+      return function(Item) {
+        let res;
+        ret = [];
+        res = false;
+        let langspec2 = false;
+        let lang2;
+        if (!Item.language) {
+          lang2 = locale_default2;
+        } else {
+          lang2 = Item.language;
+        }
+        langspec2 = localeResolve(lang2, locale_default2);
+        for (let i2 = 0, ilen2 = locale_list2.length; i2 < ilen2; i2 += 1) {
+          if (langspec2.best === locale_list2[i2].best) {
+            state.tmp.condition_lang_counter_arr.push(state.tmp.condition_counter);
+            state.tmp.condition_lang_val_arr.push(state.opt.lang);
+            state.opt.lang = locale_list2[0].best;
+            res = true;
+            break;
+          }
+        }
+        if (!res && locale_bares2.indexOf(langspec2.bare) > -1) {
+          state.tmp.condition_lang_counter_arr.push(state.tmp.condition_counter);
+          state.tmp.condition_lang_val_arr.push(state.opt.lang);
+          state.opt.lang = locale_list2[0].best;
+          res = true;
+        }
+        return res;
+      };
+    };
+    this.tests.push(maketest(locale_list, locale_default, locale_bares));
+  }
+};
+Attributes["@alternative-node-internal"] = function(state) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const maketest = function(me2) {
+    return function() {
+      return !state.tmp.abort_alternative;
+    };
+  };
+  const me = this;
+  this.tests.push(maketest(me));
+};
+Attributes["@locale-internal"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  let langspec, lang, lst, i, ilen;
+  lst = arg.split(/\s+/);
+  this.locale_bares = [];
+  for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+    lang = lst[i2];
+    langspec = localeResolve(lang, state.opt["default-locale"][0]);
+    if (lst[i2].length === 2) {
+      this.locale_bares.push(langspec.bare);
+    }
+    state.localeConfigure(langspec);
+    lst[i2] = langspec;
+  }
+  this.locale_default = state.opt["default-locale"][0];
+  this.locale = lst[0].best;
+  this.locale_list = lst.slice();
+  const maketest = function(me2) {
+    return function(Item) {
+      let ret, res;
+      ret = [];
+      res = false;
+      let langspec2 = false;
+      if (Item.language) {
+        const lang2 = Item.language;
+        langspec2 = localeResolve(lang2, state.opt["default-locale"][0]);
+        if (langspec2.best === state.opt["default-locale"][0]) {
+          langspec2 = false;
+        }
+      }
+      if (langspec2) {
+        for (let i2 = 0, ilen2 = me2.locale_list.length; i2 < ilen2; i2 += 1) {
+          if (langspec2.best === me2.locale_list[i2].best) {
+            state.opt.lang = me2.locale;
+            state.tmp.last_cite_locale = me2.locale;
+            state.output.openLevel("empty");
+            state.output.current.value().new_locale = me2.locale;
+            res = true;
+            break;
+          }
+        }
+        if (!res && me2.locale_bares.indexOf(langspec2.bare) > -1) {
+          state.opt.lang = me2.locale;
+          state.tmp.last_cite_locale = me2.locale;
+          state.output.openLevel("empty");
+          state.output.current.value().new_locale = me2.locale;
+          res = true;
+        }
+      }
+      return res;
+    };
+  };
+  const me = this;
+  this.tests.push(maketest(me));
+};
+Attributes["@court-class"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const tryclasses = arg.split(/\s+/);
+  const maketest = function(tryclass) {
+    return function(Item) {
+      const cls = GET_COURT_CLASS(state, Item);
+      if (cls === tryclass) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  };
+  for (let i = 0, ilen = tryclasses.length; i < ilen; i++) {
+    this.tests.push(maketest(tryclasses[i]));
+  }
+};
+Attributes["@container-multiple"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const retval = "true" === arg ? true : false;
+  const maketest = function(retval2) {
+    return function(Item) {
+      if (!state.tmp.container_item_count[Item.container_id]) {
+        return !retval2;
+      } else if (state.tmp.container_item_count[Item.container_id] > 1) {
+        return retval2;
+      }
+      return !retval2;
+    };
+  };
+  this.tests.push(maketest(retval));
+};
+Attributes["@container-subsequent"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const retval = "true" === arg ? true : false;
+  const maketest = function(retval2) {
+    return function(Item) {
+      if (state.tmp.container_item_pos[Item.container_id] > 1) {
+        return retval2;
+      }
+      return !retval2;
+    };
+  };
+  this.tests.push(maketest(retval));
+};
+Attributes["@has-subunit"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const maketest = function(namevar) {
+    return function(Item) {
+      let subunit_count = 0;
+      for (let i in Item[namevar]) {
+        const name = Item[namevar][i];
+        if (!name.given) {
+          const institution = name.literal ? name.literal : name.family;
+          const length = institution.split("|").length;
+          if (subunit_count === 0 || length < subunit_count) {
+            subunit_count = length;
+          }
+        }
+      }
+      return subunit_count > 1;
+    };
+  };
+  this.tests.push(maketest(arg));
+};
+Attributes["@cite-form"] = function(state, arg) {
+  if (!this.tests) {
+    this.tests = [];
+  }
+  ;
+  const maketest = function(citeForm) {
+    return function(Item) {
+      if (Item["cite-form"] === citeForm) {
+        return true;
+      }
+      return false;
+    };
+  };
+  this.tests.push(maketest(arg));
+};
+Attributes["@disable-duplicate-year-suppression"] = function(state, arg) {
+  state.opt.disable_duplicate_year_suppression = arg.split(/\s+/);
+};
+Attributes["@consolidate-containers"] = function(state, arg) {
+  Attributes["@track-containers"](state, arg);
+  const args = arg.split(/\s+/);
+  state.bibliography.opt.consolidate_containers = args;
+};
+Attributes["@track-containers"] = function(state, arg) {
+  const args = arg.split(/\s+/);
+  if (!state.bibliography.opt.track_container_items) {
+    state.bibliography.opt.track_container_items = [];
+  }
+  if (!state.bibliography.opt.consolidate_containers) {
+    state.bibliography.opt.consolidate_containers = [];
+  }
+  state.bibliography.opt.track_container_items = state.bibliography.opt.track_container_items.concat(args);
+};
+Attributes["@parallel-first"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  const vars = arg.split(/\s+/);
+  if (!state.opt.track_repeat) {
+    state.opt.track_repeat = {};
+  }
+  this.parallel_first = {};
+  for (let i in vars) {
+    const v = vars[i];
+    this.parallel_first[v] = true;
+    state.opt.track_repeat[v] = true;
+  }
+};
+Attributes["@parallel-last"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  const vars = arg.split(/\s+/);
+  if (!state.opt.track_repeat) {
+    state.opt.track_repeat = {};
+  }
+  this.parallel_last = {};
+  for (let i in vars) {
+    const v = vars[i];
+    this.parallel_last[v] = true;
+    state.opt.track_repeat[v] = true;
+  }
+};
+Attributes["@parallel-last-to-first"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  const vars = arg.split(/\s+/);
+  this.parallel_last_to_first = {};
+  for (let i = 0, ilen = vars.length; i < ilen; i++) {
+    this.parallel_last_to_first[vars[i]] = true;
+  }
+};
+Attributes["@parallel-delimiter-override"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  this.strings.set_parallel_delimiter_override = arg;
+};
+Attributes["@parallel-delimiter-override-on-suppress"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  this.strings.set_parallel_delimiter_override_on_suppress = arg;
+};
+Attributes["@no-repeat"] = function(state, arg) {
+  state.opt.parallel.enable = true;
+  const vars = arg.split(/\s+/);
+  if (!state.opt.track_repeat) {
+    state.opt.track_repeat = {};
+  }
+  this.non_parallel = {};
+  for (let i in vars) {
+    const v = vars[i];
+    this.non_parallel[v] = true;
+    state.opt.track_repeat[v] = true;
+  }
+};
+Attributes["@require"] = function(state, arg) {
+  state.opt.use_context_condition = true;
+  this.strings.require = arg;
+};
+Attributes["@reject"] = function(state, arg) {
+  state.opt.use_context_condition = true;
+  this.strings.reject = arg;
+};
+Attributes["@require-comma-on-symbol"] = function(state, arg) {
+  state.opt.require_comma_on_symbol = arg;
+};
+Attributes["@gender"] = function(state, arg) {
+  this.gender = arg;
+};
+Attributes["@cslid"] = function(state, arg) {
+  this.cslid = parseInt(arg, 10);
+};
+Attributes["@capitalize-if-first"] = function(state, arg) {
+  this.strings.capitalize_if_first_override = arg;
+};
+Attributes["@label-capitalize-if-first"] = function(state, arg) {
+  this.strings.label_capitalize_if_first_override = arg;
+};
+Attributes["@label-form"] = function(state, arg) {
+  this.strings.label_form_override = arg;
+};
+Attributes["@part-separator"] = function(state, arg) {
+  this.strings["part-separator"] = arg;
+};
+Attributes["@leading-noise-words"] = function(state, arg) {
+  this["leading-noise-words"] = arg;
+};
+Attributes["@name-never-short"] = function(state, arg) {
+  this["name-never-short"] = arg;
+};
+Attributes["@class"] = function(state, arg) {
+  state.opt["class"] = arg;
+};
+Attributes["@version"] = function(state, arg) {
+  state.opt.version = arg;
+};
+Attributes["@value"] = function(state, arg) {
+  this.strings.value = arg;
+};
+Attributes["@name"] = function(state, arg) {
+  this.strings.name = arg;
+};
+Attributes["@form"] = function(state, arg) {
+  this.strings.form = arg;
+};
+Attributes["@date-parts"] = function(state, arg) {
+  this.strings["date-parts"] = arg;
+};
+Attributes["@range-delimiter"] = function(state, arg) {
+  this.strings["range-delimiter"] = arg;
+};
+Attributes["@macro"] = function(state, arg) {
+  this.postponed_macro = arg;
+};
+Attributes["@term"] = function(state, arg) {
+  if (arg === "sub verbo") {
+    this.strings.term = "sub-verbo";
+  } else {
+    this.strings.term = arg;
+  }
+};
+Attributes["@xmlns"] = function() {
+};
+Attributes["@lang"] = function(state, arg) {
+  if (arg) {
+    state.build.lang = arg;
+  }
+};
+Attributes["@lingo"] = function() {
+};
+Attributes["@macro-has-date"] = function() {
+  this["macro-has-date"] = true;
+};
+Attributes["@suffix"] = function(state, arg) {
+  this.strings.suffix = arg;
+};
+Attributes["@prefix"] = function(state, arg) {
+  this.strings.prefix = arg;
+};
+Attributes["@delimiter"] = function(state, arg) {
+  this.strings.delimiter = arg;
+};
+Attributes["@match"] = function(state, arg) {
+  this.match = arg;
+};
+Attributes["@names-min"] = function(state, arg) {
+  const val = parseInt(arg, 10);
+  if (state[state.build.area].opt.max_number_of_names < val) {
+    state[state.build.area].opt.max_number_of_names = val;
+  }
+  this.strings["et-al-min"] = val;
+};
+Attributes["@names-use-first"] = function(state, arg) {
+  this.strings["et-al-use-first"] = parseInt(arg, 10);
+};
+Attributes["@names-use-last"] = function(state, arg) {
+  if (arg === "true") {
+    this.strings["et-al-use-last"] = true;
+  } else {
+    this.strings["et-al-use-last"] = false;
+  }
+};
+Attributes["@sort"] = function(state, arg) {
+  if (arg === "descending") {
+    this.strings.sort_direction = DESCENDING;
+  }
+};
+Attributes["@plural"] = function(state, arg) {
+  if ("always" === arg || "true" === arg) {
+    this.strings.plural = 1;
+  } else if ("never" === arg || "false" === arg) {
+    this.strings.plural = 0;
+  } else if ("contextual" === arg) {
+    this.strings.plural = false;
+  }
+};
+Attributes["@has-publisher-and-publisher-place"] = function() {
+  this.strings["has-publisher-and-publisher-place"] = true;
+};
+Attributes["@publisher-delimiter-precedes-last"] = function(state, arg) {
+  this.strings["publisher-delimiter-precedes-last"] = arg;
+};
+Attributes["@publisher-delimiter"] = function(state, arg) {
+  this.strings["publisher-delimiter"] = arg;
+};
+Attributes["@publisher-and"] = function(state, arg) {
+  this.strings["publisher-and"] = arg;
+};
+Attributes["@givenname-disambiguation-rule"] = function(state, arg) {
+  if (GIVENNAME_DISAMBIGUATION_RULES.indexOf(arg) > -1) {
+    state.citation.opt["givenname-disambiguation-rule"] = arg;
+  }
+};
+Attributes["@collapse"] = function(state, arg) {
+  if (arg) {
+    state[this.name].opt.collapse = arg;
+  }
+};
+Attributes["@cite-group-delimiter"] = function(state, arg) {
+  if (arg) {
+    state[state.tmp.area].opt.cite_group_delimiter = arg;
+  }
+};
+Attributes["@names-delimiter"] = function(state, arg) {
+  state.setOpt(this, "names-delimiter", arg);
+};
+Attributes["@name-form"] = function(state, arg) {
+  state.setOpt(this, "name-form", arg);
+};
+Attributes["@subgroup-delimiter"] = function(state, arg) {
+  this.strings["subgroup-delimiter"] = arg;
+};
+Attributes["@subgroup-delimiter-precedes-last"] = function(state, arg) {
+  this.strings["subgroup-delimiter-precedes-last"] = arg;
+};
+Attributes["@name-delimiter"] = function(state, arg) {
+  state.setOpt(this, "name-delimiter", arg);
+};
+Attributes["@et-al-min"] = function(state, arg) {
+  const val = parseInt(arg, 10);
+  if (state[state.build.area].opt.max_number_of_names < val) {
+    state[state.build.area].opt.max_number_of_names = val;
+  }
+  state.setOpt(this, "et-al-min", val);
+};
+Attributes["@et-al-use-first"] = function(state, arg) {
+  state.setOpt(this, "et-al-use-first", parseInt(arg, 10));
+};
+Attributes["@et-al-use-last"] = function(state, arg) {
+  if (arg === "true") {
+    state.setOpt(this, "et-al-use-last", true);
+  } else {
+    state.setOpt(this, "et-al-use-last", false);
+  }
+};
+Attributes["@et-al-subsequent-min"] = function(state, arg) {
+  const val = parseInt(arg, 10);
+  if (state[state.build.area].opt.max_number_of_names < val) {
+    state[state.build.area].opt.max_number_of_names = val;
+  }
+  state.setOpt(this, "et-al-subsequent-min", val);
+};
+Attributes["@et-al-subsequent-use-first"] = function(state, arg) {
+  state.setOpt(this, "et-al-subsequent-use-first", parseInt(arg, 10));
+};
+Attributes["@suppress-min"] = function(state, arg) {
+  this.strings["suppress-min"] = parseInt(arg, 10);
+};
+Attributes["@suppress-max"] = function(state, arg) {
+  this.strings["suppress-max"] = parseInt(arg, 10);
+};
+Attributes["@and"] = function(state, arg) {
+  state.setOpt(this, "and", arg);
+};
+Attributes["@delimiter-precedes-last"] = function(state, arg) {
+  state.setOpt(this, "delimiter-precedes-last", arg);
+};
+Attributes["@delimiter-precedes-et-al"] = function(state, arg) {
+  state.setOpt(this, "delimiter-precedes-et-al", arg);
+};
+Attributes["@initialize-with"] = function(state, arg) {
+  state.setOpt(this, "initialize-with", arg);
+};
+Attributes["@initialize"] = function(state, arg) {
+  if (arg === "false") {
+    state.setOpt(this, "initialize", false);
+  }
+};
+Attributes["@name-as-reverse-order"] = function(state, arg) {
+  this["name-as-reverse-order"] = arg;
+};
+Attributes["@name-as-sort-order"] = function(state, arg) {
+  if (this.name === "style-options") {
+    this["name-as-sort-order"] = arg;
+  } else {
+    state.setOpt(this, "name-as-sort-order", arg);
+  }
+};
+Attributes["@sort-separator"] = function(state, arg) {
+  state.setOpt(this, "sort-separator", arg);
+};
+Attributes["@require-match"] = function(state, arg) {
+  if (arg === "true") {
+    this.requireMatch = true;
+  }
+};
+Attributes["@exclude-types"] = function(state, arg) {
+  state.bibliography.opt.exclude_types = arg.split(/\s+/);
+};
+Attributes["@exclude-with-fields"] = function(state, arg) {
+  state.bibliography.opt.exclude_with_fields = arg.split(/\s+/);
+};
+Attributes["@year-suffix-delimiter"] = function(state, arg) {
+  state[this.name].opt["year-suffix-delimiter"] = arg;
+};
+Attributes["@after-collapse-delimiter"] = function(state, arg) {
+  state[this.name].opt["after-collapse-delimiter"] = arg;
+};
+Attributes["@subsequent-author-substitute"] = function(state, arg) {
+  state[this.name].opt["subsequent-author-substitute"] = arg;
+};
+Attributes["@subsequent-author-substitute-rule"] = function(state, arg) {
+  state[this.name].opt["subsequent-author-substitute-rule"] = arg;
+};
+Attributes["@disambiguate-add-names"] = function(state, arg) {
+  if (arg === "true") {
+    state.opt["disambiguate-add-names"] = true;
+  }
+};
+Attributes["@disambiguate-add-givenname"] = function(state, arg) {
+  if (arg === "true") {
+    state.opt["disambiguate-add-givenname"] = true;
+  }
+};
+Attributes["@disambiguate-add-year-suffix"] = function(state, arg) {
+  if (arg === "true" && state.opt.xclass !== "numeric") {
+    state.opt["disambiguate-add-year-suffix"] = true;
+  }
+};
+Attributes["@second-field-align"] = function(state, arg) {
+  if (arg === "flush" || arg === "margin") {
+    state[this.name].opt["second-field-align"] = arg;
+  }
+};
+Attributes["@hanging-indent"] = function(state, arg) {
+  if (arg === "true") {
+    if (state.opt.development_extensions.hanging_indent_legacy_number) {
+      state[this.name].opt.hangingindent = 2;
+    } else {
+      state[this.name].opt.hangingindent = true;
+    }
+  }
+};
+Attributes["@line-spacing"] = function(state, arg) {
+  if (arg && arg.match(/^[.0-9]+$/)) {
+    state[this.name].opt["line-spacing"] = parseFloat(arg);
+  }
+};
+Attributes["@default-locale"] = function(state, arg) {
+  if (this.name === "style") {
+    let lst, len, ret;
+    const m = arg.match(/-x-(sort|translit|translat)-/g);
+    if (m) {
+      for (let pos2 = 0, len2 = m.length; pos2 < len2; pos2 += 1) {
+        m[pos2] = m[pos2].replace(/^-x-/, "").replace(/-$/, "");
+      }
+    }
+    lst = arg.split(/-x-(?:sort|translit|translat)-/);
+    ret = [lst[0]];
+    for (let pos2 = 1, len2 = lst.length; pos2 < len2; pos2 += 1) {
+      ret.push(m[pos2 - 1]);
+      ret.push(lst[pos2]);
+    }
+    lst = ret.slice();
+    len = lst.length;
+    for (let pos2 = 1; pos2 < len; pos2 += 2) {
+      state.opt["locale-" + lst[pos2]].push(lst[pos2 + 1].replace(/^\s*/g, "").replace(/\s*$/g, ""));
+    }
+    if (lst.length) {
+      state.opt["default-locale"] = lst.slice(0, 1);
+    } else {
+      state.opt["default-locale"] = ["en"];
+    }
+  } else if (arg === "true") {
+    this.default_locale = true;
+  }
+};
+Attributes["@default-locale-sort"] = function(state, arg) {
+  state.opt["default-locale-sort"] = arg;
+};
+Attributes["@demote-non-dropping-particle"] = function(state, arg) {
+  state.opt["demote-non-dropping-particle"] = arg;
+};
+Attributes["@initialize-with-hyphen"] = function(state, arg) {
+  if (arg === "false") {
+    state.opt["initialize-with-hyphen"] = false;
+  }
+};
+Attributes["@katakana-display"] = function(state, arg) {
+  state.opt["katakana-display"] = arg;
+};
+Attributes["@page-range-format"] = function(state, arg) {
+  state.opt["page-range-format"] = arg;
+};
+Attributes["@institution-parts"] = function(state, arg) {
+  this.strings["institution-parts"] = arg;
+};
+Attributes["@if-short"] = function(state, arg) {
+  if (arg === "true") {
+    this.strings["if-short"] = true;
+  }
+};
+Attributes["@substitute-use-first"] = function(state, arg) {
+  this.strings["substitute-use-first"] = parseInt(arg, 10);
+};
+Attributes["@use-first"] = function(state, arg) {
+  this.strings["use-first"] = parseInt(arg, 10);
+};
+Attributes["@use-last"] = function(state, arg) {
+  this.strings["use-last"] = parseInt(arg, 10);
+};
+Attributes["@stop-first"] = function(state, arg) {
+  this.strings["stop-first"] = parseInt(arg, 10);
+};
+Attributes["@stop-last"] = function(state, arg) {
+  this.strings["stop-last"] = parseInt(arg, 10);
+};
+Attributes["@text-case"] = function(state, arg) {
+  this.strings["text-case"] = arg;
+};
+Attributes["@entry-spacing"] = function(state, arg) {
+  if (arg && arg.match(/^[.0-9]+$/)) {
+    state[this.name].opt["entry-spacing"] = parseFloat(arg);
+  }
+};
+Attributes["@display"] = function(state, arg) {
+  if (state.bibliography.tokens.length === 2) {
+    state.opt.using_display = true;
+  }
+  this.strings.cls = arg;
+};
+Attributes["@reverse-order"] = function(state, arg) {
+  if (arg === "true") {
+    this.strings["reverse-order"] = true;
+  }
+};
+Attributes["@near-note-distance"] = function(state, arg) {
+  state[this.name].opt["near-note-distance"] = parseInt(arg, 10);
+};
+Attributes["@substring"] = function(state, arg) {
+  if (arg && arg.match(/^[0-9]+$/)) {
+    this.strings["substring"] = parseInt(arg, 10);
+  }
+};
+Attributes["@year-range-format"] = function(state, arg) {
+  state.opt["year-range-format"] = arg;
+};
+
+// src/util/transform.ts
+var Transform = class {
+  constructor(state) {
+    __publicField(this, "abbrevs");
+    __publicField(this, "getTextSubField");
+    __publicField(this, "loadAbbreviation");
+    __publicField(this, "quashCheck");
+    __publicField(this, "getOutputFunction");
+    this.abbrevs = {};
+    this.abbrevs["default"] = new state.sys.AbbreviationSegments();
+    function getCountryOrJurisdiction(variable, normalizedKey, quashCountry) {
+      let value = "";
+      if (state.sys.getHumanForm) {
+        if (variable === "country") {
+          value = state.sys.getHumanForm(normalizedKey.toLowerCase(), false, true);
+          value = value.split("|")[0];
+        } else if (variable === "jurisdiction") {
+          value = state.sys.getHumanForm(normalizedKey.toLowerCase(), false, true);
+          if (!quashCountry) {
+            value = value.split("|").slice(1).join(", ");
+          } else {
+            value = "";
+          }
+        }
+      }
+      return value;
+    }
+    function abbreviate(state2, tok, Item, altvar, basevalue, family_var, use_field) {
+      let value = "";
+      const myabbrev_family = FIELD_CATEGORY_REMAP[family_var];
+      let preferredJurisdiction;
+      if (!myabbrev_family) {
+        return basevalue;
+      }
+      const variable = family_var;
+      let normalizedKey = basevalue;
+      if (state2.sys.normalizeAbbrevsKey) {
+        normalizedKey = state2.sys.normalizeAbbrevsKey(family_var, basevalue);
+      }
+      let quashCountry = false;
+      if (variable === "jurisdiction" && normalizedKey) {
+        quashCountry = normalizedKey.indexOf(":") === -1;
+      }
+      if (["jurisdiction", "country"].indexOf(family_var) > -1 && basevalue === basevalue.toLowerCase()) {
+        normalizedKey = basevalue.toUpperCase();
+      }
+      if (state2.sys.getAbbreviation) {
+        if (["jurisdiction", "country", "language-name", "language-name-original"].indexOf(variable) > -1) {
+          preferredJurisdiction = "default";
+        } else if (Item.jurisdiction) {
+          preferredJurisdiction = Item.jurisdiction;
+        } else {
+          preferredJurisdiction = "default";
+        }
+        let jurisdiction = state2.transform.loadAbbreviation(preferredJurisdiction, myabbrev_family, normalizedKey, Item.language);
+        if (state2.transform.abbrevs[jurisdiction][myabbrev_family] && normalizedKey) {
+          const abbrev = state2.transform.abbrevs[jurisdiction][myabbrev_family][normalizedKey];
+          if (tok.strings.form === "short" && abbrev) {
+            if (quashCountry) {
+              value = "";
+            } else {
+              value = abbrev;
+            }
+          } else {
+            value = getCountryOrJurisdiction(variable, normalizedKey, quashCountry);
+          }
+        }
+      }
+      if (!value && (!state2.opt.development_extensions.require_explicit_legal_case_title_short || Item.type !== "legal_case") && altvar && Item[altvar] && use_field) {
+        value = Item[altvar];
+      }
+      if (!value && !state2.sys.getAbbreviation && state2.sys.getHumanForm) {
+        value = getCountryOrJurisdiction(variable, normalizedKey, quashCountry);
+      }
+      if (!value && !quashCountry && (!state2.sys.getHumanForm || variable !== "jurisdiction")) {
+        value = basevalue;
+      }
+      if (state2.opt.development_extensions.force_title_abbrev_fallback) {
+        if (variable === "title" && value === basevalue && Item["title-short"]) {
+          value = Item["title-short"];
+        }
+      }
+      return value;
+    }
+    function getFieldLocale(Item, field) {
+      let ret = state.opt["default-locale"][0].slice(0, 2);
+      let localeRex;
+      if (state.opt.development_extensions.strict_text_case_locales) {
+        localeRex = new RegExp("^([a-zA-Z]{2})(?:$|-.*| .*)");
+      } else {
+        localeRex = new RegExp("^([a-zA-Z]{2})(?:$|-.*|.*)");
+      }
+      if (Item.language) {
+        let m = ("" + Item.language).match(localeRex);
+        if (m) {
+          ret = m[1];
+        } else {
+          ret = "tlh";
+        }
+      }
+      if (Item.multi && Item.multi.main && Item.multi.main[field]) {
+        ret = Item.multi.main[field];
+      }
+      if (!state.opt.development_extensions.strict_text_case_locales || state.opt.development_extensions.normalize_lang_keys_to_lowercase) {
+        ret = ret.toLowerCase();
+      }
+      return ret;
+    }
+    function getTextSubField(Item, field, locale_type, use_default, stopOrig, family_var) {
+      let opt, o, ret, opts;
+      const usedOrig = stopOrig;
+      let usingOrig = false;
+      if (!Item[field]) {
+        return {
+          name: "",
+          usedOrig: stopOrig,
+          token: Util_cloneToken(this)
+        };
+      }
+      let stickyLongForm = false;
+      if (VARIABLES_WITH_SHORT_FORM.indexOf(field) > -1 && family_var) {
+        field = field + "-short";
+        stickyLongForm = true;
+      }
+      let breakMe = false;
+      let firstValue = null;
+      const fieldsToTry = [];
+      if (field.slice(-6) === "-short") {
+        fieldsToTry.push(field);
+        fieldsToTry.push(field.slice(0, -6));
+      } else {
+        fieldsToTry.push(field);
+      }
+      for (let h = 0, hlen = fieldsToTry.length; h < hlen; h++) {
+        let variantMatch = false;
+        let field2 = fieldsToTry[h];
+        ret = { name: "", usedOrig: stopOrig, locale: getFieldLocale(Item, field2) };
+        opts = state.opt[locale_type] ? state.opt[locale_type].slice() : [];
+        let hasVal = false;
+        if (locale_type === "locale-orig") {
+          if (!stopOrig) {
+            ret.name = Item[field2];
+            ret.usedOrig = false;
+          }
+          hasVal = true;
+          usingOrig = true;
+        } else if (use_default && ("undefined" === typeof opts || opts.length === 0)) {
+          ret.name = Item[field2];
+          ret.usedOrig = true;
+          hasVal = true;
+          usingOrig = true;
+        }
+        if (!hasVal) {
+          for (let i = 0, ilen = opts.length; i < ilen; i += 1) {
+            opt = opts[i];
+            o = opt.split(/[\-_]/)[0];
+            if (opt && Item.multi && Item.multi._keys[field2] && Item.multi._keys[field2][opt]) {
+              ret.name = Item.multi._keys[field2][opt];
+              ret.locale = opt;
+              hasVal = true;
+              variantMatch = true;
+              usingOrig = false;
+              break;
+            } else if (o && Item.multi && Item.multi._keys[field2] && Item.multi._keys[field2][o]) {
+              ret.name = Item.multi._keys[field2][o];
+              ret.locale = o;
+              hasVal = true;
+              variantMatch = true;
+              usingOrig = false;
+              break;
+            }
+          }
+          if (!ret.name && use_default) {
+            ret = { name: Item[field2], usedOrig: true, locale: getFieldLocale(Item, field2) };
+            usingOrig = true;
+          }
+        }
+        ret.token = Util_cloneToken(this);
+        if (h === 0) {
+          if (variantMatch) {
+            ret.found_variant_ok = true;
+          }
+          firstValue = ret;
+          if (!stickyLongForm && ("undefined" === typeof opts || opts.length === 0)) {
+            breakMe = true;
+          }
+          if (variantMatch) {
+            breakMe = true;
+          }
+        } else {
+          if (!stickyLongForm && !variantMatch && firstValue) {
+            ret = firstValue;
+            field2 = fieldsToTry[0];
+          } else if (variantMatch) {
+            ret.found_variant_ok = true;
+          }
+        }
+        if (["title", "container-title"].indexOf(field2) > -1) {
+          if (!usedOrig && (!ret.token.strings["text-case"] || ret.token.strings["text-case"] === "sentence" || ret.token.strings["text-case"] === "normal")) {
+            const locale = state.opt.lang;
+            let lang;
+            if (usingOrig) {
+              lang = false;
+            } else {
+              lang = ret.locale;
+            }
+            const seg = field2.slice(0, -5);
+            const sentenceCase = ret.token.strings["text-case"] === "sentence" ? true : false;
+            ret.name = titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, Output_formatters);
+            delete ret.token.strings["text-case"];
+          }
+        }
+        if (breakMe) {
+          break;
+        }
+      }
+      return ret;
+    }
+    this.getTextSubField = getTextSubField;
+    function loadAbbreviation(jurisdiction, category, orig, lang) {
+      if (!jurisdiction) {
+        jurisdiction = "default";
+      }
+      const country = jurisdiction.split(":")[0];
+      const domain = getAbbrevsDomain(state, country, lang);
+      if (domain) {
+        jurisdiction += "@" + domain;
+      }
+      if (!orig) {
+        if (!state.transform.abbrevs[jurisdiction]) {
+          state.transform.abbrevs[jurisdiction] = new state.sys.AbbreviationSegments();
+        }
+        if (!state.transform.abbrevs[jurisdiction][category]) {
+          state.transform.abbrevs[jurisdiction][category] = {};
+        }
+        return jurisdiction;
+      }
+      if (state.sys.getAbbreviation) {
+        jurisdiction = state.sys.getAbbreviation(state.opt.styleID, state.transform.abbrevs, jurisdiction, category, orig);
+        if (!jurisdiction) {
+          jurisdiction = "default";
+          if (domain) {
+            jurisdiction += "@" + domain;
+          }
+        }
+      }
+      return jurisdiction;
+    }
+    this.loadAbbreviation = loadAbbreviation;
+    function publisherCheck(tok, Item, primary, family_var) {
+      const varname = tok.variables[0];
+      if (state.publisherOutput && primary) {
+        if (["publisher", "publisher-place"].indexOf(varname) === -1) {
+          return false;
+        } else {
+          state.publisherOutput[varname + "-token"] = tok;
+          state.publisherOutput.varlist.push(varname);
+          const lst = primary.split(/;\s*/);
+          if (lst.length === state.publisherOutput[varname + "-list"].length) {
+            state.publisherOutput[varname + "-list"] = lst;
+          }
+          for (let i = 0, ilen = lst.length; i < ilen; i += 1) {
+            lst[i] = abbreviate(state, tok, Item, false, lst[i], family_var, true);
+          }
+          state.tmp[varname + "-token"] = tok;
+          return true;
+        }
+      }
+      return false;
+    }
+    function citeFormCheck(Item, value) {
+      let m = value.match(/^#([0-9]+).*>>>/);
+      if (m && m[1]) {
+        Item["cite-form"] = m[1];
+      }
+    }
+    function quashCheck(jurisdiction, value) {
+      let m = value.match(/^(?:#[0-9]+)*(?:!((?:[-_a-z]+(?:(?:.*)))(?:,(?:[-_a-z]+(?:(?:.*))))*))*>>>/);
+      if (m) {
+        value = value.slice(m[0].length);
+        if (m[1]) {
+          const fields = m[1].split(",");
+          for (let i = 0, ilen = fields.length; i < ilen; i += 1) {
+            const rawField = fields[i];
+            const mm = rawField.match(/^([-_a-z]+)(?:\:(.*))*$/);
+            let field = mm[1];
+            const trimmer = state.tmp.abbrev_trimmer;
+            if (mm[2]) {
+              if (trimmer && jurisdiction) {
+                if (!trimmer[jurisdiction]) {
+                  trimmer[jurisdiction] = {};
+                }
+                trimmer[jurisdiction][field] = mm[2];
+              }
+            } else if (state.tmp.done_vars.indexOf(field) === -1) {
+              if (trimmer && jurisdiction) {
+                if (!trimmer.QUASHES[jurisdiction]) {
+                  trimmer.QUASHES[jurisdiction] = {};
+                }
+                trimmer.QUASHES[jurisdiction][field] = true;
+              }
+              state.tmp.done_vars.push(field);
+            }
+          }
+        }
+      }
+      return value;
+    }
+    this.quashCheck = quashCheck;
+    function getOutputFunction(variables, family_var, abbreviation_fallback, alternative_varname) {
+      let localesets;
+      const langPrefs = LangPrefsMap[variables[0]];
+      if (!langPrefs) {
+        localesets = false;
+      } else {
+        localesets = state.opt["cite-lang-prefs"][langPrefs];
+      }
+      return function(state2, Item, item) {
+        let primary, primary_locale, secondary, secondary_locale, tertiary, tertiary_locale;
+        if (!variables[0] || !Item[variables[0]] && !Item[alternative_varname]) {
+          return null;
+        }
+        if (!state2.tmp.just_looking && item && item["suppress-author"]) {
+          if (!state2.tmp.probably_rendered_something && state2.tmp.can_substitute.length() > 1) {
+            return null;
+          }
+        }
+        const slot = { primary: false, secondary: false, tertiary: false };
+        if (state2.tmp.area.slice(-5) === "_sort") {
+          slot.primary = "locale-sort";
+        } else {
+          if (localesets && localesets.length === 1 && localesets[0] === "locale-orig") {
+            slot.primary = "locale-orig";
+            localesets = false;
+          } else if (localesets && !state2.tmp.multi_layout) {
+            const slotnames = ["primary", "secondary", "tertiary"];
+            for (let i = 0, ilen = slotnames.length; i < ilen; i += 1) {
+              if (localesets.length - 1 < i) {
+                break;
+              }
+              if (localesets[i]) {
+                slot[slotnames[i]] = "locale-" + localesets[i];
+              }
+            }
+          } else {
+            slot.primary = "locale-orig";
+          }
+        }
+        if (variables[0] === "title-short" || state2.tmp.area !== "bibliography" && !(state2.tmp.area === "citation" && state2.opt.xclass === "note" && item && !item.position)) {
+          slot.secondary = false;
+          slot.tertiary = false;
+        }
+        if (state2.tmp.multi_layout) {
+          slot.secondary = false;
+          slot.tertiary = false;
+        }
+        if (state2.tmp["publisher-list"]) {
+          if (variables[0] === "publisher") {
+            state2.tmp["publisher-token"] = this;
+          } else if (variables[0] === "publisher-place") {
+            state2.tmp["publisher-place-token"] = this;
+          }
+          return null;
+        }
+        const oldLangArray = state2.tmp.lang_array.slice();
+        let res = getTextSubField.call(this, Item, variables[0], slot.primary, true, null, family_var);
+        primary = res.name;
+        primary_locale = res.locale;
+        const primary_tok = res.token;
+        const primaryUsedOrig = res.usedOrig;
+        if (family_var && !res.found_variant_ok) {
+          primary = abbreviate(state2, primary_tok, Item, alternative_varname, primary, family_var, true);
+          if (primary) {
+            citeFormCheck(Item, primary);
+            if (!state2.tmp.just_looking) {
+              primary = quashCheck(Item.jurisdiction, primary);
+            }
+          }
+        }
+        if (publisherCheck(this, Item, primary, family_var)) {
+          state2.tmp.lang_array = oldLangArray;
+          return null;
+        }
+        secondary = false;
+        tertiary = false;
+        let secondary_tok;
+        let tertiary_tok;
+        if (slot.secondary) {
+          res = getTextSubField.call(this, Item, variables[0], slot.secondary, false, res.usedOrig, null, family_var);
+          secondary = res.name;
+          secondary_locale = res.locale;
+          secondary_tok = res.token;
+          if (family_var && !res.found_variant_ok) {
+            if (secondary) {
+              secondary = abbreviate(state2, secondary_tok, Item, false, secondary, family_var, true);
+            }
+          }
+        }
+        if (slot.tertiary) {
+          res = getTextSubField.call(this, Item, variables[0], slot.tertiary, false, res.usedOrig, null, family_var);
+          tertiary = res.name;
+          tertiary_locale = res.locale;
+          tertiary_tok = res.token;
+          if (family_var && !res.found_variant_ok) {
+            if (tertiary) {
+              tertiary = abbreviate(state2, tertiary_tok, Item, false, tertiary, family_var, true);
+            }
+          }
+        }
+        let primaryPrefix;
+        if (slot.primary === "locale-translit") {
+          primaryPrefix = state2.opt.citeAffixes[langPrefs][slot.primary].prefix;
+        }
+        if (primaryPrefix === "<i>" && variables[0] === "title" && !primaryUsedOrig) {
+          let hasItalic = false;
+          for (let i = 0, ilen = primary_tok.decorations.length; i < ilen; i += 1) {
+            if (primary_tok.decorations[i][0] === "@font-style" && primary_tok.decorations[i][1] === "italic") {
+              hasItalic = true;
+            }
+          }
+          if (!hasItalic) {
+            primary_tok.decorations.push(["@font-style", "italic"]);
+          }
+        }
+        if (primary_locale !== "en" && primary_tok.strings["text-case"] === "title") {
+          primary_tok.strings["text-case"] = "passthrough";
+        }
+        if ("title" === variables[0]) {
+          primary = demoteNoiseWords(state2, primary, this["leading-noise-words"]);
+        }
+        if (secondary || tertiary) {
+          state2.output.openLevel("empty");
+          primary_tok.strings.suffix = primary_tok.strings.suffix.replace(/[ .,]+$/, "");
+          if (primary_locale) {
+            state2.tmp.lang_array = [primary_locale].concat(oldLangArray);
+          }
+          UPDATE_GROUP_CONTEXT_CONDITION(state2, null, null, primary_tok, primary_tok.strings.prefix + primary);
+          state2.output.append(primary, primary_tok);
+          state2.tmp.probably_rendered_something = true;
+          if (primary === secondary) {
+            secondary = false;
+          }
+          if (secondary) {
+            secondary_tok.strings.prefix = state2.opt.citeAffixes[langPrefs][slot.secondary].prefix;
+            secondary_tok.strings.suffix = state2.opt.citeAffixes[langPrefs][slot.secondary].suffix;
+            if (!secondary_tok.strings.prefix) {
+              secondary_tok.strings.prefix = " ";
+            }
+            for (let i = secondary_tok.decorations.length - 1; i > -1; i += -1) {
+              if (["@quotes/true", "@font-style/italic", "@font-style/oblique", "@font-weight/bold"].indexOf(secondary_tok.decorations[i].join("/")) > -1) {
+                secondary_tok.decorations = secondary_tok.decorations.slice(0, i).concat(secondary_tok.decorations.slice(i + 1));
+              }
+            }
+            if (secondary_locale !== "en" && secondary_tok.strings["text-case"] === "title") {
+              secondary_tok.strings["text-case"] = "passthrough";
+            }
+            if (secondary_locale) {
+              state2.tmp.lang_array = [secondary_locale].concat(oldLangArray);
+            }
+            const secondary_outer = new Token();
+            secondary_outer.decorations.push(["@font-style", "normal"]);
+            secondary_outer.decorations.push(["@font-weight", "normal"]);
+            state2.output.openLevel(secondary_outer);
+            state2.output.append(secondary, secondary_tok);
+            state2.output.closeLevel();
+          }
+          if (primary === tertiary) {
+            tertiary = false;
+          }
+          if (tertiary) {
+            tertiary_tok.strings.prefix = state2.opt.citeAffixes[langPrefs][slot.tertiary].prefix;
+            tertiary_tok.strings.suffix = state2.opt.citeAffixes[langPrefs][slot.tertiary].suffix;
+            if (!tertiary_tok.strings.prefix) {
+              tertiary_tok.strings.prefix = " ";
+            }
+            for (let i = tertiary_tok.decorations.length - 1; i > -1; i += -1) {
+              if (["@quotes/true", "@font-style/italic", "@font-style/oblique", "@font-weight/bold"].indexOf(tertiary_tok.decorations[i].join("/")) > -1) {
+                tertiary_tok.decorations = tertiary_tok.decorations.slice(0, i).concat(tertiary_tok.decorations.slice(i + 1));
+              }
+            }
+            if (tertiary_locale !== "en" && tertiary_tok.strings["text-case"] === "title") {
+              tertiary_tok.strings["text-case"] = "passthrough";
+            }
+            if (tertiary_locale) {
+              state2.tmp.lang_array = [tertiary_locale].concat(oldLangArray);
+            }
+            const tertiary_outer = new Token();
+            tertiary_outer.decorations.push(["@font-style", "normal"]);
+            tertiary_outer.decorations.push(["@font-weight", "normal"]);
+            state2.output.openLevel(tertiary_outer);
+            state2.output.append(tertiary, tertiary_tok);
+            state2.output.closeLevel();
+          }
+          state2.output.closeLevel();
+        } else {
+          if (primary_locale) {
+            state2.tmp.lang_array = [primary_locale].concat(oldLangArray);
+          }
+          UPDATE_GROUP_CONTEXT_CONDITION(state2, null, null, primary_tok, primary_tok.strings.prefix + primary);
+          state2.output.append(primary, primary_tok);
+          state2.tmp.probably_rendered_something = true;
+        }
+        state2.tmp.lang_array = oldLangArray;
+        if (state2.tmp.can_block_substitute) {
+          state2.tmp.name_node.children.push(state2.output.current.value());
+        }
+        return null;
+      };
+    }
+    this.getOutputFunction = getOutputFunction;
+  }
+};
+
+// src/engine/build.ts
+var Engine = class _Engine {
+  constructor(sys, style, lang, forceLang) {
+    let attrs, langspec;
+    this.processor_version = PROCESSOR_VERSION;
+    this.csl_version = "1.0";
+    this.sys = sys;
+    if (typeof Object.assign != "function") {
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target) {
+          "use strict";
+          if (target == null) {
+            throw new TypeError("Cannot convert undefined or null to object");
+          }
+          const to = Object(target);
+          for (let index = 1; index < arguments.length; index++) {
+            const nextSource = arguments[index];
+            if (nextSource != null) {
+              for (let nextKey in nextSource) {
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+    if (sys.variableWrapper) {
+      internals.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp("^([" + [" "].concat(SWAPPING_PUNCTUATION).join("") + "]*)(.*)");
+    }
+    if (internals.retrieveStyleModule) {
+      this.sys.retrieveStyleModule = internals.retrieveStyleModule;
+    }
+    if (internals.getAbbreviation) {
+      this.sys.getAbbreviation = internals.getAbbreviation;
+    }
+    if (this.sys.stringCompare) {
+      internals.stringCompare = this.sys.stringCompare;
+    }
+    this.sys.AbbreviationSegments = AbbreviationSegments;
+    this.transform = new Transform(this);
+    this.setParseNames = function(val) {
+      this.opt["parse-names"] = val;
+    };
+    this.opt = new Opt();
+    this.tmp = new Tmp();
+    this.build = new Build();
+    this.fun = new Fun(this);
+    this.configure = new Configure();
+    this.citation_sort = new CitationSort();
+    this.bibliography_sort = new BibliographySort();
+    this.citation = new Citation(this);
+    this.bibliography = new Bibliography();
+    this.intext = new InText();
+    this.output = new Queue(this);
+    this.dateput = new Queue(this);
+    this.cslXml = setupXml(style);
+    for (let i in SYS_OPTIONS) {
+      const option = SYS_OPTIONS[i];
+      if ("boolean" === typeof this.sys[option]) {
+        this.opt.development_extensions[option] = this.sys[option];
+      }
+    }
+    if (this.opt.development_extensions.uppercase_subtitles || this.opt.development_extensions.implicit_short_title) {
+      this.opt.development_extensions.main_title_from_short_title = true;
+    }
+    if (this.opt.development_extensions.csl_reverse_lookup_support) {
+      this.build.cslNodeId = 0;
+      this.setCslNodeIds = function(myxml, nodename) {
+        const children = this.cslXml.children(myxml);
+        this.cslXml.setAttribute(myxml, "cslid", this.build.cslNodeId);
+        this.opt.nodenames.push(nodename);
+        this.build.cslNodeId += 1;
+        for (let i = 0, ilen = this.cslXml.numberofnodes(children); i < ilen; i += 1) {
+          nodename = this.cslXml.nodename(children[i]);
+          if (nodename) {
+            this.setCslNodeIds(children[i], nodename);
+          }
+        }
+      };
+      this.setCslNodeIds(this.cslXml.dataObj, "style");
+    }
+    this.cslXml.addMissingNameNodes(this.cslXml.dataObj);
+    this.cslXml.addInstitutionNodes(this.cslXml.dataObj);
+    this.cslXml.insertPublisherAndPlace(this.cslXml.dataObj);
+    this.cslXml.flagDateMacros(this.cslXml.dataObj);
+    attrs = this.cslXml.attributes(this.cslXml.dataObj);
+    if ("undefined" === typeof attrs["@sort-separator"]) {
+      this.cslXml.setAttribute(this.cslXml.dataObj, "sort-separator", ", ");
+    }
+    this.opt["initialize-with-hyphen"] = true;
+    this.setStyleAttributes();
+    this.opt.xclass = this.cslXml.getAttributeValue(this.cslXml.dataObj, "class");
+    this.opt["class"] = this.opt.xclass;
+    this.opt.styleID = this.cslXml.getStyleId(this.cslXml.dataObj);
+    this.opt.styleName = this.cslXml.getStyleId(this.cslXml.dataObj, true);
+    if (this.opt.version.slice(0, 4) === "1.1m") {
+      this.opt.development_extensions.consolidate_legal_items = true;
+      this.opt.development_extensions.consolidate_container_items = true;
+      this.opt.development_extensions.main_title_from_short_title = true;
+      this.opt.development_extensions.expect_and_symbol_form = true;
+      this.opt.development_extensions.require_explicit_legal_case_title_short = true;
+      this.opt.development_extensions.force_jurisdiction = true;
+      this.opt.development_extensions.force_title_abbrev_fallback = true;
+    }
+    if (lang) {
+      lang = lang.replace("_", "-");
+      lang = normalizeLocaleStr(lang);
+    }
+    if (this.opt["default-locale"][0]) {
+      this.opt["default-locale"][0] = this.opt["default-locale"][0].replace("_", "-");
+      this.opt["default-locale"][0] = normalizeLocaleStr(this.opt["default-locale"][0]);
+    }
+    if (lang && forceLang) {
+      this.opt["default-locale"] = [lang];
+    }
+    if (lang && !forceLang && this.opt["default-locale"][0]) {
+      lang = this.opt["default-locale"][0];
+    }
+    if (this.opt["default-locale"].length === 0) {
+      if (!lang) {
+        lang = "en-US";
+      }
+      this.opt["default-locale"].push("en-US");
+    }
+    if (!lang) {
+      lang = this.opt["default-locale"][0];
+    }
+    langspec = localeResolve(lang);
+    this.opt.lang = langspec.best;
+    this.opt["default-locale"][0] = langspec.best;
+    this.locale = {};
+    if (!this.opt["default-locale-sort"]) {
+      this.opt["default-locale-sort"] = this.opt["default-locale"][0];
+    }
+    if ("dale|".localeCompare("daleb", this.opt["default-locale-sort"]) > -1) {
+      this.opt.sort_sep = "@";
+    } else {
+      this.opt.sort_sep = "|";
+    }
+    this.localeConfigure(langspec);
+    function makeRegExp(lst) {
+      lst = lst.slice();
+      const ret = new RegExp("(?:(?:[?!:]*\\s+|-|^)(?:" + lst.join("|") + ")(?=[!?:]*\\s+|-|$))", "g");
+      return ret;
+    }
+    this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]);
+    this.output.adjust = new Queue.adjust(this.getOpt("punctuation-in-quote"));
+    this.registry = new Registry(this);
+    this.macros = {};
+    this.build.area = "citation";
+    let area_nodes = this.cslXml.getNodesByName(this.cslXml.dataObj, this.build.area);
+    this.buildTokenLists(area_nodes, this[this.build.area].tokens);
+    this.build.area = "bibliography";
+    area_nodes = this.cslXml.getNodesByName(this.cslXml.dataObj, this.build.area);
+    this.buildTokenLists(area_nodes, this[this.build.area].tokens);
+    this.build.area = "intext";
+    area_nodes = this.cslXml.getNodesByName(this.cslXml.dataObj, this.build.area);
+    this.buildTokenLists(area_nodes, this[this.build.area].tokens);
+    if (this.opt.parallel.enable) {
+      this.parallel = new Parallel(this);
+    }
+    this.juris = {};
+    this.configureTokenLists();
+    this.disambiguate = new Disambiguation(this);
+    this.splice_delimiter = false;
+    this.fun.dateparser = dateParserInstance;
+    this.fun.flipflopper = new Util_FlipFlopper(this);
+    this.setCloseQuotesArray();
+    this.fun.ordinalizer.init(this);
+    this.fun.long_ordinalizer.init(this);
+    this.fun.page_mangler = Util_PageRangeMangler.getFunction(this, "page");
+    this.fun.year_mangler = Util_PageRangeMangler.getFunction(this, "year");
+    this.setOutputFormat("html");
+  }
+  setCloseQuotesArray() {
+    let ret;
+    ret = [];
+    ret.push(this.getTerm("close-quote"));
+    ret.push(this.getTerm("close-inner-quote"));
+    ret.push('"');
+    ret.push("'");
+    this.opt.close_quotes_array = ret;
+  }
+  buildTokenLists(area_nodes, target) {
+    if (!this.cslXml.getNodeValue(area_nodes)) {
+      return;
+    }
+    const builder = makeBuilder(this, target);
+    let mynode;
+    if ("undefined" === typeof area_nodes.length) {
+      mynode = area_nodes;
+    } else {
+      mynode = area_nodes[0];
+    }
+    builder(mynode);
+  }
+  setStyleAttributes() {
+    let dummy, attributes, attrname;
+    dummy = {};
+    dummy.name = this.cslXml.nodename(this.cslXml.dataObj);
+    attributes = this.cslXml.attributes(this.cslXml.dataObj);
+    for (let attrname2 in attributes) {
+      if (attributes.hasOwnProperty(attrname2)) {
+        Attributes[attrname2].call(dummy, this, attributes[attrname2]);
+      }
+    }
+  }
+  getTerm(term, form, plural, gender, mode, forceDefaultLocale) {
+    if (term && term.match(/[A-Z]/) && term === term.toUpperCase()) {
+      debug("Warning: term key is in uppercase form: " + term);
+      term = term.toLowerCase();
+    }
+    let lang;
+    if (forceDefaultLocale) {
+      lang = this.opt["default-locale"][0];
+    } else {
+      lang = this.opt.lang;
+    }
+    let ret = _Engine.getField(LOOSE, this.locale[lang].terms, term, form, plural, gender);
+    if (!ret && term === "range-delimiter") {
+      ret = "\u2013";
+    }
+    if (typeof ret === "undefined") {
+      if (mode === STRICT) {
+        error('Error in getTerm: term "' + term + '" does not exist.');
+      } else if (mode === TOLERANT) {
+        ret = "";
+      }
+    }
+    if (ret) {
+      this.tmp.cite_renders_content = true;
+    }
+    return ret;
+  }
+  getDate(form, forceDefaultLocale) {
+    let lang;
+    if (forceDefaultLocale) {
+      lang = this.opt["default-locale"];
+    } else {
+      lang = this.opt.lang;
+    }
+    if (this.locale[lang].dates[form]) {
+      return this.locale[lang].dates[form];
+    } else {
+      return false;
+    }
+  }
+  getOpt(arg) {
+    if ("undefined" !== typeof this.locale[this.opt.lang].opts[arg]) {
+      return this.locale[this.opt.lang].opts[arg];
+    } else {
+      return false;
+    }
+  }
+  getVariable(Item, varname, form, plural) {
+    return _Engine.getField(LOOSE, Item, varname, form, plural);
+  }
+  getDateNum(ItemField, partname) {
+    if ("undefined" === typeof ItemField) {
+      return 0;
+    } else {
+      return ItemField[partname];
+    }
+  }
+  static getField(mode, hash, term, form, plural, gender) {
+    let ret, forms, f, pos, len, hashterm;
+    ret = "";
+    if ("undefined" === typeof hash[term]) {
+      if (mode === STRICT) {
+        error('Error in getField: term "' + term + '" does not exist.');
+      } else {
+        return void 0;
+      }
+    }
+    if (gender && hash[term][gender]) {
+      hashterm = hash[term][gender];
+    } else {
+      hashterm = hash[term];
+    }
+    forms = [];
+    if (form === "symbol") {
+      forms = ["symbol", "short"];
+    } else if (form === "verb-short") {
+      forms = ["verb-short", "verb"];
+    } else if (form !== "long") {
+      forms = [form];
+    }
+    forms = forms.concat(["long"]);
+    len = forms.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      f = forms[pos2];
+      if ("string" === typeof hashterm || "number" === typeof hashterm) {
+        ret = hashterm;
+      } else if ("undefined" !== typeof hashterm[f]) {
+        if ("string" === typeof hashterm[f] || "number" === typeof hashterm[f]) {
+          ret = hashterm[f];
+        } else {
+          if ("number" === typeof plural) {
+            ret = hashterm[f][plural];
+          } else {
+            ret = hashterm[f][0];
+          }
+        }
+        break;
+      }
+    }
+    return ret;
+  }
+  configureTokenLists() {
+    let area, pos, len;
+    len = AREAS.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      area = AREAS[pos2];
+      const tokens = this[area].tokens;
+      this.configureTokenList(tokens);
+    }
+    this.version = internals.version;
+    return this.state;
+  }
+  configureTokenList(tokens) {
+    let dateparts_master, token, dateparts, part, ppos, pppos, llen, lllen;
+    dateparts_master = ["year", "month", "day"];
+    llen = tokens.length - 1;
+    for (let ppos2 = llen; ppos2 > -1; ppos2 += -1) {
+      token = tokens[ppos2];
+      if ("date" === token.name && END === token.tokentype) {
+        dateparts = [];
+      }
+      if ("date-part" === token.name && token.strings.name) {
+        lllen = dateparts_master.length;
+        for (let pppos2 = 0; pppos2 < lllen; pppos2 += 1) {
+          part = dateparts_master[pppos2];
+          if (part === token.strings.name) {
+            dateparts.push(token.strings.name);
+          }
+        }
+      }
+      if ("date" === token.name && START === token.tokentype) {
+        dateparts.reverse();
+        token.dateparts = dateparts;
+      }
+      token.next = ppos2 + 1;
+      if (token.name && internals.Node[token.name].configure) {
+        internals.Node[token.name].configure.call(token, this, ppos2);
+      }
+    }
+  }
+  refetchItems(ids) {
+    let ret = [];
+    for (let i = 0, ilen = ids.length; i < ilen; i += 1) {
+      ret.push(this.refetchItem("" + ids[i]));
+    }
+    return ret;
+  }
+  retrieveItem(id) {
+    let Item, m, i;
+    if (!this.tmp.loadedItemIDs[id]) {
+      this.tmp.loadedItemIDs[id] = true;
+    } else {
+      return this.registry.refhash[id];
+    }
+    if (this.opt.development_extensions.normalize_lang_keys_to_lowercase && "boolean" === typeof this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
+      for (let i2 = 0, ilen = this.opt["default-locale"].length; i2 < ilen; i2 += 1) {
+        this.opt["default-locale"][i2] = this.opt["default-locale"][i2].toLowerCase();
+      }
+      for (let i2 = 0, ilen = this.opt["locale-translit"].length; i2 < ilen; i2 += 1) {
+        this.opt["locale-translit"][i2] = this.opt["locale-translit"][i2].toLowerCase();
+      }
+      for (let i2 = 0, ilen = this.opt["locale-translat"].length; i2 < ilen; i2 += 1) {
+        this.opt["locale-translat"][i2] = this.opt["locale-translat"][i2].toLowerCase();
+      }
+      this.opt.development_extensions.normalize_lang_keys_to_lowercase = 100;
+    }
+    internals.ITERATION += 1;
+    Item = JSON.parse(JSON.stringify(this.sys.retrieveItem("" + id)));
+    if (this.opt.development_extensions.normalize_lang_keys_to_lowercase) {
+      if (Item.multi) {
+        if (Item.multi._keys) {
+          for (let field in Item.multi._keys) {
+            for (let key in Item.multi._keys[field]) {
+              if (key !== key.toLowerCase()) {
+                Item.multi._keys[field][key.toLowerCase()] = Item.multi._keys[field][key];
+                delete Item.multi._keys[field][key];
+              }
+            }
+          }
+        }
+        if (Item.multi.main) {
+          for (let field in Item.multi.main) {
+            Item.multi.main[field] = Item.multi.main[field].toLowerCase();
+          }
+        }
+      }
+      for (let i2 = 0, ilen = NAME_VARIABLES.length; i2 > ilen; i2 += 1) {
+        const ctype = NAME_VARIABLES[i2];
+        if (Item[ctype] && Item[ctype].multi) {
+          for (let j = 0, jlen = Item[ctype].length; j < jlen; j += 1) {
+            const creator = Item[ctype][j];
+            if (creator.multi) {
+              if (creator.multi._key) {
+                for (let key in creator.multi._key) {
+                  if (key !== key.toLowerCase()) {
+                    creator.multi._key[key.toLowerCase()] = creator.multi._key[key];
+                    delete creator.multi._key[key];
+                  }
+                }
+              }
+              if (creator.multi.main) {
+                creator.multi.main = creator.multi.main.toLowerCase();
+              }
+            }
+          }
+        }
+      }
+    }
+    if (Item.language && Item.language.match(/[><]/)) {
+      let m2 = Item.language.match(/(.*?)([<>])(.*)/);
+      if (m2[2] === "<") {
+        Item["language-name"] = m2[1];
+        Item["language-name-original"] = m2[3];
+      } else {
+        Item["language-name"] = m2[3];
+        Item["language-name-original"] = m2[1];
+      }
+      if (this.opt.multi_layout) {
+        if (Item["language-name-original"]) {
+          Item.language = Item["language-name-original"];
+        }
+      } else {
+        if (Item["language-name"]) {
+          Item.language = Item["language-name"];
+        }
+      }
+    }
+    if (Item.page) {
+      Item["page-first"] = Item.page;
+      const num = "" + Item.page;
+      let m2 = num.split(/\s*(?:&|, |-|\u2013)\s*/);
+      if (m2[0].slice(-1) !== "\\") {
+        Item["page-first"] = m2[0];
+      }
+    }
+    if (this.opt.development_extensions.field_hack && Item.note) {
+      parseNoteFieldHacks(Item, false, this.opt.development_extensions.allow_field_hack_date_override);
+    }
+    for (let key in Item) {
+      if (DATE_VARIABLES.indexOf(key.replace(/^alt-/, "")) > -1) {
+        let dateobj = Item[key];
+        if (dateobj) {
+          if (this.opt.development_extensions.raw_date_parsing) {
+            if (dateobj.raw && (!dateobj["date-parts"] || dateobj["date-parts"].length === 0)) {
+              dateobj = this.fun.dateparser.parseDateToObject(dateobj.raw);
+            }
+          }
+          Item[key] = this.dateParseArray(dateobj);
+        }
+      }
+    }
+    if (this.opt.development_extensions.consolidate_legal_items) {
+      if (Item.type && ["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1) {
+        let varname;
+        let elements = ["type", "title", "jurisdiction", "genre", "volume", "container-title"];
+        const legislation_id = [];
+        for (let i2 = 0, ilen = elements.length; i2 < ilen; i2 += 1) {
+          varname = elements[i2];
+          if (Item[varname]) {
+            legislation_id.push(Item[varname]);
+          }
+        }
+        elements = ["original-date", "issued"];
+        for (let i2 = 0, ilen = elements.length; i2 < ilen; i2 += 1) {
+          varname = elements[i2];
+          if (Item[varname] && Item[varname].year) {
+            const value = Item[varname].year;
+            legislation_id.push(value);
+            break;
+          }
+        }
+        Item.legislation_id = legislation_id.join("::");
+      }
+    }
+    if (this.bibliography.opt.track_container_items) {
+      if (this.bibliography.opt.track_container_items.indexOf(Item.type) > -1) {
+        let varname;
+        let elements = ["type", "container-title", "publisher", "edition"];
+        const container_id = [];
+        for (let i2 = 0, ilen = elements.length; i2 < ilen; i2 += 1) {
+          varname = elements[i2];
+          if (Item[varname]) {
+            container_id.push(Item[varname]);
+          }
+        }
+        Item.container_id = container_id.join("::");
+      }
+    }
+    if (this.opt.development_extensions.force_jurisdiction) {
+      if ("string" === typeof Item.authority) {
+        Item.authority = [
+          {
+            literal: Item.authority,
+            multi: {
+              _key: {}
+            }
+          }
+        ];
+        if (Item.multi && Item.multi._keys && Item.multi._keys.authority) {
+          Item.authority[0].multi._key = {};
+          for (let key in Item.multi._keys.authority) {
+            Item.authority[0].multi._key[key] = {
+              literal: Item.multi._keys.authority[key]
+            };
+          }
+        }
+      }
+    }
+    if (!Item["title-short"]) {
+      Item["title-short"] = Item.shortTitle;
+    }
+    if (this.opt.development_extensions.main_title_from_short_title) {
+      const narrowSpaceLocale = this.opt["default-locale"][0].slice(0, 2).toLowerCase() === "fr";
+      extractTitleAndSubtitle(this, Item, narrowSpaceLocale);
+    }
+    const isLegalType = ["bill", "legal_case", "legislation", "gazette", "regulation"].indexOf(Item.type) > -1;
+    if (this.opt.development_extensions.force_jurisdiction && isLegalType) {
+      if (!Item.jurisdiction) {
+        Item.jurisdiction = "us";
+      }
+    }
+    let normalizedKey;
+    if (!isLegalType && Item.title && this.sys.getAbbreviation) {
+      let noHints = false;
+      if (!Item.jurisdiction) {
+        noHints = true;
+      }
+      if (this.sys.normalizeAbbrevsKey) {
+        normalizedKey = this.sys.normalizeAbbrevsKey("title", Item.title);
+      } else {
+        normalizedKey = Item.title;
+      }
+      const jurisdiction = this.transform.loadAbbreviation(Item.jurisdiction, "title", normalizedKey, Item.language);
+      if (this.transform.abbrevs[jurisdiction].title) {
+        if (this.transform.abbrevs[jurisdiction].title[normalizedKey]) {
+          Item["title-short"] = this.transform.abbrevs[jurisdiction].title[normalizedKey];
+        }
+      }
+    }
+    if (!Item["container-title-short"]) {
+      Item["container-title-short"] = Item.journalAbbreviation;
+    }
+    if (Item["container-title"] && this.sys.getAbbreviation) {
+      if (this.sys.normalizeAbbrevsKey) {
+        normalizedKey = this.sys.normalizeAbbrevsKey(Item["container-title"]);
+      } else {
+        normalizedKey = Item["container-title"];
+      }
+      const jurisdiction = this.transform.loadAbbreviation(Item.jurisdiction, "container-title", normalizedKey, Item.language);
+      if (this.transform.abbrevs[jurisdiction]["container-title"]) {
+        if (this.transform.abbrevs[jurisdiction]["container-title"][normalizedKey]) {
+          Item["container-title-short"] = this.transform.abbrevs[jurisdiction]["container-title"][normalizedKey];
+        }
+      }
+    }
+    if (Item.jurisdiction) {
+      Item.country = Item.jurisdiction.split(":")[0];
+    }
+    if (this.registry.refhash[id]) {
+      if (JSON.stringify(this.registry.refhash[id]) != JSON.stringify(Item)) {
+        for (let key in this.registry.refhash[id]) {
+          delete this.registry.refhash[id][key];
+        }
+        this.tmp.taintedItemIDs[Item.id] = true;
+        Object.assign(this.registry.refhash[id], Item);
+      }
+    } else {
+      this.registry.refhash[id] = Item;
+    }
+    return this.registry.refhash[id];
+  }
+  refetchItem(id) {
+    return this.registry.refhash[id];
+  }
+  setOpt(token, name, value) {
+    if (token.name === "style" || token.name === "cslstyle") {
+      this.opt.inheritedAttributes[name] = value;
+      this.citation.opt.inheritedAttributes[name] = value;
+      this.bibliography.opt.inheritedAttributes[name] = value;
+    } else if (["citation", "bibliography"].indexOf(token.name) > -1) {
+      this[token.name].opt.inheritedAttributes[name] = value;
+    } else {
+      token.strings[name] = value;
+    }
+  }
+  inheritOpt(token, attrname, parentname, defaultValue) {
+    if ("undefined" !== typeof token.strings[attrname]) {
+      return token.strings[attrname];
+    } else {
+      const parentValue = this[this.tmp.root].opt.inheritedAttributes[parentname ? parentname : attrname];
+      if ("undefined" !== typeof parentValue) {
+        return parentValue;
+      } else {
+        return defaultValue;
+      }
+    }
+  }
+};
+function makeBuilder(me, target) {
+  const var_stack = [];
+  let node_stack = [];
+  function runStart(node) {
+    node_stack.push(node);
+    XmlToToken.call(node, me, START, target, var_stack);
+  }
+  function runEnd() {
+    let node = node_stack.pop();
+    XmlToToken.call(node, me, END, target, var_stack);
+  }
+  function runSingle(node) {
+    XmlToToken.call(node, me, SINGLETON, target, var_stack);
+  }
+  function buildStyle(nodes, parent, node_stack2) {
+    if (!node_stack2) {
+      node_stack2 = [];
+    }
+    if (!nodes) {
+      nodes = [];
+    }
+    if ("undefined" === typeof nodes.length) {
+      nodes = [nodes];
+    }
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      if (me.cslXml.nodename(node) === null) {
+        continue;
+      }
+      if (parent && me.cslXml.nodename(node) === "date") {
+        Util_fixDateNode.call(me, parent, i, node);
+        node = me.cslXml.children(parent)[i];
+      }
+      if (me.cslXml.numberofnodes(me.cslXml.children(node))) {
+        runStart(node);
+        buildStyle(me.cslXml.children(node), node, node_stack2);
+        runEnd();
+      } else {
+        runSingle(node);
+      }
+    }
+  }
+  return buildStyle;
+}
+
+// src/node/choose.ts
+var Node_choose = {
+  build: function(state, target) {
+    let func;
+    if (this.tokentype === START) {
+      func = function(state2) {
+        state2.tmp.jump.push(void 0, LITERAL);
+      };
+    }
+    if (this.tokentype === END) {
+      func = function(state2) {
+        state2.tmp.jump.pop();
+      };
+    }
+    this.execs.push(func);
+    target.push(this);
+  },
+  configure: function(state, pos) {
+    if (this.tokentype === END) {
+      state.configure.fail.push(pos);
+      state.configure.succeed.push(pos);
+    } else {
+      state.configure.fail.pop();
+      state.configure.succeed.pop();
+    }
+  }
+};
+
+// src/util/substitute.ts
+function Util_substituteStart(state, target) {
+  let element_trace, display, bib_first, func, choose_start, if_start, nodetypes;
+  func = function(state2, Item, item) {
+    for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
+      if ("@strip-periods" === this.decorations[i][0] && "true" === this.decorations[i][1]) {
+        state2.tmp.strip_periods += 1;
+        break;
+      }
+    }
+  };
+  this.execs.push(func);
+  if (this.decorations && state.opt.development_extensions.csl_reverse_lookup_support) {
+    this.decorations.reverse();
+    this.decorations.push(["@showid", "true", this.cslid]);
+    this.decorations.reverse();
+  }
+  nodetypes = ["number", "date", "names"];
+  if ("text" === this.name && !this.postponed_macro || nodetypes.indexOf(this.name) > -1) {
+    element_trace = function(state2, Item, item) {
+      if (state2.tmp.element_trace.value() === "author" || "names" === this.name) {
+        if (!state2.tmp.just_looking && item && item["author-only"] && state2.tmp.area !== "intext") {
+          if (!state2.tmp.probably_rendered_something) {
+          } else {
+            state2.tmp.element_trace.push("suppress-me");
+          }
+        }
+        if (!state2.tmp.just_looking && item && item["suppress-author"]) {
+          if (!state2.tmp.probably_rendered_something) {
+            state2.tmp.element_trace.push("suppress-me");
+          }
+        }
+      } else if ("date" === this.name) {
+        if (!state2.tmp.just_looking && item && item["author-only"] && state2.tmp.area !== "intext") {
+          if (state2.tmp.probably_rendered_something) {
+            state2.tmp.element_trace.push("suppress-me");
+          }
+        }
+      } else {
+        if (!state2.tmp.just_looking && item && item["author-only"] && state2.tmp.area !== "intext") {
+          if (!state2.tmp.probably_rendered_something && state2.tmp.can_block_substitute) {
+          } else {
+            state2.tmp.element_trace.push("suppress-me");
+          }
+        } else if (item && item["suppress-author"]) {
+          state2.tmp.element_trace.push("do-not-suppress-me");
+        }
+      }
+    };
+    this.execs.push(element_trace);
+  }
+  display = this.strings.cls;
+  this.strings.cls = false;
+  if (state.build.render_nesting_level === 0) {
+    if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
+      bib_first = new Token("group", START);
+      bib_first.decorations = [["@display", "left-margin"]];
+      func = function(state2, Item) {
+        if (!state2.tmp.render_seen) {
+          bib_first.strings.first_blob = Item.id;
+          state2.output.startTag("bib_first", bib_first);
+        }
+      };
+      bib_first.execs.push(func);
+      target.push(bib_first);
+    } else if (DISPLAY_CLASSES.indexOf(display) > -1) {
+      bib_first = new Token("group", START);
+      bib_first.decorations = [["@display", display]];
+      func = function(state2, Item) {
+        bib_first.strings.first_blob = Item.id;
+        state2.output.startTag("bib_first", bib_first);
+      };
+      bib_first.execs.push(func);
+      target.push(bib_first);
+    }
+    state.build.cls = display;
+  }
+  state.build.render_nesting_level += 1;
+  if (state.build.substitute_level.value() === 1) {
+    choose_start = new Token("choose", START);
+    Node_choose.build.call(choose_start, state, target);
+    if_start = new Token("if", START);
+    func = function() {
+      if (state.tmp.can_substitute.value()) {
+        return true;
+      }
+      return false;
+    };
+    if_start.tests ? {} : if_start.tests = [];
+    if_start.tests.push(func);
+    if_start.test = state.fun.match.any(this, state, if_start.tests);
+    target.push(if_start);
+  }
+  if (state.sys.variableWrapper && this.variables_real && this.variables_real.length) {
+    func = function(state2, Item, item) {
+      if (!state2.tmp.just_looking && !state2.tmp.suppress_decorations) {
+        const variable_entry = new Token("text", START);
+        variable_entry.decorations = [["@showid", "true"]];
+        state2.output.startTag("variable_entry", variable_entry);
+        let position = null;
+        if (item) {
+          position = item.position;
+        }
+        if (!position) {
+          position = 0;
+        }
+        const positionMap = [
+          "first",
+          "container-subsequent",
+          "subsequent",
+          "ibid",
+          "ibid-with-locator"
+        ];
+        let noteNumber = 0;
+        if (item && item.noteIndex) {
+          noteNumber = item.noteIndex;
+        }
+        let firstReferenceNoteNumber = 0;
+        if (item && item["first-reference-note-number"]) {
+          firstReferenceNoteNumber = item["first-reference-note-number"];
+        }
+        let firstContainerReferenceNoteNumber = 0;
+        if (item && item["first-container-reference-note-number"]) {
+          firstContainerReferenceNoteNumber = item["first-container-reference-note-number"];
+        }
+        let citationNumber = 0;
+        if (item && item["citation-number"]) {
+          citationNumber = item["citation-number"];
+        }
+        let index = 0;
+        if (item && item.index) {
+          index = item.index;
+        }
+        const params = {
+          itemData: Item,
+          variableNames: this.variables,
+          context: state2.tmp.area,
+          xclass: state2.opt.xclass,
+          position: positionMap[position],
+          "note-number": noteNumber,
+          "first-reference-note-number": firstReferenceNoteNumber,
+          "first-container-reference-note-number": firstContainerReferenceNoteNumber,
+          "citation-number": citationNumber,
+          "index": index,
+          "mode": state2.opt.mode
+        };
+        state2.output.current.value().params = params;
+      }
+    };
+    this.execs.push(func);
+  }
+}
+function Util_substituteEnd(state, target) {
+  let func, bib_first_end, bib_other, if_end, choose_end, author_substitute, str;
+  if (state.sys.variableWrapper && (this.hasVariable || this.variables_real && this.variables_real.length)) {
+    func = function(state2) {
+      if (!state2.tmp.just_looking && !state2.tmp.suppress_decorations) {
+        state2.output.endTag("variable_entry");
+      }
+    };
+    this.execs.push(func);
+  }
+  func = function(state2) {
+    for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
+      if ("@strip-periods" === this.decorations[i][0] && "true" === this.decorations[i][1]) {
+        state2.tmp.strip_periods += -1;
+        break;
+      }
+    }
+  };
+  this.execs.push(func);
+  state.build.render_nesting_level += -1;
+  if (state.build.render_nesting_level === 0) {
+    if (state.build.cls) {
+      func = function(state2) {
+        state2.output.endTag("bib_first");
+      };
+      this.execs.push(func);
+      state.build.cls = false;
+    } else if (state.build.area === "bibliography" && state.bibliography.opt["second-field-align"]) {
+      bib_first_end = new Token("group", END);
+      func = function(state2) {
+        if (!state2.tmp.render_seen) {
+          state2.output.endTag("bib_first");
+        }
+      };
+      bib_first_end.execs.push(func);
+      target.push(bib_first_end);
+      bib_other = new Token("group", START);
+      bib_other.decorations = [["@display", "right-inline"]];
+      func = function(state2) {
+        if (!state2.tmp.render_seen) {
+          state2.tmp.render_seen = true;
+          state2.output.startTag("bib_other", bib_other);
+        }
+      };
+      bib_other.execs.push(func);
+      target.push(bib_other);
+    }
+  }
+  if (state.build.substitute_level.value() === 1) {
+    if_end = new Token("if", END);
+    target.push(if_end);
+    choose_end = new Token("choose", END);
+    Node_choose.build.call(choose_end, state, target);
+  }
+  if ("names" === this.name || "text" === this.name && this.variables_real !== "title") {
+    author_substitute = new Token("text", SINGLETON);
+    const substitution_name = this.name;
+    func = function(state2, Item) {
+      if (state2.tmp.area !== "bibliography") {
+        return;
+      }
+      if ("string" !== typeof state2.bibliography.opt["subsequent-author-substitute"]) {
+        return;
+      }
+      if (this.variables_real && !Item[this.variables_real]) {
+        return;
+      }
+      if (this.variables_real && substitution_name === "names") {
+        return;
+      }
+      const subrule = state2.bibliography.opt["subsequent-author-substitute-rule"];
+      let i, ilen;
+      const printing = !state2.tmp.suppress_decorations;
+      if (printing && state2.tmp.subsequent_author_substitute_ok) {
+        if (state2.tmp.rendered_name) {
+          if ("partial-each" === subrule || "partial-first" === subrule) {
+            let dosub = true;
+            let rendered_name = [];
+            for (let i2 = 0, ilen2 = state2.tmp.name_node.children.length; i2 < ilen2; i2 += 1) {
+              const name = state2.tmp.rendered_name[i2];
+              if (dosub && state2.tmp.last_rendered_name && state2.tmp.last_rendered_name.length > i2 - 1 && name && !name.localeCompare(state2.tmp.last_rendered_name[i2])) {
+                str = new Blob(state2[state2.tmp.area].opt["subsequent-author-substitute"]);
+                state2.tmp.name_node.children[i2].blobs = [str];
+                if ("partial-first" === subrule) {
+                  dosub = false;
+                }
+              } else {
+                dosub = false;
+              }
+              rendered_name.push(name);
+            }
+            state2.tmp.last_rendered_name = rendered_name;
+          } else if ("complete-each" === subrule) {
+            let rendered_name = state2.tmp.rendered_name.join(",");
+            if (rendered_name) {
+              if (state2.tmp.last_rendered_name && !rendered_name.localeCompare(state2.tmp.last_rendered_name)) {
+                for (let i2 = 0, ilen2 = state2.tmp.name_node.children.length; i2 < ilen2; i2 += 1) {
+                  str = new Blob(state2[state2.tmp.area].opt["subsequent-author-substitute"]);
+                  state2.tmp.name_node.children[i2].blobs = [str];
+                }
+              }
+              state2.tmp.last_rendered_name = rendered_name;
+            }
+          } else {
+            let rendered_name = state2.tmp.rendered_name.join(",");
+            if (rendered_name) {
+              if (state2.tmp.last_rendered_name && !rendered_name.localeCompare(state2.tmp.last_rendered_name)) {
+                str = new Blob(state2[state2.tmp.area].opt["subsequent-author-substitute"]);
+                if (state2.tmp.label_blob) {
+                  state2.tmp.name_node.top.blobs = [str, state2.tmp.label_blob];
+                } else if (state2.tmp.name_node.top.blobs.length) {
+                  state2.tmp.name_node.top.blobs[0].blobs = [str];
+                } else {
+                  state2.tmp.name_node.top.blobs = [str];
+                }
+                state2.tmp.substituted_variable = substitution_name;
+              }
+              state2.tmp.last_rendered_name = rendered_name;
+            }
+          }
+          state2.tmp.subsequent_author_substitute_ok = false;
+        }
+      }
+    };
+    this.execs.push(func);
+  }
+  if ("text" === this.name && !this.postponed_macro || ["number", "date", "names"].indexOf(this.name) > -1) {
+    func = function(state2, Item) {
+      if (state2.tmp.element_trace.mystack.length > 1) {
+        state2.tmp.element_trace.pop();
+      }
+    };
+    this.execs.push(func);
+  }
+}
+
+// src/util/publishers.ts
+var PublisherOutput = class {
+  constructor(state, group_tok) {
+    __publicField(this, "state");
+    __publicField(this, "group_tok");
+    __publicField(this, "varlist");
+    __publicField(this, "and_blob");
+    __publicField(this, "publisher-list");
+    __publicField(this, "publisher-place-list");
+    __publicField(this, "publisher-token");
+    __publicField(this, "publisher-place-token");
+    this.state = state;
+    this.group_tok = group_tok;
+    this.varlist = [];
+  }
+  render() {
+    this.clearVars();
+    this.composeAndBlob();
+    this.composeElements();
+    this.composePublishers();
+    this.joinPublishers();
+  }
+  composeAndBlob() {
+    this.and_blob = {};
+    let and_term = false;
+    if (this.group_tok.strings.and === "text") {
+      and_term = this.state.getTerm("and");
+    } else if (this.group_tok.strings.and === "symbol") {
+      and_term = "&";
+    }
+    const tok = new Token();
+    tok.strings.suffix = " ";
+    tok.strings.prefix = " ";
+    this.state.output.append(and_term, tok, true);
+    const no_delim = this.state.output.pop();
+    tok.strings.prefix = this.group_tok.strings["subgroup-delimiter"];
+    this.state.output.append(and_term, tok, true);
+    const with_delim = this.state.output.pop();
+    this.and_blob.single = false;
+    this.and_blob.multiple = false;
+    if (and_term) {
+      if (this.group_tok.strings["subgroup-delimiter-precedes-last"] === "always") {
+        this.and_blob.single = with_delim;
+      } else if (this.group_tok.strings["subgroup-delimiter-precedes-last"] === "never") {
+        this.and_blob.single = no_delim;
+        this.and_blob.multiple = no_delim;
+      } else {
+        this.and_blob.single = no_delim;
+        this.and_blob.multiple = with_delim;
+      }
+    }
+  }
+  composeElements() {
+    for (let i = 0, ilen = 2; i < ilen; i += 1) {
+      const varname = ["publisher", "publisher-place"][i];
+      for (let j = 0, jlen = this["publisher-list"].length; j < jlen; j += 1) {
+        let str = this[varname + "-list"][j];
+        const tok = this[varname + "-token"];
+        this.state.output.append(str, tok, true);
+        this[varname + "-list"][j] = this.state.output.pop();
+      }
+    }
+  }
+  composePublishers() {
+    let blobs;
+    for (let i = 0, ilen = this["publisher-list"].length; i < ilen; i += 1) {
+      blobs = [this[this.varlist[0] + "-list"][i], this[this.varlist[1] + "-list"][i]];
+      this["publisher-list"][i] = this._join(blobs, this.group_tok.strings.delimiter);
+    }
+  }
+  joinPublishers() {
+    let blobs = this["publisher-list"];
+    const publishers = this._join(blobs, this.group_tok.strings["subgroup-delimiter"], this.and_blob.single, this.and_blob.multiple, this.group_tok);
+    this.state.output.append(publishers, "literal");
+  }
+  _purgeEmptyBlobs(blobs) {
+    for (let i = blobs.length - 1; i > -1; i -= 1) {
+      if (!blobs[i] || blobs[i].length === 0 || !blobs[i].blobs.length) {
+        blobs = blobs.slice(0, i).concat(blobs.slice(i + 1));
+      }
+    }
+    return blobs;
+  }
+  _join(blobs, delimiter, finalJoin, ..._extra) {
+    let i, ilen;
+    if (!blobs) {
+      return false;
+    }
+    blobs = this._purgeEmptyBlobs(blobs);
+    if (!blobs.length) {
+      return false;
+    }
+    if (blobs.length > 1) {
+      if (blobs.length === 2) {
+        if (!finalJoin) {
+          blobs[0].strings.suffix += delimiter;
+        } else {
+          blobs = [blobs[0], finalJoin, blobs[1]];
+        }
+      } else {
+        let offset;
+        if (finalJoin) {
+          offset = 1;
+        } else {
+          offset = 0;
+        }
+        const blob = blobs.pop();
+        for (let i2 = 0, ilen2 = blobs.length - offset; i2 < ilen2; i2 += 1) {
+          blobs[i2].strings.suffix += delimiter;
+        }
+        blobs.push(finalJoin);
+        blobs.push(blob);
+      }
+    }
+    this.state.output.openLevel();
+    for (let i2 = 0, ilen2 = blobs.length; i2 < ilen2; i2 += 1) {
+      this.state.output.append(blobs[i2], false, true);
+    }
+    this.state.output.closeLevel();
+    return this.state.output.pop();
+  }
+  _getToken(tokenname) {
+    const token = this[tokenname];
+    if (tokenname === "institution") {
+      const newtoken = new Token();
+      return newtoken;
+    }
+    return token;
+  }
+  clearVars() {
+    this.state.tmp["publisher-list"] = false;
+    this.state.tmp["publisher-place-list"] = false;
+    this.state.tmp["publisher-group-token"] = false;
+    this.state.tmp["publisher-token"] = false;
+    this.state.tmp["publisher-place-token"] = false;
+  }
+};
+
+// src/node/else.ts
+var Node_else = {
+  build: function(state, target) {
+    target.push(this);
+  },
+  configure: function(state, pos) {
+    if (this.tokentype === START) {
+      state.configure.fail[state.configure.fail.length - 1] = pos;
+    }
+  }
+};
+
+// src/node/if.ts
+var Node_if = {
+  build: function(state, target) {
+    Conditions.TopNode.call(this, state, target);
+    target.push(this);
+  },
+  configure: function(state, pos) {
+    Conditions.Configure.call(this, state, pos);
+  }
+};
+
+// src/node/group.ts
+var Node_group = {
+  build: function(state, target, realGroup) {
+    let func, execs;
+    this.realGroup = realGroup;
+    if (this.tokentype === START) {
+      Util_substituteStart.call(this, state, target);
+      if (state.build.substitute_level.value()) {
+        state.build.substitute_level.replace(state.build.substitute_level.value() + 1);
+      }
+      if (!this.juris) {
+        target.push(this);
+      }
+      func = function(state2) {
+        state2.output.startTag("group", this);
+        if (this.strings.label_form_override) {
+          if (!state2.tmp.group_context.tip.label_form) {
+            state2.tmp.group_context.tip.label_form = this.strings.label_form_override;
+          }
+        }
+        if (this.strings.label_capitalize_if_first_override) {
+          if (!state2.tmp.group_context.tip.label_capitalize_if_first) {
+            state2.tmp.group_context.tip.label_capitalize_if_first = this.strings.label_capitalize_if_first_override;
+          }
+        }
+        if (this.realGroup) {
+          if (state2.tmp.group_context.tip.condition) {
+            UPDATE_GROUP_CONTEXT_CONDITION(state2, this.strings.prefix, null, this);
+          }
+          let condition = false;
+          let force_suppress = false;
+          if (state2.tmp.group_context.mystack.length) {
+            state2.output.current.value().parent = state2.tmp.group_context.tip.output_tip;
+          }
+          let label_form = state2.tmp.group_context.tip.label_form;
+          if (!label_form) {
+            label_form = this.strings.label_form_override;
+          }
+          let label_capitalize_if_first = state2.tmp.group_context.tip.label_capitalize_if_first;
+          if (!label_capitalize_if_first) {
+            label_capitalize_if_first = this.strings.label_capitalize_if_first;
+          }
+          if (state2.tmp.group_context.tip.condition) {
+            condition = state2.tmp.group_context.tip.condition;
+            force_suppress = state2.tmp.group_context.tip.force_suppress;
+          } else if (this.strings.reject) {
+            condition = {
+              test: this.strings.reject,
+              not: true
+            };
+          } else if (this.strings.require) {
+            condition = {
+              test: this.strings.require,
+              not: false
+            };
+          }
+          const context = {
+            old_term_predecessor: state2.tmp.term_predecessor,
+            term_intended: false,
+            variable_attempt: false,
+            variable_success: false,
+            variable_success_parent: state2.tmp.group_context.tip.variable_success,
+            output_tip: state2.output.current.tip,
+            label_form,
+            label_static: state2.tmp.group_context.tip.label_static,
+            label_capitalize_if_first,
+            parallel_delimiter_override: this.strings.set_parallel_delimiter_override,
+            parallel_delimiter_override_on_suppress: this.strings.set_parallel_delimiter_override_on_suppress,
+            condition,
+            force_suppress,
+            done_vars: state2.tmp.group_context.tip.done_vars.slice()
+          };
+          if (this.non_parallel) {
+            let non_parallel = state2.tmp.group_context.tip.non_parallel;
+            if (!non_parallel) {
+              non_parallel = {};
+            }
+            Object.assign(non_parallel, this.non_parallel);
+            context.non_parallel = non_parallel;
+          }
+          if (this.parallel_first) {
+            let parallel_first = state2.tmp.group_context.tip.parallel_first;
+            if (!parallel_first) {
+              parallel_first = {};
+            }
+            Object.assign(parallel_first, this.parallel_first);
+            context.parallel_first = parallel_first;
+          }
+          if (this.parallel_last) {
+            let parallel_last = state2.tmp.group_context.tip.parallel_last;
+            if (!parallel_last) {
+              parallel_last = {};
+            }
+            Object.assign(parallel_last, this.parallel_last);
+            context.parallel_last = parallel_last;
+          }
+          if (state2.tmp.abbrev_trimmer && state2.tmp.abbrev_trimmer.LAST_TO_FIRST && context.parallel_last) {
+            if (!context.parallel_first) {
+              context.parallel_first = {};
+            }
+            for (let varname in state2.tmp.abbrev_trimmer.LAST_TO_FIRST) {
+              if (context.parallel_last[varname]) {
+                context.parallel_first[varname] = true;
+                delete context.parallel_last[varname];
+              }
+            }
+          }
+          state2.tmp.group_context.push(context);
+          if (state2.tmp.abbrev_trimmer && this.parallel_last_to_first) {
+            if (!state2.tmp.abbrev_trimmer.LAST_TO_FIRST) {
+              state2.tmp.abbrev_trimmer.LAST_TO_FIRST = {};
+            }
+            for (let varname in this.parallel_last_to_first) {
+              state2.tmp.abbrev_trimmer.LAST_TO_FIRST[varname] = true;
+            }
+          }
+        }
+      };
+      execs = [];
+      execs.push(func);
+      this.execs = execs.concat(this.execs);
+      if (this.strings["has-publisher-and-publisher-place"]) {
+        state.build["publisher-special"] = true;
+        if (this.strings["subgroup-delimiter"]) {
+          func = function(state2, Item) {
+            if (Item.publisher && Item["publisher-place"]) {
+              const publisher_lst = Item.publisher.split(/;\s*/);
+              const publisher_place_lst = Item["publisher-place"].split(/;\s*/);
+              if (publisher_lst.length > 1 && publisher_lst.length === publisher_place_lst.length) {
+                state2.publisherOutput = new PublisherOutput(state2, this);
+                state2.publisherOutput["publisher-list"] = publisher_lst;
+                state2.publisherOutput["publisher-place-list"] = publisher_place_lst;
+              }
+            }
+          };
+          this.execs.push(func);
+        }
+      }
+      if (this.juris) {
+        const choose_start = new Token("choose", START);
+        Node_choose.build.call(choose_start, state, target);
+        const if_start = new Token("if", START);
+        func = /* @__PURE__ */ (function(macroName) {
+          return function(Item, item) {
+            return INIT_JURISDICTION_MACROS(state, Item, item, macroName);
+          };
+        })(this.juris);
+        if_start.tests ? {} : if_start.tests = [];
+        if_start.tests.push(func);
+        if_start.test = state.fun.match.any(if_start, state, if_start.tests);
+        target.push(if_start);
+        const text_node = new Token("text", SINGLETON);
+        func = function(state2, Item, item) {
+          let itemItem = Item;
+          if (item && item["best-jurisdiction"] && this.juris === "juris-locator") {
+            itemItem = item;
+          }
+          let next = 0;
+          if (state2.juris[itemItem["best-jurisdiction"]][this.juris]) {
+            while (next < state2.juris[itemItem["best-jurisdiction"]][this.juris].length) {
+              next = tokenExec.call(state2, state2.juris[itemItem["best-jurisdiction"]][this.juris][next], Item, item);
+            }
+          }
+        };
+        text_node.juris = this.juris;
+        text_node.execs.push(func);
+        target.push(text_node);
+        const if_end = new Token("if", END);
+        Node_if.build.call(if_end, state, target);
+        const else_start = new Token("else", START);
+        Node_else.build.call(else_start, state, target);
+      }
+    }
+    if (this.tokentype === END) {
+      if (state.build["publisher-special"]) {
+        state.build["publisher-special"] = false;
+        func = function(state2) {
+          if (state2.publisherOutput) {
+            state2.publisherOutput.render();
+            state2.publisherOutput = false;
+          }
+        };
+        this.execs.push(func);
+      }
+      func = function(state2, Item, item) {
+        if (!state2.tmp.group_context.tip.condition) {
+          if (state2.output.current.tip.strings.suffix) {
+            state2.tmp.just_did_number = false;
+          }
+        }
+        state2.output.endTag();
+        if (this.realGroup) {
+          const flags = state2.tmp.group_context.pop();
+          if (flags.parallel_delimiter_override) {
+            state2.tmp.group_context.tip.parallel_delimiter_override = flags.parallel_delimiter_override;
+            if (!state2.tmp.just_looking && state2.registry.registry[Item.id].master) {
+              state2.registry.registry[Item.id].parallel_delimiter_override = flags.parallel_delimiter_override;
+            }
+          }
+          if (flags.parallel_delimiter_override_on_suppress) {
+            state2.tmp.group_context.tip.parallel_delimiter_override_on_suppress = flags.parallel_delimiter_override_on_suppress;
+          }
+          if (state2.tmp.area === "bibliography_sort") {
+            const citationNumberIdx = flags.done_vars.indexOf("citation-number");
+            if (this.strings.sort_direction && citationNumberIdx > -1 && state2.tmp.group_context.length() == 1) {
+              if (this.strings.sort_direction === DESCENDING) {
+                state2.bibliography_sort.opt.citation_number_sort_direction = DESCENDING;
+              } else {
+                state2.bibliography_sort.opt.citation_number_sort_direction = ASCENDING;
+              }
+              flags.done_vars = flags.done_vars.slice(0, citationNumberIdx).concat(flags.done_vars.slice(citationNumberIdx + 1));
+            }
+          }
+          if (flags.condition) {
+            flags.force_suppress = EVALUATE_GROUP_CONDITION(state2, flags);
+          }
+          if (state2.tmp.group_context.tip.condition) {
+            state2.tmp.group_context.tip.force_suppress = flags.force_suppress;
+          }
+          if (!flags.force_suppress && (flags.variable_success || flags.term_intended && !flags.variable_attempt)) {
+            if (!this.isJurisLocatorLabel) {
+              state2.tmp.group_context.tip.variable_success = true;
+            }
+            const blobs = state2.output.current.value().blobs;
+            const pos = state2.output.current.value().blobs.length - 1;
+            if (!state2.tmp.just_looking && (flags.non_parallel || flags.parallel_last || flags.parallel_first || flags.parallel_delimiter_override || flags.parallel_delimiter_override_on_suppress)) {
+              const hasRepeat = state2.parallel.checkRepeats(flags);
+              if (hasRepeat) {
+                if (blobs) {
+                  blobs.pop();
+                }
+              }
+              if (state2.tmp.cite_index > 0 && (hasRepeat || !flags.parallel_first && !flags.parallel_last && !flags.non_parallel)) {
+                const info = state2.tmp.suppress_repeats[state2.tmp.cite_index - 1];
+                if (hasRepeat && flags.parallel_delimiter_override_on_suppress && (info.SIBLING || info.ORPHAN)) {
+                  state2.output.queue.slice(-1)[0].parallel_delimiter = flags.parallel_delimiter_override_on_suppress;
+                } else if (flags.parallel_delimiter_override && info.SIBLING) {
+                  state2.output.queue.slice(-1)[0].parallel_delimiter = flags.parallel_delimiter_override;
+                }
+              }
+            }
+          } else {
+            state2.tmp.term_predecessor = flags.old_term_predecessor;
+            state2.tmp.group_context.tip.variable_attempt = flags.variable_attempt;
+            if (flags.force_suppress && !state2.tmp.group_context.tip.condition) {
+              state2.tmp.group_context.tip.variable_attempt = true;
+              state2.tmp.group_context.tip.variable_success = flags.variable_success_parent;
+            }
+            if (flags.force_suppress) {
+              for (let i = 0, ilen = flags.done_vars.length; i < ilen; i++) {
+                const doneVar = flags.done_vars[i];
+                for (let j = 0, jlen = state2.tmp.done_vars.length; j < jlen; j++) {
+                  if (state2.tmp.done_vars[j] === doneVar) {
+                    state2.tmp.done_vars = state2.tmp.done_vars.slice(0, j).concat(state2.tmp.done_vars.slice(j + 1));
+                  }
+                }
+              }
+            }
+            if (state2.output.current.value().blobs) {
+              state2.output.current.value().blobs.pop();
+            }
+          }
+        }
+      };
+      this.execs.push(func);
+      if (this.juris) {
+        const else_end = new Token("else", END);
+        Node_else.build.call(else_end, state, target);
+        const choose_end = new Token("choose", END);
+        Node_choose.build.call(choose_end, state, target);
+      }
+    }
+    if (this.tokentype === END) {
+      if (!this.juris) {
+        target.push(this);
+      }
+      if (state.build.substitute_level.value()) {
+        state.build.substitute_level.replace(state.build.substitute_level.value() - 1);
+      }
+      Util_substituteEnd.call(this, state, target);
+    }
+  }
+};
+
+// src/util/nodes.ts
+function tokenExec(token, Item, item) {
+  let next, maybenext, exec, debug2;
+  debug2 = false;
+  next = token.next;
+  maybenext = false;
+  const record = function(result) {
+    if (result) {
+      this.tmp.jump.replace("succeed");
+      return token.succeed;
+    } else {
+      this.tmp.jump.replace("fail");
+      return token.fail;
+    }
+  };
+  if (token.test) {
+    next = record.call(this, token.test(Item, item));
+  }
+  for (let i = 0, ilen = token.execs.length; i < ilen; i++) {
+    exec = token.execs[i];
+    maybenext = exec.call(token, this, Item, item);
+    if (maybenext) {
+      next = maybenext;
+    }
+  }
+  if (debug2) {
+    debug2(token.name + " (" + token.tokentype + ") ---> done");
+  }
+  return next;
+}
+function expandMacro(macro_key_token, target) {
+  let mkey, macro_nodes, end_of_macro, func;
+  mkey = macro_key_token.postponed_macro;
+  const sort_direction = macro_key_token.strings.sort_direction;
+  macro_key_token = new Token("group", START);
+  let hasDate = false;
+  let macroid = false;
+  macro_nodes = this.cslXml.getNodesByName(this.cslXml.dataObj, "macro", mkey);
+  if (macro_nodes.length) {
+    macroid = this.cslXml.getAttributeValue(macro_nodes[0], "cslid");
+    hasDate = this.cslXml.getAttributeValue(macro_nodes[0], "macro-has-date");
+  }
+  if (hasDate) {
+    mkey = mkey + "@" + this.build.current_default_locale;
+    func = function(state) {
+      if (state.tmp.extension) {
+        state.tmp["doing-macro-with-date"] = true;
+      }
+    };
+    macro_key_token.execs.push(func);
+  }
+  if (this.build.macro_stack.indexOf(mkey) > -1) {
+    error('CSL processor error: call to macro "' + mkey + '" would cause an infinite loop');
+  } else {
+    this.build.macro_stack.push(mkey);
+  }
+  macro_key_token.cslid = macroid;
+  if (MODULE_MACROS[mkey]) {
+    macro_key_token.juris = mkey;
+    this.opt.update_mode = POSITION;
+  }
+  Node_group.build.call(macro_key_token, this, target, true);
+  if (!this.cslXml.getNodeValue(macro_nodes)) {
+    error('CSL style error: undefined macro "' + mkey + '"');
+  }
+  let mytarget = getMacroTarget.call(this, mkey);
+  if (mytarget) {
+    buildMacro.call(this, mytarget, macro_nodes);
+    configureMacro.call(this, mytarget);
+  }
+  if (this.build.extension) {
+    let func2 = /* @__PURE__ */ (function(macro_name) {
+      return function(state, Item, item) {
+        let next = 0;
+        while (next < state.sort_macros[macro_name].length) {
+          next = tokenExec.call(state, state.sort_macros[macro_name][next], Item, item);
+        }
+      };
+    })(mkey);
+    const text_node = new Token("text", SINGLETON);
+    text_node.execs.push(func2);
+    target.push(text_node);
+  } else {
+    let func2 = /* @__PURE__ */ (function(macro_name) {
+      return function(state, Item, item) {
+        let next = 0;
+        while (next < state.macros[macro_name].length) {
+          next = tokenExec.call(state, state.macros[macro_name][next], Item, item);
+        }
+      };
+    })(mkey);
+    const text_node = new Token("text", SINGLETON);
+    text_node.execs.push(func2);
+    target.push(text_node);
+  }
+  end_of_macro = new Token("group", END);
+  end_of_macro.strings.sort_direction = sort_direction;
+  if (hasDate) {
+    func = function(state) {
+      if (state.tmp.extension) {
+        state.tmp["doing-macro-with-date"] = false;
+      }
+    };
+    end_of_macro.execs.push(func);
+  }
+  if (macro_key_token.juris) {
+    end_of_macro.juris = mkey;
+  }
+  Node_group.build.call(end_of_macro, this, target, true);
+  this.build.macro_stack.pop();
+}
+function getMacroTarget(mkey) {
+  let mytarget = false;
+  if (this.build.extension) {
+    if (!this.sort_macros) {
+      this.sort_macros = {};
+    }
+    if (!this.sort_macros[mkey]) {
+      mytarget = [];
+      this.sort_macros[mkey] = mytarget;
+    }
+  } else if (!this.macros[mkey]) {
+    mytarget = [];
+    this.macros[mkey] = mytarget;
+  }
+  return mytarget;
+}
+function buildMacro(mytarget, macro_nodes) {
+  const builder = makeBuilder(this, mytarget);
+  let mynode;
+  if ("undefined" === typeof macro_nodes.length) {
+    mynode = macro_nodes;
+  } else {
+    mynode = macro_nodes[0];
+  }
+  builder(mynode);
+}
+function configureMacro(mytarget) {
+  this.configureTokenList(mytarget);
+}
+function XmlToToken(state, tokentype, explicitTarget, var_stack) {
+  let name, txt, attrfuncs, attributes, decorations, token, key, target;
+  name = state.cslXml.nodename(this);
+  if (state.build.skip && state.build.skip !== name) {
+    return;
+  }
+  if (!name) {
+    txt = state.cslXml.content(this);
+    if (txt) {
+      state.build.text = txt;
+    }
+    return;
+  }
+  if (!internals.Node[state.cslXml.nodename(this)]) {
+    error('Undefined node name "' + name + '".');
+  }
+  attrfuncs = [];
+  attributes = state.cslXml.attributes(this);
+  decorations = setDecorations.call(this, state, attributes);
+  token = new Token(name, tokentype);
+  if (tokentype !== END || name === "if" || name === "else-if" || name === "layout") {
+    for (let key2 in attributes) {
+      if (attributes.hasOwnProperty(key2)) {
+        if (tokentype === END && key2 !== "@language" && key2 !== "@locale") {
+          continue;
+        }
+        if (attributes.hasOwnProperty(key2)) {
+          if (Attributes[key2]) {
+            try {
+              Attributes[key2].call(token, state, "" + attributes[key2]);
+            } catch (e) {
+              error(key2 + " attribute: " + e);
+            }
+          } else {
+            debug('warning: undefined attribute "' + key2 + '" in style');
+          }
+        }
+      }
+    }
+    token.decorations = decorations;
+    if (DATE_VARIABLES.indexOf(attributes["@variable"]) > -1) {
+      var_stack.push(token.variables);
+    }
+  } else if (tokentype === END && attributes["@variable"]) {
+    token.hasVariable = true;
+    if (DATE_VARIABLES.indexOf(attributes["@variable"]) > -1) {
+      token.variables = var_stack.pop();
+    }
+  }
+  if (explicitTarget) {
+    target = explicitTarget;
+  } else {
+    target = state[state.build.area].tokens;
+  }
+  internals.Node[name].build.call(token, state, target, true);
+}
+
+// src/engine/cite.ts
+function previewCitationCluster(citation, citationsPre, citationsPost, newMode) {
+  const oldMode = this.opt.mode;
+  this.setOutputFormat(newMode);
+  if (citation.citationID) {
+    delete citation.citationID;
+  }
+  let ret;
+  try {
+    ret = this.processCitationCluster(citation, citationsPre, citationsPost, PREVIEW);
+  } finally {
+    this.setOutputFormat(oldMode);
+  }
+  return ret[1];
+}
+function appendCitationCluster(citation) {
+  const citationsPre = [];
+  let len = this.registry.citationreg.citationByIndex.length;
+  for (let pos = 0; pos < len; pos += 1) {
+    let c = this.registry.citationreg.citationByIndex[pos];
+    citationsPre.push(["" + c.citationID, c.properties.noteIndex]);
+  }
+  return this.processCitationCluster(citation, citationsPre, [])[1];
+}
+function processCitationCluster(citation, citationsPre, citationsPost, flag) {
+  let c, preCitation, postCitation, i, ilen, j, jlen, k, klen, n, nlen, key, Item, item, noteCitations, textCitations, m, citationsInNote;
+  this.debug = false;
+  this.tmp.loadedItemIDs = {};
+  this.tmp.citation_errors = [];
+  this.registry.return_data = { "bibchange": false };
+  this.setCitationId(citation);
+  let oldCitationList;
+  let oldItemList;
+  let oldAmbigs;
+  if (flag === PREVIEW) {
+    if (this.debug) {
+      debug("****** start state save *********");
+    }
+    oldCitationList = this.registry.citationreg.citationByIndex.slice();
+    oldItemList = this.registry.reflist.slice();
+    const newCitationList = citationsPre.concat(citationsPost);
+    const newItemIds = {};
+    const newItemIdsList = [];
+    for (let i2 = 0, ilen2 = newCitationList.length; i2 < ilen2; i2 += 1) {
+      c = this.registry.citationreg.citationById[newCitationList[i2][0]];
+      for (let j2 = 0, jlen2 = c.citationItems.length; j2 < jlen2; j2 += 1) {
+        newItemIds[c.citationItems[j2].id] = true;
+        newItemIdsList.push("" + c.citationItems[j2].id);
+      }
+    }
+    for (let j2 = 0, jlen2 = citation.citationItems.length; j2 < jlen2; j2 += 1) {
+      newItemIds[citation.citationItems[j2].id] = true;
+      newItemIdsList.push("" + citation.citationItems[j2].id);
+    }
+    oldAmbigs = {};
+    for (let i2 = 0, ilen2 = oldItemList.length; i2 < ilen2; i2 += 1) {
+      if (!newItemIds[oldItemList[i2].id]) {
+        const oldAkey = this.registry.registry[oldItemList[i2].id].ambig;
+        const ids = this.registry.ambigcites[oldAkey];
+        if (ids) {
+          for (let j2 = 0, jlen2 = ids.length; j2 < jlen2; j2 += 1) {
+            oldAmbigs[ids[j2]] = cloneAmbigConfig(this.registry.registry[ids[j2]].disambig);
+          }
+        }
+      }
+    }
+    if (this.debug) {
+      debug("****** end state save *********");
+    }
+  }
+  this.tmp.taintedCitationIDs = {};
+  const sortedItems = [];
+  const rerunAkeys = {};
+  for (let i2 = 0, ilen2 = citation.citationItems.length; i2 < ilen2; i2 += 1) {
+    item = {};
+    for (let key2 in citation.citationItems[i2]) {
+      item[key2] = citation.citationItems[i2][key2];
+    }
+    Item = this.retrieveItem("" + item.id);
+    if (Item.id) {
+      this.transform.loadAbbreviation("default", "hereinafter", Item.id, Item.language);
+    }
+    item = parseLocator.call(this, item);
+    if (this.opt.development_extensions.consolidate_legal_items) {
+      this.remapSectionVariable([[Item, item]]);
+    }
+    if (this.opt.development_extensions.locator_label_parse) {
+      if (item.locator && ["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) === -1 && (!item.label || item.label === "page")) {
+        let m2 = LOCATOR_LABELS_REGEXP.exec(item.locator);
+        if (m2) {
+          const tryLabel = LOCATOR_LABELS_MAP[m2[2]];
+          if (this.getTerm(tryLabel)) {
+            item.label = tryLabel;
+            item.locator = m2[3];
+          }
+        }
+      }
+    }
+    let newitem = [Item, item];
+    sortedItems.push(newitem);
+    citation.citationItems[i2].item = Item;
+  }
+  citation.sortedItems = sortedItems;
+  const citationByIndex = [];
+  const citationById = {};
+  let lastNotePos;
+  for (let i2 = 0, ilen2 = citationsPre.length; i2 < ilen2; i2 += 1) {
+    preCitation = citationsPre[i2];
+    if (this.opt.development_extensions.strict_inputs) {
+      if (citationById[preCitation[0]]) {
+        error("Previously referenced citationID " + preCitation[0] + " encountered in citationsPre");
+      }
+      if (preCitation[1]) {
+        if (lastNotePos > preCitation[1]) {
+          debug("Note index sequence is not sane at citationsPre[" + i2 + "]");
+        }
+        lastNotePos = preCitation[1];
+      }
+    }
+    this.registry.citationreg.citationById[preCitation[0]].properties.noteIndex = preCitation[1];
+    citationByIndex.push(this.registry.citationreg.citationById[preCitation[0]]);
+    citationById[preCitation[0]] = this.registry.citationreg.citationById[preCitation[0]];
+  }
+  if (!citation.properties) {
+    citation.properties = {
+      noteIndex: 0
+    };
+  }
+  if (this.opt.development_extensions.strict_inputs) {
+    if (citationById[citation.citationID]) {
+      error("Citation with previously referenced citationID " + citation.citationID);
+    }
+    if (citation.properties.noteIndex) {
+      if (lastNotePos > citation.properties.noteIndex) {
+        debug("Note index sequence is not sane for citation " + citation.citationID);
+      }
+      lastNotePos = citation.properties.noteIndex;
+    }
+  }
+  citationByIndex.push(citation);
+  citationById[citation.citationID] = citation;
+  for (let i2 = 0, ilen2 = citationsPost.length; i2 < ilen2; i2 += 1) {
+    postCitation = citationsPost[i2];
+    if (this.opt.development_extensions.strict_inputs) {
+      if (citationById[postCitation[0]]) {
+        error("Previously referenced citationID " + postCitation[0] + " encountered in citationsPost");
+      }
+      if (postCitation[1]) {
+        if (lastNotePos > postCitation[1]) {
+          debug("Note index sequence is not sane at postCitation[" + i2 + "]");
+        }
+        lastNotePos = postCitation[1];
+      }
+    }
+    this.registry.citationreg.citationById[postCitation[0]].properties.noteIndex = postCitation[1];
+    citationByIndex.push(this.registry.citationreg.citationById[postCitation[0]]);
+    citationById[postCitation[0]] = this.registry.citationreg.citationById[postCitation[0]];
+  }
+  this.registry.citationreg.citationByIndex = citationByIndex;
+  this.registry.citationreg.citationById = citationById;
+  this.registry.citationreg.citationsByItemId = {};
+  if (this.opt.update_mode === POSITION) {
+    textCitations = [];
+    noteCitations = [];
+    citationsInNote = {};
+  }
+  const update_items = [];
+  for (let i2 = 0, ilen2 = citationByIndex.length; i2 < ilen2; i2 += 1) {
+    citationByIndex[i2].properties.index = i2;
+    for (let j2 = 0, jlen2 = citationByIndex[i2].sortedItems.length; j2 < jlen2; j2 += 1) {
+      item = citationByIndex[i2].sortedItems[j2];
+      if (!this.registry.citationreg.citationsByItemId[item[1].id]) {
+        this.registry.citationreg.citationsByItemId[item[1].id] = [];
+        update_items.push("" + item[1].id);
+      }
+      if (this.registry.citationreg.citationsByItemId[item[1].id].indexOf(citationByIndex[i2]) === -1) {
+        this.registry.citationreg.citationsByItemId[item[1].id].push(citationByIndex[i2]);
+      }
+    }
+    if (this.opt.update_mode === POSITION) {
+      if (citationByIndex[i2].properties.noteIndex) {
+        noteCitations.push(citationByIndex[i2]);
+      } else {
+        citationByIndex[i2].properties.noteIndex = 0;
+        textCitations.push(citationByIndex[i2]);
+      }
+    }
+  }
+  if (flag !== ASSUME_ALL_ITEMS_REGISTERED) {
+    if (this.debug) {
+      debug("****** start update items *********");
+    }
+    this.updateItems(update_items, null, null, true);
+    if (this.debug) {
+      debug("****** endo update items *********");
+    }
+  }
+  if (!this.opt.citation_number_sort && sortedItems && sortedItems.length > 1 && this.citation_sort.tokens.length > 0) {
+    for (let i2 = 0, ilen2 = sortedItems.length; i2 < ilen2; i2 += 1) {
+      sortedItems[i2][1].sortkeys = internals.getSortKeys.call(this, sortedItems[i2][0], "citation_sort");
+    }
+    if (this.opt.grouped_sort && !citation.properties.unsorted) {
+      for (let i2 = 0, ilen2 = sortedItems.length; i2 < ilen2; i2 += 1) {
+        const sortkeys = sortedItems[i2][1].sortkeys;
+        this.tmp.authorstring_request = true;
+        const mydisambig = this.registry.registry[sortedItems[i2][0].id].disambig;
+        this.tmp.authorstring_request = true;
+        getAmbiguousCite.call(this, sortedItems[i2][0], mydisambig);
+        const authorstring = this.registry.authorstrings[sortedItems[i2][0].id];
+        this.tmp.authorstring_request = false;
+        sortedItems[i2][1].sortkeys = [authorstring].concat(sortkeys);
+      }
+      sortedItems.sort(this.citation.srt.compareCompositeKeys);
+      let lastauthor = false;
+      let thiskey = false;
+      let thisauthor = false;
+      for (let i2 = 0, ilen2 = sortedItems.length; i2 < ilen2; i2 += 1) {
+        if (sortedItems[i2][1].sortkeys[0] !== lastauthor) {
+          thisauthor = sortedItems[i2][1].sortkeys[0];
+          thiskey = sortedItems[i2][1].sortkeys[1];
+        }
+        sortedItems[i2][1].sortkeys[0] = "" + thiskey + i2;
+        lastauthor = thisauthor;
+      }
+    }
+    if (!citation.properties.unsorted) {
+      sortedItems.sort(this.citation.srt.compareCompositeKeys);
+    }
+  }
+  if (this.opt.parallel.enable) {
+    this.parallel.StartCitation(citation.sortedItems);
+  }
+  let citations;
+  if (this.opt.update_mode === POSITION) {
+    for (let i2 = 0; i2 < 2; i2 += 1) {
+      let first_ref = {};
+      let last_ref = {};
+      let first_container_ref = {};
+      citations = [textCitations, noteCitations][i2];
+      for (let j2 = 0, jlen2 = citations.length; j2 < jlen2; j2 += 1) {
+        const onecitation = citations[j2];
+        if (!citations[j2].properties.noteIndex) {
+          citations[j2].properties.noteIndex = 0;
+        }
+        citations[j2].properties.noteIndex = parseInt(citations[j2].properties.noteIndex, 10);
+        if (j2 > 0 && onecitation.properties.noteIndex && citations[j2 - 1].properties.noteIndex > onecitation.properties.noteIndex) {
+          citationsInNote = {};
+          first_ref = {};
+          last_ref = {};
+          first_container_ref = {};
+        }
+        for (let k2 = 0, klen2 = onecitation.sortedItems.length; k2 < klen2; k2 += 1) {
+          if (onecitation.sortedItems[k2][1].parallel && onecitation.sortedItems[k2][1].parallel !== "first") {
+            continue;
+          }
+          if (!citationsInNote[onecitation.properties.noteIndex]) {
+            citationsInNote[onecitation.properties.noteIndex] = 1;
+          } else {
+            citationsInNote[onecitation.properties.noteIndex] += 1;
+          }
+        }
+        for (let k2 = 0, klen2 = citations[j2].sortedItems.length; k2 < klen2; k2 += 1) {
+          item = citations[j2].sortedItems[k2];
+          const item_id = item[0].id;
+          const first_id = item[0].legislation_id ? item[0].legislation_id : item[0].id;
+          const last_id = item[0].legislation_id ? item[0].legislation_id : item[0].container_id ? item[0].container_id : item[0].id;
+          const myxloc = item[1]["locator-extra"];
+          const mylocator = item[1].locator;
+          const mylabel = item[1].label;
+          let incitationid;
+          let incitationxloc;
+          if (k2 > 0) {
+            if (onecitation.sortedItems[k2 - 1][0].legislation_id) {
+              incitationid = onecitation.sortedItems[k2 - 1][0].legislation_id;
+            } else {
+              incitationid = onecitation.sortedItems[k2 - 1][1].id;
+              incitationxloc = onecitation.sortedItems[k2 - 1][1]["locator-extra"];
+              for (let l = k2 - 2; l > -1; l--) {
+                if (onecitation.sortedItems[l][1].parallel === "first") {
+                  incitationid = onecitation.sortedItems[l][1].id;
+                  incitationxloc = onecitation.sortedItems[l][1]["locator-extra"];
+                }
+              }
+            }
+          }
+          if (flag === PREVIEW) {
+            if (onecitation.citationID != citation.citationID) {
+              if ("undefined" === typeof first_ref[item[1].id]) {
+                first_ref[first_id] = onecitation.properties.noteIndex;
+                last_ref[last_id] = onecitation.properties.noteIndex;
+              } else {
+                last_ref[last_id] = onecitation.properties.noteIndex;
+              }
+              continue;
+            }
+          }
+          const oldvalue = {};
+          oldvalue.position = item[1].position;
+          oldvalue["first-reference-note-number"] = item[1]["first-reference-note-number"];
+          oldvalue["first-container-reference-note-number"] = item[1]["first-container-reference-note-number"];
+          oldvalue["near-note"] = item[1]["near-note"];
+          item[1]["first-reference-note-number"] = 0;
+          item[1]["first-container-reference-note-number"] = 0;
+          item[1]["near-note"] = false;
+          if (this.registry.citationreg.citationsByItemId[item_id]) {
+            if (this.opt.xclass === "note" && this.opt.has_disambiguate) {
+              const oldCount = this.registry.registry[item[0].id]["citation-count"];
+              const newCount = this.registry.citationreg.citationsByItemId[item_id].length;
+              this.registry.registry[item[0].id]["citation-count"] = this.registry.citationreg.citationsByItemId[item_id].length;
+              if ("number" === typeof oldCount) {
+                const oldCountCheck = oldCount < 2;
+                const newCountCheck = newCount < 2;
+                if (oldCountCheck !== newCountCheck) {
+                  for (let l = 0, llen = this.registry.citationreg.citationsByItemId[item_id].length; l < llen; l++) {
+                    rerunAkeys[this.registry.registry[item[0].id].ambig] = true;
+                    this.tmp.taintedCitationIDs[this.registry.citationreg.citationsByItemId[item_id][l].citationID] = true;
+                  }
+                }
+              } else {
+                for (let l = 0, llen = this.registry.citationreg.citationsByItemId[item_id].length; l < llen; l++) {
+                  rerunAkeys[this.registry.registry[item[0].id].ambig] = true;
+                  this.tmp.taintedCitationIDs[this.registry.citationreg.citationsByItemId[item_id][l].citationID] = true;
+                }
+              }
+            }
+          }
+          let oldlastid;
+          let oldlastxloc;
+          if ("undefined" === typeof last_ref[last_id] && onecitation.properties.mode !== "author-only") {
+            first_ref[first_id] = onecitation.properties.noteIndex;
+            last_ref[last_id] = onecitation.properties.noteIndex;
+            first_container_ref[last_id] = onecitation.properties.noteIndex;
+            item[1].position = POSITION_FIRST;
+          } else {
+            let ibidme = false;
+            let suprame = false;
+            let prevCitation = null;
+            if (j2 > 0) {
+              prevCitation = citations[j2 - 1];
+            }
+            const thisCitation = citations[j2];
+            if (j2 > 0) {
+              let old_last_id_offset = 1;
+              if (prevCitation.properties.mode === "author-only" && j2 > 1) {
+                old_last_id_offset = 2;
+              }
+              const adjusted_offset = j2 - old_last_id_offset;
+              if (citations[adjusted_offset].sortedItems.length) {
+                oldlastid = citations[adjusted_offset].sortedItems.slice(-1)[0][1].id;
+                oldlastxloc = citations[j2 - old_last_id_offset].sortedItems.slice(-1)[0][1]["locator-extra"];
+              }
+              if (prevCitation.sortedItems.length) {
+                if (prevCitation.sortedItems[0].slice(-1)[0].legislation_id) {
+                  oldlastid = prevCitation.sortedItems[0].slice(-1)[0].legislation_id;
+                }
+              }
+            }
+            if (j2 > 0 && k2 === 0 && prevCitation.properties.noteIndex !== thisCitation.properties.noteIndex) {
+              let useme = false;
+              let oldid = prevCitation.sortedItems[0][0].id;
+              if (prevCitation.sortedItems[0][0].legislation_id) {
+                oldid = prevCitation.sortedItems[0][0].legislation_id;
+              }
+              if (oldid == first_id && prevCitation.properties.noteIndex >= thisCitation.properties.noteIndex - 1) {
+                const prevxloc = prevCitation.sortedItems[0][1]["locator-extra"];
+                const thisxloc = thisCitation.sortedItems[0][1]["locator-extra"];
+                if ((citationsInNote[prevCitation.properties.noteIndex] === 1 || prevCitation.properties.noteIndex === 0) && prevxloc === thisxloc) {
+                  useme = true;
+                }
+              }
+              if (useme) {
+                ibidme = true;
+              } else {
+                suprame = true;
+              }
+            } else if (k2 > 0 && incitationid == first_id && incitationxloc == myxloc) {
+              ibidme = true;
+            } else if (k2 === 0 && j2 > 0 && prevCitation.properties.noteIndex == thisCitation.properties.noteIndex && prevCitation.sortedItems.length && oldlastid == first_id && oldlastxloc == myxloc) {
+              ibidme = true;
+            } else {
+              suprame = true;
+            }
+            let prev, prev_locator, prev_label, curr_locator, curr_label;
+            if (ibidme) {
+              if (k2 > 0) {
+                prev = onecitation.sortedItems[k2 - 1][1];
+              } else {
+                prev = citations[j2 - 1].sortedItems[0][1];
+              }
+              if (prev.locator) {
+                if (prev.label) {
+                  prev_label = prev.label;
+                } else {
+                  prev_label = "";
+                }
+                prev_locator = "" + prev.locator + prev_label;
+              } else {
+                prev_locator = prev.locator;
+              }
+              if (mylocator) {
+                if (mylabel) {
+                  curr_label = mylabel;
+                } else {
+                  curr_label = "";
+                }
+                curr_locator = "" + mylocator + curr_label;
+              } else {
+                curr_locator = mylocator;
+              }
+            }
+            if (ibidme && prev_locator && !curr_locator) {
+              ibidme = false;
+              suprame = true;
+            }
+            if (ibidme) {
+              if (!prev_locator && curr_locator) {
+                item[1].position = POSITION_IBID_WITH_LOCATOR;
+              } else if (!prev_locator && !curr_locator) {
+                item[1].position = POSITION_IBID;
+              } else if (prev_locator && curr_locator === prev_locator) {
+                item[1].position = POSITION_IBID;
+              } else if (prev_locator && curr_locator && curr_locator !== prev_locator) {
+                item[1].position = POSITION_IBID_WITH_LOCATOR;
+              } else {
+                ibidme = false;
+                suprame = true;
+              }
+            }
+            if (suprame) {
+              item[1].position = POSITION_CONTAINER_SUBSEQUENT;
+              if ("undefined" === typeof first_ref[first_id]) {
+                first_ref[first_id] = onecitation.properties.noteIndex;
+              } else {
+                item[1].position = POSITION_SUBSEQUENT;
+              }
+            }
+            if (suprame || ibidme) {
+              if (onecitation.properties.mode === "author-only") {
+                item[1].position = POSITION_FIRST;
+              }
+              if (first_container_ref[last_id] != onecitation.properties.noteIndex) {
+                item[1]["first-container-reference-note-number"] = first_container_ref[last_id];
+                if (this.registry.registry[item[0].id]) {
+                  this.registry.registry[item[0].id]["first-container-reference-note-number"] = first_container_ref[last_id];
+                }
+              }
+              if (first_ref[first_id] != onecitation.properties.noteIndex) {
+                item[1]["first-reference-note-number"] = first_ref[first_id];
+                if (this.registry.registry[item[0].id]) {
+                  this.registry.registry[item[0].id]["first-reference-note-number"] = first_ref[first_id];
+                }
+              }
+            }
+          }
+          if (onecitation.properties.noteIndex) {
+            const note_distance = parseInt(onecitation.properties.noteIndex, 10) - parseInt(last_ref[last_id], 10);
+            if (item[1].position !== POSITION_FIRST && note_distance <= this.citation.opt["near-note-distance"]) {
+              item[1]["near-note"] = true;
+            }
+            last_ref[last_id] = onecitation.properties.noteIndex;
+          } else if (item[1].position !== POSITION_FIRST) {
+            item[1]["near-note"] = true;
+          }
+          if (onecitation.citationID != citation.citationID) {
+            for (let n2 = 0, nlen2 = POSITION_TEST_VARS.length; n2 < nlen2; n2 += 1) {
+              const param = POSITION_TEST_VARS[n2];
+              if (item[1][param] !== oldvalue[param]) {
+                if (this.registry.registry[item[0].id]) {
+                  if (param === "first-reference-note-number") {
+                    rerunAkeys[this.registry.registry[item[0].id].ambig] = true;
+                    this.tmp.taintedItemIDs[item[0].id] = true;
+                  }
+                }
+                this.tmp.taintedCitationIDs[onecitation.citationID] = true;
+              }
+            }
+          }
+          if (this.sys.variableWrapper) {
+            item[1].index = onecitation.properties.index;
+            item[1].noteIndex = onecitation.properties.noteIndex;
+          }
+        }
+      }
+    }
+  }
+  if (this.opt.citation_number_sort && sortedItems && sortedItems.length > 1 && this.citation_sort.tokens.length > 0) {
+    if (!citation.properties.unsorted) {
+      for (let i2 = 0, ilen2 = sortedItems.length; i2 < ilen2; i2 += 1) {
+        sortedItems[i2][1].sortkeys = internals.getSortKeys.call(this, sortedItems[i2][0], "citation_sort");
+      }
+      sortedItems.sort(this.citation.srt.compareCompositeKeys);
+    }
+  }
+  for (let key2 in this.tmp.taintedItemIDs) {
+    if (this.tmp.taintedItemIDs.hasOwnProperty(key2)) {
+      citations = this.registry.citationreg.citationsByItemId[key2];
+      if (citations) {
+        for (let i2 = 0, ilen2 = citations.length; i2 < ilen2; i2 += 1) {
+          this.tmp.taintedCitationIDs[citations[i2].citationID] = true;
+        }
+      }
+    }
+  }
+  let ret = [];
+  if (flag === PREVIEW) {
+    if (this.debug) {
+      debug("****** start run processor *********");
+    }
+    try {
+      ret = this.process_CitationCluster.call(this, citation.sortedItems, citation);
+    } catch (e) {
+      error("Error running CSL processor for preview: " + e);
+    } finally {
+      if (this.debug) {
+        debug("****** end run processor *********");
+        debug("****** start state restore *********");
+      }
+      this.registry.citationreg.citationByIndex = oldCitationList;
+      this.registry.citationreg.citationById = {};
+      for (let i2 = 0, ilen2 = oldCitationList.length; i2 < ilen2; i2 += 1) {
+        this.registry.citationreg.citationById[oldCitationList[i2].citationID] = oldCitationList[i2];
+      }
+      if (this.debug) {
+        debug("****** start final update *********");
+      }
+      const oldItemIds = [];
+      for (let i2 = 0, ilen2 = oldItemList.length; i2 < ilen2; i2 += 1) {
+        oldItemIds.push("" + oldItemList[i2].id);
+      }
+      this.updateItems(oldItemIds, null, null, true);
+      if (this.debug) {
+        debug("****** end final update *********");
+      }
+      const currentIds = {};
+      for (let j2 = 0, jlen2 = citation.citationItems.length; j2 < jlen2; j2 += 1) {
+        currentIds[citation.citationItems[j2].id] = true;
+      }
+      for (let key2 in oldAmbigs) {
+        if (oldAmbigs.hasOwnProperty(key2)) {
+          if (!currentIds[key2]) {
+            this.registry.registry[key2].disambig = oldAmbigs[key2];
+          }
+        }
+      }
+      if (this.debug) {
+        debug("****** end state restore *********");
+      }
+    }
+  } else {
+    for (let rerunAkey in rerunAkeys) {
+      this.disambiguate.run(rerunAkey, citation);
+    }
+    const clusterItemIds = {};
+    for (let i2 = 0; i2 < citation.citationItems.length; i2 += 1) {
+      clusterItemIds[citation.citationItems[i2].id] = true;
+    }
+    for (let rerunAkey in rerunAkeys) {
+      const groupIds = this.registry.ambigcites[rerunAkey];
+      if (!groupIds || groupIds.length < 2) continue;
+      let citedCount = 0;
+      for (let gi = 0; gi < groupIds.length; gi += 1) {
+        if (clusterItemIds[groupIds[gi]]) {
+          citedCount += 1;
+        }
+      }
+      if (citedCount > 0 && citedCount < groupIds.length) {
+        for (let gi = 0; gi < groupIds.length; gi += 1) {
+          const gid = "" + groupIds[gi];
+          if (this.registry.registry[gid] && this.registry.registry[gid].disambig && this.registry.registry[gid].disambig.disambiguate > 1) {
+            this.registry.registry[gid].disambig.disambiguate = 1;
+          }
+        }
+      }
+    }
+    let obj;
+    for (let key2 in this.tmp.taintedCitationIDs) {
+      if (key2 == citation.citationID) {
+        continue;
+      }
+      const mycitation = this.registry.citationreg.citationById[key2];
+      if (!mycitation.properties.unsorted) {
+        for (let i2 = 0, ilen2 = mycitation.sortedItems.length; i2 < ilen2; i2 += 1) {
+          mycitation.sortedItems[i2][1].sortkeys = internals.getSortKeys.call(this, mycitation.sortedItems[i2][0], "citation_sort");
+        }
+        mycitation.sortedItems.sort(this.citation.srt.compareCompositeKeys);
+      }
+      this.tmp.citation_pos = mycitation.properties.index;
+      this.tmp.citation_note_index = mycitation.properties.noteIndex;
+      this.tmp.citation_id = "" + mycitation.citationID;
+      obj = [];
+      obj.push(mycitation.properties.index);
+      obj.push(this.process_CitationCluster.call(this, mycitation.sortedItems, mycitation));
+      obj.push(mycitation.citationID);
+      ret.push(obj);
+    }
+    this.tmp.taintedItemIDs = {};
+    this.tmp.taintedCitationIDs = {};
+    this.tmp.citation_pos = citation.properties.index;
+    this.tmp.citation_note_index = citation.properties.noteIndex;
+    this.tmp.citation_id = "" + citation.citationID;
+    obj = [];
+    let noteOrderedIndex = citationsPre.length;
+    if (citation.properties.noteIndex) {
+      noteOrderedIndex = 0;
+      for (let i2 = 0, ilen2 = citationsPre.length; i2 < ilen2; i2 += 1) {
+        if (citationsPre[i2][1] <= citation.properties.noteIndex) {
+          noteOrderedIndex += 1;
+        }
+      }
+      for (let i2 = 0, ilen2 = citationsPost.length; i2 < ilen2; i2 += 1) {
+        if (citationsPost[i2][1] <= citation.properties.noteIndex) {
+          noteOrderedIndex += 1;
+        }
+      }
+    }
+    obj.push(noteOrderedIndex);
+    obj.push(this.process_CitationCluster.call(this, sortedItems, citation));
+    obj.push(citation.citationID);
+    ret.push(obj);
+    ret.sort(function(a, b) {
+      if (a[0] > b[0]) {
+        return 1;
+      } else if (a[0] < b[0]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+  this.registry.return_data.citation_errors = this.tmp.citation_errors.slice();
+  return [this.registry.return_data, ret];
+}
+function process_CitationCluster(sortedItems, citation) {
+  let str = "";
+  if (citation && citation.properties && citation.properties.mode === "composite") {
+    citation.properties.mode = "author-only";
+    let firstChunk = getCitationCluster.call(this, sortedItems, citation);
+    citation.properties.mode = "suppress-author";
+    let secondChunk = "";
+    if (citation.properties.infix) {
+      this.output.append(citation.properties.infix);
+      secondChunk = this.output.string(this, this.output.queue);
+      if ("object" === typeof secondChunk) {
+        secondChunk = secondChunk.join("");
+      }
+    }
+    const thirdChunk = getCitationCluster.call(this, sortedItems, citation);
+    citation.properties.mode = "composite";
+    if (firstChunk && secondChunk && SWAPPING_PUNCTUATION.concat(["\u2019", "'"]).indexOf(secondChunk[0]) > -1) {
+      firstChunk += secondChunk;
+      secondChunk = false;
+    }
+    str = [firstChunk, secondChunk, thirdChunk].filter(function(obj) {
+      return obj;
+    }).join(" ");
+  } else {
+    str = getCitationCluster.call(this, sortedItems, citation);
+  }
+  return str;
+}
+function makeCitationCluster(rawList) {
+  let inputList, newitem, str, pos, len, item, Item;
+  inputList = [];
+  len = rawList.length;
+  for (let pos2 = 0; pos2 < len; pos2 += 1) {
+    item = {};
+    for (let key in rawList[pos2]) {
+      item[key] = rawList[pos2][key];
+    }
+    Item = this.retrieveItem("" + item.id);
+    if (this.opt.development_extensions.locator_label_parse) {
+      if (item.locator && ["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) === -1 && (!item.label || item.label === "page")) {
+        let m = LOCATOR_LABELS_REGEXP.exec(item.locator);
+        if (m) {
+          const tryLabel = LOCATOR_LABELS_MAP[m[2]];
+          if (this.getTerm(tryLabel)) {
+            item.label = tryLabel;
+            item.locator = m[3];
+          }
+        }
+      }
+    }
+    if (item.locator) {
+      item.locator = ("" + item.locator).replace(/\s+$/, "");
+    }
+    newitem = [Item, item];
+    inputList.push(newitem);
+  }
+  if (this.opt.development_extensions.consolidate_legal_items) {
+    this.remapSectionVariable(inputList);
+  }
+  if (inputList && inputList.length > 1 && this.citation_sort.tokens.length > 0) {
+    len = inputList.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      inputList[pos2][1].sortkeys = internals.getSortKeys.call(this, inputList[pos2][0], "citation_sort");
+    }
+    inputList.sort(this.citation.srt.compareCompositeKeys);
+  }
+  this.tmp.citation_errors = [];
+  str = getCitationCluster.call(this, inputList);
+  return str;
+}
+function getAmbiguousCite(Item, disambig, visualForm, item) {
+  let ret;
+  const flags = this.tmp.group_context.tip;
+  const oldTermSiblingLayer = {
+    term_intended: flags.term_intended,
+    variable_attempt: flags.variable_attempt,
+    variable_success: flags.variable_success,
+    output_tip: flags.output_tip,
+    label_form: flags.label_form,
+    non_parallel: flags.non_parallel,
+    parallel_last: flags.parallel_last,
+    parallel_first: flags.parallel_first,
+    parallel_last_override: flags.parallel_last_override,
+    parallel_delimiter_override: flags.parallel_delimiter_override,
+    parallel_delimiter_override_on_suppress: flags.parallel_delimiter_override_on_suppress,
+    condition: flags.condition,
+    force_suppress: flags.force_suppress,
+    done_vars: flags.done_vars.slice()
+  };
+  if (disambig) {
+    this.tmp.disambig_request = disambig;
+  } else {
+    this.tmp.disambig_request = false;
+  }
+  const itemSupp = {
+    position: POSITION_SUBSEQUENT,
+    "near-note": true
+  };
+  if (item) {
+    itemSupp.locator = item.locator;
+    itemSupp.label = item.label;
+  }
+  if (this.registry.registry[Item.id] && this.registry.citationreg.citationsByItemId && this.registry.citationreg.citationsByItemId[Item.id] && this.registry.citationreg.citationsByItemId[Item.id].length && visualForm) {
+    if (this.citation.opt["givenname-disambiguation-rule"] === "by-cite") {
+      itemSupp["first-reference-note-number"] = this.registry.registry[Item.id]["first-reference-note-number"];
+    }
+  }
+  this.tmp.area = "citation";
+  this.tmp.root = "citation";
+  const origSuppressDecorations = this.tmp.suppress_decorations;
+  this.tmp.suppress_decorations = true;
+  this.tmp.just_looking = true;
+  getCite.call(this, Item, itemSupp, null, false);
+  for (let i = 0, ilen = this.output.queue.length; i < ilen; i += 1) {
+    Queue.purgeEmptyBlobs(this.output.queue[i]);
+  }
+  if (this.opt.development_extensions.clean_up_csl_flaws) {
+    for (let j = 0, jlen = this.output.queue.length; j < jlen; j += 1) {
+      this.output.adjust.upward(this.output.queue[j]);
+      this.output.adjust.leftward(this.output.queue[j]);
+      this.output.adjust.downward(this.output.queue[j]);
+      this.output.adjust.fix(this.output.queue[j]);
+    }
+  }
+  ret = this.output.string(this, this.output.queue);
+  this.tmp.just_looking = false;
+  this.tmp.suppress_decorations = origSuppressDecorations;
+  this.tmp.group_context.replace(oldTermSiblingLayer);
+  return ret;
+}
+function getSpliceDelimiter(last_locator, last_collapsed, pos) {
+  if (void 0 !== this.citation.opt["after-collapse-delimiter"]) {
+    if (last_locator) {
+      this.tmp.splice_delimiter = this.citation.opt["after-collapse-delimiter"];
+    } else if (last_collapsed && !this.tmp.have_collapsed) {
+      this.tmp.splice_delimiter = this.citation.opt["after-collapse-delimiter"];
+    } else if (!last_collapsed && !this.tmp.have_collapsed && this.citation.opt.collapse !== "year-suffix") {
+      this.tmp.splice_delimiter = this.citation.opt["after-collapse-delimiter"];
+    } else {
+      this.tmp.splice_delimiter = this.citation.opt.layout_delimiter;
+    }
+  } else if (this.tmp.use_cite_group_delimiter) {
+    this.tmp.splice_delimiter = this.citation.opt.cite_group_delimiter;
+  } else {
+    if (this.tmp.have_collapsed && this.opt.xclass === "in-text" && this.opt.update_mode !== NUMERIC) {
+      this.tmp.splice_delimiter = ", ";
+    } else if (this.tmp.cite_locales[pos - 1]) {
+      const alt_affixes = this.tmp.cite_affixes[this.tmp.area][this.tmp.cite_locales[pos - 1]];
+      if (alt_affixes && alt_affixes.delimiter) {
+        this.tmp.splice_delimiter = alt_affixes.delimiter;
+      }
+    } else if (!this.tmp.splice_delimiter) {
+      this.tmp.splice_delimiter = "";
+    }
+  }
+  return this.tmp.splice_delimiter;
+}
+function getCitationCluster(inputList, citation) {
+  let result, objects, myparams, len, pos, item, last_collapsed, params, empties, composite, compie, myblobs, Item, llen, ppos, obj, preceding_item, txt_esc, error_object, citationID, authorOnly, suppressAuthor;
+  let citation_prefix = "";
+  this.output.checkNestedBrace = new checkNestedBrace(this);
+  if (citation) {
+    citationID = citation.citationID;
+    authorOnly = citation.properties.mode === "author-only" ? !!citation.properties.mode : false;
+    if (this.opt.xclass !== "note") {
+      suppressAuthor = citation.properties.mode === "suppress-author" ? !!citation.properties.mode : false;
+    }
+    if (citation.properties.prefix) {
+      citation_prefix = checkPrefixSpaceAppend(this, citation.properties.prefix);
+    }
+  }
+  inputList = inputList ? inputList : [];
+  this.tmp.last_primary_names_string = false;
+  txt_esc = getSafeEscape(this);
+  this.tmp.area = "citation";
+  this.tmp.root = "citation";
+  result = "";
+  objects = [];
+  this.tmp.last_suffix_used = "";
+  this.tmp.last_names_used = [];
+  this.tmp.last_years_used = [];
+  this.tmp.backref_index = [];
+  this.tmp.cite_locales = [];
+  if (!this.tmp.just_looking) {
+    this.tmp.abbrev_trimmer = {
+      QUASHES: {}
+    };
+  }
+  const use_layout_prefix = this.output.checkNestedBrace.update(this.citation.opt.layout_prefix + citation_prefix);
+  let suppressTrailingPunctuation = false;
+  if (this.citation.opt.suppressTrailingPunctuation) {
+    suppressTrailingPunctuation = true;
+  }
+  if (citationID) {
+    if (this.registry.citationreg.citationById[citationID].properties["suppress-trailing-punctuation"]) {
+      suppressTrailingPunctuation = true;
+    }
+  }
+  if (this.opt.xclass === "note") {
+    const parasets = [];
+    let lastTitle = false;
+    let lastPosition = false;
+    let lastID = false;
+    let lst = [];
+    for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
+      const type = inputList[i][0].type;
+      const title = inputList[i][0].title;
+      const position = inputList[i][1].position;
+      const id = inputList[i][0].id;
+      if (title && type === "legal_case" && id !== lastID && position) {
+        if (title !== lastTitle || parasets.length === 0) {
+          lst = [];
+          parasets.push(lst);
+        }
+        lst.push(inputList[i][1]);
+      }
+      lastTitle = title;
+      lastPosition = position;
+      lastID = id;
+    }
+    for (let i = 0, ilen = parasets.length; i < ilen; i += 1) {
+      lst = parasets[i];
+      if (lst.length < 2) {
+        continue;
+      }
+      let locatorInLastPosition = lst.slice(-1)[0].locator;
+      if (locatorInLastPosition) {
+        for (let j = 0, jlen = lst.length - 1; j < jlen; j += 1) {
+          if (lst[j].locator) {
+            locatorInLastPosition = false;
+          }
+        }
+      }
+      if (locatorInLastPosition) {
+        lst[0].locator = locatorInLastPosition;
+        delete lst.slice(-1)[0].locator;
+        lst[0].label = lst.slice(-1)[0].label;
+        if (lst.slice(-1)[0].label) {
+          delete lst.slice(-1)[0].label;
+        }
+      }
+    }
+  }
+  myparams = [];
+  len = inputList.length;
+  if (inputList[0] && inputList[0][1]) {
+    if (authorOnly) {
+      delete inputList[0][1]["suppress-author"];
+      inputList[0][1]["author-only"] = true;
+    } else if (suppressAuthor) {
+      delete inputList[0][1]["author-only"];
+      inputList[0][1]["suppress-author"] = true;
+    }
+  }
+  if (this.opt.parallel.enable) {
+    this.parallel.StartCitation(inputList);
+  }
+  for (let pos2 = 0; pos2 < len; pos2 += 1) {
+    this.tmp.cite_index = pos2;
+    Item = inputList[pos2][0];
+    item = inputList[pos2][1];
+    item = parseLocator.call(this, item);
+    last_collapsed = this.tmp.have_collapsed;
+    let last_locator = false;
+    if (pos2 > 0 && inputList[pos2 - 1][1]) {
+      last_locator = !!inputList[pos2 - 1][1].locator;
+    }
+    params = {};
+    this.tmp.shadow_numbers = {};
+    if (!this.tmp.just_looking && this.opt.hasPlaceholderTerm) {
+      const output = this.output;
+      this.output = new Queue(this);
+      this.output.adjust = new Queue.adjust();
+      getAmbiguousCite.call(this, Item, null, false, item);
+      this.output = output;
+    }
+    this.tmp.in_cite_predecessor = false;
+    if (pos2 > 0) {
+      getCite.call(this, Item, item, "" + inputList[pos2 - 1][0].id, true);
+    } else {
+      this.tmp.term_predecessor = false;
+      getCite.call(this, Item, item, null, true);
+    }
+    if (!this.tmp.cite_renders_content) {
+      error_object = {
+        citationID: "" + this.tmp.citation_id,
+        index: this.tmp.citation_pos,
+        noteIndex: this.tmp.citation_note_index,
+        itemID: "" + Item.id,
+        citationItems_pos: pos2,
+        error_code: ERROR_NO_RENDERED_FORM
+      };
+      this.tmp.citation_errors.push(error_object);
+    }
+    params.splice_delimiter = getSpliceDelimiter.call(this, last_locator, last_collapsed, pos2);
+    if (item && item["author-only"]) {
+      this.tmp.suppress_decorations = true;
+    }
+    if (pos2 > 0) {
+      preceding_item = inputList[pos2 - 1][1];
+      const precedingEndsInPeriodOrComma = preceding_item.suffix && [";", ".", ","].indexOf(preceding_item.suffix.slice(-1)) > -1;
+      const currentStartsWithPeriodOrComma = !preceding_item.suffix && item.prefix && [";", ".", ","].indexOf(item.prefix.slice(0, 1)) > -1;
+      if (precedingEndsInPeriodOrComma || currentStartsWithPeriodOrComma) {
+        const spaceidx = params.splice_delimiter.indexOf(" ");
+        if (spaceidx > -1 && !currentStartsWithPeriodOrComma) {
+          params.splice_delimiter = params.splice_delimiter.slice(spaceidx);
+        } else {
+          params.splice_delimiter = "";
+        }
+      }
+    }
+    params.suppress_decorations = this.tmp.suppress_decorations;
+    params.have_collapsed = this.tmp.have_collapsed;
+    myparams.push(params);
+    if (item["author-only"]) {
+      break;
+    }
+  }
+  empties = 0;
+  myblobs = this.output.queue.slice();
+  let citation_suffix = "";
+  if (citation) {
+    citation_suffix = checkSuffixSpacePrepend(this, citation.properties.suffix);
+  }
+  let suffix = this.citation.opt.layout_suffix;
+  const last_locale = this.tmp.cite_locales[this.tmp.cite_locales.length - 1];
+  if (last_locale && this.tmp.cite_affixes[this.tmp.area][last_locale] && this.tmp.cite_affixes[this.tmp.area][last_locale].suffix) {
+    suffix = this.tmp.cite_affixes[this.tmp.area][last_locale].suffix;
+  }
+  if (TERMINAL_PUNCTUATION.slice(0, -1).indexOf(suffix.slice(0, 1)) > -1) {
+    suffix = suffix.slice(0, 1);
+  }
+  suffix = this.output.checkNestedBrace.update(citation_suffix + suffix);
+  for (let i = 0, ilen = this.output.queue.length; i < ilen; i += 1) {
+    Queue.purgeEmptyBlobs(this.output.queue[i]);
+  }
+  if (!this.tmp.suppress_decorations && this.output.queue.length) {
+    if (!(this.opt.development_extensions.apply_citation_wrapper && this.sys.wrapCitationEntry && !this.tmp.just_looking && this.tmp.area === "citation")) {
+      if (!suppressTrailingPunctuation) {
+        this.output.queue[this.output.queue.length - 1].strings.suffix = suffix;
+      }
+      this.output.queue[0].strings.prefix = use_layout_prefix;
+    }
+  }
+  if (this.opt.development_extensions.clean_up_csl_flaws) {
+    for (let j = 0, jlen = this.output.queue.length; j < jlen; j += 1) {
+      this.output.adjust.upward(this.output.queue[j]);
+      this.output.adjust.leftward(this.output.queue[j]);
+      this.output.adjust.downward(this.output.queue[j]);
+      this.tmp.last_chr = this.output.adjust.fix(this.output.queue[j]);
+    }
+  }
+  for (let pos2 = 0, len2 = myblobs.length; pos2 < len2; pos2 += 1) {
+    let buffer = [];
+    this.output.queue = [myblobs[pos2]];
+    this.tmp.suppress_decorations = myparams[pos2].suppress_decorations;
+    this.tmp.splice_delimiter = myparams[pos2].splice_delimiter;
+    if (myblobs[pos2].parallel_delimiter) {
+      this.tmp.splice_delimiter = myblobs[pos2].parallel_delimiter;
+    }
+    this.tmp.have_collapsed = myparams[pos2].have_collapsed;
+    composite = this.output.string(this, this.output.queue);
+    this.tmp.suppress_decorations = false;
+    if ("string" === typeof composite) {
+      this.tmp.suppress_decorations = false;
+      if (!composite) {
+        if (this.opt.development_extensions.throw_on_empty) {
+          error("Citation would render no content");
+        } else {
+          composite = "[NO_PRINTED_FORM]";
+        }
+      }
+      return composite;
+    }
+    if ("object" === typeof composite && composite.length === 0 && !item["suppress-author"]) {
+      if (pos2 === 0) {
+        const errStr = "[CSL STYLE ERROR: reference with no printed form.]";
+        const preStr = pos2 === 0 ? txt_esc(this.citation.opt.layout_prefix) : "";
+        const sufStr = pos2 === myblobs.length - 1 ? txt_esc(this.citation.opt.layout_suffix) : "";
+        composite.push(preStr + errStr + sufStr);
+      } else if (pos2 === myblobs.length - 1) {
+        const tmpobj = objects[objects.length - 1];
+        if (typeof tmpobj === "string") {
+          objects[objects.length - 1] += txt_esc(this.citation.opt.layout_suffix);
+        } else if (typeof tmpobj === "object") {
+          tmpobj.strings.suffix += txt_esc(this.citation.opt.layout_suffix);
+        }
+      }
+    }
+    if (buffer.length && "string" === typeof composite[0]) {
+      composite.reverse();
+      const tmpstr = composite.pop();
+      if (tmpstr && tmpstr.slice(0, 1) === ",") {
+        buffer.push(tmpstr);
+      } else if ("string" == typeof buffer.slice(-1)[0] && buffer.slice(-1)[0].slice(-1) === ",") {
+        buffer.push(" " + tmpstr);
+      } else if (tmpstr) {
+        buffer.push(txt_esc(this.tmp.splice_delimiter) + tmpstr);
+      }
+    } else {
+      composite.reverse();
+      compie = composite.pop();
+      if ("undefined" !== typeof compie) {
+        if (buffer.length && "string" === typeof buffer[buffer.length - 1]) {
+          buffer[buffer.length - 1] += compie.successor_prefix;
+        }
+        buffer.push(compie);
+      }
+    }
+    llen = composite.length;
+    for (let ppos2 = 0; ppos2 < llen; ppos2 += 1) {
+      obj = composite[ppos2];
+      if ("string" === typeof obj) {
+        buffer.push(txt_esc(this.tmp.splice_delimiter) + obj);
+        continue;
+      }
+      compie = composite.pop();
+      if ("undefined" !== typeof compie) {
+        buffer.push(compie);
+      }
+    }
+    if (buffer.length === 0 && !inputList[pos2][1]["suppress-author"]) {
+      empties += 1;
+    }
+    if (buffer.length > 1 && typeof buffer[0] !== "string") {
+      buffer = [this.output.renderBlobs(buffer)];
+    }
+    if (buffer.length) {
+      if ("string" === typeof buffer[0]) {
+        if (pos2 > 0) {
+          buffer[0] = txt_esc(this.tmp.splice_delimiter) + buffer[0];
+        }
+      } else {
+        if (pos2 > 0) {
+          buffer[0].splice_prefix = this.tmp.splice_delimiter;
+        } else {
+          buffer[0].splice_prefix = "";
+        }
+      }
+    }
+    objects = objects.concat(buffer);
+  }
+  result += this.output.renderBlobs(objects);
+  if (result) {
+    if (!this.tmp.suppress_decorations) {
+      len = this.citation.opt.layout_decorations.length;
+      for (let pos2 = 0; pos2 < len; pos2 += 1) {
+        params = this.citation.opt.layout_decorations[pos2];
+        if (params[1] === "normal") {
+          continue;
+        }
+        if (!item || !item["author-only"]) {
+          result = this.fun.decorate[params[0]][params[1]](this, result);
+        }
+      }
+    }
+  }
+  this.tmp.suppress_decorations = false;
+  if (!result) {
+    if (this.opt.development_extensions.throw_on_empty) {
+      error("Citation would render no content");
+    } else {
+      result = "[NO_PRINTED_FORM]";
+    }
+  }
+  return result;
+}
+function getCite(Item, item, prevItemID, blockShadowNumberReset) {
+  let next, error_object;
+  const areaOrig = this.tmp.area;
+  if (item && item["author-only"] && this.intext && this.intext.tokens.length > 0) {
+    this.tmp.area = "intext";
+  }
+  this.tmp.cite_renders_content = false;
+  this.tmp.probably_rendered_something = false;
+  this.tmp.prevItemID = prevItemID;
+  citeStart.call(this, Item, item, blockShadowNumberReset);
+  next = 0;
+  this.tmp.name_node = {};
+  this.nameOutput = new NameOutput(this, Item, item);
+  while (next < this[this.tmp.area].tokens.length) {
+    next = tokenExec.call(this, this[this.tmp.area].tokens[next], Item, item);
+  }
+  citeEnd.call(this, Item, item);
+  if (!this.tmp.cite_renders_content && !this.tmp.just_looking) {
+    if (this.tmp.area === "bibliography") {
+      error_object = {
+        index: this.tmp.bibliography_pos,
+        itemID: "" + Item.id,
+        error_code: ERROR_NO_RENDERED_FORM
+      };
+      this.tmp.bibliography_errors.push(error_object);
+    }
+  }
+  this.tmp.area = areaOrig;
+  return "" + Item.id;
+}
+function citeStart(Item, item, blockShadowNumberReset) {
+  this.tmp.lang_array = [];
+  if (Item.language) {
+    let m = Item.language.match(/^([a-zA-Z]+).*/);
+    if (m) {
+      this.tmp.lang_array.push(m[1].toLowerCase());
+    }
+  }
+  this.tmp.lang_array.push(this.opt.lang);
+  if (!blockShadowNumberReset) {
+    this.tmp.shadow_numbers = {};
+  }
+  this.tmp.disambiguate_count = 0;
+  this.tmp.disambiguate_maxMax = 0;
+  this.tmp.same_author_as_previous_cite = false;
+  if (!this.tmp.suppress_decorations) {
+    this.tmp.subsequent_author_substitute_ok = true;
+  } else {
+    this.tmp.subsequent_author_substitute_ok = false;
+  }
+  this.tmp.lastchr = "";
+  if (this.tmp.area === "citation" && this.citation.opt.collapse && this.citation.opt.collapse.length) {
+    this.tmp.have_collapsed = true;
+  } else {
+    this.tmp.have_collapsed = false;
+  }
+  this.tmp.render_seen = false;
+  if (this.tmp.disambig_request && !this.tmp.disambig_override) {
+    this.tmp.disambig_settings = this.tmp.disambig_request;
+  } else if (this.registry.registry[Item.id] && !this.tmp.disambig_override) {
+    this.tmp.disambig_request = this.registry.registry[Item.id].disambig;
+    this.tmp.disambig_settings = this.registry.registry[Item.id].disambig;
+  } else {
+    this.tmp.disambig_settings = new AmbigConfig();
+  }
+  if (this.tmp.area !== "citation") {
+    if (!this.registry.registry[Item.id]) {
+      this.tmp.disambig_restore = new AmbigConfig();
+    } else {
+      this.tmp.disambig_restore = cloneAmbigConfig(this.registry.registry[Item.id].disambig);
+      if (this.tmp.area === "bibliography" && this.tmp.disambig_settings && this.tmp.disambig_override) {
+        if (this.opt["disambiguate-add-names"]) {
+          this.tmp.disambig_settings.names = this.registry.registry[Item.id].disambig.names.slice();
+          if (this.tmp.disambig_request) {
+            this.tmp.disambig_request.names = this.registry.registry[Item.id].disambig.names.slice();
+          }
+        }
+        if (this.opt["disambiguate-add-givenname"]) {
+          this.tmp.disambig_request = this.tmp.disambig_settings;
+          this.tmp.disambig_settings.givens = this.registry.registry[Item.id].disambig.givens.slice();
+          this.tmp.disambig_request.givens = this.registry.registry[Item.id].disambig.givens.slice();
+          for (let i = 0, ilen = this.tmp.disambig_settings.givens.length; i < ilen; i += 1) {
+            this.tmp.disambig_settings.givens[i] = this.registry.registry[Item.id].disambig.givens[i].slice();
+          }
+          for (let i = 0, ilen = this.tmp.disambig_request.givens.length; i < ilen; i += 1) {
+            this.tmp.disambig_request.givens[i] = this.registry.registry[Item.id].disambig.givens[i].slice();
+          }
+        }
+      }
+    }
+  }
+  this.tmp.names_used = [];
+  this.tmp.nameset_counter = 0;
+  this.tmp.years_used = [];
+  this.tmp.names_max.clear();
+  if (!this.tmp.just_looking) {
+    if (!item || item.parallel === "first" || !item.parallel) {
+      this.tmp.abbrev_trimmer = {
+        QUASHES: {}
+      };
+    }
+  }
+  this.tmp.splice_delimiter = this[this.tmp.area].opt.layout_delimiter;
+  this.bibliography_sort.keys = [];
+  this.citation_sort.keys = [];
+  this.tmp.has_done_year_suffix = false;
+  this.tmp.last_cite_locale = false;
+  if (!this.tmp.just_looking && item && !item.position && this.registry.registry[Item.id]) {
+    this.tmp.disambig_restore = cloneAmbigConfig(this.registry.registry[Item.id].disambig);
+  }
+  this.tmp.first_name_string = false;
+  this.tmp.authority_stop_last = 0;
+}
+function citeEnd(Item, item) {
+  if (this.tmp.disambig_restore && this.registry.registry[Item.id]) {
+    this.registry.registry[Item.id].disambig.names = this.tmp.disambig_restore.names.slice();
+    this.registry.registry[Item.id].disambig.givens = this.tmp.disambig_restore.givens.slice();
+    for (let i = 0, ilen = this.registry.registry[Item.id].disambig.givens.length; i < ilen; i += 1) {
+      this.registry.registry[Item.id].disambig.givens[i] = this.tmp.disambig_restore.givens[i].slice();
+    }
+  }
+  this.tmp.disambig_restore = false;
+  if (item && item.suffix) {
+    this.tmp.last_suffix_used = item.suffix;
+  } else {
+    this.tmp.last_suffix_used = "";
+  }
+  this.tmp.last_years_used = this.tmp.years_used.slice();
+  this.tmp.last_names_used = this.tmp.names_used.slice();
+  this.tmp.cut_var = false;
+  this.tmp.disambig_request = false;
+  this.tmp.cite_locales.push(this.tmp.last_cite_locale);
+  if (this.tmp.issued_date && this.tmp.renders_collection_number) {
+    const buf = [];
+    for (let i = this.tmp.issued_date.list.length - 1; i > this.tmp.issued_date.pos; i += -1) {
+      buf.push(this.tmp.issued_date.list.pop());
+    }
+    this.tmp.issued_date.list.pop();
+    for (let i = buf.length - 1; i > -1; i += -1) {
+      this.tmp.issued_date.list.push(buf.pop());
+    }
+  }
+  this.tmp.issued_date = false;
+  this.tmp.renders_collection_number = false;
+}
+
+// src/engine/bibliography.ts
+function makeBibliography(bibsection) {
+  let debug2, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
+  debug2 = false;
+  if (!bibsection && (this.bibliography.opt.exclude_types || this.bibliography.opt.exclude_with_fields)) {
+    bibsection = {
+      exclude: []
+    };
+    if (this.bibliography.opt.exclude_types) {
+      for (let i in this.bibliography.opt.exclude_types) {
+        const val = this.bibliography.opt.exclude_types[i];
+        bibsection.exclude.push({
+          field: "type",
+          value: val
+        });
+      }
+    }
+    if (this.bibliography.opt.exclude_with_fields) {
+      for (let i in this.bibliography.opt.exclude_with_fields) {
+        const field = this.bibliography.opt.exclude_with_fields[i];
+        bibsection.exclude.push({
+          field,
+          value: true
+        });
+      }
+    }
+  }
+  if (!this.bibliography.tokens.length) {
+    return false;
+  }
+  if ("string" === typeof bibsection) {
+    this.opt.citation_number_slug = bibsection;
+    bibsection = false;
+  }
+  if (debug2) {
+    len = this.bibliography.tokens.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      tok = this.bibliography.tokens[pos2];
+      debug2("bibtok: " + tok.name);
+    }
+    debug2("---");
+    len = this.citation.tokens.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      tokk = this.citation.tokens[pos2];
+      debug2("cittok: " + tok.name);
+    }
+    debug2("---");
+    len = this.bibliography_sort.tokens.length;
+    for (let pos2 = 0; pos2 < len; pos2 += 1) {
+      tokkk = this.bibliography_sort.tokens[pos2];
+      debug2("bibsorttok: " + tok.name);
+    }
+  }
+  ret = getBibliographyEntries.call(this, bibsection);
+  entry_ids = ret[0];
+  entry_strings = ret[1];
+  let done = ret[2];
+  params = {
+    "maxoffset": 0,
+    "entryspacing": this.bibliography.opt["entry-spacing"],
+    "linespacing": this.bibliography.opt["line-spacing"],
+    "second-field-align": false,
+    "entry_ids": entry_ids,
+    "bibliography_errors": this.tmp.bibliography_errors.slice(),
+    "done": done
+  };
+  if (this.bibliography.opt["second-field-align"]) {
+    params["second-field-align"] = this.bibliography.opt["second-field-align"];
+  }
+  maxoffset = 0;
+  len = this.registry.reflist.length;
+  for (let pos2 = 0; pos2 < len; pos2 += 1) {
+    item = this.registry.reflist[pos2];
+    if (item.offset > params.maxoffset) {
+      params.maxoffset = item.offset;
+    }
+  }
+  if (this.bibliography.opt.hangingindent) {
+    params.hangingindent = this.bibliography.opt.hangingindent;
+  }
+  params.bibstart = this.fun.decorate.bibstart;
+  params.bibend = this.fun.decorate.bibend;
+  this.opt.citation_number_slug = false;
+  return [params, entry_strings];
+}
+function getBibliographyEntries(bibsection) {
+  let ret, input, include, anymatch, allmatch, bib_entry, res, item, spec, lllen, pppos, topblobs, entry_item_ids, debug2, i, ilen, siblings, skips, sortedItems, eyetem, entry_item_data, j, jlen;
+  ret = [];
+  entry_item_data = [];
+  this.tmp.area = "bibliography";
+  this.tmp.root = "bibliography";
+  this.tmp.last_rendered_name = false;
+  this.tmp.bibliography_errors = [];
+  this.tmp.bibliography_pos = 0;
+  if (bibsection && bibsection.page_start && bibsection.page_length) {
+    input = this.registry.getSortedIds();
+  } else {
+    input = this.refetchItems(this.registry.getSortedIds());
+  }
+  this.tmp.disambig_override = true;
+  function eval_string(a, b) {
+    if (a === b) {
+      return true;
+    }
+    return false;
+  }
+  function eval_list(a, lst) {
+    for (const [key, value] of Object.entries(lst)) {
+      if (eval_spec(a, value)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function eval_spec(a, b) {
+    if ("boolean" === typeof a || !a) {
+      if (a) {
+        return !!b;
+      } else {
+        return !b;
+      }
+    } else {
+      if ("string" === typeof b) {
+        return eval_string(a, b);
+      } else if ("number" === typeof b) {
+        return eval_string(a, b.toString());
+      } else if (!b) {
+        return false;
+      } else {
+        return eval_list(a, b);
+      }
+    }
+  }
+  skips = {};
+  let page_item_count;
+  if (bibsection && bibsection.page_start && bibsection.page_length) {
+    page_item_count = 0;
+    if (bibsection.page_start !== true) {
+      for (let i2 = 0, ilen2 = input.length; i2 < ilen2; i2 += 1) {
+        skips[input[i2]] = true;
+        if (bibsection.page_start == input[i2]) {
+          break;
+        }
+      }
+    }
+  }
+  const processed_item_ids = [];
+  const consolidatedIDs = {};
+  this.tmp.container_item_count = {};
+  input = input.filter((o) => {
+    let ret2 = o;
+    if (o.legislation_id) {
+      if (consolidatedIDs[o.legislation_id]) {
+        ret2 = false;
+      } else {
+        consolidatedIDs[o.legislation_id] = true;
+      }
+    } else if (o.container_id) {
+      if (!this.tmp.container_item_count[o.container_id]) {
+        this.tmp.container_item_count[o.container_id] = 0;
+      }
+      this.tmp.container_item_count[o.container_id]++;
+      if (this.bibliography.opt.consolidate_containers.indexOf(o.type) > -1) {
+        if (consolidatedIDs[o.container_id]) {
+          ret2 = false;
+        } else {
+          consolidatedIDs[o.container_id] = true;
+        }
+      }
+    }
+    return ret2;
+  });
+  this.tmp.container_item_pos = {};
+  for (let i2 = 0, ilen2 = input.length; i2 < ilen2; i2 += 1) {
+    if (bibsection && bibsection.page_start && bibsection.page_length) {
+      if (skips[input[i2]]) {
+        continue;
+      }
+      item = this.refetchItem(input[i2]);
+      if (page_item_count === bibsection.page_length) {
+        break;
+      }
+    } else {
+      item = input[i2];
+      if (skips[item.id]) {
+        continue;
+      }
+    }
+    if (bibsection) {
+      include = true;
+      if (bibsection.include) {
+        include = false;
+        for (let j2 = 0, jlen2 = bibsection.include.length; j2 < jlen2; j2 += 1) {
+          spec = bibsection.include[j2];
+          if (eval_spec(spec.value, item[spec.field])) {
+            include = true;
+            break;
+          }
+        }
+      } else if (bibsection.exclude) {
+        anymatch = false;
+        for (let j2 = 0, jlen2 = bibsection.exclude.length; j2 < jlen2; j2 += 1) {
+          spec = bibsection.exclude[j2];
+          if (eval_spec(spec.value, item[spec.field])) {
+            anymatch = true;
+            break;
+          }
+        }
+        if (anymatch) {
+          include = false;
+        }
+      } else if (bibsection.select) {
+        include = false;
+        allmatch = true;
+        for (let j2 = 0, jlen2 = bibsection.select.length; j2 < jlen2; j2 += 1) {
+          spec = bibsection.select[j2];
+          if (!eval_spec(spec.value, item[spec.field])) {
+            allmatch = false;
+          }
+        }
+        if (allmatch) {
+          include = true;
+        }
+      }
+      if (bibsection.quash) {
+        allmatch = true;
+        for (let j2 = 0, jlen2 = bibsection.quash.length; j2 < jlen2; j2 += 1) {
+          spec = bibsection.quash[j2];
+          if (!eval_spec(spec.value, item[spec.field])) {
+            allmatch = false;
+          }
+        }
+        if (allmatch) {
+          include = false;
+        }
+      }
+      if (!include) {
+        continue;
+      }
+    }
+    if (debug2) {
+      debug2("BIB: " + item.id);
+    }
+    if (item.container_id) {
+      if (!this.tmp.container_item_pos[item.container_id]) {
+        this.tmp.container_item_pos[item.container_id] = 0;
+      }
+      this.tmp.container_item_pos[item.container_id]++;
+    }
+    bib_entry = new Token("group", START);
+    bib_entry.decorations = [["@bibliography", "entry"]].concat(this.bibliography.opt.layout_decorations);
+    this.output.startTag("bib_entry", bib_entry);
+    if (item.system_id && this.sys.embedBibliographyEntry) {
+      this.output.current.value().item_id = item.system_id;
+    } else {
+      this.output.current.value().system_id = item.id;
+    }
+    entry_item_ids = [];
+    if (this.registry.registry[item.id].master && !(bibsection && bibsection.page_start && bibsection.page_length)) {
+      sortedItems = [[item, { id: item.id }]];
+      siblings = this.registry.registry[item.id].siblings;
+      for (let j2 = 0, jlen2 = siblings.length; j2 < jlen2; j2++) {
+        sortedItems.push([this.refetchItem(siblings[j2]), { id: siblings[j2] }]);
+      }
+      this.parallel.StartCitation(sortedItems);
+      if (this.registry.registry[item.id].parallel_delimiter_override) {
+        this.output.queue[0].strings.delimiter = this.registry.registry[item.id].parallel_delimiter_override;
+      } else {
+        this.output.queue[0].strings.delimiter = ", ";
+      }
+      this.tmp.term_predecessor = false;
+      this.tmp.cite_index = 0;
+      for (let j2 = 0, jlen2 = sortedItems.length; j2 < jlen2; j2 += 1) {
+        if (j2 < sortedItems.length - 1) {
+          this.tmp.parallel_and_not_last = true;
+        } else {
+          delete this.tmp.parallel_and_not_last;
+        }
+        entry_item_ids.push("" + getCite.call(this, sortedItems[j2][0], sortedItems[j2][1]));
+        this.tmp.cite_index++;
+        skips[sortedItems[j2][0].id] = true;
+      }
+    } else if (!this.registry.registry[item.id].siblings) {
+      this.tmp.term_predecessor = false;
+      this.tmp.cite_index = 0;
+      entry_item_ids.push("" + getCite.call(this, item));
+      if (bibsection && bibsection.page_start && bibsection.page_length) {
+        page_item_count += 1;
+      }
+    }
+    entry_item_data.push("");
+    this.tmp.bibliography_pos += 1;
+    processed_item_ids.push(entry_item_ids);
+    this.output.endTag("bib_entry");
+    if (this.output.queue[0].blobs.length && this.output.queue[0].blobs[0].blobs.length) {
+      if (!this.output.queue[0].blobs[0].blobs[0].strings) {
+        topblobs = this.output.queue[0].blobs;
+      } else {
+        topblobs = this.output.queue[0].blobs[0].blobs;
+      }
+      topblobs[0].strings.prefix = this.bibliography.opt.layout_prefix + topblobs[0].strings.prefix;
+    }
+    for (let j2 = 0, jlen2 = this.output.queue.length; j2 < jlen2; j2 += 1) {
+      Queue.purgeEmptyBlobs(this.output.queue[j2]);
+    }
+    for (let j2 = 0, jlen2 = this.output.queue.length; j2 < jlen2; j2 += 1) {
+      this.output.adjust.upward(this.output.queue[j2]);
+      this.output.adjust.leftward(this.output.queue[j2]);
+      this.output.adjust.downward(this.output.queue[j2], true);
+      this.output.adjust.fix(this.output.queue[j2]);
+    }
+    res = this.output.string(this, this.output.queue)[0];
+    if (!res && this.opt.update_mode === NUMERIC) {
+      const err = ret.length + 1 + ". [CSL STYLE ERROR: reference with no printed form.]";
+      res = Output_formats[this.opt.mode]["@bibliography/entry"](this, err);
+    }
+    if (res) {
+      ret.push(res);
+    }
+  }
+  let done = false;
+  if (bibsection && bibsection.page_start && bibsection.page_length) {
+    const last_expected_id = input.slice(-1)[0];
+    const last_seen_id = processed_item_ids.slice(-1)[0];
+    if (!last_expected_id || !last_seen_id || last_expected_id == last_seen_id) {
+      done = true;
+    }
+  }
+  this.tmp.disambig_override = false;
+  return [processed_item_ids, ret, done];
+}
+
+// src/util/internals.ts
+var internals = {
+  Node: {},
+  ITERATION: 0,
+  debug,
+  error,
+  getAmbiguousCite,
+  getSpliceDelimiter,
+  getCitationCluster,
+  getCite,
+  citeStart,
+  citeEnd,
+  getBibliographyEntries,
+  getSortKeys
+};
+
+// src/output/formats.ts
+var OutputFormats = class {
+};
+OutputFormats.prototype.html = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text.replace(/&/g, "&#38;").replace(/</g, "&#60;").replace(/>/g, "&#62;").replace(/\s\s/g, "\xA0 ").replace(
+      SUPERSCRIPTS_REGEXP,
+      function(aChar) {
+        return "<sup>" + SUPERSCRIPTS[aChar] + "</sup>";
+      }
+    );
+  },
+  "bibstart": '<div class="csl-bib-body">\n',
+  "bibend": "</div>",
+  "@font-style/italic": "<i>%%STRING%%</i>",
+  "@font-style/oblique": "<em>%%STRING%%</em>",
+  "@font-style/normal": '<span style="font-style:normal;">%%STRING%%</span>',
+  "@font-variant/small-caps": '<span style="font-variant:small-caps;">%%STRING%%</span>',
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-variant/normal": '<span style="font-variant:normal;">%%STRING%%</span>',
+  "@font-weight/bold": "<b>%%STRING%%</b>",
+  "@font-weight/normal": '<span style="font-weight:normal;">%%STRING%%</span>',
+  "@font-weight/light": false,
+  "@text-decoration/none": '<span style="text-decoration:none;">%%STRING%%</span>',
+  "@text-decoration/underline": '<span style="text-decoration:underline;">%%STRING%%</span>',
+  "@vertical-align/sup": "<sup>%%STRING%%</sup>",
+  "@vertical-align/sub": "<sub>%%STRING%%</sub>",
+  "@vertical-align/baseline": '<span style="baseline">%%STRING%%</span>',
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return state.getTerm("open-quote");
+    }
+    return state.getTerm("open-quote") + str + state.getTerm("close-quote");
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "\u2019";
+    }
+    return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
+  },
+  "@quotes/false": false,
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    let insert = "";
+    if (state.sys.embedBibliographyEntry) {
+      insert = state.sys.embedBibliographyEntry(this.item_id) + "\n";
+    }
+    return '  <div class="csl-entry">' + str + "</div>\n" + insert;
+  },
+  "@display/block": function(state, str) {
+    return '\n\n    <div class="csl-block">' + str + "</div>\n";
+  },
+  "@display/left-margin": function(state, str) {
+    return '\n    <div class="csl-left-margin">' + str + "</div>";
+  },
+  "@display/right-inline": function(state, str) {
+    return '<div class="csl-right-inline">' + str + "</div>\n  ";
+  },
+  "@display/indent": function(state, str) {
+    return '<div class="csl-indent">' + str + "</div>\n  ";
+  },
+  "@showid/true": function(state, str, cslid) {
+    if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
+      if (cslid) {
+        return '<span class="' + state.opt.nodenames[cslid] + '" cslid="' + cslid + '">' + str + "</span>";
+      } else if (this.params && "string" === typeof str) {
+        let prePunct = "";
+        if (str) {
+          const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
+          prePunct = m[1];
+          str = m[2];
+        }
+        let postPunct = "";
+        if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+          postPunct = str.slice(-1);
+          str = str.slice(0, -1);
+        }
+        return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
+      } else {
+        return str;
+      }
+    } else {
+      return str;
+    }
+  },
+  "@URL/true": function(state, str) {
+    return '<a href="' + str + '">' + str + "</a>";
+  },
+  "@DOI/true": function(state, str) {
+    let doiurl = str;
+    if (!str.match(/^https?:\/\//)) {
+      doiurl = "https://doi.org/" + encodeDoiForUrl(str);
+    }
+    return '<a href="' + doiurl + '">' + str + "</a>";
+  }
+};
+OutputFormats.prototype.text = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text;
+  },
+  "bibstart": "",
+  "bibend": "",
+  "@font-style/italic": false,
+  "@font-style/oblique": false,
+  "@font-style/normal": false,
+  "@font-variant/small-caps": false,
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-variant/normal": false,
+  "@font-weight/bold": false,
+  "@font-weight/normal": false,
+  "@font-weight/light": false,
+  "@text-decoration/none": false,
+  "@text-decoration/underline": false,
+  "@vertical-align/baseline": false,
+  "@vertical-align/sup": false,
+  "@vertical-align/sub": false,
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return state.getTerm("open-quote");
+    }
+    return state.getTerm("open-quote") + str + state.getTerm("close-quote");
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "\u2019";
+    }
+    return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
+  },
+  "@quotes/false": false,
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    return str + "\n";
+  },
+  "@display/block": function(state, str) {
+    return "\n" + str;
+  },
+  "@display/left-margin": function(state, str) {
+    return str + " ";
+  },
+  "@display/right-inline": function(state, str) {
+    return str;
+  },
+  "@display/indent": function(state, str) {
+    return "\n    " + str;
+  },
+  "@showid/true": function(state, str) {
+    return str;
+  },
+  "@URL/true": function(state, str) {
+    return str;
+  },
+  "@DOI/true": function(state, str) {
+    return str;
+  }
+};
+OutputFormats.prototype.rtf = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text.replace(/([\\{}])/g, "\\$1").replace(
+      SUPERSCRIPTS_REGEXP,
+      function(aChar) {
+        return "\\super " + SUPERSCRIPTS[aChar] + "\\nosupersub{}";
+      }
+    ).replace(
+      /[\u007F-\uFFFF]/g,
+      function(aChar) {
+        return "\\uc0\\u" + aChar.charCodeAt(0).toString() + "{}";
+      }
+    ).split("	").join("\\tab{}");
+  },
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-style/italic": "{\\i{}%%STRING%%}",
+  "@font-style/normal": "{\\i0{}%%STRING%%}",
+  "@font-style/oblique": "{\\i{}%%STRING%%}",
+  "@font-variant/small-caps": "{\\scaps %%STRING%%}",
+  "@font-variant/normal": "{\\scaps0{}%%STRING%%}",
+  "@font-weight/bold": "{\\b{}%%STRING%%}",
+  "@font-weight/normal": "{\\b0{}%%STRING%%}",
+  "@font-weight/light": false,
+  "@text-decoration/none": false,
+  "@text-decoration/underline": "{\\ul{}%%STRING%%}",
+  "@vertical-align/baseline": false,
+  "@vertical-align/sup": "\\super %%STRING%%\\nosupersub{}",
+  "@vertical-align/sub": "\\sub %%STRING%%\\nosupersub{}",
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return Output_formats.rtf.text_escape(state.getTerm("open-quote"));
+    }
+    return Output_formats.rtf.text_escape(state.getTerm("open-quote")) + str + Output_formats.rtf.text_escape(state.getTerm("close-quote"));
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return Output_formats.rtf.text_escape("\u2019");
+    }
+    return Output_formats.rtf.text_escape(state.getTerm("open-inner-quote")) + str + Output_formats.rtf.text_escape(state.getTerm("close-inner-quote"));
+  },
+  "@quotes/false": false,
+  "bibstart": "{\\rtf ",
+  "bibend": "}",
+  "@display/block": "\\line{}%%STRING%%\\line\r\n",
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    return str;
+  },
+  "@display/left-margin": function(state, str) {
+    return str + "\\tab ";
+  },
+  "@display/right-inline": function(state, str) {
+    return str + "\r\n";
+  },
+  "@display/indent": function(state, str) {
+    return "\n\\tab " + str + "\\line\r\n";
+  },
+  "@showid/true": function(state, str) {
+    if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
+      let prePunct = "";
+      if (str) {
+        const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
+        prePunct = m[1];
+        str = m[2];
+      }
+      let postPunct = "";
+      if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+        postPunct = str.slice(-1);
+        str = str.slice(0, -1);
+      }
+      return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
+    } else {
+      return str;
+    }
+  },
+  "@URL/true": function(state, str) {
+    return str;
+  },
+  "@DOI/true": function(state, str) {
+    return str;
+  }
+};
+OutputFormats.prototype.asciidoc = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text.replace("*", "pass:[*]").replace("_", "pass:[_]").replace("#", "pass:[#]").replace("^", "pass:[^]").replace("~", "pass:[~]").replace("[[", "pass:[[[]").replace("  ", "&#160; ").replace(SUPERSCRIPTS_REGEXP, function(aChar) {
+      return "^" + SUPERSCRIPTS[aChar] + "^";
+    });
+  },
+  "bibstart": "",
+  "bibend": "",
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-style/italic": "__%%STRING%%__",
+  "@font-style/oblique": "__%%STRING%%__",
+  "@font-style/normal": false,
+  "@font-variant/small-caps": "[small-caps]#%%STRING%%#",
+  "@font-variant/normal": false,
+  "@font-weight/bold": "**%%STRING%%**",
+  "@font-weight/normal": false,
+  "@font-weight/light": false,
+  "@text-decoration/none": false,
+  "@text-decoration/underline": "[underline]##%%STRING%%##",
+  "@vertical-align/sup": "^^%%STRING%%^^",
+  "@vertical-align/sub": "~~%%STRING%%~~",
+  "@vertical-align/baseline": false,
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "``";
+    }
+    return "``" + str + "''";
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "`";
+    }
+    return "`" + str + "'";
+  },
+  "@quotes/false": false,
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    return str + "\n";
+  },
+  "@display/block": function(state, str) {
+    return str;
+  },
+  "@display/left-margin": function(state, str) {
+    return str;
+  },
+  "@display/right-inline": function(state, str) {
+    return " " + str;
+  },
+  "@display/indent": function(state, str) {
+    return " " + str;
+  },
+  "@showid/true": function(state, str) {
+    if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
+      let prePunct = "";
+      if (str) {
+        const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
+        prePunct = m[1];
+        str = m[2];
+      }
+      let postPunct = "";
+      if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+        postPunct = str.slice(-1);
+        str = str.slice(0, -1);
+      }
+      return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
+    } else {
+      return str;
+    }
+  },
+  "@URL/true": function(state, str) {
+    return str;
+  },
+  "@DOI/true": function(state, str) {
+    let doiurl = str;
+    if (!str.match(/^https?:\/\//)) {
+      doiurl = "https://doi.org/" + encodeDoiForUrl(str);
+    }
+    return doiurl + "[" + str + "]";
+  }
+};
+OutputFormats.prototype.fo = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text.replace(/&/g, "&#38;").replace(/</g, "&#60;").replace(/>/g, "&#62;").replace("  ", "&#160; ").replace(SUPERSCRIPTS_REGEXP, function(aChar) {
+      return '<fo:inline vertical-align="super">' + SUPERSCRIPTS[aChar] + "</fo:inline>";
+    });
+  },
+  "bibstart": "",
+  "bibend": "",
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-style/italic": '<fo:inline font-style="italic">%%STRING%%</fo:inline>',
+  "@font-style/oblique": '<fo:inline font-style="oblique">%%STRING%%</fo:inline>',
+  "@font-style/normal": '<fo:inline font-style="normal">%%STRING%%</fo:inline>',
+  "@font-variant/small-caps": '<fo:inline font-variant="small-caps">%%STRING%%</fo:inline>',
+  "@font-variant/normal": '<fo:inline font-variant="normal">%%STRING%%</fo:inline>',
+  "@font-weight/bold": '<fo:inline font-weight="bold">%%STRING%%</fo:inline>',
+  "@font-weight/normal": '<fo:inline font-weight="normal">%%STRING%%</fo:inline>',
+  "@font-weight/light": '<fo:inline font-weight="lighter">%%STRING%%</fo:inline>',
+  "@text-decoration/none": '<fo:inline text-decoration="none">%%STRING%%</fo:inline>',
+  "@text-decoration/underline": '<fo:inline text-decoration="underline">%%STRING%%</fo:inline>',
+  "@vertical-align/sup": '<fo:inline vertical-align="super">%%STRING%%</fo:inline>',
+  "@vertical-align/sub": '<fo:inline vertical-align="sub">%%STRING%%</fo:inline>',
+  "@vertical-align/baseline": '<fo:inline vertical-align="baseline">%%STRING%%</fo:inline>',
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return state.getTerm("open-quote");
+    }
+    return state.getTerm("open-quote") + str + state.getTerm("close-quote");
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "\u2019";
+    }
+    return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
+  },
+  "@quotes/false": false,
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    let indent = "";
+    if (state.bibliography && state.bibliography.opt && state.bibliography.opt.hangingindent) {
+      const hi = state.bibliography.opt.hangingindent;
+      indent = ' start-indent="' + hi + 'em" text-indent="-' + hi + 'em"';
+    }
+    let insert = "";
+    if (state.sys.embedBibliographyEntry) {
+      insert = state.sys.embedBibliographyEntry(this.item_id) + "\n";
+    }
+    return '<fo:block id="' + this.system_id + '"' + indent + ">" + str + "</fo:block>\n" + insert;
+  },
+  "@display/block": function(state, str) {
+    return "\n  <fo:block>" + str + "</fo:block>\n";
+  },
+  "@display/left-margin": function(state, str) {
+    return '\n  <fo:table table-layout="fixed" width="100%">\n    <fo:table-column column-number="1" column-width="$$$__COLUMN_WIDTH_1__$$$"/>\n    <fo:table-column column-number="2" column-width="proportional-column-width(1)"/>\n    <fo:table-body>\n      <fo:table-row>\n        <fo:table-cell>\n          <fo:block>' + str + "</fo:block>\n        </fo:table-cell>\n        ";
+  },
+  "@display/right-inline": function(state, str) {
+    return "<fo:table-cell>\n          <fo:block>" + str + "</fo:block>\n        </fo:table-cell>\n      </fo:table-row>\n    </fo:table-body>\n  </fo:table>\n";
+  },
+  "@display/indent": function(state, str) {
+    return '<fo:block margin-left="2em">' + str + "</fo:block>\n";
+  },
+  "@showid/true": function(state, str) {
+    if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
+      let prePunct = "";
+      if (str) {
+        const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
+        prePunct = m[1];
+        str = m[2];
+      }
+      let postPunct = "";
+      if (str && SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1) {
+        postPunct = str.slice(-1);
+        str = str.slice(0, -1);
+      }
+      return state.sys.variableWrapper(this.params, prePunct, str, postPunct);
+    } else {
+      return str;
+    }
+  },
+  "@URL/true": function(state, str) {
+    return `<fo:basic-link external-destination="url('` + str + `')">` + str + "</fo:basic-link>";
+  },
+  "@DOI/true": function(state, str) {
+    let doiurl = str;
+    if (!str.match(/^https?:\/\//)) {
+      doiurl = "https://doi.org/" + str;
+    }
+    return `<fo:basic-link external-destination="url('` + doiurl + `')">` + str + "</fo:basic-link>";
+  }
+};
+OutputFormats.prototype.latex = {
+  "text_escape": function(text) {
+    if (!text) {
+      text = "";
+    }
+    return text;
+  },
+  "bibstart": "\\begin{thebibliography}{4}",
+  "bibend": "\\end{thebibliography}",
+  "@font-style/italic": "{\\em %%STRING%%}",
+  "@font-style/oblique": false,
+  "@font-style/normal": false,
+  "@font-variant/small-caps": false,
+  "@passthrough/true": Output_formatters.passthrough,
+  "@font-variant/normal": false,
+  "@font-weight/bold": "{\\bf %%STRING%%}",
+  "@font-weight/normal": false,
+  "@font-weight/light": false,
+  "@text-decoration/none": false,
+  "@text-decoration/underline": false,
+  "@vertical-align/baseline": false,
+  "@vertical-align/sup": false,
+  "@vertical-align/sub": false,
+  "@strip-periods/true": Output_formatters.passthrough,
+  "@strip-periods/false": Output_formatters.passthrough,
+  "@quotes/true": function(state, str) {
+    if ("undefined" === typeof str) {
+      return state.getTerm("open-quote");
+    }
+    return state.getTerm("open-quote") + str + state.getTerm("close-quote");
+  },
+  "@quotes/inner": function(state, str) {
+    if ("undefined" === typeof str) {
+      return "\u2019";
+    }
+    return state.getTerm("open-inner-quote") + str + state.getTerm("close-inner-quote");
+  },
+  "@quotes/false": false,
+  "@cite/entry": function(state, str) {
+    return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt);
+  },
+  "@bibliography/entry": function(state, str) {
+    return "\\bibitem{" + state.sys.embedBibliographyEntry(this.item_id) + "}\n";
+  },
+  "@display/block": function(state, str) {
+    return "\n" + str;
+  },
+  "@display/left-margin": function(state, str) {
+    return str;
+  },
+  "@display/right-inline": function(state, str) {
+    return str;
+  },
+  "@display/indent": function(state, str) {
+    return "\n    " + str;
+  },
+  "@showid/true": function(state, str, cslid) {
+    return str;
+  },
+  "@URL/true": function(state, str) {
+    return str;
+  },
+  "@DOI/true": function(state, str) {
+    return str;
+  }
+};
+var Output_formats = new OutputFormats();
+
+// src/util/processor.ts
+function substituteOne(template) {
+  return function(state, list) {
+    if (!list) {
+      return "";
+    } else {
+      return template.replace("%%STRING%%", list);
+    }
+  };
+}
+function substituteTwo(template) {
+  return function(param) {
+    const template2 = template.replace("%%PARAM%%", param);
+    return function(state, list) {
+      if (!list) {
+        return "";
+      } else {
+        return template2.replace("%%STRING%%", list);
+      }
+    };
+  };
+}
+function Mode(mode) {
+  let decorations, params, param, func, val, args;
+  decorations = {};
+  params = Output_formats[mode];
+  for (let param2 in params) {
+    if (true) {
+      if ("@" !== param2.slice(0, 1)) {
+        decorations[param2] = params[param2];
+        continue;
+      }
+      func = false;
+      val = params[param2];
+      args = param2.split("/");
+      if (typeof val === "string" && val.indexOf("%%STRING%%") > -1) {
+        if (val.indexOf("%%PARAM%%") > -1) {
+          func = substituteTwo(val);
+        } else {
+          func = substituteOne(val);
+        }
+      } else if (typeof val === "boolean" && !val) {
+        func = Output_formatters.passthrough;
+      } else if (typeof val === "function") {
+        func = val;
+      } else {
+        error("Bad " + mode + " config entry for " + param2 + ": " + val);
+      }
+      if (args.length === 1) {
+        decorations[args[0]] = func;
+      } else if (args.length === 2) {
+        if (!decorations[args[0]]) {
+          decorations[args[0]] = {};
+        }
+        decorations[args[0]][args[1]] = func;
+      }
+    }
+  }
+  return decorations;
+}
+function setDecorations(state, attributes) {
+  let ret, key, pos;
+  ret = [];
+  for (let pos2 = 0; pos2 < FORMAT_KEY_SEQUENCE.length; pos2 += 1) {
+    const key2 = FORMAT_KEY_SEQUENCE[pos2];
+    if (attributes[key2]) {
+      ret.push([key2, attributes[key2]]);
+      delete attributes[key2];
+    }
+  }
+  return ret;
+}
+function Doppeler(rexStr, stringMangler) {
+  const matchRex = new RegExp("(" + rexStr + ")", "g");
+  const splitRex = new RegExp(rexStr, "g");
+  this.split = function(str) {
+    if (stringMangler) {
+      str = stringMangler(str);
+    }
+    const match = str.match(matchRex);
+    if (!match) {
+      return {
+        tags: [],
+        strings: [str],
+        origStrings: [str]
+      };
+    }
+    const split = str.split(splitRex);
+    for (let i = match.length - 1; i > -1; i -= 1) {
+      if (typeof match[i] === "number") {
+        match[i] = "";
+      }
+      const tag = match[i];
+      if (tag === "'" && split[i + 1].length > 0 && split[i + 1][0] !== " ") {
+        split[i + 1] = match[i] + split[i + 1];
+        match[i] = "";
+      }
+    }
+    return {
+      tags: match,
+      strings: split,
+      origStrings: split.slice()
+    };
+  };
+  this.join = function(obj) {
+    const lst = obj.strings.slice(-1);
+    for (let i = obj.tags.length - 1; i > -1; i -= 1) {
+      lst.push(obj.tags[i]);
+      lst.push(obj.strings[i]);
+    }
+    lst.reverse();
+    return lst.join("");
+  };
+}
+function normalDecorIsOrphan(blob, params) {
+  if (params[1] === "normal") {
+    let use_param = false;
+    let all_the_decor;
+    if (this.tmp.area === "citation") {
+      all_the_decor = [this.citation.opt.layout_decorations].concat(blob.alldecor);
+    } else {
+      all_the_decor = blob.alldecor;
+    }
+    for (let k = all_the_decor.length - 1; k > -1; k -= 1) {
+      for (let n = all_the_decor[k].length - 1; n > -1; n -= 1) {
+        if (all_the_decor[k][n][0] === params[0]) {
+          if (all_the_decor[k][n][1] !== "normal") {
+            use_param = true;
+          }
+        }
+      }
+    }
+    if (!use_param) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// src/util/locale_sniff.ts
+function getLocaleNames(myxml, preferredLocale) {
+  const stylexml = setupXml(myxml);
+  function extendLocaleList(localeList, locale) {
+    const forms = ["base", "best"];
+    if (locale) {
+      const normalizedLocale = localeResolve(locale);
+      for (let i = 0, ilen = forms.length; i < ilen; i += 1) {
+        if (normalizedLocale[forms[i]] && localeList.indexOf(normalizedLocale[forms[i]]) === -1) {
+          localeList.push(normalizedLocale[forms[i]]);
+        }
+      }
+    }
+  }
+  const localeIDs = ["en-US"];
+  function sniffLocaleOnOneNodeName(_xml, _localeIDs, nodeName) {
+    const nodes = stylexml.getNodesByName(stylexml.dataObj, nodeName);
+    for (let i = 0, ilen = nodes.length; i < ilen; i += 1) {
+      let nodeLocales = stylexml.getAttributeValue(nodes[i], "locale");
+      if (nodeLocales) {
+        nodeLocales = nodeLocales.split(/ +/);
+        for (let j = 0, jlen = nodeLocales.length; j < jlen; j += 1) {
+          extendLocaleList(localeIDs, nodeLocales[j]);
+        }
+      }
+    }
+  }
+  extendLocaleList(localeIDs, preferredLocale);
+  const styleNode = stylexml.getNodesByName(stylexml.dataObj, "style")[0];
+  const defaultLocale = stylexml.getAttributeValue(styleNode, "default-locale");
+  extendLocaleList(localeIDs, defaultLocale);
+  const nodeNames = ["layout", "if", "else-if", "condition"];
+  for (let i = 0, ilen = nodeNames.length; i < ilen; i += 1) {
+    sniffLocaleOnOneNodeName(stylexml, localeIDs, nodeNames[i]);
+  }
+  return localeIDs;
+}
+
+// src/util/static_locator.ts
+function remapSectionVariable(inputList) {
+  for (let i = 0, ilen = inputList.length; i < ilen; i += 1) {
+    const Item = inputList[i][0];
+    const item = inputList[i][1];
+    if (["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1) {
+      if (item.locator) {
+        item.locator = item.locator.trim();
+        let m = item.locator.match(STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
+        if (!m) {
+          if (item.label) {
+            item.locator = STATUTE_SUBDIV_STRINGS_REVERSE[item.label] + " " + item.locator;
+          } else {
+            item.locator = "p. " + item.locator;
+          }
+        }
+      }
+      let sectionMasterLabel = null;
+      if (Item.section) {
+        Item.section = Item.section.trim();
+        const m2 = Item.section.match(STATUTE_SUBDIV_PLAIN_REGEX_FRONT);
+        if (!m2) {
+          Item.section = "sec. " + Item.section;
+          sectionMasterLabel = "sec.";
+        } else {
+          sectionMasterLabel = m2[0].trim();
+        }
+      }
+      if (Item.section) {
+        if (!item.locator) {
+          item.locator = Item.section;
+        } else {
+          const m3 = item.locator.match(/^([^ ]*)\s*(.*)/);
+          let space = " ";
+          if (m3) {
+            if (m3[1] === "p." && sectionMasterLabel !== "p.") {
+              item.locator = m3[2];
+            }
+            if (["[", "(", ".", ",", ";", ":", "?"].indexOf(item.locator.slice(0, 1)) > -1) {
+              space = "";
+            }
+          } else {
+            space = "";
+          }
+          item.locator = Item.section + space + item.locator;
+        }
+      }
+      item.label = "";
+    }
+  }
+}
+function setNumberLabels(Item) {
+  if (Item.number && ["bill", "gazette", "legislation", "regulation", "treaty"].indexOf(Item.type) > -1 && this.opt.development_extensions.consolidate_legal_items && !this.tmp.shadow_numbers["number"]) {
+    this.tmp.shadow_numbers["number"] = {};
+    this.tmp.shadow_numbers["number"].values = [];
+    this.tmp.shadow_numbers["number"].plural = 0;
+    this.tmp.shadow_numbers["number"].numeric = false;
+    this.tmp.shadow_numbers["number"].label = false;
+    let value = "" + Item.number;
+    value = value.split("\\").join("");
+    const firstword = value.split(/\s+/)[0];
+    const firstlabel = STATUTE_SUBDIV_STRINGS[firstword];
+    if (firstlabel) {
+      const splt = value.split(STATUTE_SUBDIV_PLAIN_REGEX);
+      if (splt.length > 1) {
+        const lst = [];
+        for (let j = 1, jlen = splt.length; j < jlen; j += 1) {
+          lst.push(splt[j].replace(/\s*$/, "").replace(/^\s*/, ""));
+        }
+        value = lst.join(" ");
+      } else {
+        value = splt[0];
+      }
+      this.tmp.shadow_numbers["number"].label = firstlabel;
+      this.tmp.shadow_numbers["number"].values.push(["Blob", value, false]);
+      this.tmp.shadow_numbers["number"].numeric = false;
+    } else {
+      this.tmp.shadow_numbers["number"].values.push(["Blob", value, false]);
+      this.tmp.shadow_numbers["number"].numeric = true;
+    }
+  }
+}
+
+// src/util/citationlabel.ts
+function getCitationLabel(Item) {
+  let label = "";
+  const params = this.getTrigraphParams();
+  let config = params[0];
+  let myname = this.getTerm("reference", "short", 0);
+  if ("undefined" === typeof myname) {
+    myname = "reference";
+  }
+  myname = myname.replace(".", "");
+  myname = myname.slice(0, 1).toUpperCase() + myname.slice(1);
+  for (let i = 0, ilen = NAME_VARIABLES.length; i < ilen; i += 1) {
+    const n = NAME_VARIABLES[i];
+    if (Item[n]) {
+      const names = Item[n];
+      if (names.length > params.length) {
+        config = params[params.length - 1];
+      } else {
+        config = params[names.length - 1];
+      }
+      for (let j = 0, jlen = names.length; j < jlen; j += 1) {
+        if (j === config.authors.length) {
+          break;
+        }
+        const res = this.nameOutput.getName(names[j], "locale-translit", true);
+        const name = res.name;
+        if (name && name.family) {
+          myname = name.family;
+          myname = myname.replace(/^([ \'\u2019a-z]+\s+)/, "");
+        } else if (name && name.literal) {
+          myname = name.literal;
+        }
+        let m = myname.toLowerCase().match(/^(a\s+|the\s+|an\s+)/);
+        if (m) {
+          myname = myname.slice(m[1].length);
+        }
+        myname = myname.replace(ROMANESQUE_NOT_REGEXP, "");
+        if (!myname) {
+          break;
+        }
+        myname = myname.slice(0, config.authors[j]);
+        if (myname.length > 1) {
+          myname = myname.slice(0, 1).toUpperCase() + myname.slice(1).toLowerCase();
+        } else if (myname.length === 1) {
+          myname = myname.toUpperCase();
+        }
+        label += myname;
+      }
+      break;
+    }
+  }
+  if (!label) {
+    if (Item.title) {
+      const skipWords = this.locale[this.opt.lang].opts["skip-words"];
+      let lst = Item.title.split(/\s+/);
+      for (let i2 = lst.length - 1; i2 > -1; i2 -= 1) {
+        if (skipWords.indexOf(lst[i2]) > -1) {
+          lst = lst.slice(0, i2).concat(lst.slice(i2 + 1));
+        }
+      }
+      let str = lst.join("");
+      str = str.slice(0, params[0].authors[0]);
+      if (str.length > 1) {
+        str = str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+      } else if (str.length === 1) {
+        str = str.toUpperCase();
+      }
+      label = str;
+    }
+  }
+  let year = "0000";
+  if (Item.issued) {
+    if (Item.issued.year) {
+      year = "" + Item.issued.year;
+    }
+  }
+  year = year.slice(config.year * -1);
+  label = label + year;
+  return label;
+}
+function getTrigraphParams() {
+  const params = [];
+  const ilst = this.opt.trigraph.split(":");
+  if (!this.opt.trigraph || this.opt.trigraph.slice(0, 1) !== "A") {
+    error("Bad trigraph definition: " + this.opt.trigraph);
+  }
+  for (let i = 0, ilen = ilst.length; i < ilen; i += 1) {
+    let str = ilst[i];
+    let config = { authors: [], year: 0 };
+    for (let j = 0, jlen = str.length; j < jlen; j += 1) {
+      switch (str.slice(j, j + 1)) {
+        case "A":
+          config.authors.push(1);
+          break;
+        case "a":
+          config.authors[config.authors.length - 1] += 1;
+          break;
+        case "0":
+          config.year += 1;
+          break;
+        default:
+          error("Invalid character in trigraph definition: " + this.opt.trigraph);
+      }
+    }
+    params.push(config);
+  }
+  return params;
+}
+
+// src/engine/control.ts
+function setOutputFormat(mode) {
+  this.opt.mode = mode;
+  this.fun.decorate = Mode(mode);
+  if (!this.output[mode]) {
+    this.output[mode] = {};
+    this.output[mode].tmp = {};
+  }
+}
+function getSortFunc() {
+  return function(a, b) {
+    a = a.split("-");
+    b = b.split("-");
+    if (a.length < b.length) {
+      return 1;
+    } else if (a.length > b.length) {
+      return -1;
+    } else {
+      a = a.slice(-1)[0];
+      b = b.slice(-1)[0];
+      if (a.length < b.length) {
+        return 1;
+      } else if (a.length > b.length) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+  };
+}
+function setLangTagsForCslSort(tags) {
+  let i, ilen;
+  if (tags) {
+    this.opt["locale-sort"] = [];
+    for (let i2 = 0, ilen2 = tags.length; i2 < ilen2; i2 += 1) {
+      this.opt["locale-sort"].push(tags[i2]);
+    }
+  }
+  this.opt["locale-sort"].sort(this.getSortFunc());
+}
+function setLangTagsForCslTransliteration(tags) {
+  let i, ilen;
+  this.opt["locale-translit"] = [];
+  if (tags) {
+    for (let i2 = 0, ilen2 = tags.length; i2 < ilen2; i2 += 1) {
+      this.opt["locale-translit"].push(tags[i2]);
+    }
+  }
+  this.opt["locale-translit"].sort(this.getSortFunc());
+}
+function setLangTagsForCslTranslation(tags) {
+  let i, ilen;
+  this.opt["locale-translat"] = [];
+  if (tags) {
+    for (let i2 = 0, ilen2 = tags.length; i2 < ilen2; i2 += 1) {
+      this.opt["locale-translat"].push(tags[i2]);
+    }
+  }
+  this.opt["locale-translat"].sort(this.getSortFunc());
+}
+function setLangPrefsForCites(obj, conv) {
+  const opt = this.opt["cite-lang-prefs"];
+  if (!conv) {
+    conv = function(key) {
+      return key.toLowerCase();
+    };
+  }
+  const segments = ["Persons", "Institutions", "Titles", "Journals", "Publishers", "Places"];
+  for (let i = 0, ilen = segments.length; i < ilen; i += 1) {
+    const clientSegment = conv(segments[i]);
+    const citeprocSegment = segments[i].toLowerCase();
+    if (!obj[clientSegment]) {
+      continue;
+    }
+    const supplements = [];
+    while (obj[clientSegment].length > 1) {
+      supplements.push(obj[clientSegment].pop());
+    }
+    const sortval = { orig: 1, translit: 2, translat: 3 };
+    if (supplements.length === 2 && sortval[supplements[0]] < sortval[supplements[1]]) {
+      supplements.reverse();
+    }
+    while (supplements.length) {
+      obj[clientSegment].push(supplements.pop());
+    }
+    const lst = opt[citeprocSegment];
+    while (lst.length) {
+      lst.pop();
+    }
+    for (let j = 0, jlen = obj[clientSegment].length; j < jlen; j += 1) {
+      lst.push(obj[clientSegment][j]);
+    }
+  }
+}
+function setLangPrefsForCiteAffixes(affixList) {
+  if (affixList && affixList.length === 48) {
+    const affixes = this.opt.citeAffixes;
+    let count = 0;
+    const settings = ["persons", "institutions", "titles", "journals", "publishers", "places"];
+    const forms = ["translit", "orig", "translit", "translat"];
+    let value;
+    for (let i = 0, ilen = settings.length; i < ilen; i += 1) {
+      for (let j = 0, jlen = forms.length; j < jlen; j += 1) {
+        value = "";
+        if (count % 8 === 4) {
+          if (!affixes[settings[i]]["locale-" + forms[j]].prefix && !affixes[settings[i]]["locale-" + forms[j]].suffix) {
+            value = affixList[count] ? affixList[count] : "";
+            affixes[settings[i]]["locale-" + forms[j]].prefix = value;
+            value = affixList[count] ? affixList[count + 1] : "";
+            affixes[settings[i]]["locale-" + forms[j]].suffix = value;
+          }
+        } else {
+          value = affixList[count] ? affixList[count] : "";
+          affixes[settings[i]]["locale-" + forms[j]].prefix = value;
+          value = affixList[count] ? affixList[count + 1] : "";
+          affixes[settings[i]]["locale-" + forms[j]].suffix = value;
+        }
+        count += 2;
+      }
+    }
+    this.opt.citeAffixes = affixes;
+  }
+}
+function setAutoVietnameseNamesOption(arg) {
+  if (arg) {
+    this.opt["auto-vietnamese-names"] = true;
+  } else {
+    this.opt["auto-vietnamese-names"] = false;
+  }
+}
+function setAbbreviations(arg) {
+  if (this.sys.setAbbreviations) {
+    this.sys.setAbbreviations(arg);
+  }
+}
+function setSuppressTrailingPunctuation(arg) {
+  this.citation.opt.suppressTrailingPunctuation = !!arg;
+}
+
+// src/util/integration.ts
+function setCitationId(citation, force) {
+  let ret, id, direction;
+  ret = false;
+  if (!citation.citationID || force) {
+    id = Math.floor(Math.random() * 1e14);
+    while (true) {
+      direction = 0;
+      if (!this.registry.citationreg.citationById[id]) {
+        citation.citationID = "a" + id.toString(32);
+        break;
+      } else if (!direction && id < 5e13) {
+        direction = 1;
+      } else {
+        direction = -1;
+      }
+      if (direction === 1) {
+        id += 1;
+      } else {
+        id += -1;
+      }
+    }
+    ret = "" + id;
+  }
+  this.registry.citationreg.citationById[citation.citationID] = citation;
+  return ret;
+}
+
+// src/engine/update.ts
+function rebuildProcessorState(citations, mode, uncitedItemIDs) {
+  if (!citations) {
+    citations = [];
+  }
+  if (!mode) {
+    mode = "html";
+  }
+  const doneIDs = {};
+  const itemIDs = [];
+  for (let i = 0, ilen = citations.length; i < ilen; i += 1) {
+    for (let j = 0, jlen = citations[i].citationItems.length; j < jlen; j += 1) {
+      const itemID = "" + citations[i].citationItems[j].id;
+      if (!doneIDs[itemID]) {
+        itemIDs.push(itemID);
+      }
+      doneIDs[itemID] = true;
+    }
+  }
+  this.updateItems(itemIDs);
+  const pre = [];
+  const post = [];
+  let ret = [];
+  const oldMode = this.opt.mode;
+  this.setOutputFormat(mode);
+  for (let i = 0, ilen = citations.length; i < ilen; i += 1) {
+    const res = this.processCitationCluster(citations[i], pre, post, ASSUME_ALL_ITEMS_REGISTERED);
+    pre.push([citations[i].citationID, citations[i].properties.noteIndex]);
+    for (let j = 0, jlen = res[1].length; j < jlen; j += 1) {
+      const index = res[1][j][0];
+      ret[index] = [
+        pre[index][0],
+        pre[index][1],
+        res[1][j][1]
+      ];
+    }
+  }
+  this.updateUncitedItems(uncitedItemIDs);
+  this.setOutputFormat(oldMode);
+  return ret;
+}
+function restoreProcessorState(citations) {
+  let i, ilen, j, jlen, item, Item, newitem, citationList, itemList, sortedItems;
+  citationList = [];
+  itemList = [];
+  if (!citations) {
+    citations = [];
+  }
+  const indexNumbers = [];
+  const citationIds = {};
+  for (let i2 = 0, ilen2 = citations.length; i2 < ilen2; i2 += 1) {
+    if (citationIds[citations[i2].citationID]) {
+      this.setCitationId(citations[i2], true);
+    }
+    citationIds[citations[i2].citationID] = true;
+    indexNumbers.push(citations[i2].properties.index);
+  }
+  const oldCitations = citations.slice();
+  oldCitations.sort(
+    function(a, b) {
+      if (a.properties.index < b.properties.index) {
+        return -1;
+      } else if (a.properties.index > b.properties.index) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  );
+  for (let i2 = 0, ilen2 = oldCitations.length; i2 < ilen2; i2 += 1) {
+    oldCitations[i2].properties.index = i2;
+  }
+  for (let i2 = 0, ilen2 = oldCitations.length; i2 < ilen2; i2 += 1) {
+    sortedItems = [];
+    for (let j2 = 0, jlen2 = oldCitations[i2].citationItems.length; j2 < jlen2; j2 += 1) {
+      item = oldCitations[i2].citationItems[j2];
+      if ("undefined" === typeof item.sortkeys) {
+        item.sortkeys = [];
+      }
+      Item = this.retrieveItem("" + item.id);
+      newitem = [Item, item];
+      sortedItems.push(newitem);
+      oldCitations[i2].citationItems[j2].item = Item;
+      itemList.push("" + item.id);
+    }
+    if (!oldCitations[i2].properties.unsorted) {
+      sortedItems.sort(this.citation.srt.compareCompositeKeys);
+    }
+    oldCitations[i2].sortedItems = sortedItems;
+    this.registry.citationreg.citationById[oldCitations[i2].citationID] = oldCitations[i2];
+  }
+  this.updateItems(itemList);
+  for (let i2 = 0, ilen2 = citations.length; i2 < ilen2; i2 += 1) {
+    citationList.push(["" + citations[i2].citationID, citations[i2].properties.noteIndex]);
+  }
+  let ret = [];
+  if (citations && citations.length) {
+    ret = this.processCitationCluster(citations[0], [], citationList.slice(1));
+  } else {
+    this.registry = new Registry(this);
+    this.tmp = new Tmp();
+    this.disambiguate = new Disambiguation(this);
+  }
+  return ret;
+}
+function updateItems(idList, nosort, rerun_ambigs, implicitUpdate) {
+  const debug2 = false;
+  const oldArea = this.tmp.area;
+  const oldRoot = this.tmp.root;
+  const oldExtension = this.tmp.extension;
+  if (this.bibliography_sort.tokens.length === 0) {
+    nosort = true;
+  }
+  this.tmp.area = "citation";
+  this.tmp.root = "citation";
+  this.tmp.extension = "";
+  if (!implicitUpdate) {
+    this.tmp.loadedItemIDs = {};
+  }
+  if (debug2) {
+    debug2("--> init <--");
+  }
+  this.registry.init(idList);
+  if (rerun_ambigs) {
+    for (let ambig in this.registry.ambigcites) {
+      this.registry.ambigsTouched[ambig] = true;
+    }
+  }
+  this.registry.dodeletes(this.registry.myhash);
+  this.registry.doinserts(this.registry.mylist);
+  this.registry.dorefreshes();
+  this.registry.rebuildlist(nosort);
+  this.registry.setsortkeys();
+  this.registry.setdisambigs();
+  this.registry.sorttokens(nosort);
+  this.registry.renumber();
+  this.tmp.extension = oldExtension;
+  this.tmp.area = oldArea;
+  this.tmp.root = oldRoot;
+  return this.registry.getSortedIds();
+}
+function updateUncitedItems(idList, nosort) {
+  let idHash;
+  const oldArea = this.tmp.area;
+  const oldRoot = this.tmp.root;
+  const oldExtension = this.tmp.extension;
+  if (this.bibliography_sort.tokens.length === 0) {
+    nosort = true;
+  }
+  this.tmp.area = "citation";
+  this.tmp.root = "citation";
+  this.tmp.extension = "";
+  this.tmp.loadedItemIDs = {};
+  if (!idList) {
+    idList = [];
+  }
+  if ("object" == typeof idList) {
+    if ("undefined" == typeof idList.length) {
+      idHash = idList;
+      idList = [];
+      for (let key in idHash) {
+        idList.push(key);
+      }
+    } else if ("number" == typeof idList.length) {
+      idHash = {};
+      for (let i = 0, ilen = idList.length; i < ilen; i += 1) {
+        idHash[idList[i]] = true;
+      }
+    }
+  }
+  this.registry.init(idList, true);
+  this.registry.dopurge(idHash);
+  this.registry.doinserts(this.registry.mylist);
+  this.registry.dorefreshes();
+  this.registry.rebuildlist(nosort);
+  this.registry.setsortkeys();
+  this.registry.setdisambigs();
+  this.registry.sorttokens(nosort);
+  this.registry.renumber();
+  this.tmp.extension = oldExtension;
+  this.tmp.area = oldArea;
+  this.tmp.root = oldRoot;
+  return this.registry.getSortedIds();
+}
+
+// src/node/bibliography.ts
+var Node_bibliography = {
+  build: function(state, target) {
+    if (this.tokentype === START) {
+      state.build.area = "bibliography";
+      state.build.root = "bibliography";
+      state.build.extension = "";
+      let func = function(state2) {
+        state2.tmp.area = "bibliography";
+        state2.tmp.root = "bibliography";
+        state2.tmp.extension = "";
+      };
+      this.execs.push(func);
+    }
+    target.push(this);
+  }
+};
+
+// src/node/citation.ts
+var Node_citation = {
+  build: function(state, target) {
+    if (this.tokentype === START) {
+      state.build.area = "citation";
+      state.build.root = "citation";
+      state.build.extension = "";
+      let func = function(state2) {
+        state2.tmp.area = "citation";
+        state2.tmp.root = "citation";
+        state2.tmp.extension = "";
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === END) {
+      state.opt.grouped_sort = state.opt.xclass === "in-text" && (state.citation.opt.collapse && state.citation.opt.collapse.length) || state.citation.opt.cite_group_delimiter && state.citation.opt.cite_group_delimiter.length && state.opt.update_mode !== POSITION && state.opt.update_mode !== NUMERIC;
+      if (state.opt.grouped_sort && state.citation_sort.opt.sort_directions.length) {
+        const firstkey = state.citation_sort.opt.sort_directions[0].slice();
+        state.citation_sort.opt.sort_directions = [firstkey].concat(state.citation_sort.opt.sort_directions);
+      }
+      state.citation.srt = new Comparifier(state, "citation_sort");
+    }
+    target.push(this);
+  }
+};
+
+// src/node/comment.ts
+var Node_comment = {
+  build: function() {
+  }
+};
+
+// src/util/dates.ts
+var Util_Dates = {};
+Util_Dates.year = {};
+Util_Dates.year["long"] = function(state, num) {
+  if (!num) {
+    if ("boolean" === typeof num) {
+      num = "";
+    } else {
+      num = 0;
+    }
+  }
+  return num.toString();
+};
+Util_Dates.year.imperial = function(state, num, end) {
+  let year = "";
+  if (!num) {
+    if ("boolean" === typeof num) {
+      num = "";
+    } else {
+      num = 0;
+    }
+  }
+  const endSuffix = end ? "_end" : "";
+  let month = state.tmp.date_object["month" + endSuffix];
+  month = month ? "" + month : "1";
+  while (month.length < 2) {
+    month = "0" + month;
+  }
+  let day = state.tmp.date_object["day" + endSuffix];
+  day = day ? "" + day : "1";
+  while (day.length < 2) {
+    day = "0" + day;
+  }
+  const date = parseInt(num + month + day, 10);
+  let label;
+  let offset;
+  if (date >= 18680908 && date < 19120730) {
+    label = "\u660E\u6CBB";
+    offset = 1867;
+  } else if (date >= 19120730 && date < 19261225) {
+    label = "\u5927\u6B63";
+    offset = 1911;
+  } else if (date >= 19261225 && date < 19890108) {
+    label = "\u662D\u548C";
+    offset = 1925;
+  } else if (date >= 19890108) {
+    label = "\u5E73\u6210";
+    offset = 1988;
+  }
+  if (label && offset) {
+    let normalizedKey = label;
+    if (state.sys.normalizeAbbrevsKey) {
+      normalizedKey = state.sys.normalizeAbbrevsKey("number", label);
+    }
+    if (!state.transform.abbrevs["default"]["number"][normalizedKey]) {
+      state.transform.loadAbbreviation("default", "number", normalizedKey, null);
+    }
+    if (state.transform.abbrevs["default"]["number"][normalizedKey]) {
+      label = state.transform.abbrevs["default"]["number"][normalizedKey];
+    }
+    year = label + (Number(num) - offset);
+  }
+  return year;
+};
+Util_Dates.year["short"] = function(state, num) {
+  num = num.toString();
+  if (num && num.length === 4) {
+    return num.substr(2);
+  }
+  return num;
+};
+Util_Dates.year.numeric = function(state, num) {
+  let m, pre;
+  num = "" + num;
+  const m2 = num.match(/([0-9]*)$/);
+  if (m2) {
+    pre = num.slice(0, m2[1].length * -1);
+    num = m2[1];
+  } else {
+    pre = num;
+    num = "";
+  }
+  while (num.length < 4) {
+    num = "0" + num;
+  }
+  return pre + num;
+};
+Util_Dates.normalizeMonth = function(num, useSeason) {
+  let ret;
+  if (!num) {
+    num = 0;
+  }
+  const numStr = "" + num;
+  if (!numStr.match(/^[0-9]+$/)) {
+    num = 0;
+  } else {
+    num = parseInt(numStr, 10);
+  }
+  if (useSeason) {
+    const res = { stub: "month-", num };
+    if (res.num < 1 || res.num > 24) {
+      res.num = 0;
+    } else {
+      while (res.num > 16) {
+        res.num = res.num - 4;
+      }
+      if (res.num > 12) {
+        res.stub = "season-";
+        res.num = res.num - 12;
+      }
+    }
+    ret = res;
+  } else {
+    if (num < 1 || num > 12) {
+      num = 0;
+    }
+    ret = num;
+  }
+  return ret;
+};
+Util_Dates.month = {};
+Util_Dates.month.numeric = function(state, num) {
+  let num2 = Util_Dates.normalizeMonth(num);
+  if (!num2) {
+    num2 = "";
+  }
+  return num2;
+};
+Util_Dates.month["numeric-leading-zeros"] = function(state, num) {
+  let num2 = Util_Dates.normalizeMonth(num);
+  if (!num2) {
+    num2 = "";
+  } else {
+    num2 = "" + num2;
+    while (num2.length < 2) {
+      num2 = "0" + num2;
+    }
+  }
+  return num2;
+};
+Util_Dates.month["long"] = function(state, num, gender, forceDefaultLocale) {
+  const res = Util_Dates.normalizeMonth(num, true);
+  let num2 = res.num;
+  if (!num2) {
+    num2 = "";
+  } else {
+    num2 = "" + num2;
+    while (num2.length < 2) {
+      num2 = "0" + num2;
+    }
+    num2 = state.getTerm(res.stub + num2, "long", 0, 0, false, forceDefaultLocale);
+  }
+  return num2;
+};
+Util_Dates.month["short"] = function(state, num, gender, forceDefaultLocale) {
+  const res = Util_Dates.normalizeMonth(num, true);
+  let num2 = res.num;
+  if (!num2) {
+    num2 = "";
+  } else {
+    num2 = "" + num2;
+    while (num2.length < 2) {
+      num2 = "0" + num2;
+    }
+    num2 = state.getTerm(res.stub + num2, "short", 0, 0, false, forceDefaultLocale);
+  }
+  return num2;
+};
+Util_Dates.day = {};
+Util_Dates.day.numeric = function(state, num) {
+  return num.toString();
+};
+Util_Dates.day["long"] = Util_Dates.day.numeric;
+Util_Dates.day["numeric-leading-zeros"] = function(state, num) {
+  if (!num) {
+    num = 0;
+  }
+  num = num.toString();
+  while (num.length < 2) {
+    num = "0" + num;
+  }
+  return num.toString();
+};
+Util_Dates.day.ordinal = function(state, num, gender) {
+  return state.fun.ordinalizer.format(num, gender);
+};
+
+// src/util/date.ts
+function dateMacroAsSortKey(state, Item) {
+  dateAsSortKey.call(this, state, Item, true);
+}
+function dateAsSortKey(state, Item, isMacro) {
+  let dp, elem, value, e, yr, prefix, i, ilen;
+  const variable = this.variables[0];
+  let macroFlag = "empty";
+  if (isMacro && state.tmp.extension) {
+    macroFlag = "macro-with-date";
+  }
+  dp = Item[variable];
+  if ("undefined" === typeof dp) {
+    dp = { "date-parts": [[0]] };
+  }
+  if ("undefined" === typeof this.dateparts) {
+    this.dateparts = ["year", "month", "day"];
+  }
+  if (dp.raw) {
+    dp = state.fun.dateparser.parseDateToArray(dp.raw);
+  } else if (dp["date-parts"]) {
+    dp = state.dateParseArray(dp);
+  }
+  if ("undefined" === typeof dp) {
+    dp = {};
+  }
+  if (dp.year) {
+    for (let i2 = 0, ilen2 = DATE_PARTS_INTERNAL.length; i2 < ilen2; i2 += 1) {
+      elem = DATE_PARTS_INTERNAL[i2];
+      value = 0;
+      e = elem;
+      if (e.slice(-4) === "_end") {
+        e = e.slice(0, -4);
+      }
+      if (dp[elem] && this.dateparts.indexOf(e) > -1) {
+        value = dp[elem];
+      }
+      if (elem.slice(0, 4) === "year") {
+        yr = Util_Dates[e].numeric(state, value);
+        let prefix2 = "1";
+        if (yr[0] === "-") {
+          prefix2 = "0";
+          yr = yr.slice(1);
+          yr = 9999 - parseInt(yr, 10);
+        }
+        state.output.append(Util_Dates[elem.slice(0, 4)].numeric(state, prefix2 + yr), macroFlag);
+      } else {
+        value = Util_Dates[e]["numeric-leading-zeros"](state, value);
+        if (!value) {
+          value = "00";
+        }
+        state.output.append(value, macroFlag);
+      }
+    }
+  }
+}
+function dateParseArray(date_obj) {
+  let ret, field, dp, exts;
+  ret = {};
+  for (let field2 in date_obj) {
+    if (field2 === "date-parts") {
+      dp = date_obj["date-parts"];
+      if (dp.length > 1) {
+        if (dp[0].length !== dp[1].length) {
+          error("CSL data error: element mismatch in date range input.");
+        }
+      }
+      exts = ["", "_end"];
+      for (let i = 0, ilen = dp.length; i < ilen; i += 1) {
+        for (let j = 0, jlen = DATE_PARTS.length; j < jlen; j += 1) {
+          if (isNaN(parseInt(dp[i][j], 10))) {
+            ret[DATE_PARTS[j] + exts[i]] = void 0;
+          } else {
+            ret[DATE_PARTS[j] + exts[i]] = parseInt(dp[i][j], 10);
+          }
+        }
+      }
+    } else if (date_obj.hasOwnProperty(field2)) {
+      if (field2 === "literal" && "object" === typeof date_obj.literal && "string" === typeof date_obj.literal.part) {
+        debug("Warning: fixing up weird literal date value");
+        ret.literal = date_obj.literal.part;
+      } else {
+        ret[field2] = date_obj[field2];
+      }
+    }
+  }
+  return ret;
+}
+
+// src/node/date.ts
+var Node_date = {
+  build: function(state, target) {
+    let func, date_obj, len, pos, part, dpx, parts, mypos, start, end;
+    if (this.tokentype === START || this.tokentype === SINGLETON) {
+      state.dateput.string(state, state.dateput.queue);
+      state.tmp.date_token = Util_cloneToken(this);
+      state.tmp.date_token.strings.prefix = "";
+      state.tmp.date_token.strings.suffix = "";
+      state.dateput.openLevel(this);
+      state.build.date_parts = [];
+      state.build.date_variables = this.variables;
+      if (!state.build.extension) {
+        Util_substituteStart.call(this, state, target);
+      }
+      if (state.build.extension) {
+        func = dateMacroAsSortKey;
+      } else {
+        func = function(state2, Item, item) {
+          let dp;
+          state2.tmp.element_rendered_ok = false;
+          state2.tmp.donesies = [];
+          state2.tmp.dateparts = [];
+          dp = [];
+          if (this.variables.length && !(state2.tmp.just_looking && this.variables[0] === "accessed")) {
+            date_obj = Item[this.variables[0]];
+            if ("undefined" === typeof date_obj) {
+              date_obj = { "date-parts": [[0]] };
+              if (state2.opt.development_extensions.locator_date_and_revision) {
+                if (item && this.variables[0] === "locator-date" && item["locator-date"]) {
+                  date_obj = item["locator-date"];
+                }
+              }
+            }
+            state2.tmp.date_object = date_obj;
+            len = this.dateparts.length;
+            for (let pos2 = 0; pos2 < len; pos2 += 1) {
+              part = this.dateparts[pos2];
+              if ("undefined" !== typeof state2.tmp.date_object[part + "_end"]) {
+                dp.push(part);
+              } else if (part === "month" && "undefined" !== typeof state2.tmp.date_object.season_end) {
+                dp.push(part);
+              }
+            }
+            dpx = [];
+            parts = ["year", "month", "day"];
+            len = parts.length;
+            for (let pos2 = 0; pos2 < len; pos2 += 1) {
+              if (dp.indexOf(parts[pos2]) > -1) {
+                dpx.push(parts[pos2]);
+              }
+            }
+            dp = dpx.slice();
+            mypos = 2;
+            len = dp.length;
+            for (let pos2 = 0; pos2 < len; pos2 += 1) {
+              part = dp[pos2];
+              start = state2.tmp.date_object[part];
+              end = state2.tmp.date_object[part + "_end"];
+              if (start !== end) {
+                mypos = pos2;
+                break;
+              }
+            }
+            state2.tmp.date_collapse_at = dp.slice(mypos);
+          } else {
+            state2.tmp.date_object = false;
+          }
+        };
+      }
+      this.execs.push(func);
+      func = function(state2, Item) {
+        if (!Item[this.variables[0]]) {
+          return;
+        }
+        state2.output.startTag("date", this);
+        if (this.variables[0] === "issued" && (Item.type === "legal_case" || Item.type === "legislation") && state2.opt.disable_duplicate_year_suppression.indexOf(Item.country) === -1 && !state2.tmp.extension && "" + Item["collection-number"] === "" + state2.tmp.date_object.year && this.dateparts.length === 1 && this.dateparts[0] === "year") {
+          for (let key in state2.tmp.date_object) {
+            if (state2.tmp.date_object.hasOwnProperty(key)) {
+              if (key.slice(0, 4) === "year") {
+                state2.tmp.issued_date = {};
+                const lst = state2.output.current.mystack.slice(-2)[0].blobs;
+                state2.tmp.issued_date.list = lst;
+                state2.tmp.issued_date.pos = lst.length - 1;
+              }
+            }
+          }
+        }
+      };
+      this.execs.push(func);
+    }
+    if (!state.build.extension && (this.tokentype === END || this.tokentype === SINGLETON)) {
+      func = function(state2, Item) {
+        if (!Item[this.variables[0]]) {
+          return;
+        }
+        state2.output.endTag();
+      };
+      this.execs.push(func);
+    }
+    target.push(this);
+    if (this.tokentype === END || this.tokentype === SINGLETON) {
+      if (!state.build.extension) {
+        Util_substituteEnd.call(this, state, target);
+      }
+    }
+  }
+};
+
+// src/node/datepart.ts
+var Node_date_part = {
+  build: function(state, target) {
+    let func, pos, len, first_date, value, value_end, real, have_collapsed, invoked, precondition, known_year, bc, ad, bc_end, ad_end, ready, curr, dcurr, number, num, formatter, item, blob;
+    if (!this.strings.form) {
+      this.strings.form = "long";
+    }
+    state.build.date_parts.push(this.strings.name);
+    const date_variable = state.build.date_variables[0];
+    function formatAndStrip(myform, gender, val) {
+      if (!val) {
+        return val;
+      }
+      val = "" + Util_Dates[this.strings.name][myform](state, val, gender, this.default_locale);
+      if ("month" === this.strings.name) {
+        if (state.tmp.strip_periods) {
+          val = val.replace(/\./g, "");
+        } else {
+          for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
+            if ("@strip-periods" === this.decorations[i][0] && "true" === this.decorations[i][1]) {
+              val = val.replace(/\./g, "");
+              break;
+            }
+          }
+        }
+      }
+      return val;
+    }
+    func = function(state2, Item) {
+      if (!state2.tmp.date_object) {
+        return;
+      } else {
+        state2.tmp.probably_rendered_something = true;
+      }
+      let last_string_output = "";
+      first_date = true;
+      value = "";
+      value_end = "";
+      state2.tmp.donesies.push(this.strings.name);
+      if (state2.tmp.date_object.literal && "year" === this.strings.name) {
+        last_string_output = state2.tmp.date_object.literal;
+        state2.output.append(state2.tmp.date_object.literal, this);
+      }
+      if (state2.tmp.date_object) {
+        value = state2.tmp.date_object[this.strings.name];
+        value_end = state2.tmp.date_object[this.strings.name + "_end"];
+      }
+      if ("year" === this.strings.name && value === 0 && !state2.tmp.suppress_decorations) {
+        value = false;
+      }
+      real = !state2.tmp.suppress_decorations;
+      have_collapsed = state2.tmp.have_collapsed;
+      invoked = state2[state2.tmp.area].opt.collapse === "year-suffix" || state2[state2.tmp.area].opt.collapse === "year-suffix-ranged";
+      precondition = state2.opt["disambiguate-add-year-suffix"];
+      if (real && precondition && invoked) {
+        state2.tmp.years_used.push(value);
+        known_year = state2.tmp.last_years_used.length >= state2.tmp.years_used.length;
+        if (known_year && have_collapsed) {
+          if (state2.tmp.last_years_used[state2.tmp.years_used.length - 1] === value) {
+            value = false;
+          }
+        }
+      }
+      if ("undefined" !== typeof value) {
+        bc = false;
+        ad = false;
+        bc_end = false;
+        ad_end = false;
+        if ("year" === this.strings.name) {
+          if (parseInt(value, 10) < 500 && parseInt(value, 10) > 0) {
+            ad = state2.getTerm("ad");
+          }
+          if (parseInt(value, 10) < 0) {
+            bc = state2.getTerm("bc");
+            value = parseInt(value, 10) * -1;
+          }
+          if (value_end) {
+            if (parseInt(value_end, 10) < 500 && parseInt(value_end, 10) > 0) {
+              ad_end = state2.getTerm("ad");
+            }
+            if (parseInt(value_end, 10) < 0) {
+              bc_end = state2.getTerm("bc");
+              value_end = parseInt(value_end, 10) * -1;
+            }
+          }
+        }
+        let monthnameid = "" + state2.tmp.date_object.month;
+        while (monthnameid.length < 2) {
+          monthnameid = "0" + monthnameid;
+        }
+        monthnameid = "month-" + monthnameid;
+        const gender = state2.locale[state2.opt.lang]["noun-genders"][monthnameid];
+        if (this.strings.form) {
+          let myform = this.strings.form;
+          let myform_end = this.strings.form;
+          if (this.strings.name === "day") {
+            if (myform === "ordinal" && state2.locale[state2.opt.lang].opts["limit-day-ordinals-to-day-1"]) {
+              if (value != 1) {
+                myform = "numeric";
+              }
+              if (value_end != 1) {
+                myform_end = "numeric";
+              }
+            }
+          }
+          value = formatAndStrip.call(this, myform, gender, value);
+          value_end = formatAndStrip.call(this, myform_end, gender, value_end);
+        }
+        state2.output.openLevel("empty");
+        if (state2.tmp.date_collapse_at.length) {
+          ready = true;
+          len = state2.tmp.date_collapse_at.length;
+          for (let pos2 = 0; pos2 < len; pos2 += 1) {
+            item = state2.tmp.date_collapse_at[pos2];
+            if (state2.tmp.donesies.indexOf(item) === -1) {
+              ready = false;
+              break;
+            }
+          }
+          if (ready) {
+            if ("" + value_end !== "0") {
+              if (state2.dateput.queue.length === 0) {
+                first_date = true;
+              }
+              if (state2.opt["year-range-format"] && state2.opt["year-range-format"] !== "expanded" && !state2.tmp.date_object.day && !state2.tmp.date_object.month && !state2.tmp.date_object.season && this.strings.name === "year" && value && value_end) {
+                value_end = state2.fun.year_mangler(value + "-" + value_end, true);
+                const range_delimiter = state2.getTerm("year-range-delimiter");
+                value_end = value_end.slice(value_end.indexOf(range_delimiter) + 1);
+              }
+              last_string_output = value_end;
+              state2.dateput.append(value_end, this);
+              if (first_date) {
+                blob = state2.dateput.current.value().blobs[0];
+                if (blob) {
+                  blob.strings.prefix = "";
+                }
+              }
+            }
+            last_string_output = value;
+            state2.output.append(value, this);
+            curr = state2.output.current.value();
+            blob = curr.blobs[curr.blobs.length - 1];
+            if (blob) {
+              blob.strings.suffix = "";
+            }
+            if (this.strings["range-delimiter"]) {
+              state2.output.append(this.strings["range-delimiter"]);
+            } else {
+              state2.output.append(state2.getTerm("year-range-delimiter"), "empty");
+            }
+            state2.dateput.closeLevel();
+            dcurr = state2.dateput.current.value();
+            curr.blobs = curr.blobs.concat(dcurr);
+            state2.dateput.string(state2, state2.dateput.queue);
+            state2.dateput.openLevel(state2.tmp.date_token);
+            state2.tmp.date_collapse_at = [];
+          } else {
+            last_string_output = value;
+            state2.output.append(value, this);
+            if (state2.tmp.date_collapse_at.indexOf(this.strings.name) > -1) {
+              if ("" + value_end !== "0") {
+                if (state2.dateput.queue.length === 0) {
+                  first_date = true;
+                }
+                state2.dateput.openLevel("empty");
+                last_string_output = value_end;
+                state2.dateput.append(value_end, this);
+                if (first_date) {
+                  blob = state2.dateput.current.value().blobs[0];
+                  if (blob) {
+                    blob.strings.prefix = "";
+                  }
+                }
+                if (bc) {
+                  last_string_output = bc;
+                  state2.dateput.append(bc);
+                }
+                if (ad) {
+                  last_string_output = ad;
+                  state2.dateput.append(ad);
+                }
+                state2.dateput.closeLevel();
+              }
+            }
+          }
+        } else {
+          last_string_output = value;
+          state2.output.append(value, this);
+        }
+        if (bc) {
+          last_string_output = bc;
+          state2.output.append(bc);
+        }
+        if (ad) {
+          last_string_output = ad;
+          state2.output.append(ad);
+        }
+        state2.output.closeLevel();
+      } else if ("month" === this.strings.name) {
+        if (state2.tmp.date_object.season) {
+          value = "" + state2.tmp.date_object.season;
+          if (value && value.match(/^[1-4]$/)) {
+            state2.tmp.group_context.tip.variable_success = true;
+            last_string_output = "winter";
+            state2.output.append(state2.getTerm("season-0" + value), this);
+          } else if (value) {
+            last_string_output = value;
+            state2.output.append(value, this);
+          }
+        }
+      }
+      state2.tmp.value = [];
+      if (Item[date_variable] && (value || state2.tmp.have_collapsed) && !state2.opt.has_year_suffix && "year" === this.strings.name && !state2.tmp.just_looking) {
+        if (state2.registry.registry[Item.id] && state2.registry.registry[Item.id].disambig.year_suffix !== false && !state2.tmp.has_done_year_suffix) {
+          state2.tmp.has_done_year_suffix = true;
+          last_string_output = "x";
+          num = parseInt(state2.registry.registry[Item.id].disambig.year_suffix, 10);
+          number = new NumericBlob(state2, false, num, this, Item.id);
+          this.successor_prefix = state2[state2.build.area].opt.layout_delimiter;
+          this.splice_prefix = state2[state2.build.area].opt.layout_delimiter;
+          formatter = new Suffixator(SUFFIX_CHARS);
+          number.setFormatter(formatter);
+          if (state2[state2.tmp.area].opt.collapse === "year-suffix-ranged") {
+            number.range_prefix = state2.getTerm("citation-range-delimiter");
+          }
+          if (state2[state2.tmp.area].opt.cite_group_delimiter) {
+            number.successor_prefix = state2[state2.tmp.area].opt.cite_group_delimiter;
+          } else if (state2[state2.tmp.area].opt["year-suffix-delimiter"]) {
+            number.successor_prefix = state2[state2.tmp.area].opt["year-suffix-delimiter"];
+          } else {
+            number.successor_prefix = state2[state2.tmp.area].opt.layout_delimiter;
+          }
+          number.UGLY_DELIMITER_SUPPRESS_HACK = true;
+          state2.output.append(number, "literal");
+        }
+      }
+      if (last_string_output && !state2.tmp.group_context.tip.condition) {
+        state2.tmp.just_did_number = last_string_output.match(/[0-9]$/);
+        if (state2.output.current.tip.strings.suffix) {
+          state2.tmp.just_did_number = false;
+        }
+      }
+    };
+    this.execs.push(func);
+    target.push(this);
+  }
+};
+
+// src/node/elseif.ts
+var Node_else_if = {
+  build: function(state, target) {
+    Conditions.TopNode.call(this, state, target);
+    target.push(this);
+  },
+  configure: function(state, pos) {
+    Conditions.Configure.call(this, state, pos);
+  }
+};
+
+// src/node/etal.ts
+var Node_et_al = {
+  build: function(state, target) {
+    if (state.build.area === "citation" || state.build.area === "bibliography") {
+      let func = function(state2) {
+        state2.tmp.etal_node = this;
+        if ("string" === typeof this.strings.term) {
+          state2.tmp.etal_term = this.strings.term;
+        }
+      };
+      this.execs.push(func);
+    }
+    target.push(this);
+  }
+};
+
+// src/node/conditions.ts
+var Node_conditions = {
+  build: function(state) {
+    if (this.tokentype === START) {
+      state.tmp.conditions.addMatch(this.match);
+    }
+    if (this.tokentype === END) {
+      state.tmp.conditions.matchCombine();
+    }
+  }
+};
+
+// src/node/condition.ts
+var Node_condition = {
+  build: function(state) {
+    if (this.tokentype === SINGLETON) {
+      const test = state.fun.match[this.match](this, state, this.tests);
+      state.tmp.conditions.addTest(test);
+    }
+  }
+};
+
+// src/node/info.ts
+var Node_info = {
+  build: function(state) {
+    if (this.tokentype === START) {
+      state.build.skip = "info";
+    } else {
+      state.build.skip = false;
+    }
+  }
+};
+
+// src/node/institution.ts
+var Node_institution = {
+  build: function(state, target) {
+    if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
+      let func = function(state2) {
+        if ("string" === typeof this.strings.delimiter) {
+          state2.tmp.institution_delimiter = this.strings.delimiter;
+        } else {
+          state2.tmp.institution_delimiter = state2.tmp.name_delimiter;
+        }
+        if ("text" === state2.inheritOpt(this, "and")) {
+          this.and_term = state2.getTerm("and", "long", 0);
+        } else if ("symbol" === state2.inheritOpt(this, "and")) {
+          if (state2.opt.development_extensions.expect_and_symbol_form) {
+            this.and_term = state2.getTerm("and", "symbol", 0);
+          } else {
+            this.and_term = "&";
+          }
+        } else if ("none" === state2.inheritOpt(this, "and")) {
+          this.and_term = state2.tmp.institution_delimiter;
+        }
+        if ("undefined" === typeof this.and_term && state2.tmp.and_term) {
+          this.and_term = state2.tmp.and_term;
+        }
+        if (STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
+          this.and_prefix_single = " ";
+          this.and_prefix_multiple = ", ";
+          if ("string" === typeof state2.tmp.institution_delimiter) {
+            this.and_prefix_multiple = state2.tmp.institution_delimiter;
+          }
+          this.and_suffix = " ";
+        } else {
+          this.and_prefix_single = "";
+          this.and_prefix_multiple = "";
+          this.and_suffix = "";
+        }
+        if (state2.inheritOpt(this, "delimiter-precedes-last") === "always") {
+          this.and_prefix_single = state2.tmp.institution_delimiter;
+        } else if (state2.inheritOpt(this, "delimiter-precedes-last") === "never") {
+          if (this.and_prefix_multiple) {
+            this.and_prefix_multiple = " ";
+          }
+        }
+        this.and = {};
+        if ("undefined" !== typeof this.and_term) {
+          state2.output.append(this.and_term, "empty", true);
+          this.and.single = state2.output.pop();
+          this.and.single.strings.prefix = this.and_prefix_single;
+          this.and.single.strings.suffix = this.and_suffix;
+          state2.output.append(this.and_term, "empty", true);
+          this.and.multiple = state2.output.pop();
+          this.and.multiple.strings.prefix = this.and_prefix_multiple;
+          this.and.multiple.strings.suffix = this.and_suffix;
+        } else if ("undefined" !== this.strings.delimiter) {
+          this.and.single = new Blob(state2.tmp.institution_delimiter);
+          this.and.single.strings.prefix = "";
+          this.and.single.strings.suffix = "";
+          this.and.multiple = new Blob(state2.tmp.institution_delimiter);
+          this.and.multiple.strings.prefix = "";
+          this.and.multiple.strings.suffix = "";
+        }
+        state2.nameOutput.institution = this;
+      };
+      this.execs.push(func);
+    }
+    target.push(this);
+  },
+  configure: function(state) {
+    if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
+      state.build.has_institution = true;
+    }
+  }
+};
+
+// src/node/institutionpart.ts
+var Node_institution_part = {
+  build: function(state, target) {
+    let func;
+    if ("long" === this.strings.name) {
+      if (this.strings["if-short"]) {
+        func = function(state2) {
+          state2.nameOutput.institutionpart["long-with-short"] = this;
+        };
+      } else {
+        func = function(state2) {
+          state2.nameOutput.institutionpart["long"] = this;
+        };
+      }
+    } else if ("short" === this.strings.name) {
+      func = function(state2) {
+        state2.nameOutput.institutionpart["short"] = this;
+      };
+    }
+    this.execs.push(func);
+    target.push(this);
+  }
+};
+
+// src/node/name.ts
+var Node_name = {
+  build: function(state, target) {
+    let func;
+    if ([SINGLETON, START].indexOf(this.tokentype) > -1) {
+      let oldTmpRoot;
+      if ("undefined" === typeof state.tmp.root) {
+        oldTmpRoot = void 0;
+        state.tmp.root = "citation";
+      } else {
+        oldTmpRoot = state.tmp.root;
+      }
+      if (state.inheritOpt(this, "et-al-subsequent-min") && state.inheritOpt(this, "et-al-subsequent-min") !== state.inheritOpt(this, "et-al-min")) {
+        state.opt.update_mode = POSITION;
+      }
+      if (state.inheritOpt(this, "et-al-subsequent-use-first") && state.inheritOpt(this, "et-al-subsequent-use-first") !== state.inheritOpt(this, "et-al-use-first")) {
+        state.opt.update_mode = POSITION;
+      }
+      state.tmp.root = oldTmpRoot;
+      func = function(state2) {
+        state2.tmp.etal_term = "et-al";
+        state2.tmp.name_delimiter = state2.inheritOpt(this, "delimiter", "name-delimiter", ", ");
+        state2.tmp["delimiter-precedes-et-al"] = state2.inheritOpt(this, "delimiter-precedes-et-al");
+        if ("text" === state2.inheritOpt(this, "and")) {
+          this.and_term = state2.getTerm("and", "long", 0);
+        } else if ("symbol" === state2.inheritOpt(this, "and")) {
+          if (state2.opt.development_extensions.expect_and_symbol_form) {
+            this.and_term = state2.getTerm("and", "symbol", 0);
+          } else {
+            this.and_term = "&";
+          }
+        }
+        state2.tmp.and_term = this.and_term;
+        if (STARTSWITH_ROMANESQUE_REGEXP.test(this.and_term)) {
+          this.and_prefix_single = " ";
+          this.and_prefix_multiple = ", ";
+          if ("string" === typeof state2.tmp.name_delimiter) {
+            this.and_prefix_multiple = state2.tmp.name_delimiter;
+          }
+          this.and_suffix = " ";
+        } else {
+          this.and_prefix_single = "";
+          this.and_prefix_multiple = "";
+          this.and_suffix = "";
+        }
+        if (state2.inheritOpt(this, "delimiter-precedes-last") === "always") {
+          this.and_prefix_single = state2.tmp.name_delimiter;
+        } else if (state2.inheritOpt(this, "delimiter-precedes-last") === "never") {
+          if (this.and_prefix_multiple) {
+            this.and_prefix_multiple = " ";
+          }
+        } else if (state2.inheritOpt(this, "delimiter-precedes-last") === "after-inverted-name") {
+          if (this.and_prefix_single) {
+            this.and_prefix_single = state2.tmp.name_delimiter;
+          }
+          if (this.and_prefix_multiple) {
+            this.and_prefix_multiple = " ";
+          }
+        }
+        this.and = {};
+        if (state2.inheritOpt(this, "and")) {
+          state2.output.append(this.and_term, "empty", true);
+          this.and.single = state2.output.pop();
+          this.and.single.strings.prefix = this.and_prefix_single;
+          this.and.single.strings.suffix = this.and_suffix;
+          state2.output.append(this.and_term, "empty", true);
+          this.and.multiple = state2.output.pop();
+          this.and.multiple.strings.prefix = this.and_prefix_multiple;
+          this.and.multiple.strings.suffix = this.and_suffix;
+        } else if (state2.tmp.name_delimiter) {
+          this.and.single = new Blob(state2.tmp.name_delimiter);
+          this.and.single.strings.prefix = "";
+          this.and.single.strings.suffix = "";
+          this.and.multiple = new Blob(state2.tmp.name_delimiter);
+          this.and.multiple.strings.prefix = "";
+          this.and.multiple.strings.suffix = "";
+        }
+        this.ellipsis = {};
+        if (state2.inheritOpt(this, "et-al-use-last")) {
+          this.ellipsis_term = "\u2026";
+          this.ellipsis_prefix_single = " ";
+          this.ellipsis_prefix_multiple = state2.inheritOpt(this, "delimiter", "name-delimiter", ", ");
+          this.ellipsis_suffix = " ";
+          this.ellipsis.single = new Blob(this.ellipsis_term);
+          this.ellipsis.single.strings.prefix = this.ellipsis_prefix_single;
+          this.ellipsis.single.strings.suffix = this.ellipsis_suffix;
+          this.ellipsis.multiple = new Blob(this.ellipsis_term);
+          this.ellipsis.multiple.strings.prefix = this.ellipsis_prefix_multiple;
+          this.ellipsis.multiple.strings.suffix = this.ellipsis_suffix;
+        }
+        if ("undefined" === typeof state2.tmp["et-al-min"]) {
+          state2.tmp["et-al-min"] = state2.inheritOpt(this, "et-al-min");
+        }
+        if ("undefined" === typeof state2.tmp["et-al-use-first"]) {
+          state2.tmp["et-al-use-first"] = state2.inheritOpt(this, "et-al-use-first");
+        }
+        if ("undefined" === typeof state2.tmp["et-al-use-last"]) {
+          state2.tmp["et-al-use-last"] = state2.inheritOpt(this, "et-al-use-last");
+        }
+        state2.nameOutput.name = this;
+      };
+      state.build.name_flag = true;
+      this.execs.push(func);
+    }
+    target.push(this);
+  }
+};
+
+// src/node/names.ts
+var Node_names = {
+  build: function(state, target) {
+    let func;
+    if (this.tokentype === START || this.tokentype === SINGLETON) {
+      Util_substituteStart.call(this, state, target);
+      state.build.substitute_level.push(1);
+    }
+    if (this.tokentype === SINGLETON) {
+      state.build.names_variables[state.build.names_variables.length - 1].concat(this.variables);
+      for (let i in this.variables) {
+        const variable = this.variables[i];
+        const name_labels = state.build.name_label[state.build.name_label.length - 1];
+        if (Object.keys(name_labels).length) {
+          name_labels[variable] = name_labels[Object.keys(name_labels)[0]];
+        }
+      }
+      func = function(state2) {
+        state2.nameOutput.reinit(this, this.variables_real[0]);
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === START) {
+      state.build.names_flag = true;
+      state.build.name_flag = false;
+      state.build.names_level += 1;
+      state.build.names_variables.push(this.variables);
+      state.build.name_label.push({});
+      func = function(state2) {
+        state2.tmp.can_substitute.push(true);
+        state2.tmp.name_node = {};
+        state2.tmp.name_node.children = [];
+        state2.nameOutput.init(this);
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === END) {
+      for (let i = 0, ilen = 3; i < ilen; i += 1) {
+        let key = ["family", "given", "et-al"][i];
+        this[key] = state.build[key];
+        if (state.build.names_level === 1) {
+          state.build[key] = void 0;
+        }
+      }
+      this.label = state.build.name_label[state.build.name_label.length - 1];
+      state.build.names_level += -1;
+      state.build.names_variables.pop();
+      state.build.name_label.pop();
+      func = function(state2) {
+        if (state2.tmp.etal_node) {
+          this.etal_style = state2.tmp.etal_node;
+        } else {
+          this.etal_style = "empty";
+        }
+        this.etal_term = state2.getTerm(state2.tmp.etal_term, "long", 0);
+        this.etal_prefix_single = " ";
+        this.etal_prefix_multiple = state2.tmp.name_delimiter;
+        if (state2.tmp["delimiter-precedes-et-al"] === "always") {
+          this.etal_prefix_single = state2.tmp.name_delimiter;
+        } else if (state2.tmp["delimiter-precedes-et-al"] === "never") {
+          this.etal_prefix_multiple = " ";
+        } else if (state2.tmp["delimiter-precedes-et-al"] === "after-inverted-name") {
+          this.etal_prefix_single = state2.tmp.name_delimiter;
+          this.etal_prefix_multiple = " ";
+        }
+        this.etal_suffix = "";
+        if (!STARTSWITH_ROMANESQUE_REGEXP.test(this.etal_term)) {
+          if (this.etal_prefix_single === " ") {
+            this.etal_prefix_single = "";
+          }
+          if (this.etal_prefix_multiple === " ") {
+            this.etal_prefix_multiple = "";
+          }
+          if (this.etal_suffix === " ") {
+            this.etal_suffix = "";
+          }
+        }
+        for (let i = 0, ilen = 3; i < ilen; i += 1) {
+          let key = ["family", "given"][i];
+          state2.nameOutput[key] = this[key];
+        }
+        state2.nameOutput["with"] = this["with"];
+        const mywith = "with";
+        let with_default_prefix = "";
+        let with_suffix = "";
+        if (STARTSWITH_ROMANESQUE_REGEXP.test(mywith)) {
+          with_default_prefix = " ";
+          with_suffix = " ";
+        }
+        const thewith = {
+          single: new Blob(mywith),
+          multiple: new Blob(mywith)
+        };
+        thewith.single.strings.suffix = with_suffix;
+        thewith.multiple = new Blob(mywith);
+        thewith.multiple.strings.suffix = with_suffix;
+        if (state2.inheritOpt(state2.nameOutput.name, "delimiter-precedes-last") === "always") {
+          thewith.single.strings.prefix = state2.inheritOpt(this, "delimiter", "names-delimiter");
+          thewith.multiple.strings.prefix = state2.inheritOpt(this, "delimiter", "names-delimiter");
+        } else if (state2.inheritOpt(state2.nameOutput.name, "delimiter-precedes-last") === "contextual") {
+          thewith.single.strings.prefix = with_default_prefix;
+          thewith.multiple.strings.prefix = state2.inheritOpt(this, "delimiter", "names-delimiter");
+        } else if (state2.inheritOpt(state2.nameOutput.name, "delimiter-precedes-last") === "after-inverted-name") {
+          thewith.single.strings.prefix = state2.inheritOpt(this, "delimiter", "names-delimiter");
+          thewith.multiple.strings.prefix = with_default_prefix;
+        } else {
+          thewith.single.strings.prefix = with_default_prefix;
+          thewith.multiple.strings.prefix = with_default_prefix;
+        }
+        state2.nameOutput["with"] = thewith;
+        state2.nameOutput.label = this.label;
+        state2.nameOutput.etal_style = this.etal_style;
+        state2.nameOutput.etal_term = this.etal_term;
+        state2.nameOutput.etal_prefix_single = this.etal_prefix_single;
+        state2.nameOutput.etal_prefix_multiple = this.etal_prefix_multiple;
+        state2.nameOutput.etal_suffix = this.etal_suffix;
+        state2.nameOutput.outputNames();
+        state2.tmp["et-al-use-first"] = void 0;
+        state2.tmp["et-al-min"] = void 0;
+        state2.tmp["et-al-use-last"] = void 0;
+      };
+      this.execs.push(func);
+      func = function(state2) {
+        if (!state2.tmp.can_substitute.pop()) {
+          state2.tmp.can_substitute.replace(false, LITERAL);
+        }
+        if (state2.tmp.can_substitute.mystack.length === 1) {
+          state2.tmp.can_block_substitute = false;
+        }
+      };
+      this.execs.push(func);
+      state.build.name_flag = false;
+    }
+    target.push(this);
+    if (this.tokentype === END || this.tokentype === SINGLETON) {
+      state.build.substitute_level.pop();
+      Util_substituteEnd.call(this, state, target);
+    }
+  }
+};
+
+// src/node/key.ts
+var Node_key = {
+  build: function(state, target) {
+    target = state[state.build.root + "_sort"].tokens;
+    let func;
+    const debug2 = false;
+    const start_key = new Token("key", START);
+    state.tmp.root = state.build.root;
+    start_key.strings["et-al-min"] = state.inheritOpt(this, "et-al-min");
+    start_key.strings["et-al-use-first"] = state.inheritOpt(this, "et-al-use-first");
+    start_key.strings["et-al-use-last"] = state.inheritOpt(this, "et-al-use-last");
+    func = function(state2) {
+      state2.tmp.done_vars = [];
+    };
+    start_key.execs.push(func);
+    func = function(state2) {
+      state2.output.openLevel("empty");
+    };
+    start_key.execs.push(func);
+    const sort_direction = [];
+    if (this.strings.sort_direction === DESCENDING) {
+      sort_direction.push(1);
+      sort_direction.push(-1);
+    } else {
+      sort_direction.push(-1);
+      sort_direction.push(1);
+    }
+    state[state.build.area].opt.sort_directions.push(sort_direction);
+    if (DATE_VARIABLES.indexOf(this.variables[0]) > -1) {
+      state.build.date_key = true;
+    }
+    func = function(state2) {
+      state2.tmp.sort_key_flag = true;
+      if (state2.inheritOpt(this, "et-al-min")) {
+        state2.tmp["et-al-min"] = state2.inheritOpt(this, "et-al-min");
+      }
+      if (state2.inheritOpt(this, "et-al-use-first")) {
+        state2.tmp["et-al-use-first"] = state2.inheritOpt(this, "et-al-use-first");
+      }
+      if ("boolean" === typeof state2.inheritOpt(this, "et-al-use-last")) {
+        state2.tmp["et-al-use-last"] = state2.inheritOpt(this, "et-al-use-last");
+      }
+    };
+    start_key.execs.push(func);
+    target.push(start_key);
+    if (this.variables.length) {
+      const variable = this.variables[0];
+      if (NAME_VARIABLES.indexOf(variable) > -1) {
+        const names_start_token = new Token("names", START);
+        names_start_token.tokentype = START;
+        names_start_token.variables = this.variables;
+        Node_names.build.call(names_start_token, state, target);
+        const name_token = new Token("name", SINGLETON);
+        name_token.tokentype = SINGLETON;
+        name_token.strings["name-as-sort-order"] = "all";
+        name_token.strings["sort-separator"] = " ";
+        name_token.strings["et-al-use-last"] = state.inheritOpt(this, "et-al-use-last");
+        name_token.strings["et-al-min"] = state.inheritOpt(this, "et-al-min");
+        name_token.strings["et-al-use-first"] = state.inheritOpt(this, "et-al-use-first");
+        Node_name.build.call(name_token, state, target);
+        const institution_token = new Token("institution", SINGLETON);
+        institution_token.tokentype = SINGLETON;
+        Node_institution.build.call(institution_token, state, target);
+        const names_end_token = new Token("names", END);
+        names_end_token.tokentype = END;
+        Node_names.build.call(names_end_token, state, target);
+      } else {
+        const single_text = new Token("text", SINGLETON);
+        single_text.strings.sort_direction = this.strings.sort_direction;
+        single_text.dateparts = this.dateparts;
+        if (NUMERIC_VARIABLES.indexOf(variable) > -1) {
+          if (variable === "citation-number") {
+            func = function(state2, Item) {
+              if (state2.tmp.area === "bibliography_sort") {
+                if (this.strings.sort_direction === DESCENDING) {
+                  state2.bibliography_sort.opt.citation_number_sort_direction = DESCENDING;
+                } else {
+                  state2.bibliography_sort.opt.citation_number_sort_direction = ASCENDING;
+                }
+              }
+              let num;
+              if (state2.tmp.area === "citation_sort" && state2.bibliography_sort.tmp.citation_number_map) {
+                num = state2.bibliography_sort.tmp.citation_number_map[state2.registry.registry[Item.id].seq];
+              } else {
+                num = state2.registry.registry[Item.id].seq;
+              }
+              if (num) {
+                num = padding("" + num);
+              }
+              state2.output.append(num, this);
+            };
+          } else {
+            func = function(state2, Item) {
+              let num = false;
+              num = Item[variable];
+              if (num) {
+                num = padding("" + num);
+              }
+              state2.output.append(num, this);
+            };
+          }
+        } else if (variable === "citation-label") {
+          func = function(state2, Item) {
+            const trigraph = state2.getCitationLabel(Item);
+            state2.output.append(trigraph, this);
+          };
+        } else if (DATE_VARIABLES.indexOf(variable) > -1) {
+          func = dateAsSortKey;
+          single_text.variables = this.variables;
+        } else if ("title" === variable) {
+          const abbrevfam = "title";
+          const abbrfall = false;
+          const altvar = false;
+          const transfall = true;
+          func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
+        } else if ("court-class" === variable) {
+          func = function(state2, Item, item) {
+            INIT_JURISDICTION_MACROS(state2, Item, item, "juris-main");
+            const cls = GET_COURT_CLASS(state2, Item, true);
+            state2.output.append(cls, "empty");
+          };
+        } else {
+          func = function(state2, Item) {
+            const varval = Item[variable];
+            state2.output.append(varval, "empty");
+          };
+        }
+        single_text.execs.push(func);
+        target.push(single_text);
+      }
+    } else {
+      const token = new Token("text", SINGLETON);
+      token.strings.sort_direction = this.strings.sort_direction;
+      token.postponed_macro = this.postponed_macro;
+      expandMacro.call(state, token, target);
+    }
+    const end_key = new Token("key", END);
+    func = function(state2) {
+      let keystring = state2.output.string(state2, state2.output.queue);
+      if (state2.sys.normalizeUnicode) {
+        keystring = state2.sys.normalizeUnicode(keystring);
+      }
+      if (keystring) {
+        if (Array.isArray(keystring)) {
+          keystring = keystring.map(function(v) {
+            if (v && typeof v === "object" && typeof v.blobs === "string") return v.blobs;
+            return "" + v;
+          }).join("");
+        }
+        keystring = keystring.split(" ").join(state2.opt.sort_sep) + state2.opt.sort_sep;
+      } else {
+        keystring = "";
+      }
+      if ("" === keystring) {
+        keystring = void 0;
+      }
+      if ("string" !== typeof keystring) {
+        keystring = void 0;
+      }
+      state2[state2[state2.tmp.area].root + "_sort"].keys.push(keystring);
+      state2.tmp.value = [];
+    };
+    end_key.execs.push(func);
+    if (state.build.date_key) {
+      if (state.build.area === "citation" && state.build.extension === "_sort") {
+        state[state.build.area].opt.sort_directions.push([-1, 1]);
+        func = function(state2, Item) {
+          let year_suffix = state2.registry.registry[Item.id].disambig.year_suffix;
+          if (!year_suffix) {
+            year_suffix = 0;
+          }
+          let key = padding("" + year_suffix);
+          state2[state2.tmp.area].keys.push(key);
+        };
+        end_key.execs.push(func);
+      }
+      state.build.date_key = false;
+    }
+    func = function(state2) {
+      state2.tmp["et-al-min"] = void 0;
+      state2.tmp["et-al-use-first"] = void 0;
+      state2.tmp["et-al-use-last"] = void 0;
+      state2.tmp.sort_key_flag = false;
+    };
+    end_key.execs.push(func);
+    target.push(end_key);
+  }
+};
+
+// src/node/label.ts
+var Node_label = {
+  build: function(state, target) {
+    if (this.strings.term) {
+      let func = function(state2, Item, item) {
+        let termtxt = evaluateLabel(this, state2, Item, item);
+        if (item && this.strings.term === "locator") {
+          item.section_form_override = this.strings.form;
+        }
+        if (termtxt) {
+          state2.tmp.group_context.tip.term_intended = true;
+        }
+        UPDATE_GROUP_CONTEXT_CONDITION(state2, termtxt, null, this);
+        if (termtxt.indexOf("%s") === -1) {
+          if (this.strings.capitalize_if_first) {
+            if (!state2.tmp.term_predecessor && !(state2.opt["class"] === "in-text" && state2.tmp.area === "citation")) {
+              termtxt = Output_formatters["capitalize-first"](state2, termtxt);
+            }
+          }
+          state2.output.append(termtxt, this);
+        }
+      };
+      this.execs.push(func);
+    } else {
+      if (!this.strings.form) {
+        this.strings.form = "long";
+      }
+      const namevars = state.build.names_variables[state.build.names_variables.length - 1];
+      const namelabels = state.build.name_label[state.build.name_label.length - 1];
+      for (let i = 0, ilen = namevars.length; i < ilen; i += 1) {
+        if (!namelabels[namevars[i]]) {
+          namelabels[namevars[i]] = {};
+        }
+      }
+      if (!state.build.name_flag) {
+        for (let i = 0, ilen = namevars.length; i < ilen; i += 1) {
+          namelabels[namevars[i]].before = this;
+        }
+      } else {
+        for (let i = 0, ilen = namevars.length; i < ilen; i += 1) {
+          namelabels[namevars[i]].after = this;
+        }
+      }
+    }
+    target.push(this);
+  }
+};
+
+// src/node/layout.ts
+var Node_layout = {
+  build: function(state, target) {
+    let func, prefix_token, suffix_token, tok;
+    function setSuffix() {
+      if (state.build.area === "bibliography") {
+        suffix_token = new Token("text", SINGLETON);
+        func = function(state2) {
+          if (!state2.tmp.parallel_and_not_last) {
+            let suffix;
+            if (state2.tmp.cite_affixes[state2.tmp.area][state2.tmp.last_cite_locale]) {
+              suffix = state2.tmp.cite_affixes[state2.tmp.area][state2.tmp.last_cite_locale].suffix;
+            } else {
+              suffix = state2.bibliography.opt.layout_suffix;
+            }
+            const topblob = state2.output.current.value();
+            if (state2.opt.using_display) {
+              topblob.blobs[topblob.blobs.length - 1].strings.suffix = suffix;
+            } else {
+              topblob.strings.suffix = suffix;
+            }
+          }
+          if (state2.bibliography.opt["second-field-align"]) {
+            state2.output.endTag("bib_other");
+          }
+        };
+        suffix_token.execs.push(func);
+        target.push(suffix_token);
+      }
+    }
+    if (this.tokentype === START) {
+      if (this.locale_raw) {
+        state.build.current_default_locale = this.locale_raw;
+      } else {
+        state.build.current_default_locale = state.opt["default-locale"];
+      }
+      func = function(state2, Item, item) {
+        if (state2.opt.development_extensions.apply_citation_wrapper && state2.sys.wrapCitationEntry && !state2.tmp.just_looking && Item.system_id && state2.tmp.area === "citation") {
+          const cite_entry = new Token("group", START);
+          cite_entry.decorations = [["@cite", "entry"]];
+          state2.output.startTag("cite_entry", cite_entry);
+          state2.output.current.value().item_id = Item.system_id;
+          if (item) {
+            state2.output.current.value().locator_txt = item.locator_txt;
+            state2.output.current.value().suffix_txt = item.suffix_txt;
+          }
+        }
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === START && !state.tmp.cite_affixes[state.build.area]) {
+      func = function(state2, Item, item) {
+        state2.tmp.done_vars = [];
+        if (item && item["author-only"]) {
+          state2.tmp.done_vars.push("locator");
+        }
+        if (state2.opt.suppressedJurisdictions[Item["country"]] && Item["country"] && ["treaty", "patent"].indexOf(Item.type) === -1) {
+          state2.tmp.done_vars.push("country");
+        }
+        if (!state2.tmp.just_looking && state2.registry.registry[Item.id] && state2.registry.registry[Item.id].parallel) {
+          state2.tmp.done_vars.push("first-reference-note-number");
+        }
+        if (!state2.tmp.just_looking && state2.tmp.abbrev_trimmer && Item.jurisdiction) {
+          for (let field in state2.tmp.abbrev_trimmer.QUASHES[Item.jurisdiction]) {
+            state2.tmp.done_vars.push(field);
+          }
+        }
+        state2.tmp.rendered_name = false;
+      };
+      this.execs.push(func);
+      func = function(state2) {
+        state2.tmp.sort_key_flag = false;
+      };
+      this.execs.push(func);
+      func = function(state2) {
+        state2.tmp.nameset_counter = 0;
+      };
+      this.execs.push(func);
+      func = function(state2, Item) {
+        let tok2 = new Token();
+        state2.output.openLevel(tok2);
+      };
+      this.execs.push(func);
+      target.push(this);
+      if (state.build.area === "citation") {
+        prefix_token = new Token("text", SINGLETON);
+        func = function(state2, Item, item) {
+          if (item && item.prefix) {
+            let prefix = checkPrefixSpaceAppend(state2, item.prefix);
+            if (!state2.tmp.just_looking) {
+              prefix = state2.output.checkNestedBrace.update(prefix);
+            }
+            const ignorePredecessor = checkIgnorePredecessor(state2, prefix);
+            state2.output.append(prefix, this, false, ignorePredecessor);
+          }
+        };
+        prefix_token.execs.push(func);
+        target.push(prefix_token);
+      }
+    }
+    let my_tok;
+    if (this.locale_raw) {
+      my_tok = new Token("dummy", START);
+      my_tok.locale = this.locale_raw;
+      my_tok.strings.delimiter = this.strings.delimiter;
+      my_tok.strings.suffix = this.strings.suffix;
+      if (!state.tmp.cite_affixes[state.build.area]) {
+        state.tmp.cite_affixes[state.build.area] = {};
+      }
+    }
+    if (this.tokentype === START) {
+      state.build.layout_flag = true;
+      if (!this.locale_raw) {
+        state[state.tmp.area].opt.topdecor = [this.decorations];
+        state[state.tmp.area + "_sort"].opt.topdecor = [this.decorations];
+        state[state.build.area].opt.layout_prefix = this.strings.prefix;
+        state[state.build.area].opt.layout_suffix = this.strings.suffix;
+        state[state.build.area].opt.layout_delimiter = this.strings.delimiter;
+        state[state.build.area].opt.layout_decorations = this.decorations;
+        if (state.tmp.cite_affixes[state.build.area]) {
+          tok = new Token("else", START);
+          Node_else.build.call(tok, state, target);
+        }
+      }
+      if (this.locale_raw) {
+        if (!state.build.layout_locale_flag) {
+          const choose_tok = new Token("choose", START);
+          Node_choose.build.call(choose_tok, state, target);
+          my_tok.name = "if";
+          Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+          Node_if.build.call(my_tok, state, target);
+        } else {
+          my_tok.name = "else-if";
+          Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+          Node_else_if.build.call(my_tok, state, target);
+        }
+        state.tmp.cite_affixes[state.build.area][my_tok.locale] = {};
+        state.tmp.cite_affixes[state.build.area][my_tok.locale].delimiter = this.strings.delimiter;
+        state.tmp.cite_affixes[state.build.area][my_tok.locale].suffix = this.strings.suffix;
+      }
+    }
+    if (this.tokentype === END) {
+      if (this.locale_raw) {
+        setSuffix();
+        if (!state.build.layout_locale_flag) {
+          my_tok.name = "if";
+          my_tok.tokentype = END;
+          Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+          Node_if.build.call(my_tok, state, target);
+          state.build.layout_locale_flag = true;
+        } else {
+          my_tok.name = "else-if";
+          my_tok.tokentype = END;
+          Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+          Node_else_if.build.call(my_tok, state, target);
+        }
+      }
+      if (!this.locale_raw) {
+        setSuffix();
+        if (state.tmp.cite_affixes[state.build.area]) {
+          if (state.build.layout_locale_flag) {
+            tok = new Token("else", END);
+            Node_else.build.call(tok, state, target);
+            tok = new Token("choose", END);
+            Node_choose.build.call(tok, state, target);
+          }
+        }
+        state.build_layout_locale_flag = true;
+        if (state.build.area === "citation") {
+          suffix_token = new Token("text", SINGLETON);
+          func = function(state2, Item, item) {
+            if (item && item.suffix) {
+              let suffix = checkSuffixSpacePrepend(state2, item.suffix);
+              if (!state2.tmp.just_looking) {
+                suffix = state2.output.checkNestedBrace.update(suffix);
+              }
+              state2.output.append(suffix, this);
+            }
+          };
+          suffix_token.execs.push(func);
+          target.push(suffix_token);
+        }
+        func = function(state2) {
+          state2.output.closeLevel();
+        };
+        this.execs.push(func);
+        func = function(state2, Item) {
+          if (state2.opt.development_extensions.apply_citation_wrapper && state2.sys.wrapCitationEntry && !state2.tmp.just_looking && Item.system_id && state2.tmp.area === "citation") {
+            state2.output.endTag();
+          }
+        };
+        this.execs.push(func);
+        target.push(this);
+        state.build.layout_flag = false;
+        state.build.layout_locale_flag = false;
+      }
+    }
+  }
+};
+
+// src/node/macro.ts
+var Node_macro = {
+  build: function() {
+  }
+};
+
+// src/node/alternative.ts
+var Node_alternative = {
+  build: function(state, target) {
+    if (this.tokentype === START) {
+      const choose_tok = new Token("choose", START);
+      Node_choose.build.call(choose_tok, state, target);
+      const if_tok = new Token("if", START);
+      Attributes["@alternative-node-internal"].call(if_tok, state);
+      Node_if.build.call(if_tok, state, target);
+      let func = function(state2, Item) {
+        state2.tmp.oldItem = Item;
+        state2.tmp.oldLang = state2.opt.lang;
+        state2.tmp.abort_alternative = true;
+        let newItem;
+        if (Item["language-name"] && Item["language-name-original"]) {
+          newItem = JSON.parse(JSON.stringify(Item));
+          newItem.language = newItem["language-name"];
+          const langspec = localeResolve(newItem.language, state2.opt["default-locale"][0]);
+          if (state2.opt.multi_layout) {
+            for (let i in state2.opt.multi_layout) {
+              const locale_list = state2.opt.multi_layout[i];
+              let gotlang = "";
+              for (let j in locale_list) {
+                const tryspec = locale_list[j];
+                if (langspec.best === tryspec.best || langspec.base === tryspec.base || langspec.bare === tryspec.bare) {
+                  gotlang = locale_list[0].best;
+                  break;
+                }
+              }
+              if (!gotlang) {
+                gotlang = state2.opt["default-locale"][0];
+              }
+              state2.opt.lang = gotlang;
+            }
+          }
+          for (let key in newItem) {
+            if (["id", "type", "language", "multi"].indexOf(key) === -1 && key.slice(0, 4) !== "alt-") {
+              if (newItem.multi && newItem.multi._keys[key]) {
+                let deleteme = true;
+                for (let lang in newItem.multi._keys[key]) {
+                  if (langspec.bare === lang.replace(/^([a-zA-Z]+).*/, "$1")) {
+                    deleteme = false;
+                    break;
+                  }
+                }
+                if (deleteme) {
+                  delete newItem[key];
+                }
+              } else {
+                delete newItem[key];
+              }
+            }
+          }
+          for (let key in newItem) {
+            if (key.slice(0, 4) === "alt-") {
+              newItem[key.slice(4)] = newItem[key];
+              state2.tmp.abort_alternative = false;
+            } else {
+              if (newItem.multi && newItem.multi._keys) {
+                if (!newItem["alt-" + key] && newItem.multi._keys[key]) {
+                  if (newItem.multi._keys[key][langspec.best]) {
+                    newItem[key] = newItem.multi._keys[key][langspec.best];
+                    state2.tmp.abort_alternative = false;
+                  } else if (newItem.multi._keys[key][langspec.base]) {
+                    newItem[key] = newItem.multi._keys[key][langspec.base];
+                    state2.tmp.abort_alternative = false;
+                  } else if (newItem.multi._keys[key][langspec.bare]) {
+                    newItem[key] = newItem.multi._keys[key][langspec.bare];
+                    state2.tmp.abort_alternative = false;
+                  }
+                }
+              }
+            }
+          }
+        }
+        state2.output.openLevel(this);
+        state2.registry.refhash[Item.id] = newItem;
+        state2.nameOutput = new NameOutput(state2, newItem);
+      };
+      this.execs.push(func);
+      target.push(this);
+      const choose_tok2 = new Token("choose", START);
+      Node_choose.build.call(choose_tok2, state, target);
+      const if_tok2 = new Token("if", START);
+      Attributes["@alternative-node-internal"].call(if_tok2, state);
+      const func2 = function(state2) {
+        state2.tmp.abort_alternative = true;
+      };
+      if_tok2.execs.push(func2);
+      Node_if.build.call(if_tok2, state, target);
+    } else if (this.tokentype === END) {
+      const if_tok3 = new Token("if", END);
+      Node_if.build.call(if_tok3, state, target);
+      const choose_tok3 = new Token("choose", END);
+      Node_choose.build.call(choose_tok3, state, target);
+      const func3 = function(state2, Item) {
+        state2.output.closeLevel();
+        state2.registry.refhash[Item.id] = state2.tmp.oldItem;
+        state2.opt.lang = state2.tmp.oldLang;
+        state2.nameOutput = new NameOutput(state2, state2.tmp.oldItem);
+        state2.tmp.abort_alternative = false;
+      };
+      this.execs.push(func3);
+      target.push(this);
+      const if_tok4 = new Token("if", END);
+      Node_if.build.call(if_tok4, state, target);
+      const choose_tok4 = new Token("choose", END);
+      Node_choose.build.call(choose_tok4, state, target);
+    }
+  }
+};
+
+// src/node/alternativetext.ts
+var Node_alternative_text = {
+  build: function(state, target) {
+    if (this.tokentype === SINGLETON) {
+      let func = function(state2, Item) {
+        const item = state2.refetchItem(Item.id);
+        getCite.call(state2, item);
+      };
+      this.execs.push(func);
+    }
+    target.push(this);
+  }
+};
+
+// src/util/names/tests.ts
+function isPerson(value) {
+  if (value.literal || !value.given && value.family && value.isInstitution) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// src/util/names/truncate.ts
+function truncatePersonalNameLists() {
+  let v, i, ilen, j, jlen, chopvar, values;
+  this.freeters_count = {};
+  this.persons_count = {};
+  this.institutions_count = {};
+  for (let v2 in this.freeters) {
+    if (this.freeters.hasOwnProperty(v2)) {
+      this.freeters_count[v2] = this.freeters[v2].length;
+      this.freeters[v2] = this._truncateNameList(this.freeters, v2);
+    }
+  }
+  for (let v2 in this.persons) {
+    if (this.persons.hasOwnProperty(v2)) {
+      this.institutions_count[v2] = this.institutions[v2].length;
+      this._truncateNameList(this.institutions, v2);
+      this.persons[v2] = this.persons[v2].slice(0, this.institutions[v2].length);
+      this.persons_count[v2] = [];
+      for (let j2 = 0, jlen2 = this.persons[v2].length; j2 < jlen2; j2 += 1) {
+        this.persons_count[v2][j2] = this.persons[v2][j2].length;
+        this.persons[v2][j2] = this._truncateNameList(this.persons, v2, j2);
+      }
+    }
+  }
+  if (this.state.opt.development_extensions.etal_min_etal_usefirst_hack && this.etal_min === 1 && this.etal_use_first === 1 && !(this.state.tmp.extension || this.state.tmp.just_looking)) {
+    chopvar = v;
+  } else {
+    chopvar = false;
+  }
+  if (chopvar || this._please_chop) {
+    for (let i2 = 0, ilen2 = this.variables.length; i2 < ilen2; i2 += 1) {
+      v = this.variables[i2];
+      if (this.freeters[v].length) {
+        if (this._please_chop === v) {
+          this.freeters[v] = this.freeters[v].slice(1);
+          this.freeters_count[v] += -1;
+          this._please_chop = false;
+        } else if (chopvar && !this._please_chop) {
+          this.freeters[v] = this.freeters[v].slice(0, 1);
+          this.freeters_count[v] = 1;
+          this.institutions[v] = [];
+          this.persons[v] = [];
+          this._please_chop = chopvar;
+        }
+      }
+      for (let j2 = 0, jlen2 = this.persons[v].length; j2 < jlen2; j2 += 1) {
+        if (this.persons[v][j2].length) {
+          if (this._please_chop === v) {
+            this.persons[v][j2] = this.persons[v][j2].slice(1);
+            this.persons_count[v][j2] += -1;
+            this._please_chop = false;
+            break;
+          } else if (chopvar && !this._please_chop) {
+            this.freeters[v] = this.persons[v][j2].slice(0, 1);
+            this.freeters_count[v] = 1;
+            this.institutions[v] = [];
+            this.persons[v] = [];
+            values = [];
+            this._please_chop = chopvar;
+            break;
+          }
+        }
+      }
+      if (this.institutions[v].length) {
+        if (this._please_chop === v) {
+          this.institutions[v] = this.institutions[v].slice(1);
+          this.institutions_count[v] += -1;
+          this._please_chop = false;
+        } else if (chopvar && !this._please_chop) {
+          this.institutions[v] = this.institutions[v].slice(0, 1);
+          this.institutions_count[v] = 1;
+          values = [];
+          this._please_chop = chopvar;
+        }
+      }
+    }
+  }
+  for (let i2 = 0, ilen2 = this.variables.length; i2 < ilen2; i2 += 1) {
+    const curVar = this.variables[i2];
+    if (this.institutions[curVar] && this.institutions[curVar].length) {
+      this.nameset_offset += 1;
+    }
+    for (let j3 = 0, jlen3 = (this.persons[curVar] || []).length; j3 < jlen3; j3 += 1) {
+      if (this.persons[curVar][j3].length) {
+        this.nameset_offset += 1;
+      }
+    }
+  }
+}
+function _truncateNameList(container, variable, index) {
+  let lst;
+  if ("undefined" === typeof index) {
+    lst = container[variable];
+  } else {
+    lst = container[variable][index];
+  }
+  if (this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names && lst.length > 50 && lst.length > this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names + 2) {
+    const limit = this.state[this.state[this.state.tmp.area].root].opt.max_number_of_names;
+    lst = lst.slice(0, limit + 1).concat(lst.slice(-1));
+  }
+  return lst;
+}
+
+// src/util/names/divide.ts
+function divideAndTransliterateNames() {
+  let i, ilen, j, jlen;
+  const Item = this.Item;
+  const variables = this.variables;
+  this.varnames = variables.slice();
+  this.freeters = {};
+  this.persons = {};
+  this.institutions = {};
+  for (let i2 = 0, ilen2 = variables.length; i2 < ilen2; i2 += 1) {
+    const v = variables[i2];
+    this.variable_offset[v] = this.nameset_offset;
+    let values = this._normalizeVariableValue(Item, v);
+    if (this.name.strings["suppress-min"] && values.length >= this.name.strings["suppress-min"]) {
+      values = [];
+    }
+    if (this.name.strings["suppress-max"] && values.length <= this.name.strings["suppress-max"]) {
+      values = [];
+    }
+    this._getFreeters(v, values);
+    this._getPersonsAndInstitutions(v, values);
+    if (this.state.opt.development_extensions.spoof_institutional_affiliations) {
+      if (this.name.strings["suppress-min"] === 0) {
+        this.freeters[v] = [];
+        for (let j2 = 0, jlen2 = this.persons[v].length; j2 < jlen2; j2 += 1) {
+          this.persons[v][j2] = [];
+        }
+      } else if (this.institution.strings["suppress-min"] === 0) {
+        this.institutions[v] = [];
+        this.freeters[v] = this.freeters[v].concat(this.persons[v]);
+        for (let j2 = 0, jlen2 = this.persons[v].length; j2 < jlen2; j2 += 1) {
+          for (let k = 0, klen = this.persons[v][j2].length; k < klen; k += 1) {
+            this.freeters[v].push(this.persons[v][j2][k]);
+          }
+        }
+        this.persons[v] = [];
+      }
+    }
+  }
+}
+function _normalizeVariableValue(Item, variable) {
+  let names;
+  if ("string" === typeof Item[variable] || "number" === typeof Item[variable]) {
+    debug('name variable "' + variable + '" is string or number, not array. Attempting to fix.');
+    names = [{ literal: Item[variable] + "" }];
+  } else if (!Item[variable]) {
+    names = [];
+  } else if ("number" !== typeof Item[variable].length) {
+    debug('name variable "' + variable + '" is object, not array. Attempting to fix.');
+    Item[variable] = [Item[variable]];
+    names = Item[variable].slice();
+  } else {
+    names = Item[variable].slice();
+  }
+  return names;
+}
+function _getFreeters(v, values) {
+  this.freeters[v] = [];
+  if (this.state.opt.development_extensions.spoof_institutional_affiliations) {
+    for (let i = values.length - 1; i > -1; i -= 1) {
+      if (this.isPerson(values[i])) {
+        const value = this._checkNickname(values.pop());
+        if (value) {
+          this.freeters[v].push(value);
+        }
+      } else {
+        break;
+      }
+    }
+  } else {
+    for (let i2 = values.length - 1; i2 > -1; i2 -= 1) {
+      let value2 = values.pop();
+      if (this.isPerson(value2)) {
+        value2 = this._checkNickname(value2);
+      }
+      this.freeters[v].push(value2);
+    }
+  }
+  this.freeters[v].reverse();
+  if (this.freeters[v].length) {
+    this.nameset_offset += 1;
+  }
+}
+function _getPersonsAndInstitutions(v, values) {
+  this.persons[v] = [];
+  this.institutions[v] = [];
+  if (!this.state.opt.development_extensions.spoof_institutional_affiliations) {
+    return;
+  }
+  let persons = [];
+  let has_affiliates = false;
+  let first = true;
+  for (let i = values.length - 1; i > -1; i -= 1) {
+    if (this.isPerson(values[i])) {
+      const value = this._checkNickname(values[i]);
+      if (value) {
+        persons.push(value);
+      }
+    } else {
+      has_affiliates = true;
+      this.institutions[v].push(values[i]);
+      if (!first) {
+        persons.reverse();
+        this.persons[v].push(persons);
+        persons = [];
+      }
+      first = false;
+    }
+  }
+  if (has_affiliates) {
+    persons.reverse();
+    this.persons[v].push(persons);
+    this.persons[v].reverse();
+    this.institutions[v].reverse();
+  }
+}
+function _clearValues(values) {
+  for (let i = values.length - 1; i > -1; i -= 1) {
+    values.pop();
+  }
+}
+function _checkNickname(name) {
+  if (["interview", "personal_communication"].indexOf(this.Item.type) > -1) {
+    let author = "";
+    author = getRawName(name);
+    if (author && this.state.sys.getAbbreviation && !(this.item && this.item["suppress-author"])) {
+      let normalizedKey = author;
+      if (this.state.sys.normalizeAbbrevsKey) {
+        normalizedKey = this.state.sys.normalizeAbbrevsKey("author", author);
+      }
+      this.state.transform.loadAbbreviation("default", "nickname", normalizedKey, this.Item.language);
+      const myLocalName = this.state.transform.abbrevs["default"].nickname[normalizedKey];
+      if (myLocalName) {
+        if (myLocalName === "!here>>>") {
+          name = false;
+        } else {
+          name = { family: myLocalName, given: "" };
+        }
+      }
+    }
+  }
+  return name;
+}
+
+// src/util/names/join.ts
+function _purgeEmptyBlobs(blobs) {
+  for (let i = blobs.length - 1; i > -1; i -= 1) {
+    if (!blobs[i] || blobs[i].length === 0 || !blobs[i].blobs.length) {
+      blobs = blobs.slice(0, i).concat(blobs.slice(i + 1));
+    }
+  }
+  return blobs;
+}
+function joinPersons(blobs, pos, j, tokenname) {
+  let ret;
+  blobs = this._purgeEmptyBlobs(blobs);
+  if (!tokenname) {
+    tokenname = "name";
+  }
+  if ("undefined" === typeof j) {
+    if (this.etal_spec[pos].freeters === 1) {
+      ret = this._joinEtAl(blobs);
+    } else if (this.etal_spec[pos].freeters === 2) {
+      ret = this._joinEllipsis(blobs);
+    } else if (!this.state.tmp.sort_key_flag) {
+      ret = this._joinAnd(blobs);
+    } else {
+      ret = this._join(blobs, this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", "));
+    }
+  } else {
+    if (this.etal_spec[pos].persons[j] === 1) {
+      ret = this._joinEtAl(blobs);
+    } else if (this.etal_spec[pos].persons[j] === 2) {
+      ret = this._joinEllipsis(blobs);
+    } else if (!this.state.tmp.sort_key_flag) {
+      ret = this._joinAnd(blobs);
+    } else {
+      ret = this._join(blobs, this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", "));
+    }
+  }
+  return ret;
+}
+function joinInstitutionSets(blobs, pos) {
+  let ret;
+  blobs = this._purgeEmptyBlobs(blobs);
+  if (this.etal_spec[pos].institutions === 1) {
+    ret = this._joinEtAl(blobs, "institution");
+  } else if (this.etal_spec[pos].institutions === 2) {
+    ret = this._joinEllipsis(blobs, "institution");
+  } else {
+    ret = this._joinAnd(blobs);
+  }
+  return ret;
+}
+function joinPersonsAndInstitutions(blobs) {
+  blobs = this._purgeEmptyBlobs(blobs);
+  let ret = this._join(blobs, this.state.tmp.name_delimiter);
+  ret.isInstitution = true;
+  return ret;
+}
+function joinFreetersAndInstitutionSets(blobs) {
+  blobs = this._purgeEmptyBlobs(blobs);
+  let ret = this._join(blobs, "[never here]", this["with"].single, this["with"].multiple);
+  return ret;
+}
+function _getAfterInvertedName(blobs, delimiter, finalJoin) {
+  if (finalJoin && blobs.length > 1) {
+    if (this.state.inheritOpt(this.name, "delimiter-precedes-last") === "after-inverted-name") {
+      const prevBlob = blobs[blobs.length - 2];
+      if (prevBlob.blobs.length > 0 && prevBlob.blobs[0].isInverted) {
+        finalJoin.strings.prefix = delimiter;
+      }
+    }
+  }
+  return finalJoin;
+}
+function _getAndJoin(blobs, delimiter) {
+  let finalJoin = false;
+  if (blobs.length > 1) {
+    let singleOrMultiple = "single";
+    if (blobs.length > 2) {
+      singleOrMultiple = "multiple";
+    }
+    if (blobs[blobs.length - 1].isInstitution) {
+      finalJoin = this.institution.and[singleOrMultiple];
+    } else {
+      finalJoin = this.name.and[singleOrMultiple];
+    }
+    finalJoin = JSON.parse(JSON.stringify(finalJoin));
+    finalJoin = this._getAfterInvertedName(blobs, delimiter, finalJoin);
+  }
+  return finalJoin;
+}
+function _joinEtAl(blobs) {
+  const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
+  const blob = this._join(blobs, delimiter);
+  this.state.output.openLevel(this._getToken("name"));
+  this.state.output.current.value().strings.delimiter = "";
+  this.state.output.append(blob, "literal", true);
+  if (blobs.length > 1) {
+    this.state.output.append(this["et-al"].multiple, "literal", true);
+  } else if (blobs.length === 1) {
+    this.state.output.append(this["et-al"].single, "literal", true);
+  }
+  this.state.output.closeLevel();
+  return this.state.output.pop();
+}
+function _joinEllipsis(blobs) {
+  const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
+  let finalJoin = false;
+  if (blobs.length > 1) {
+    let singleOrMultiple = "single";
+    if (blobs.length > 2) {
+      singleOrMultiple = "multiple";
+    }
+    finalJoin = JSON.parse(JSON.stringify(this.name.ellipsis[singleOrMultiple]));
+    finalJoin = this._getAfterInvertedName(blobs, delimiter, finalJoin);
+  }
+  return this._join(blobs, delimiter, finalJoin);
+}
+function _joinAnd(blobs) {
+  const delimiter = this.state.inheritOpt(this.name, "delimiter", "name-delimiter", ", ");
+  const finalJoin = this._getAndJoin(blobs, delimiter);
+  return this._join(blobs, delimiter, finalJoin);
+}
+function _join(blobs, delimiter, finalJoin) {
+  let i, ilen;
+  if (!blobs) {
+    return false;
+  }
+  blobs = this._purgeEmptyBlobs(blobs);
+  if (!blobs.length) {
+    return false;
+  }
+  if (blobs.length > 1) {
+    if (blobs.length === 2) {
+      if (!finalJoin) {
+        blobs[0].strings.suffix += delimiter;
+      } else {
+        blobs = [blobs[0], finalJoin, blobs[1]];
+      }
+    } else {
+      let offset;
+      if (finalJoin) {
+        offset = 1;
+      } else {
+        offset = 0;
+      }
+      const blob = blobs.pop();
+      for (let i2 = 0, ilen2 = blobs.length - offset; i2 < ilen2; i2 += 1) {
+        blobs[i2].strings.suffix += delimiter;
+      }
+      blobs.push(finalJoin);
+      blobs.push(blob);
+    }
+  }
+  this.state.output.openLevel();
+  for (let i2 = 0, ilen2 = blobs.length; i2 < ilen2; i2 += 1) {
+    this.state.output.append(blobs[i2], false, true);
+  }
+  this.state.output.closeLevel();
+  return this.state.output.pop();
+}
+function _getToken(tokenname) {
+  const token = this[tokenname];
+  if (tokenname === "institution") {
+    const newtoken = new Token();
+    return newtoken;
+  }
+  return token;
+}
+
+// src/util/names/constraints.ts
+function constrainNames() {
+  this.names_count = 0;
+  let pos;
+  for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+    const v = this.variables[i];
+    pos = this.nameset_base + i;
+    if (this.freeters[v].length) {
+      this.state.tmp.names_max.push(this.freeters[v].length, "literal");
+      this._imposeNameConstraints(this.freeters, this.freeters_count, v, pos);
+      this.names_count += this.freeters[v].length;
+    }
+    if (this.institutions[v].length) {
+      this.state.tmp.names_max.push(this.institutions[v].length, "literal");
+      this._imposeNameConstraints(this.institutions, this.institutions_count, v, pos);
+      this.persons[v] = this.persons[v].slice(0, this.institutions[v].length);
+      this.names_count += this.institutions[v].length;
+    }
+    for (let j = 0, jlen = this.persons[v].length; j < jlen; j += 1) {
+      if (this.persons[v][j].length) {
+        this.state.tmp.names_max.push(this.persons[v][j].length, "literal");
+        this._imposeNameConstraints(this.persons[v], this.persons_count[v], j, pos);
+        this.names_count += this.persons[v][j].length;
+      }
+    }
+  }
+}
+function _imposeNameConstraints(lst, count, key, pos) {
+  const display_names = lst[key];
+  let discretionary_names_length = this.state.tmp["et-al-min"];
+  if (this.state.tmp.suppress_decorations) {
+    if (this.state.tmp.disambig_request && this.state.tmp.disambig_request.names[pos]) {
+      discretionary_names_length = this.state.tmp.disambig_request.names[pos];
+    } else if (count[key] >= this.etal_min) {
+      discretionary_names_length = this.etal_use_first;
+    }
+  } else {
+    if (this.state.tmp.disambig_request && this.state.tmp.disambig_request.names[pos] > this.etal_use_first) {
+      if (count[key] < this.etal_min) {
+        discretionary_names_length = count[key];
+      } else {
+        discretionary_names_length = this.state.tmp.disambig_request.names[pos];
+      }
+    } else if (count[key] >= this.etal_min) {
+      discretionary_names_length = this.etal_use_first;
+    }
+    if (this.etal_use_last && discretionary_names_length > this.etal_min - 2) {
+      discretionary_names_length = this.etal_min - 2;
+    }
+  }
+  const sane = this.etal_min >= this.etal_use_first;
+  const overlength = count[key] > discretionary_names_length;
+  if (discretionary_names_length > count[key]) {
+    discretionary_names_length = display_names.length;
+  }
+  if (sane && overlength) {
+    if (this.etal_use_last) {
+      lst[key] = display_names.slice(0, discretionary_names_length).concat(display_names.slice(-1));
+    } else {
+      lst[key] = display_names.slice(0, discretionary_names_length);
+    }
+  }
+  this.state.tmp.disambig_settings.names[pos] = lst[key].length;
+  this.state.disambiguate.padBase(this.state.tmp.disambig_settings);
+}
+
+// src/util/names/disambig.ts
+function disambigNames() {
+  let pos;
+  for (let i = 0, ilen = this.variables.length; i < ilen; i += 1) {
+    const v = this.variables[i];
+    pos = this.nameset_base + i;
+    if (this.freeters[v].length) {
+      this._runDisambigNames(this.freeters[v], pos);
+    }
+    if (this.institutions[v].length) {
+      if ("undefined" === typeof this.state.tmp.disambig_settings.givens[pos]) {
+        this.state.tmp.disambig_settings.givens[pos] = [];
+      }
+      for (let j = 0, jlen = this.institutions[v].length; j < jlen; j += 1) {
+        if ("undefined" === typeof this.state.tmp.disambig_settings.givens[pos][j]) {
+          this.state.tmp.disambig_settings.givens[pos].push(2);
+        }
+      }
+    }
+    for (let j2 = 0, jlen2 = this.persons[v].length; j2 < jlen2; j2 += 1) {
+      if (this.persons[v][j2].length) {
+        this._runDisambigNames(this.persons[v][j2], pos);
+      }
+    }
+  }
+}
+function _runDisambigNames(lst, pos) {
+  let chk, myform, myinitials, param, i, ilen, paramx;
+  for (let i2 = 0, ilen2 = lst.length; i2 < ilen2; i2 += 1) {
+    if (!lst[i2].given && !lst[i2].family) {
+      continue;
+    }
+    myinitials = this.state.inheritOpt(this.name, "initialize-with");
+    this.state.registry.namereg.addname("" + this.Item.id, lst[i2], i2);
+    chk = this.state.tmp.disambig_settings.givens[pos];
+    if ("undefined" === typeof chk) {
+      for (let j = 0, jlen = pos + 1; j < jlen; j += 1) {
+        if (!this.state.tmp.disambig_settings.givens[j]) {
+          this.state.tmp.disambig_settings.givens[j] = [];
+        }
+      }
+    }
+    chk = this.state.tmp.disambig_settings.givens[pos][i2];
+    if ("undefined" === typeof chk) {
+      myform = this.state.inheritOpt(this.name, "form", "name-form", "long");
+      param = this.state.registry.namereg.evalname("" + this.Item.id, lst[i2], i2, 0, myform, myinitials);
+      this.state.tmp.disambig_settings.givens[pos].push(param);
+    }
+    myform = this.state.inheritOpt(this.name, "form", "name-form", "long");
+    paramx = this.state.registry.namereg.evalname("" + this.Item.id, lst[i2], i2, 0, myform, myinitials);
+    if (this.state.tmp.disambig_request) {
+      let val = this.state.tmp.disambig_settings.givens[pos][i2];
+      if (val === 1 && this.state.citation.opt["givenname-disambiguation-rule"] === "by-cite" && ("undefined" === typeof this.state.inheritOpt(this.name, "initialize-with") || "undefined" === typeof lst[i2].given)) {
+        val = 2;
+      }
+      param = val;
+      if (this.state.opt["disambiguate-add-givenname"] && lst[i2].given) {
+        param = this.state.registry.namereg.evalname("" + this.Item.id, lst[i2], i2, param, this.state.inheritOpt(this.name, "form", "name-form", "long"), this.state.inheritOpt(this.name, "initialize-with"));
+      }
+    } else {
+      param = paramx;
+    }
+    if (!this.state.tmp.just_looking && this.item && this.item.position === POSITION_FIRST) {
+      if (paramx > param) {
+        param = paramx;
+      }
+    }
+    if (!this.state.tmp.sort_key_flag) {
+      this.state.tmp.disambig_settings.givens[pos][i2] = param;
+      if ("string" === typeof myinitials && ("undefined" === typeof this.name.strings["initialize"] || true === this.name.strings["initialize"])) {
+        this.state.tmp.disambig_settings.use_initials = true;
+      }
+    }
+  }
+}
+
+// src/util/names/etalconfig.ts
+function getEtAlConfig() {
+  let item = this.item;
+  this["et-al"] = {};
+  this.state.output.append(this.etal_term, this.etal_style, true);
+  this["et-al"].single = this.state.output.pop();
+  this["et-al"].single.strings.suffix = this.etal_suffix;
+  this["et-al"].single.strings.prefix = this.etal_prefix_single;
+  this.state.output.append(this.etal_term, this.etal_style, true);
+  this["et-al"].multiple = this.state.output.pop();
+  this["et-al"].multiple.strings.suffix = this.etal_suffix;
+  this["et-al"].multiple.strings.prefix = this.etal_prefix_multiple;
+  if ("undefined" === typeof item) {
+    item = {};
+  }
+  if (item.position) {
+    if (this.state.inheritOpt(this.name, "et-al-subsequent-min")) {
+      this.etal_min = this.state.inheritOpt(this.name, "et-al-subsequent-min");
+    } else {
+      this.etal_min = this.state.inheritOpt(this.name, "et-al-min");
+    }
+    if (this.state.inheritOpt(this.name, "et-al-subsequent-use-first")) {
+      this.etal_use_first = this.state.inheritOpt(this.name, "et-al-subsequent-use-first");
+    } else {
+      this.etal_use_first = this.state.inheritOpt(this.name, "et-al-use-first");
+    }
+  } else {
+    if (this.state.tmp["et-al-min"]) {
+      this.etal_min = this.state.tmp["et-al-min"];
+    } else {
+      this.etal_min = this.state.inheritOpt(this.name, "et-al-min");
+    }
+    if (this.state.tmp["et-al-use-first"]) {
+      this.etal_use_first = this.state.tmp["et-al-use-first"];
+    } else {
+      this.etal_use_first = this.state.inheritOpt(this.name, "et-al-use-first");
+    }
+    if ("boolean" === typeof this.state.tmp["et-al-use-last"]) {
+      this.etal_use_last = this.state.tmp["et-al-use-last"];
+    } else {
+      this.etal_use_last = this.state.inheritOpt(this.name, "et-al-use-last");
+    }
+  }
+  if (!this.state.tmp["et-al-min"]) {
+    this.state.tmp["et-al-min"] = this.etal_min;
+  }
+}
+
+// src/util/names/etal.ts
+function setEtAlParameters() {
+  let i, ilen, j, jlen;
+  for (let i2 = 0, ilen2 = this.variables.length; i2 < ilen2; i2 += 1) {
+    const v = this.variables[i2];
+    if ("undefined" === typeof this.etal_spec[v]) {
+      this.etal_spec[v] = { freeters: 0, institutions: 0, persons: [] };
+    }
+    this.etal_spec[this.nameset_base + i2] = this.etal_spec[v];
+    if (this.freeters[v].length) {
+      this._setEtAlParameter("freeters", v);
+    }
+    for (let j2 = 0, jlen2 = this.persons[v].length; j2 < jlen2; j2 += 1) {
+      if ("undefined" === typeof this.etal_spec[v][j2]) {
+        this.etal_spec[v].persons[j2] = 0;
+      }
+      this._setEtAlParameter("persons", v, j2);
+    }
+    if (this.institutions[v].length) {
+      this._setEtAlParameter("institutions", v);
+    }
+  }
+}
+function _setEtAlParameter(type, v, j) {
+  let lst, count;
+  if (type === "persons") {
+    lst = this.persons[v][j];
+    count = this.persons_count[v][j];
+  } else {
+    lst = this[type][v];
+    count = this[type + "_count"][v];
+  }
+  if (lst.length < count && !this.state.tmp.sort_key_flag) {
+    if (this.etal_use_last) {
+      if (type === "persons") {
+        this.etal_spec[v].persons[j] = 2;
+      } else {
+        this.etal_spec[v][type] = 2;
+      }
+    } else {
+      if (type === "persons") {
+        this.etal_spec[v].persons[j] = 1;
+      } else {
+        this.etal_spec[v][type] = 1;
+      }
+    }
+  } else {
+    if (type === "persons") {
+      this.etal_spec[v].persons[j] = 0;
+    } else {
+      this.etal_spec[v][type] = 0;
+    }
+  }
+}
+
+// src/node/namepart.ts
+var Node_name_part = {
+  build: function(state) {
+    state.build[this.strings.name] = this;
+  }
+};
+
+// src/node/number.ts
+var Node_number = {
+  build: function(state, target) {
+    let func;
+    Util_substituteStart.call(this, state, target);
+    if (this.strings.form === "roman") {
+      this.formatter = state.fun.romanizer;
+    } else if (this.strings.form === "ordinal") {
+      this.formatter = state.fun.ordinalizer;
+    } else if (this.strings.form === "long-ordinal") {
+      this.formatter = state.fun.long_ordinalizer;
+    }
+    if ("undefined" === typeof this.successor_prefix) {
+      this.successor_prefix = state[state.build.area].opt.layout_delimiter;
+    }
+    if ("undefined" === typeof this.splice_prefix) {
+      this.splice_prefix = state[state.build.area].opt.layout_delimiter;
+    }
+    func = function(state2, Item, item) {
+      if (this.variables.length === 0) {
+        return;
+      }
+      let varname;
+      varname = this.variables[0];
+      if ("undefined" === typeof item) {
+        item = {};
+      }
+      if (["locator", "locator-extra"].indexOf(varname) > -1) {
+        if (state2.tmp.just_looking) {
+          return;
+        }
+        if (!item[varname]) {
+          return;
+        }
+      } else {
+        if (!Item[varname]) {
+          return;
+        }
+      }
+      if (varname === "collection-number" && Item.type === "legal_case") {
+        state2.tmp.renders_collection_number = true;
+      }
+      const node = this;
+      if (state2.tmp.group_context.tip.force_suppress) {
+        return;
+      }
+      if (["locator", "locator-extra"].indexOf(varname) > -1) {
+        state2.processNumber.call(state2, node, item, varname, Item.type);
+      } else {
+        if (!state2.tmp.group_context.tip.condition && Item[varname]) {
+          state2.tmp.just_did_number = ("" + Item[varname]).match(/[0-9]$/);
+        }
+        state2.processNumber.call(state2, node, Item, varname, Item.type);
+      }
+      if (this.substring) {
+        const val = Item[varname].slice(this.substring);
+        state2.output.append(val, node);
+      } else {
+        outputNumericField(state2, varname, Item.id);
+      }
+      if (["locator", "locator-extra"].indexOf(this.variables_real[0]) > -1 && !state2.tmp.just_looking) {
+        state2.tmp.done_vars.push(this.variables_real[0]);
+        state2.tmp.group_context.tip.done_vars.push(this.variables_real[0]);
+      }
+    };
+    this.execs.push(func);
+    target.push(this);
+    Util_substituteEnd.call(this, state, target);
+  }
+};
+
+// src/node/sort.ts
+var Node_sort = {
+  build: function(state, target) {
+    target = state[state.build.root + "_sort"].tokens;
+    if (this.tokentype === START) {
+      if (state.build.area === "citation") {
+        state.opt.sort_citations = true;
+      }
+      state.build.area = state.build.root + "_sort";
+      state.build.extension = "_sort";
+      let func = function(state2, Item) {
+        if (state2.opt.has_layout_locale) {
+          const langspec = localeResolve(Item.language, state2.opt["default-locale"][0]);
+          const sort_locales = state2[state2.tmp.area.slice(0, -5)].opt.sort_locales;
+          let langForItem;
+          for (let i = 0, ilen = sort_locales.length; i < ilen; i += 1) {
+            langForItem = sort_locales[i][langspec.bare];
+            if (!langForItem) {
+              langForItem = sort_locales[i][langspec.best];
+            }
+            if (langForItem) {
+              break;
+            }
+          }
+          if (!langForItem) {
+            langForItem = state2.opt["default-locale"][0];
+          }
+          state2.tmp.lang_sort_hold = state2.opt.lang;
+          state2.opt.lang = langForItem;
+        }
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === END) {
+      state.build.area = state.build.root;
+      state.build.extension = "";
+      const funcEnd = function(state2) {
+        if (state2.opt.has_layout_locale) {
+          state2.opt.lang = state2.tmp.lang_sort_hold;
+          delete state2.tmp.lang_sort_hold;
+        }
+      };
+      this.execs.push(funcEnd);
+    }
+    target.push(this);
+  }
+};
+
+// src/node/substitute.ts
+var Node_substitute = {
+  build: function(state, target) {
+    let func;
+    if (this.tokentype === START) {
+      const choose_start = new Token("choose", START);
+      Node_choose.build.call(choose_start, state, target);
+      const if_singleton = new Token("if", SINGLETON);
+      func = function() {
+        if (state.tmp.value.length && !state.tmp.common_term_match_fail) {
+          return true;
+        }
+        return false;
+      };
+      if_singleton.tests = [func];
+      if_singleton.test = state.fun.match.any(if_singleton, state, if_singleton.tests);
+      target.push(if_singleton);
+      func = function(state2) {
+        state2.tmp.can_block_substitute = true;
+        if (state2.tmp.value.length && !state2.tmp.common_term_match_fail) {
+          state2.tmp.can_substitute.replace(false, LITERAL);
+        }
+        state2.tmp.common_term_match_fail = false;
+      };
+      this.execs.push(func);
+      target.push(this);
+    }
+    if (this.tokentype === END) {
+      target.push(this);
+      const choose_end = new Token("choose", END);
+      Node_choose.build.call(choose_end, state, target);
+    }
+  }
+};
+
+// src/node/text.ts
+var Node_text = {
+  build: function(state, target) {
+    let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
+    if (this.postponed_macro) {
+      const group_start = Util_cloneToken(this);
+      group_start.name = "group";
+      group_start.tokentype = START;
+      Node_group.build.call(group_start, state, target);
+      expandMacro.call(state, this, target);
+      const group_end = Util_cloneToken(this);
+      group_end.name = "group";
+      group_end.tokentype = END;
+      if (this.postponed_macro === "juris-locator-label") {
+        group_end.isJurisLocatorLabel = true;
+      }
+      Node_group.build.call(group_end, state, target);
+    } else {
+      Util_substituteStart.call(this, state, target);
+      if (!this.variables_real) {
+        this.variables_real = [];
+      }
+      if (!this.variables) {
+        this.variables = [];
+      }
+      form = "long";
+      plural = 0;
+      if (this.strings.form) {
+        form = this.strings.form;
+      }
+      if (this.strings.plural) {
+        plural = this.strings.plural;
+      }
+      if ("citation-number" === this.variables_real[0] || "year-suffix" === this.variables_real[0] || "citation-label" === this.variables_real[0]) {
+        if (this.variables_real[0] === "citation-number") {
+          if (state.build.root === "citation") {
+            state.opt.update_mode = NUMERIC;
+          }
+          if (state.build.root === "bibliography") {
+            state.opt.bib_mode = NUMERIC;
+          }
+          if ("citation-number" === state[state.tmp.area].opt.collapse) {
+            this.range_prefix = state.getTerm("citation-range-delimiter");
+          }
+          this.successor_prefix = state[state.build.area].opt.layout_delimiter;
+          this.splice_prefix = state[state.build.area].opt.layout_delimiter;
+          func = function(state2, Item, item) {
+            id = "" + Item.id;
+            if (!state2.tmp.just_looking) {
+              if (state2.tmp.area.slice(-5) === "_sort" && this.variables[0] === "citation-number") {
+                if (state2.tmp.area === "bibliography_sort") {
+                  state2.tmp.group_context.tip.done_vars.push("citation-number");
+                }
+                let sortnum;
+                if (state2.tmp.area === "citation_sort" && state2.bibliography_sort.tmp.citation_number_map) {
+                  sortnum = state2.bibliography_sort.tmp.citation_number_map[state2.registry.registry[Item.id].seq];
+                } else {
+                  sortnum = state2.registry.registry[Item.id].seq;
+                }
+                if (sortnum) {
+                  sortnum = padding("" + sortnum);
+                }
+                state2.output.append(sortnum, this);
+                return;
+              }
+              if (item && item["author-only"]) {
+                state2.tmp.element_trace.replace("suppress-me");
+              }
+              if (state2.tmp.area !== "bibliography_sort" && state2.bibliography_sort.tmp.citation_number_map && state2.bibliography_sort.opt.citation_number_sort_direction === DESCENDING) {
+                num = state2.bibliography_sort.tmp.citation_number_map[state2.registry.registry[id].seq];
+              } else {
+                num = state2.registry.registry[id].seq;
+              }
+              if (state2.opt.citation_number_slug) {
+                state2.output.append(state2.opt.citation_number_slug, this);
+              } else {
+                number = new NumericBlob(state2, false, num, this, Item.id);
+                if (state2.tmp.in_cite_predecessor) {
+                  number.suppress_splice_prefix = true;
+                }
+                state2.output.append(number, "literal");
+              }
+            }
+          };
+          this.execs.push(func);
+        } else if (this.variables_real[0] === "year-suffix") {
+          state.opt.has_year_suffix = true;
+          if (state[state.tmp.area].opt.collapse === "year-suffix-ranged") {
+            this.range_prefix = state.getTerm("citation-range-delimiter");
+          }
+          this.successor_prefix = state[state.build.area].opt.layout_delimiter;
+          if (state[state.tmp.area].opt["year-suffix-delimiter"]) {
+            this.successor_prefix = state[state.build.area].opt["year-suffix-delimiter"];
+          }
+          func = function(state2, Item) {
+            if (state2.registry.registry[Item.id] && state2.registry.registry[Item.id].disambig.year_suffix !== false && !state2.tmp.just_looking) {
+              num = parseInt(state2.registry.registry[Item.id].disambig.year_suffix, 10);
+              if (state2[state2.tmp.area].opt.cite_group_delimiter) {
+                this.successor_prefix = state2[state2.tmp.area].opt.cite_group_delimiter;
+              }
+              number = new NumericBlob(state2, false, num, this, Item.id);
+              formatter = new Suffixator(SUFFIX_CHARS);
+              number.setFormatter(formatter);
+              state2.output.append(number, "literal");
+              firstoutput = false;
+              for (let i = 0, ilen = state2.tmp.group_context.mystack.length; i < ilen; i++) {
+                const flags = state2.tmp.group_context.mystack[i];
+                if (!flags.variable_success && (flags.variable_attempt || !flags.variable_attempt && !flags.term_intended)) {
+                  firstoutput = true;
+                  break;
+                }
+              }
+              specialdelimiter = state2[state2.tmp.area].opt["year-suffix-delimiter"];
+              if (firstoutput && specialdelimiter && !state2.tmp.sort_key_flag) {
+                state2.tmp.splice_delimiter = state2[state2.tmp.area].opt["year-suffix-delimiter"];
+              }
+            }
+          };
+          this.execs.push(func);
+        } else if (this.variables_real[0] === "citation-label") {
+          if (state.build.root === "bibliography") {
+            state.opt.bib_mode = TRIGRAPH;
+          }
+          state.opt.has_year_suffix = true;
+          func = function(state2, Item) {
+            label = Item["citation-label"];
+            if (!label) {
+              label = state2.getCitationLabel(Item);
+            }
+            if (!state2.tmp.just_looking) {
+              suffix = "";
+              if (state2.registry.registry[Item.id] && state2.registry.registry[Item.id].disambig.year_suffix !== false) {
+                num = parseInt(state2.registry.registry[Item.id].disambig.year_suffix, 10);
+                suffix = state2.fun.suffixator.format(num);
+              }
+              label += suffix;
+            }
+            state2.output.append(label, this);
+          };
+          this.execs.push(func);
+        }
+      } else {
+        if (this.strings.term) {
+          func = function(state2, Item) {
+            const gender = state2.opt.gender[Item.type];
+            let term2 = this.strings.term;
+            term2 = state2.getTerm(term2, form, plural, gender, TOLERANT, this.default_locale);
+            let myterm;
+            if (term2 !== "") {
+              state2.tmp.group_context.tip.term_intended = true;
+            }
+            UPDATE_GROUP_CONTEXT_CONDITION(state2, term2, null, this);
+            if (!state2.tmp.term_predecessor && !(state2.opt["class"] === "in-text" && state2.tmp.area === "citation")) {
+              myterm = Output_formatters["capitalize-first"](state2, term2);
+            } else {
+              myterm = term2;
+            }
+            Node_checkNonEnglishTitleCase.call(this, state2, Item);
+            if (state2.tmp.strip_periods) {
+              myterm = myterm.replace(/\./g, "");
+            } else {
+              for (let i = 0, ilen = this.decorations.length; i < ilen; i += 1) {
+                if ("@strip-periods" === this.decorations[i][0] && "true" === this.decorations[i][1]) {
+                  myterm = myterm.replace(/\./g, "");
+                  break;
+                }
+              }
+            }
+            state2.output.append(myterm, this);
+            if (state2.tmp.can_block_substitute) {
+              state2.tmp.can_substitute.replace(false, LITERAL);
+            }
+          };
+          this.execs.push(func);
+          state.build.term = false;
+          state.build.form = false;
+          state.build.plural = false;
+        } else if (this.variables_real.length) {
+          func = function(state2, Item) {
+            if (this.variables_real[0] !== "locator") {
+              state2.tmp.have_collapsed = false;
+            }
+            if (!state2.tmp.group_context.tip.condition && Item[this.variables[0]]) {
+              state2.tmp.just_did_number = false;
+            }
+            const val = Item[this.variables[0]];
+            if (val && !state2.tmp.group_context.tip.condition) {
+              if (("" + val).slice(-1).match(/[0-9]/)) {
+                state2.tmp.just_did_number = true;
+              } else {
+                state2.tmp.just_did_number = false;
+              }
+            }
+          };
+          this.execs.push(func);
+          if (MULTI_FIELDS.indexOf(this.variables_real[0]) > -1 || this.variables_real[0].indexOf("-main") > -1 || this.variables_real[0].indexOf("-sub") > -1 || ["language-name", "language-name-original"].indexOf(this.variables_real[0]) > -1) {
+            let abbrevfam = this.variables[0];
+            let abbrfall = false;
+            let altvar = false;
+            let transfall = false;
+            if (form === "short") {
+              if (this.variables_real[0].slice(-6) !== "-short") {
+                altvar = this.variables_real[0] + "-short";
+              }
+            } else {
+              abbrevfam = false;
+            }
+            if (state.build.extension) {
+              transfall = true;
+            } else {
+              transfall = true;
+              abbrfall = true;
+            }
+            func = state.transform.getOutputFunction(this.variables, abbrevfam, abbrfall, altvar, transfall);
+          } else {
+            if (CITE_FIELDS.indexOf(this.variables_real[0]) > -1) {
+              func = function(state2, Item, item) {
+                if (item && item[this.variables[0]]) {
+                  state2.processNumber(this, item, this.variables[0], Item.type);
+                  outputNumericField(state2, this.variables[0], Item.id);
+                  if (["locator", "locator-extra"].indexOf(this.variables_real[0]) > -1 && !state2.tmp.just_looking) {
+                    state2.tmp.done_vars.push(this.variables_real[0]);
+                  }
+                }
+              };
+            } else if (["page", "page-first", "chapter-number", "collection-number", "edition", "issue", "number", "number-of-pages", "number-of-volumes", "volume"].indexOf(this.variables_real[0]) > -1) {
+              func = function(state2, Item) {
+                Node_checkNonEnglishTitleCase.call(this, state2, Item);
+                state2.processNumber(this, Item, this.variables[0], Item.type);
+                outputNumericField(state2, this.variables[0], Item.id);
+              };
+            } else if (["URL", "DOI"].indexOf(this.variables_real[0]) > -1) {
+              func = function(state2, Item) {
+                let value;
+                if (this.variables[0]) {
+                  value = state2.getVariable(Item, this.variables[0], form);
+                  if (value) {
+                    if (this.variables[0] === "URL" && form === "short") {
+                      value = value.replace(/(.*\.[^\/]+)\/.*/, "$1");
+                      if (value.match(/\/\/www\./)) {
+                        value = value.replace(/https?:\/\//, "");
+                      }
+                    }
+                    if (this.variables[0] === "DOI") {
+                      if (!value.match(/^https?:\/\//) && this.strings.prefix && this.strings.prefix.match(/^.*https:\/\/doi\.org\/$/)) {
+                        value = encodeDoiForUrl(value);
+                      }
+                    }
+                    if (state2.opt.development_extensions.wrap_url_and_doi) {
+                      if (!this.decorations.length || this.decorations[0][0] !== "@" + this.variables[0]) {
+                        const clonetoken = Util_cloneToken(this);
+                        const groupblob = new Blob(null, null, "url-wrapper");
+                        groupblob.decorations.push(["@DOI", "true"]);
+                        if (this.variables_real[0] === "DOI") {
+                          let prefix;
+                          if (this.strings.prefix && this.strings.prefix.match(/^.*https:\/\/doi\.org\/$/)) {
+                            if (value.match(/^https?:\/\/doi\.org\//)) {
+                              value = value.replace(/^https?:\/\/doi\.org\//, "");
+                              value = decodeURIComponent(value);
+                            }
+                            if (value.match(/^https?:\/\//)) {
+                              prefix = "";
+                            } else {
+                              prefix = "https://doi.org/";
+                            }
+                            clonetoken.strings.prefix = this.strings.prefix.slice(0, this.strings.prefix.length - 16);
+                          }
+                          if (!value.match(/^https?:\/\//)) {
+                            value = encodeDoiForUrl(value);
+                          }
+                          const prefixblob = new Blob(prefix);
+                          const valueblob = new Blob(value);
+                          groupblob.push(prefixblob);
+                          groupblob.push(valueblob);
+                          state2.output.append(groupblob, clonetoken, false, false, true);
+                        } else {
+                          const valueblob = new Blob(value);
+                          groupblob.push(valueblob);
+                          state2.output.append(groupblob, clonetoken, false, false, true);
+                        }
+                      } else {
+                        state2.output.append(value, this, false, false, true);
+                      }
+                    } else {
+                      if (this.decorations.length) {
+                        for (let i = this.decorations.length - 1; i > -1; i--) {
+                          if (this.decorations[i][0] === "@" + this.variables[0]) {
+                            this.decorations = this.decorations.slice(0, i).concat(this.decorations.slice(i + 1));
+                          }
+                        }
+                      }
+                      state2.output.append(value, this, false, false, true);
+                    }
+                  }
+                }
+              };
+            } else if (this.variables_real[0] === "section") {
+              func = function(state2, Item) {
+                let value;
+                value = state2.getVariable(Item, this.variables[0], form);
+                if (value) {
+                  Node_checkNonEnglishTitleCase.call(this, state2, Item);
+                  state2.output.append(value, this);
+                }
+              };
+            } else if (this.variables_real[0] === "hereinafter") {
+              func = function(state2, Item) {
+                let value = state2.transform.abbrevs["default"]["hereinafter"][Item.id];
+                if (value) {
+                  state2.output.append(value, this);
+                  state2.tmp.group_context.tip.variable_success = true;
+                }
+              };
+            } else {
+              func = function(state2, Item) {
+                let value;
+                if (this.variables[0]) {
+                  value = state2.getVariable(Item, this.variables[0], form);
+                  if (value) {
+                    value = "" + value;
+                    value = value.split("\\").join("");
+                    Node_checkNonEnglishTitleCase.call(this, state2, Item);
+                    state2.output.append(value, this);
+                  }
+                }
+              };
+            }
+          }
+          this.execs.push(func);
+        } else if (this.strings.value) {
+          func = function(state2, Item) {
+            state2.tmp.group_context.tip.term_intended = true;
+            UPDATE_GROUP_CONTEXT_CONDITION(state2, this.strings.value, true, this);
+            Node_checkNonEnglishTitleCase.call(this, state2, Item);
+            state2.output.append(this.strings.value, this);
+            if (state2.tmp.can_block_substitute) {
+              state2.tmp.can_substitute.replace(false, LITERAL);
+            }
+          };
+          this.execs.push(func);
+        }
+      }
+      target.push(this);
+      Util_substituteEnd.call(this, state, target);
+    }
+  }
+};
+function Node_checkNonEnglishTitleCase(state, Item) {
+  if (this.strings["text-case"] === "title") {
+    let lang = Item.language ? Item.language : state.opt.lang;
+    if (lang && lang.slice(0, 2) !== "en") {
+      this.strings["text-case"] = "passthrough";
+    }
+  }
+}
+
+// src/node/intext.ts
+var Node_intext = {
+  build: function(state, target) {
+    if (this.tokentype === START) {
+      state.build.area = "intext";
+      state.build.root = "intext";
+      state.build.extension = "";
+      let func = function(state2, Item) {
+        state2.tmp.area = "intext";
+        state2.tmp.root = "intext";
+        state2.tmp.extension = "";
+      };
+      this.execs.push(func);
+    }
+    if (this.tokentype === END) {
+      state.intext_sort = {
+        opt: {
+          sort_directions: state.citation_sort.opt.sort_directions
+        }
+      };
+      state.intext.srt = state.citation.srt;
+    }
+    target.push(this);
+  }
+};
+
+// src/util/modules.ts
+function getJurisdictionList(jurisdiction) {
+  const jurisdictionList = [];
+  const jurisdictionElems = jurisdiction.split(":");
+  for (let j = jurisdictionElems.length; j > 0; j -= 1) {
+    const composedID = jurisdictionElems.slice(0, j).join(":");
+    jurisdictionList.push(composedID);
+    if (this.opt.jurisdiction_fallbacks[composedID]) {
+      const fallback = this.opt.jurisdiction_fallbacks[composedID];
+      jurisdictionList.push(fallback);
+    }
+  }
+  if (jurisdictionList.indexOf("us") === -1) {
+    jurisdictionList.push("us");
+  }
+  return jurisdictionList;
+}
+function loadStyleModule(jurisdiction, xmlSource, skipFallback) {
+  let myFallback = null;
+  let macroCount = 0;
+  this.juris[jurisdiction] = {};
+  const myXml = setupXml(xmlSource);
+  myXml.addMissingNameNodes(myXml.dataObj);
+  myXml.addInstitutionNodes(myXml.dataObj);
+  myXml.insertPublisherAndPlace(myXml.dataObj);
+  myXml.flagDateMacros(myXml.dataObj);
+  let myNodes = myXml.getNodesByName(myXml.dataObj, "law-module");
+  for (let i = 0, ilen = myNodes.length; i < ilen; i += 1) {
+    let myTypes = myXml.getAttributeValue(myNodes[i], "types");
+    if (myTypes) {
+      this.juris[jurisdiction].types = {};
+      myTypes = myTypes.split(/\s+/);
+      for (let j = 0, jlen = myTypes.length; j < jlen; j += 1) {
+        this.juris[jurisdiction].types[myTypes[j]] = true;
+      }
+    }
+    if (!skipFallback) {
+      myFallback = myXml.getAttributeValue(myNodes[i], "fallback");
+      if (myFallback) {
+        if (jurisdiction !== "us") {
+          this.opt.jurisdiction_fallbacks[jurisdiction] = myFallback;
+        }
+      }
+    }
+  }
+  const lang = this.opt.lang ? this.opt.lang : this.opt["default-locale"][0];
+  SET_COURT_CLASSES(this, lang, myXml, myXml.dataObj);
+  if (!this.juris[jurisdiction].types) {
+    this.juris[jurisdiction].types = MODULE_TYPES;
+  }
+  myNodes = myXml.getNodesByName(myXml.dataObj, "macro");
+  for (let i2 = 0, ilen2 = myNodes.length; i2 < ilen2; i2 += 1) {
+    const myName = myXml.getAttributeValue(myNodes[i2], "name");
+    if (!MODULE_MACROS[myName]) {
+      debug('CSL: skipping non-modular macro name "' + myName + '" in module context');
+      continue;
+    }
+    macroCount += 1;
+    this.juris[jurisdiction][myName] = [];
+    this.buildTokenLists(myNodes[i2], this.juris[jurisdiction][myName]);
+    this.configureTokenList(this.juris[jurisdiction][myName]);
+  }
+  return myFallback;
+}
+function retrieveAllStyleModules(jurisdictionList) {
+  let ret = {};
+  let preferences = this.locale[this.opt.lang].opts["jurisdiction-preference"];
+  preferences = preferences ? preferences : [];
+  preferences = [""].concat(preferences);
+  for (let i = preferences.length - 1; i > -1; i -= 1) {
+    const preference = preferences[i];
+    for (let j = 0, jlen = jurisdictionList.length; j < jlen; j += 1) {
+      const jurisdiction = jurisdictionList[j];
+      if (this.opt.jurisdictions_seen[jurisdiction]) {
+        continue;
+      }
+      const res = this.sys.retrieveStyleModule(jurisdiction, preference);
+      if (!res && !preference || res) {
+        this.opt.jurisdictions_seen[jurisdiction] = true;
+      }
+      if (!res) {
+        continue;
+      }
+      ret[jurisdiction] = res;
+    }
+  }
+  return ret;
+}
+
+// src/csl.ts
+var CSL2 = {
+  ...core_exports,
+  ...regex_exports,
+  ...statute_exports,
+  normalizeLocaleStr,
+  toLocaleUpperCase,
+  toLocaleLowerCase,
+  getAbbrevsDomain,
+  AbbreviationSegments,
+  Conditions,
+  Doppeler,
+  substituteOne,
+  substituteTwo,
+  setDecorations,
+  Mode,
+  checkPrefixSpaceAppend,
+  checkSuffixSpacePrepend,
+  checkIgnorePredecessor,
+  TITLE_FIELD_SPLITS,
+  TITLE_SPLIT,
+  demoteNoiseWords,
+  extractTitleAndSubtitle,
+  titlecaseSentenceOrNormal: function(state, Item, seg, lang, sentenceCase) {
+    return titlecaseSentenceOrNormal(state, Item, seg, lang, sentenceCase, Output_formatters);
+  },
+  checkNestedBrace,
+  parseLocator,
+  parseNoteFieldHacks,
+  getSafeEscape,
+  UPDATE_GROUP_CONTEXT_CONDITION,
+  EVALUATE_GROUP_CONDITION,
+  GET_COURT_CLASS,
+  SET_COURT_CLASSES,
+  INIT_JURISDICTION_MACROS,
+  localeResolve,
+  makeBuilder,
+  getAmbiguousCite,
+  getSpliceDelimiter,
+  getCitationCluster,
+  getCite,
+  citeStart,
+  citeEnd,
+  getBibliographyEntries
+};
+CSL2.internals = internals;
+CSL2.Node = internals.Node;
+Object.defineProperty(CSL2, "ITERATION", {
+  get: () => internals.ITERATION,
+  set: (v) => {
+    internals.ITERATION = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+Object.defineProperty(CSL2, "stringCompare", {
+  get: () => internals.stringCompare,
+  set: (v) => {
+    internals.stringCompare = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+Object.defineProperty(CSL2, "VARIABLE_WRAPPER_PREPUNCT_REX", {
+  get: () => internals.VARIABLE_WRAPPER_PREPUNCT_REX,
+  set: (v) => {
+    internals.VARIABLE_WRAPPER_PREPUNCT_REX = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+Object.defineProperty(CSL2, "debug", {
+  get: () => internals.debug,
+  set: (v) => {
+    internals.debug = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+Object.defineProperty(CSL2, "error", {
+  get: () => internals.error,
+  set: (v) => {
+    internals.error = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+Object.defineProperty(CSL2, "getSortKeys", {
+  get: () => internals.getSortKeys,
+  set: (v) => {
+    internals.getSortKeys = v;
+  },
+  enumerable: true,
+  configurable: true
+});
+CSL2.XmlJSON = XmlJSON;
+CSL2.stripXmlProcessingInstruction = stripXmlProcessingInstruction;
+CSL2.parseXml = parseXml;
+CSL2.XmlDOM = XmlDOM;
+CSL2.setupXml = setupXml;
+CSL2.getLocaleNames = getLocaleNames;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.Match = Match;
+CSL2.Util.encodeDoiForUrl = encodeDoiForUrl;
+CSL2.Transform = Transform;
+CSL2.getSortCompare = getSortCompare;
+CSL2.ambigConfigDiff = ambigConfigDiff;
+CSL2.cloneAmbigConfig = cloneAmbigConfig;
+CSL2.getAmbigConfig = getAmbigConfig;
+CSL2.getMaxVals = getMaxVals;
+CSL2.getMinVal = getMinVal;
+CSL2.tokenExec = tokenExec;
+CSL2.expandMacro = expandMacro;
+CSL2.getMacroTarget = getMacroTarget;
+CSL2.buildMacro = buildMacro;
+CSL2.configureMacro = configureMacro;
+CSL2.XmlToToken = XmlToToken;
+CSL2.DateParser = dateParserInstance;
+CSL2.Engine = Engine;
+CSL2.Output = CSL2.Output || {};
+CSL2.Output.Queue = Queue;
+CSL2.Engine.Opt = Opt;
+CSL2.Engine.Tmp = Tmp;
+CSL2.Engine.Fun = Fun;
+CSL2.Engine.Build = Build;
+CSL2.Engine.Configure = Configure;
+CSL2.Engine.Citation = Citation;
+CSL2.Engine.Bibliography = Bibliography;
+CSL2.Engine.BibliographySort = BibliographySort;
+CSL2.Engine.CitationSort = CitationSort;
+CSL2.Engine.InText = InText;
+CSL2.Conditions = CSL2.Conditions || {};
+CSL2.Conditions.Engine = EngineCondition;
+CSL2.Node = CSL2.Node || {};
+CSL2.Node.bibliography = Node_bibliography;
+CSL2.Node.choose = Node_choose;
+CSL2.Node.citation = Node_citation;
+CSL2.Node["#comment"] = Node_comment;
+CSL2.Node.date = Node_date;
+CSL2.Node["date-part"] = Node_date_part;
+CSL2.Node["else-if"] = Node_else_if;
+CSL2.Node["else"] = Node_else;
+CSL2.Node["et-al"] = Node_et_al;
+CSL2.Node.group = Node_group;
+CSL2.Node["if"] = Node_if;
+CSL2.Node.conditions = Node_conditions;
+CSL2.Node.condition = Node_condition;
+CSL2.Node.info = Node_info;
+CSL2.Node.institution = Node_institution;
+CSL2.Node["institution-part"] = Node_institution_part;
+CSL2.Node.key = Node_key;
+CSL2.Node.label = Node_label;
+CSL2.Node.layout = Node_layout;
+CSL2.Node.macro = Node_macro;
+CSL2.Node.alternative = Node_alternative;
+CSL2.Node["alternative-text"] = Node_alternative_text;
+CSL2.NameOutput = NameOutput;
+Object.assign(CSL2.NameOutput.prototype, {
+  isPerson,
+  truncatePersonalNameLists,
+  _truncateNameList,
+  divideAndTransliterateNames,
+  _normalizeVariableValue,
+  _getFreeters,
+  _getPersonsAndInstitutions,
+  _clearValues,
+  _checkNickname,
+  _purgeEmptyBlobs,
+  joinPersons,
+  joinInstitutionSets,
+  joinPersonsAndInstitutions,
+  joinFreetersAndInstitutionSets,
+  _getAfterInvertedName,
+  _getAndJoin,
+  _joinEtAl,
+  _joinEllipsis,
+  _joinAnd,
+  _join,
+  _getToken,
+  checkCommonAuthor,
+  setCommonTerm,
+  _compareNamesets,
+  constrainNames,
+  _imposeNameConstraints,
+  disambigNames,
+  _runDisambigNames,
+  getEtAlConfig,
+  setEtAlParameters,
+  _setEtAlParameter
+});
+CSL2.PublisherOutput = PublisherOutput;
+CSL2.evaluateLabel = evaluateLabel;
+CSL2.castLabel = castLabel;
+CSL2.Node = CSL2.Node || {};
+CSL2.Node.name = Node_name;
+CSL2.Node["name-part"] = Node_name_part;
+CSL2.Node.names = Node_names;
+CSL2.Node.number = Node_number;
+CSL2.Node.sort = Node_sort;
+CSL2.Node.substitute = Node_substitute;
+CSL2.Node.text = Node_text;
+CSL2.checkNonEnglishTitleCase = Node_checkNonEnglishTitleCase;
+CSL2.Node.intext = Node_intext;
+CSL2.Attributes = Attributes;
+CSL2.Stack = Stack;
+CSL2.Parallel = Parallel;
+CSL2.Token = Token;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.cloneToken = Util_cloneToken;
+CSL2.AmbigConfig = AmbigConfig;
+CSL2.Blob = Blob;
+CSL2.NumericBlob = NumericBlob;
+CSL2.Output = CSL2.Output || {};
+CSL2.Output.DefaultFormatter = Output_DefaultFormatter;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.fixDateNode = Util_fixDateNode;
+CSL2.dateMacroAsSortKey = dateMacroAsSortKey;
+CSL2.dateAsSortKey = dateAsSortKey;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.Names = Util_Names;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.Dates = Util_Dates;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.Sort = Util_Sort;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.substituteStart = Util_substituteStart;
+CSL2.Util.substituteEnd = Util_substituteEnd;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.padding = padding;
+CSL2.Util.outputNumericField = outputNumericField;
+CSL2.Util.LongOrdinalizer = LongOrdinalizer;
+CSL2.Util.Ordinalizer = Ordinalizer;
+CSL2.Util.Romanizer = Romanizer;
+CSL2.Util.Suffixator = Suffixator;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.PageRangeMangler = Util_PageRangeMangler;
+CSL2.Util = CSL2.Util || {};
+CSL2.Util.FlipFlopper = Util_FlipFlopper;
+CSL2.Output = CSL2.Output || {};
+CSL2.Output.Formatters = Output_formatters;
+CSL2.Output = CSL2.Output || {};
+CSL2.Output.Formats = Output_formats;
+CSL2.getSortKeys = getSortKeys;
+CSL2.Registry = Registry;
+CSL2.Registry.Comparifier = Comparifier;
+CSL2.Disambiguation = Disambiguation;
+CSL2.NameReg = NameReg;
+CSL2.CitationReg = CitationReg;
+CSL2.ParticleList = ParticleList;
+CSL2.parseParticles = parseParticles;
+Object.assign(CSL2.Engine.prototype, {
+  processNumber,
+  dateParseArray,
+  remapSectionVariable,
+  setNumberLabels,
+  normalDecorIsOrphan,
+  getJurisdictionList,
+  loadStyleModule,
+  retrieveAllStyleModules,
+  getCitationLabel,
+  getTrigraphParams,
+  localeConfigure,
+  localeSet,
+  setCitationId,
+  setOutputFormat,
+  getSortFunc,
+  setLangTagsForCslSort,
+  setLangTagsForCslTransliteration,
+  setLangTagsForCslTranslation,
+  setLangPrefsForCites,
+  setLangPrefsForCiteAffixes,
+  setAutoVietnameseNamesOption,
+  setAbbreviations,
+  setSuppressTrailingPunctuation,
+  previewCitationCluster,
+  appendCitationCluster,
+  processCitationCluster,
+  process_CitationCluster,
+  makeCitationCluster,
+  rebuildProcessorState,
+  restoreProcessorState,
+  updateItems,
+  updateUncitedItems,
+  makeBibliography
+});
+
+// src/index.ts
+var index_default = CSL2;
+export {
+  CSL2 as CSL,
+  index_default as default
+};
