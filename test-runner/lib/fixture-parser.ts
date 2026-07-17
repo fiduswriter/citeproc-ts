@@ -1,6 +1,6 @@
 import fs from "fs";
 import sections from "./sections.js";
-import { REQ, OPT, SKP } from "./flags.js";
+import { REQ, OPT } from "./flags.js";
 
 function Parser(options, tn, fpth) {
     this.options = options;

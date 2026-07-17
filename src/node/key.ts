@@ -2,6 +2,10 @@ import { CSL } from '../csl';
 
 import { Token } from '../obj/token';
 
+import { Node_institution } from './institution';
+import { Node_name } from './name';
+import { Node_names } from './names';
+
 import { ASCENDING, DATE_VARIABLES, DESCENDING, END, NAME_VARIABLES, NUMERIC_VARIABLES, SINGLETON, START } from '../constants/core';
 export const Node_key = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
@@ -78,7 +82,7 @@ export const Node_key = {
                 const names_start_token = new Token("names", START);
                 names_start_token.tokentype = START;
                 names_start_token.variables = this.variables;
-                CSL.Node.names.build.call(names_start_token, state, target);
+                Node_names.build.call(names_start_token, state, target);
                 //
                 // Name tag
                 const name_token = new Token("name", SINGLETON);
@@ -88,17 +92,17 @@ export const Node_key = {
                 name_token.strings["et-al-use-last"] = state.inheritOpt(this, "et-al-use-last");
                 name_token.strings["et-al-min"] = state.inheritOpt(this, "et-al-min");
                 name_token.strings["et-al-use-first"] = state.inheritOpt(this, "et-al-use-first");
-                CSL.Node.name.build.call(name_token, state, target);
+                Node_name.build.call(name_token, state, target);
                 //
                 // Institution tag
                 const institution_token = new Token("institution", SINGLETON);
                 institution_token.tokentype = SINGLETON;
-                CSL.Node.institution.build.call(institution_token, state, target);
+                Node_institution.build.call(institution_token, state, target);
                 //
                 // End tag
                 const names_end_token = new Token("names", END);
                 names_end_token.tokentype = END;
-                CSL.Node.names.build.call(names_end_token, state, target);
+                Node_names.build.call(names_end_token, state, target);
             } else {
                 const single_text = new Token("text", SINGLETON);
                 single_text.strings.sort_direction = this.strings.sort_direction;

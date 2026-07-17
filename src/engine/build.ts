@@ -8,6 +8,7 @@ import { Transform } from '../util/transform';
 import { AREAS, DATE_VARIABLES, END, LOOSE, NAME_VARIABLES, PROCESSOR_VERSION, SINGLETON, START, STRICT, SWAPPING_PUNCTUATION, SYS_OPTIONS, TOLERANT } from '../constants/core';
 import { normalizeLocaleStr, AbbreviationSegments } from '../util/locale_shared';
 import { extractTitleAndSubtitle } from '../util/title';
+import { setupXml } from '../system';
 import { debug, error } from '../logger';
 export class Engine {
     [key: string]: any;
@@ -96,7 +97,7 @@ export class Engine {
         //
         this.dateput = new CSL.Output.Queue(this);
 
-        this.cslXml = CSL.setupXml(style);
+        this.cslXml = setupXml(style);
 
         for (let i in SYS_OPTIONS) {
             const option = SYS_OPTIONS[i];

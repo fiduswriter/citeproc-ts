@@ -1,8 +1,8 @@
-import { CSL } from '../csl';
+import { Mode } from '../util/processor';
 
 export function setOutputFormat(this: any, mode: string): void {
     this.opt.mode = mode;
-    this.fun.decorate = CSL.Mode(mode);
+    this.fun.decorate = Mode(mode);
     if (!this.output[mode]) {
         this.output[mode] = {};
         this.output[mode].tmp = {};

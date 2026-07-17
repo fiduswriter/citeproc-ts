@@ -1,5 +1,3 @@
-import { CSL } from '../csl';
-
 import { Output_formatters } from '../output/formatters';
 
 import { TOLERANT } from '../constants/core';

@@ -2,11 +2,9 @@ import { CSL } from '../../csl';
 import { getRawName } from './index';
 
 import { Token, Util_cloneToken } from '../../obj/token';
-import { Output_formatters } from '../../output/formatters';
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
-import { Blob } from '../../obj/blob';
 export class NameOutput {
     [key: string]: any;
 

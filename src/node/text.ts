@@ -5,9 +5,9 @@ import { Blob } from '../obj/blob';
 import { NumericBlob } from '../obj/number';
 import { Util_cloneToken } from '../obj/token';
 import { Output_formatters } from '../output/formatters';
+import { Node_group } from './group';
 
 import { CITE_FIELDS, DESCENDING, END, LITERAL, MULTI_FIELDS, NUMERIC, START, SUFFIX_CHARS, TOLERANT, TRIGRAPH } from '../constants/core';
-import { debug } from '../logger';
 export const Node_text = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, form, plural, id, num, number, formatter, firstoutput, specialdelimiter, label, suffix, term;
@@ -15,7 +15,7 @@ export const Node_text = {
             const group_start = Util_cloneToken(this);
             group_start.name = "group";
             group_start.tokentype = START;
-            CSL.Node.group.build.call(group_start, state, target);
+            Node_group.build.call(group_start, state, target);
 
             CSL.expandMacro.call(state, this, target);
 
@@ -25,7 +25,7 @@ export const Node_text = {
             if (this.postponed_macro === 'juris-locator-label') {
                 group_end.isJurisLocatorLabel = true;
             }
-            CSL.Node.group.build.call(group_end, state, target);
+            Node_group.build.call(group_end, state, target);
 
         } else {
             CSL.Util.substituteStart.call(this, state, target);

@@ -3,7 +3,6 @@ import { CSL } from '../csl';
 import { Token } from '../obj/token';
 
 import { NUMERIC, START } from '../constants/core';
-import { debug } from '../logger';
 export function makeBibliography(this: any, bibsection?: any): any {
     let debug, ret, params, maxoffset, item, len, pos, tok, tokk, tokkk, entry_ids, entry_strings;
     debug = false;

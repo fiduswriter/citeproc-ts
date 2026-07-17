@@ -1,7 +1,8 @@
-import { CSL } from '../../csl';
 import { _compareNamesets } from './common';
 import { toLocaleLowerCase } from '../locale_shared';
 import { Output_formatters } from '../../output/formatters';
+
+import { NAME_INITIAL_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_ROMANESQUE_REGEXP } from '../../constants/regex';
 
 export const Util_Names: Record<string, Function> = {};
 
@@ -39,7 +40,7 @@ Util_Names.initializeWith = function (state: CslState, name: string, terminator?
         terminator = "";
     }
     if (["Lord", "Lady"].indexOf(name) > -1
-        || (!name.replace(/^(?:<[^>]+>)*/, "").match(CSL.STARTSWITH_ROMANESQUE_REGEXP)
+        || (!name.replace(/^(?:<[^>]+>)*/, "").match(STARTSWITH_ROMANESQUE_REGEXP)
             && !terminator.match("%s"))) {
         return name;
     }
@@ -154,8 +155,8 @@ Util_Names.doInitialize = function (state: CslState, namelist: string[], termina
         if (!n) {
             continue;
         }
-        m = n.match(CSL.NAME_INITIAL_REGEXP);
-        if (!m && (!n.match(CSL.STARTSWITH_ROMANESQUE_REGEXP) && n.length > 1 && terminator.match("%s"))) {
+        m = n.match(NAME_INITIAL_REGEXP);
+        if (!m && (!n.match(STARTSWITH_ROMANESQUE_REGEXP) && n.length > 1 && terminator.match("%s"))) {
             m = n.match(/(.)(.*)/);
         }
         if (m && m[2] && m[3]) {
@@ -197,7 +198,7 @@ Util_Names.doInitialize = function (state: CslState, namelist: string[], termina
                     namelist.push(terminator);
                 }
             }
-        } else if (n.match(CSL.ROMANESQUE_REGEXP) && (!m || !m[3])) {
+        } else if (n.match(ROMANESQUE_REGEXP) && (!m || !m[3])) {
             namelist[i] = " " + n;
         }
     }

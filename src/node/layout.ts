@@ -1,10 +1,13 @@
-import { CSL } from '../csl';
-
 import { Token } from '../obj/token';
+
+import { Attributes } from '../attributes/attributes';
+import { Node_choose } from './choose';
+import { Node_else } from './else';
+import { Node_else_if } from './elseif';
+import { Node_if } from './if';
 
 import { END, SINGLETON, START } from '../constants/core';
 import { checkPrefixSpaceAppend, checkSuffixSpacePrepend, checkIgnorePredecessor } from '../util/affix';
-import { debug } from '../logger';
 export const Node_layout = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func, prefix_token, suffix_token, tok;
@@ -174,7 +177,7 @@ export const Node_layout = {
                     // if build_layout_locale_flag is true,
                     // write cs:else START to the token list.
                     tok = new Token("else", START);
-                    CSL.Node["else"].build.call(tok, state, target);
+                    Node_else.build.call(tok, state, target);
                 }
 
             } // !this.locale_raw
@@ -186,16 +189,16 @@ export const Node_layout = {
                     // write cs:choose START and cs:if START
                     // to the token list.
                     const choose_tok = new Token("choose", START);
-                    CSL.Node.choose.build.call(choose_tok, state, target);
+                    Node_choose.build.call(choose_tok, state, target);
                     my_tok.name = "if";
-                    CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
-                    CSL.Node["if"].build.call(my_tok, state, target);
+                    Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+                    Node_if.build.call(my_tok, state, target);
                 } else {
                     // if build_layout_locale_flag is true,
                     // write cs:else-if START to the token list.
                     my_tok.name = "else-if";
-                    CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
-                    CSL.Node["else-if"].build.call(my_tok, state, target);
+                    Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+                    Node_else_if.build.call(my_tok, state, target);
                 }
                 // cite_affixes for this node
                 state.tmp.cite_affixes[state.build.area][my_tok.locale] = {};
@@ -211,16 +214,16 @@ export const Node_layout = {
                     // to the token list.
                     my_tok.name = "if";
                     my_tok.tokentype = END;
-                    CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
-                    CSL.Node["if"].build.call(my_tok, state, target);
+                    Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+                    Node_if.build.call(my_tok, state, target);
                     state.build.layout_locale_flag = true;
                 } else {
                     // If layout_locale_flag is true, write cs:else-if END
                     // to the token list.
                     my_tok.name = "else-if";
                     my_tok.tokentype = END;
-                    CSL.Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
-                    CSL.Node["else-if"].build.call(my_tok, state, target);
+                    Attributes["@locale-internal"].call(my_tok, state, this.locale_raw);
+                    Node_else_if.build.call(my_tok, state, target);
                 }
             }
             if (!this.locale_raw) {
@@ -231,9 +234,9 @@ export const Node_layout = {
                     // and cs:choose END to the token list.
                     if (state.build.layout_locale_flag) {
                         tok = new Token("else", END);
-                        CSL.Node["else"].build.call(tok, state, target);
+                        Node_else.build.call(tok, state, target);
                         tok = new Token("choose", END);
-                        CSL.Node.choose.build.call(tok, state, target);
+                        Node_choose.build.call(tok, state, target);
                     }
                 }
                 state.build_layout_locale_flag = true;

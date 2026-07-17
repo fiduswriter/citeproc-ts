@@ -1,6 +1,9 @@
 import { CSL } from '../csl';
 
 import { Token } from '../obj/token';
+import { setDecorations } from '../util/processor';
+import { Attributes } from '../attributes/attributes';
+import { Node_group } from '../node/group';
 
 import { DATE_VARIABLES, END, MODULE_MACROS, POSITION, SINGLETON, START } from '../constants/core';
 import { debug, error } from '../logger';
@@ -84,7 +87,7 @@ export function expandMacro(macro_key_token, target) {
         this.opt.update_mode = POSITION;
     }
     // Macro group is treated as a real node in the style
-    CSL.Node.group.build.call(macro_key_token, this, target, true);
+    Node_group.build.call(macro_key_token, this, target, true);
 
     if (!this.cslXml.getNodeValue(macro_nodes)) {
         error("CSL style error: undefined macro \"" + mkey + "\"");
@@ -135,7 +138,7 @@ export function expandMacro(macro_key_token, target) {
     if (macro_key_token.juris) {
         end_of_macro.juris = mkey;
      }
-    CSL.Node.group.build.call(end_of_macro, this, target, true);
+    Node_group.build.call(end_of_macro, this, target, true);
 
     this.build.macro_stack.pop();
 };
@@ -193,7 +196,7 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
     }
     attrfuncs = [];
     attributes = state.cslXml.attributes(this);
-    decorations = CSL.setDecorations.call(this, state, attributes);
+    decorations = setDecorations.call(this, state, attributes);
     token = new Token(name, tokentype);
     if (tokentype !== END || name === "if" || name === "else-if" || name === "layout") {
         for (let key in attributes) {
@@ -202,9 +205,9 @@ export function XmlToToken(state, tokentype, explicitTarget, var_stack) {
                     continue;
                 }
                 if (attributes.hasOwnProperty(key)) {
-                    if (CSL.Attributes[key]) {
+                    if (Attributes[key]) {
                         try {
-                            CSL.Attributes[key].call(token, state, "" + attributes[key]);
+                            Attributes[key].call(token, state, "" + attributes[key]);
                         } catch (e) {
                             error(key + " attribute: " + e);
                         }

@@ -1,4 +1,3 @@
-import { CSL } from '../../csl';
 
 export function getEtAlConfig(this: any): void {
     let item = this.item;

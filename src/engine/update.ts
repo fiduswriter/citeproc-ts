@@ -1,6 +1,5 @@
 import { CSL } from '../csl';
 import { ASSUME_ALL_ITEMS_REGISTERED } from '../constants/core';
-import { debug } from '../logger';
 import { Tmp } from './state';
 export function rebuildProcessorState(this: any, citations: any[], mode: string, uncitedItemIDs?: string[] | Record<string, boolean>): any {
     // Rebuilds the processor from scratch, based on a list of citation

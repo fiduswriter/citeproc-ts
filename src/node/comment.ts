@@ -1,4 +1,3 @@
-import { debug } from '../logger';
 export const Node_comment = {
     build: function (this: CslNode): void {
         // This is a comment in the CSL file.

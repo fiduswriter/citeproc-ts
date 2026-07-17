@@ -3,7 +3,6 @@ import { Blob } from '../obj/blob';
 
 import { END, LITERAL, SINGLETON, START } from '../constants/core';
 import { STARTSWITH_ROMANESQUE_REGEXP } from '../constants/regex';
-import { debug } from '../logger';
 export const Node_names = {
     build: function (this: CslNode, state: CslState, target: any[]): void {
         let func;

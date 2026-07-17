@@ -5,7 +5,6 @@
 import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
-import tmp from "tmp";
 import clear from "cross-clear";
 import chokidar from "chokidar";
 import normalizeNewline from "normalize-newline";

@@ -1,4 +1,3 @@
-import { Blob } from '../../obj/blob';
 import { Token } from '../../obj/token';
 
 export function _purgeEmptyBlobs(this: any, blobs: any[]): any[] {

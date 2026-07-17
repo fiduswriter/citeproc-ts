@@ -1,7 +1,7 @@
-import { CSL } from '../csl';
-
 import { Blob } from '../obj/blob';
 import { Token } from '../obj/token';
+
+import { Node_choose } from '../node/choose';
 
 import { DISPLAY_CLASSES, END, SINGLETON, START } from '../constants/core';
 export function Util_substituteStart(state, target) {
@@ -85,7 +85,7 @@ export function Util_substituteStart(state, target) {
     state.build.render_nesting_level += 1;
     if (state.build.substitute_level.value() === 1) {
         choose_start = new Token("choose", START);
-        CSL.Node.choose.build.call(choose_start, state, target);
+        Node_choose.build.call(choose_start, state, target);
         if_start = new Token("if", START);
         func = function () {
             if (state.tmp.can_substitute.value()) {
@@ -220,7 +220,7 @@ export function Util_substituteEnd(state, target) {
         if_end = new Token("if", END);
         target.push(if_end);
         choose_end = new Token("choose", END);
-        CSL.Node.choose.build.call(choose_end, state, target);
+        Node_choose.build.call(choose_end, state, target);
     }
 
     if ("names" === this.name || ("text" === this.name && this.variables_real !== "title")) {

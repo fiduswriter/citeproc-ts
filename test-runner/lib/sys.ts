@@ -3,7 +3,6 @@
 
 import fs from "fs";
 import path from "path";
-import yaml from "yaml";
 import normalizeNewline from "normalize-newline";
 import { preloadAbbreviations } from "./preload.js";
 

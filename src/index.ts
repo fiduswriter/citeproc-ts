@@ -32,7 +32,7 @@ CSL.getMacroTarget = getMacroTarget;
 CSL.buildMacro = buildMacro;
 CSL.configureMacro = configureMacro;
 CSL.XmlToToken = XmlToToken;
-import { DateParser, dateParserInstance } from './util/dateparser';
+import { dateParserInstance } from './util/dateparser';
 CSL.DateParser = dateParserInstance;
 import { Engine } from './engine/build';
 CSL.Engine = Engine;

@@ -44,6 +44,7 @@
         "citeproc-locales": ">=1.0.2",
         "cross-clear": "^1.0.0",
         "esbuild": "^0.28.1",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "fetch-promise": "^1.0.2",
         "getopts": "^2.3.0",
         "mocha": "^10.8.0",

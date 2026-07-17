@@ -1,7 +1,8 @@
 import { CSL } from '../csl';
 
+import { setupXml } from '../system';
+
 import { GENDERS, LANG_BASES, SKIP_WORDS } from '../constants/core';
-import { debug } from '../logger';
 CSL.localeResolve = function (langstr, defaultLocale) {
     let ret, langlst;
     if (!defaultLocale) {
@@ -40,14 +41,14 @@ export function localeConfigure(langspec, beShy) {
         return;
     }
     if (langspec.best === "en-US") {
-        localexml = CSL.setupXml(this.sys.retrieveLocale("en-US"));
+        localexml = setupXml(this.sys.retrieveLocale("en-US"));
         this.localeSet(localexml, "en-US", langspec.best);
     } else if (langspec.best !== "en-US") {
         if (langspec.base !== langspec.best) {
-            localexml = CSL.setupXml(this.sys.retrieveLocale(langspec.base));
+            localexml = setupXml(this.sys.retrieveLocale(langspec.base));
             this.localeSet(localexml, langspec.base, langspec.best);
         }
-        localexml = CSL.setupXml(this.sys.retrieveLocale(langspec.best));
+        localexml = setupXml(this.sys.retrieveLocale(langspec.best));
         this.localeSet(localexml, langspec.best, langspec.best);        
     }
     this.localeSet(this.cslXml, "", langspec.best);

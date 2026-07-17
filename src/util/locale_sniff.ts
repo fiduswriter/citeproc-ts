@@ -1,7 +1,8 @@
 import { CSL } from '../csl';
+import { setupXml } from '../system';
 
 export function getLocaleNames(myxml: any, preferredLocale?: string): string[] {
-    const stylexml = CSL.setupXml(myxml);
+    const stylexml = setupXml(myxml);
 
     function extendLocaleList(localeList: string[], locale?: string): void {
         const forms = ["base", "best"];

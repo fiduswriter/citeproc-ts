@@ -1,4 +1,3 @@
-import { CSL } from '../csl';
 
 import { Blob } from '../obj/blob';
 

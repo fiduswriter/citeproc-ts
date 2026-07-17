@@ -1,4 +1,5 @@
 import { CSL } from '../csl';
+import { setupXml } from '../system';
 import { MODULE_MACROS, MODULE_TYPES } from '../constants/core';
 import { debug } from '../logger';
 export function getJurisdictionList(this: CslState, jurisdiction: string): string[] {
@@ -22,7 +23,7 @@ export function loadStyleModule(this: CslState, jurisdiction: string, xmlSource:
     let myFallback = null;
     let macroCount = 0;
     this.juris[jurisdiction] = {};
-    const myXml = CSL.setupXml(xmlSource);
+    const myXml = setupXml(xmlSource);
     myXml.addMissingNameNodes(myXml.dataObj);
     myXml.addInstitutionNodes(myXml.dataObj);
     myXml.insertPublisherAndPlace(myXml.dataObj);

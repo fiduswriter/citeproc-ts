@@ -1,4 +1,3 @@
-import { CSL } from '../../csl';
 
 export function setEtAlParameters(this: any): void {
     let i: number, ilen: number, j: number, jlen: number;

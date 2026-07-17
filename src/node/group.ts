@@ -2,6 +2,10 @@ import { CSL } from '../csl';
 
 import { Token } from '../obj/token';
 
+import { Node_choose } from './choose';
+import { Node_else } from './else';
+import { Node_if } from './if';
+
 import { ASCENDING, DESCENDING, END, SINGLETON, START } from '../constants/core';
 export const Node_group = {
     build: function (this: CslNode, state: CslState, target: any[], realGroup: boolean): void {
@@ -210,7 +214,7 @@ export const Node_group = {
                 // Code for fetching an instantiating?
 
                 const choose_start = new Token("choose", START);
-                CSL.Node.choose.build.call(choose_start, state, target);
+                Node_choose.build.call(choose_start, state, target);
                 
                 const if_start = new Token("if", START);
 
@@ -243,9 +247,9 @@ export const Node_group = {
                 target.push(text_node);
 
                 const if_end = new Token("if", END);
-                CSL.Node["if"].build.call(if_end, state, target);
+                Node_if.build.call(if_end, state, target);
                 const else_start = new Token("else", START);
-                CSL.Node["else"].build.call(else_start, state, target);
+                Node_else.build.call(else_start, state, target);
             }
         }
 
@@ -370,9 +374,9 @@ export const Node_group = {
             
             if (this.juris) {
                 const else_end = new Token("else", END);
-                CSL.Node["else"].build.call(else_end, state, target);
+                Node_else.build.call(else_end, state, target);
                 const choose_end = new Token("choose", END);
-                CSL.Node.choose.build.call(choose_end, state, target);
+                Node_choose.build.call(choose_end, state, target);
             }
         }
 
