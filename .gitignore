@@ -8,6 +8,7 @@ test
 cslrun.yaml
 # Compiled bundles (built by npm run build / build:runner)
 citeproc.mjs
+citeproc-core.mjs
 test-runner/dist/
 # TypeScript build info
 .tsbuild

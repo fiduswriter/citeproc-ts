@@ -3,7 +3,8 @@
  * Build the citeproc ESM bundle from the modular TypeScript entry point.
  *
  * Outputs:
- *   citeproc.mjs  – ES module (Node.js + browser <script type="module">)
+ *   citeproc.mjs      – Full bundle (ES module, includes XML parsing)
+ *   citeproc-core.mjs – Core bundle (no XML/DOM parsing, smaller, tree-shakeable)
  */
 
 import fs from 'fs';
@@ -13,7 +14,6 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
-const ENTRY = path.join(ROOT, 'src', 'index.ts');
 
 const LICENSE_HEADER = `/*
 Copyright (c) 2009-2019 Frank Bennett
@@ -43,20 +43,49 @@ Copyright (c) 2009-2019 Frank Bennett
 /*global CSL: true */
 `;
 
-async function build() {
-    const outfile = path.join(ROOT, 'citeproc.mjs');
+const SRC = path.join(ROOT, 'src');
+
+/**
+ * Redirect imports of ../system and ./system to system-core.ts
+ * so the core bundle excludes XML/DOM parsing code.
+ */
+const corePlugin = {
+    name: 'core',
+    setup(build) {
+        build.onResolve({ filter: /system$/ }, (args) => {
+            if (args.path.endsWith('-core')) {
+                return;
+            }
+            if (args.importer && args.importer.startsWith(SRC)) {
+                const resolved = path.resolve(args.resolveDir, args.path) + '.ts';
+                const coreTs = path.join(SRC, 'system-core.ts');
+                if (resolved === path.join(SRC, 'system.ts')) {
+                    return { path: coreTs };
+                }
+            }
+        });
+    },
+};
+
+async function buildBundle(name, entry, extraPlugins) {
+    const outfile = path.join(ROOT, name + '.mjs');
     await esbuild.build({
-        entryPoints: [ENTRY],
+        entryPoints: [path.join(SRC, entry)],
         bundle: true,
         platform: 'neutral',
         format: 'esm',
         target: 'es2018',
         outfile,
         banner: { js: LICENSE_HEADER },
-        logLevel: 'info'
+        logLevel: 'info',
+        plugins: extraPlugins || [],
     });
+    process.stdout.write('Built ' + outfile + '\n');
+}
 
-    process.stdout.write('Built citeproc.mjs\n');
+async function build() {
+    await buildBundle('citeproc', 'index.ts');
+    await buildBundle('citeproc-core', 'core.ts', [corePlugin]);
 }
 
 build().catch((err) => {

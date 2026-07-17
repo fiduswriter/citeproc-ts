@@ -1,3 +1,4 @@
 import { CSL } from './csl';
 
-export = CSL;
+export { CSL };
+export default CSL;

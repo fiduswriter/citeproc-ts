@@ -28,9 +28,6 @@ import { getAmbiguousCite, getSpliceDelimiter, getCitationCluster, getCite, cite
 import { getBibliographyEntries } from './engine/bibliography';
 
 import { XmlJSON } from './xml/xmljson';
-import { parseXml, stripXmlProcessingInstruction } from './xml/parse';
-import { XmlDOM } from './xml/xmldom';
-import { setupXml } from './system';
 import { getLocaleNames } from './util/locale_sniff';
 import { Match, encodeDoiForUrl } from './util/util';
 import { Transform } from './util/transform';
@@ -119,7 +116,7 @@ import { getJurisdictionList, loadStyleModule, retrieveAllStyleModules } from '.
 import { ParticleList, parseParticles } from './util/name_particles';
 
 
-export const CSL: CSLNamespace = {
+const CSL: Record<string, any> = {
     ...Core,
     ...Regex,
     ...Statute,
@@ -215,10 +212,6 @@ Object.defineProperty(CSL, 'getSortKeys', {
 });
 
 CSL.XmlJSON = XmlJSON;
-CSL.stripXmlProcessingInstruction = stripXmlProcessingInstruction;
-CSL.parseXml = parseXml;
-CSL.XmlDOM = XmlDOM;
-CSL.setupXml = setupXml;
 CSL.getLocaleNames = getLocaleNames;
 CSL.Util = CSL.Util || {};
 CSL.Util.Match = Match;
@@ -405,3 +398,6 @@ Object.assign(CSL.Engine.prototype, {
   updateUncitedItems,
   makeBibliography,
 });
+
+export { CSL };
+export default CSL;

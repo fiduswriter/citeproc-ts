@@ -1,6 +1,4 @@
 import { XmlJSON } from './xml/xmljson';
-import { parseXml } from './xml/parse';
-import { XmlDOM } from './xml/xmldom';
 
 import { error } from './logger';
 export function setupXml(xmlObject: string | any): any {
@@ -11,18 +9,16 @@ export function setupXml(xmlObject: string | any): any {
             xmlObject = xmlObject.replace("^\uFEFF", "")
                 .replace(/^\s+/, "");
             if (xmlObject.slice(0, 1) === "<") {
-                // Assume serialized XML
-                dataObj = parseXml(xmlObject);
+                error("citeproc-ts core: XML string parsing not available in the core bundle. Use the full citeproc-ts package or provide a pre-parsed JSON object/string.");
+                return new XmlJSON({} as any);
             } else {
-                // Assume serialized JSON
                 dataObj = JSON.parse(xmlObject);
             }
             parser = new XmlJSON(dataObj);
         } else if ("undefined" !== typeof xmlObject.getAttribute) {
-            // Assume DOM instance
-            parser = new XmlDOM(xmlObject);
+            error("citeproc-ts core: DOM parsing not available in the core bundle. Use the full citeproc-ts package or provide a pre-parsed JSON object.");
+            return new XmlJSON({} as any);
         } else {
-            // Assume JS object
             parser = new XmlJSON(xmlObject);
         }
     } else {

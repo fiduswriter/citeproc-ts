@@ -1,10 +1,11 @@
 {
     "name": "citeproc-ts",
-    "version": "0.2.0",
+    "version": "0.2.3",
     "description": "The citeproc-js citation formatting module ported to TypeScript",
     "main": "./citeproc.mjs",
     "exports": {
-        ".": "./citeproc.mjs"
+        ".": "./citeproc.mjs",
+        "./core": "./citeproc-core.mjs"
     },
     "bin": {
         "cslrun": "test-runner/dist/runtests.js"
@@ -15,6 +16,7 @@
     },
     "files": [
         "citeproc.mjs",
+        "citeproc-core.mjs",
         "test-runner/dist/",
         "tools/rnc-validator.js"
     ],
