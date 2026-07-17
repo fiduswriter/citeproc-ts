@@ -14,7 +14,6 @@ import { debug, error } from '../logger';
 export function previewCitationCluster(this: any, citation: any, citationsPre: Array<[string, number]>, citationsPost: Array<[string, number]>, newMode: string): any {
     // Generate output for a hypothetical citation at the current position,
     // Leave the registry in the same state in which it was found.
-    //print("################### previewCitationCluster() #################");
     const oldMode = this.opt.mode;
     this.setOutputFormat(newMode);
     // Avoids generating unwanted ibids, if the citationID already exists in document

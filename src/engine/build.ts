@@ -1,5 +1,6 @@
 import { CSL } from '../csl';
 import { parseNoteFieldHacks } from '../util/csl-shared';
+import { internals } from '../util/internals';
 import { Opt, Tmp, Fun, Build, Configure, Citation, Bibliography, BibliographySort, CitationSort, InText } from './state';
 import { Queue } from '../output/queue';
 import { Registry } from '../registry/registry';
@@ -62,7 +63,7 @@ export class Engine {
         // XXX the output queue before variableWrapper() is run, a single
         // XXX space should be the most cruft that we ever see before a variable.
         if (sys.variableWrapper) {
-            CSL.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp('^([' + [" "].concat(SWAPPING_PUNCTUATION).join("") + ']*)(.*)');
+            internals.VARIABLE_WRAPPER_PREPUNCT_REX = new RegExp('^([' + [" "].concat(SWAPPING_PUNCTUATION).join("") + ']*)(.*)');
         }
         // XXXX This should be restored -- temporarily suspended for testing of JSON style support.
         if (CSL.retrieveStyleModule) {
@@ -72,7 +73,7 @@ export class Engine {
             this.sys.getAbbreviation = CSL.getAbbreviation;
         }
         if (this.sys.stringCompare) {
-            CSL.stringCompare = this.sys.stringCompare;
+            internals.stringCompare = this.sys.stringCompare;
         }
         this.sys.AbbreviationSegments = AbbreviationSegments;
 

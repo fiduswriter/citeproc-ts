@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { internals } from '../util/internals';
 import { encodeDoiForUrl } from '../util/util';
 import { Output_formatters } from './formatters';
 
@@ -89,7 +89,7 @@ class OutputFormats {
             } else if (this.params && "string" === typeof str) {
                 let prePunct = "";
                 if (str) {
-                    const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                    const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
                     prePunct = m[1];
                     str = m[2];
                 }
@@ -253,7 +253,7 @@ class OutputFormats {
         if (!state.tmp.just_looking && !state.tmp.suppress_decorations) {
             let prePunct = "";
             if (str) {
-                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }
@@ -345,7 +345,7 @@ class OutputFormats {
         if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
             let prePunct = "";
             if (str) {
-                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }
@@ -459,7 +459,7 @@ class OutputFormats {
         if (!state.tmp.just_looking && !state.tmp.suppress_decorations && this.params && "string" === typeof str) {
             let prePunct = "";
             if (str) {
-                const m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX);
+                const m = str.match(internals.VARIABLE_WRAPPER_PREPUNCT_REX);
                 prePunct = m[1];
                 str = m[2];
             }

@@ -23,6 +23,7 @@ import {
     SET_COURT_CLASSES,
     INIT_JURISDICTION_MACROS
 } from './util/csl-shared';
+import { internals } from './util/internals';
 import { localeResolve } from './util/locale';
 import { makeBuilder } from './engine/build';
 import { getAmbiguousCite, getSpliceDelimiter, getCitationCluster, getCite, citeStart, citeEnd } from './engine/cite';
@@ -84,3 +85,19 @@ export const CSL: CSLNamespace = {
 };
 
 CSL.ITERATION = 0;
+CSL.internals = internals;
+CSL.Node = internals.Node;
+
+Object.defineProperty(CSL, 'stringCompare', {
+    get: () => internals.stringCompare,
+    set: (v) => { internals.stringCompare = v; },
+    enumerable: true,
+    configurable: true
+});
+
+Object.defineProperty(CSL, 'VARIABLE_WRAPPER_PREPUNCT_REX', {
+    get: () => internals.VARIABLE_WRAPPER_PREPUNCT_REX,
+    set: (v) => { internals.VARIABLE_WRAPPER_PREPUNCT_REX = v; },
+    enumerable: true,
+    configurable: true
+});

@@ -1,4 +1,4 @@
-import { CSL } from './csl';
+import { internals } from './util/internals';
 import { toLocaleLowerCase } from './util/locale_shared';
 
 /**
@@ -6,8 +6,8 @@ import { toLocaleLowerCase } from './util/locale_shared';
  * processor-supplied ``CSL.stringCompare`` and locale collation rules.
  */
 export function getSortCompare(default_locale?: string): (a: string, b: string) => number {
-    if (CSL.stringCompare) {
-        return CSL.stringCompare;
+    if (internals.stringCompare) {
+        return internals.stringCompare;
     }
     const me: any = this;
     const strcmp_opts: Intl.CollatorOptions = {
