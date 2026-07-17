@@ -1,4 +1,4 @@
-import { CSL } from '../../csl';
+import { getRawName } from './index';
 
 import { debug } from '../../logger';
 export function divideAndTransliterateNames(this: any): void {
@@ -129,7 +129,7 @@ export function _clearValues(this: any, values: any): void {
 export function _checkNickname(this: any, name: any): any {
     if (["interview", "personal_communication"].indexOf(this.Item.type) > -1) {
         let author = "";
-        author = CSL.Util.Names.getRawName(name);
+        author = getRawName(name);
         if (author && this.state.sys.getAbbreviation && !(this.item && this.item["suppress-author"])) {
             let normalizedKey = author;
             if (this.state.sys.normalizeAbbrevsKey) {

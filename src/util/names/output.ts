@@ -1,4 +1,6 @@
 import { CSL } from '../../csl';
+import { getRawName } from './index';
+
 
 import { LITERAL, NAME_PARTS, TOLERANT } from '../../constants/core';
 import { KATAKANA_REGEXP, ROMANESQUE_REGEXP, STARTSWITH_KATAKANA_REGEXP, STARTSWITH_ROMANESQUE_REGEXP, VIETNAMESE_NAMES, VIETNAMESE_SPECIALS } from '../../constants/regex';
@@ -122,7 +124,7 @@ export class NameOutput {
             // names node, and on what conditions? For each attribute,
             // and decoration, is it an override, or is it additive?
             this.variables = names.variables;
-            
+
             // Not sure why this is necessary. Guards against a memory leak perhaps?
             const oldval = this.state.tmp.value.slice();
             this.state.tmp.value = [];
@@ -393,7 +395,7 @@ export class NameOutput {
             const nameobjs = this.Item[variables[0]];
             if (nameobjs) {
                 for (let i = 0, ilen = nameobjs.length; i < ilen; i += 1) {
-                    const substring = CSL.Util.Names.getRawName(nameobjs[i]);
+                    const substring = getRawName(nameobjs[i]);
                     if (substring) {
                         name_node_string.push(substring);
                     }
@@ -443,7 +445,7 @@ export class NameOutput {
 
         // For name_SubstituteOnNamesSpanNamesSpanFail
         this.variables = [];
-        
+
         // Reset stop-last after rendering
         this.state.tmp.authority_stop_last = 0;
 
@@ -523,7 +525,7 @@ export class NameOutput {
         }
         if ((this.state[this.state.tmp.area].opt.collapse
                 && this.state[this.state.tmp.area].opt.collapse.length)
-            || (this.state[this.state.tmp.area].opt.cite_group_delimiter 
+            || (this.state[this.state.tmp.area].opt.cite_group_delimiter
                 && this.state[this.state.tmp.area].opt.cite_group_delimiter.length)) {
 
             if (this.state.tmp.authorstring_request) {
@@ -608,7 +610,7 @@ export class NameOutput {
                     this.state.tmp.just_did_number = false;
                 }
             }
-            
+
             pos = this.nameset_base + i;
             if (this.freeters[v].length) {
                 this.freeters[v] = this._renderNames(v, this.freeters[v], pos);
@@ -661,7 +663,7 @@ export class NameOutput {
                     && !(this.state.tmp.area === "citation"
                          && this.state.opt.xclass === "note"
                          && this.item && !this.item.position)) {
-                    
+
                     slot.secondary = false;
                     slot.tertiary = false;
                 }
@@ -886,11 +888,11 @@ export class NameOutput {
             const names = [];
             for (let i = 0, ilen = values.length; i < ilen; i += 1) {
                 let name = values[i];
-                
+
                 // XXX We'll start here with attempts.
                 // Figure out the three segments: primary, secondary, tertiary
                 let ret, localesets;
-                
+
                 if (this.state.tmp.extension) {
                     localesets = ["sort"];
                 } else if (name.isInstitution || name.literal) {
@@ -916,7 +918,7 @@ export class NameOutput {
                     && !(this.state.tmp.area === "citation"
                          && this.state.opt.xclass === "note"
                          && this.item && !this.item.position))) {
-                    
+
                     slot.secondary = false;
                     slot.tertiary = false;
                 }
@@ -1000,7 +1002,7 @@ export class NameOutput {
     };
 
     /** Japanese */
-    _isJapanese(name: CslName) 
+    _isJapanese(name: CslName)
     {
         /**
         0: Not japanese
@@ -1028,7 +1030,7 @@ export class NameOutput {
         {
             fullname = name.family.replace(/\"/g, '')+name.given.replace(/\"/g, '');
         }
-        
+
         if(fullname.match(KATAKANA_REGEXP)) {
             ret = 1;
         }
@@ -1056,7 +1058,7 @@ export class NameOutput {
             ret = 1;
         }
         let top_locale;
-        
+
         if (ret == 2) {
             if (name.multi && name.multi.main) {
                 top_locale = name.multi.main.slice(0, 2);
@@ -1078,10 +1080,10 @@ export class NameOutput {
         let blob;
         /**
         katakana-display
-        "legacy-order": セイメイ 
+        "legacy-order": セイメイ
         "normal-order": メイ、セイ and セイ・メイ (Family, Given and Given・Family)
         */
-        
+
         /**
         Take care of "and", which will not be displayed for Japanese. It will be likely "symbol", used for English names
         Leave delimiter only
@@ -1090,11 +1092,11 @@ export class NameOutput {
         this.name.and.single.strings.prefix="";
         this.name.and.single.strings.suffix="";
         this.name.and.single.blobs=this.name.strings.delimiter;
-        
+
         this.name.and.multiple.blobs=this.name.strings.delimiter;
         this.name.and.multiple.strings.prefix="";
         this.name.and.multiple.strings.suffix="";
-        
+
         if(katakana===1 && this.state.opt["katakana-display"]!=="legacy-order")
         {
             if (this.state.inheritOpt(this.name, "name-as-sort-order") === "all" || (this.state.inheritOpt(this.name, "name-as-sort-order") === "first" && i === 0 && (j === 0 || "undefined" === typeof j)))
@@ -1106,17 +1108,17 @@ export class NameOutput {
                 blob = this._join([given, family], "・");
             }
         }
-        
+
         /**
         1. Some styles in Japanese require space between Family and Given. We should allow affixing in Japanese too.
-        2. This should be the default but if it leads to issues for existing Japanese styles, we could add a global option to activate it as well. e.g. kanji-display: ["legacy-order", "normal-order"]. It depends on how much we can "pollute" the global options :D 
+        2. This should be the default but if it leads to issues for existing Japanese styles, we could add a global option to activate it as well. e.g. kanji-display: ["legacy-order", "normal-order"]. It depends on how much we can "pollute" the global options :D
         */
         else if(japanese===1)
         {
             /*
             Romanesque names will not lead here even if language-name is ja
             */
-            
+
             if(this.family && this.family.strings) {
                 family.strings.prefix = this.family.strings.prefix;
                 family.strings.suffix = this.family.strings.suffix;
@@ -1143,7 +1145,7 @@ export class NameOutput {
             suffix = false;
         }
         let sort_sep = this.state.inheritOpt(this.name, "sort-separator");
-        
+
         if (!sort_sep) {
             sort_sep = "";
         }
@@ -1156,7 +1158,7 @@ export class NameOutput {
         let romanesque = this._isRomanesque(name);
         const katakana = this._isKatakana(name);
         let japanese = this._isJapanese(name);
-        
+
         function hasJoiningPunctuation(blob: any) {
             if (!blob) {
                 return false;
@@ -1170,7 +1172,7 @@ export class NameOutput {
                 return hasJoiningPunctuation(blob.blobs[blob.blobs.length-1]);
             }
         }
-        
+
         const has_hyphenated_non_dropping_particle = hasJoiningPunctuation(non_dropping_particle);
 
         let nbspace;
@@ -1179,7 +1181,7 @@ export class NameOutput {
         } else {
             nbspace = " ";
         }
-        
+
         /**
         Keep roman rendering if name is Romanesque but language is Japanese
         The style may still depend on language to render other parts
@@ -1188,9 +1190,9 @@ export class NameOutput {
             japanese = 0;
             romanesque = 2;
         }
-        
+
         let blob, merged, first, second;
-            
+
         if (romanesque === 0) {
             if((katakana===1 && this.state.opt["katakana-display"]!=="legacy-order") || japanese===1){
                 blob = this._renderJapaneseName(japanese, katakana, family, given, i, j, sort_sep);
@@ -1239,7 +1241,7 @@ export class NameOutput {
                 // Drop non-dropping particle
                 //second = this._join([given, dropping_particle, non_dropping_particle], " ");
                 second = this._join([given, dropping_particle], (name["comma-dropping-particle"] + " "));
-            
+
                 // This would be a problem with al-Ghazali. Avoided by has_hyphenated_non_dropping_particle check above.
                 second = this._join([second, non_dropping_particle], " ");
                 if (second && this.given) {
@@ -1314,7 +1316,7 @@ export class NameOutput {
             if (this.state.inheritOpt(this.name, "initialize-with")
                 && this.state.inheritOpt(this.name, "initialize-with").match(/[\u00a0\ufeff]/)
                 && givenInfo.initializationLevel === 1) {
-                
+
                 space = nbspace;
             } else {
                 space = " ";
@@ -1402,13 +1404,13 @@ export class NameOutput {
         let str = this._stripPeriods("given", dp);
         if (name["dropping-particle"] && name["dropping-particle"].match(/^et.?al[^a-z]$/)) {
             if (this.state.inheritOpt(this.name, "et-al-use-last")) {
-                if ("undefined" === typeof j) { 
+                if ("undefined" === typeof j) {
                     this.etal_spec[pos].freeters = 2;
                 } else {
                     this.etal_spec[pos].persons = 2;
                 }
             } else {
-                if ("undefined" === typeof j) { 
+                if ("undefined" === typeof j) {
                     this.etal_spec[pos].freeters = 1;
                 } else {
                     this.etal_spec[pos].persons = 1;
@@ -1554,7 +1556,7 @@ export class NameOutput {
             name.isInstitution = undefined;
         }
         let noparse;
-        if (name.family 
+        if (name.family
             && (name.family.slice(0, 1) === '"' && name.family.slice(-1) === '"')
             || (!name["parse-names"] && "undefined" !== typeof name["parse-names"])) {
 
@@ -1582,7 +1584,7 @@ export class NameOutput {
     getName(name: any, slotLocaleset: any, fallback: any, stopOrig?: any) {
 
         // Needs to tell us whether we used orig or not.
-        
+
         if (stopOrig && slotLocaleset === 'locale-orig') {
             return {name:false,usedOrig:stopOrig};
         }
@@ -1645,7 +1647,7 @@ export class NameOutput {
         if (!fallback && !foundTag) {
             return {name:false,usedOrig:stopOrig};
         }
-        
+
         // Normalize to string (again)
         if (!name.family) {
             name.family = "";
@@ -1677,7 +1679,7 @@ export class NameOutput {
             isInstitution:name.isInstitution,
             multi:name.multi
         };
-        
+
         if (!name.literal && (!name.given && name.family && name.isInstitution)) {
             name.literal = name.family;
         }
@@ -1714,7 +1716,7 @@ export class NameOutput {
         if (name_never_short && name_never_short[field_lang_bare]) {
             ret["full-form-always"] = true;
         }
-        
+
         if (ret["static-ordering"]) {
             ret["block-initialize"] = true;
         }
@@ -1840,7 +1842,7 @@ export class NameOutput {
             if (this.state.opt['auto-vietnamese-names']
                 && (VIETNAMESE_NAMES.exec(name.family + " " + name.given)
                     && VIETNAMESE_SPECIALS.exec(name.family + name.given))) {
-                
+
                 static_ordering_val = true;
             }
         }
@@ -1907,7 +1909,7 @@ export class NameOutput {
                 }
                 s = s.slice(0, use_first);
             }
-            
+
             if (use_last) {
                 let ss = subunits.slice();
                 if (use_first) {

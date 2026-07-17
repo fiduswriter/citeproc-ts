@@ -1,5 +1,3 @@
-import { CSL } from '../../csl';
-
 export function constrainNames(this: any): void {
     this.names_count = 0;
     let pos: any;

@@ -205,7 +205,7 @@ Util_Names.doInitialize = function (state: CslState, namelist: string[], termina
     return ret;
 };
 
-Util_Names.getRawName = function (name: CslName): string {
+export function getRawName(name: CslName): string {
     let ret = [];
     if (name.literal) {
         ret.push(name.literal);
@@ -219,3 +219,5 @@ Util_Names.getRawName = function (name: CslName): string {
     }
     return ret.join(" ");
 };
+
+Util_Names.getRawName = getRawName;

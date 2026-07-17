@@ -1,5 +1,3 @@
-import { CSL } from '../csl';
-
 import { END, SINGLETON, START } from '../constants/core';
 export const Conditions = {
   TopNode: function (this: CslNode, state: CslState): void {

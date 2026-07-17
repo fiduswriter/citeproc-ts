@@ -1,5 +1,3 @@
-import { CSL } from '../../csl';
-
 export function truncatePersonalNameLists(this: any): void {
     let v: any, i: number, ilen: number, j: number, jlen: number, chopvar: any, values: any;
     this.freeters_count = {};
