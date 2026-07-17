@@ -989,7 +989,7 @@ export function makeCitationCluster(this: any, rawList: any[]): any {
  * [object] disambiguation parameters
  * [boolean] If true, include first-reference-note-number value in cite
  */
-CSL.getAmbiguousCite = function (Item: CslItem, disambig: any, visualForm?: boolean, item?: any) {
+export function getAmbiguousCite(this: any, Item: CslItem, disambig?: any, visualForm?: boolean, item?: any) {
     let ret;
     const flags = this.tmp.group_context.tip;
     const oldTermSiblingLayer = {
@@ -1073,7 +1073,7 @@ CSL.getAmbiguousCite = function (Item: CslItem, disambig: any, visualForm?: bool
  * completion of the run.</p>
  */
 
-CSL.getSpliceDelimiter = function (last_locator, last_collapsed, pos) {
+export function getSpliceDelimiter(this: any, last_locator: any, last_collapsed: any, pos: any) {
     //print(pos +  " after-collapse-delimiter="+this.citation.opt["after-collapse-delimiter"] + "\n  cite_group_delimiter=" + this.tmp.use_cite_group_delimiter + "\n  last_collapsed=" +last_collapsed + "\n  have_collapsed=" +this.tmp.have_collapsed + "\n  last_locator=" + last_locator)
     if (undefined !== this.citation.opt["after-collapse-delimiter"]) {
         if (last_locator) {
@@ -1137,7 +1137,7 @@ CSL.getSpliceDelimiter = function (last_locator, last_collapsed, pos) {
  * Compose individual cites into a single string, with
  * flexible inter-cite splicing.
  */
-CSL.getCitationCluster = function (inputList, citation) {
+export function getCitationCluster(this: any, inputList: any, citation?: any) {
     let result, objects, myparams, len, pos, item, last_collapsed, params, empties, composite, compie, myblobs, Item, llen, ppos, obj, preceding_item, txt_esc, error_object, citationID, authorOnly, suppressAuthor;
     let citation_prefix = "";
     this.output.checkNestedBrace = new checkNestedBrace(this);
@@ -1532,7 +1532,7 @@ CSL.getCitationCluster = function (inputList, citation) {
  * (This is dual-purposed for generating individual
  * entries in a bibliography.)
  */
-CSL.getCite = function (Item, item, prevItemID, blockShadowNumberReset) {
+export function getCite(this: any, Item: any, item?: any, prevItemID?: any, blockShadowNumberReset?: any) {
     let next, error_object;
     const areaOrig = this.tmp.area;
     if (item && item["author-only"] && this.intext && this.intext.tokens.length > 0) {
@@ -1569,7 +1569,7 @@ CSL.getCite = function (Item, item, prevItemID, blockShadowNumberReset) {
 };
 
 
-CSL.citeStart = function (Item, item, blockShadowNumberReset) {
+export function citeStart(this: any, Item: any, item?: any, blockShadowNumberReset?: any) {
     this.tmp.lang_array = [];
     if (Item.language) {
         // Guard against garbage locales in user input
@@ -1666,7 +1666,7 @@ CSL.citeStart = function (Item, item, blockShadowNumberReset) {
     this.tmp.authority_stop_last = 0;
 };
 
-CSL.citeEnd = function (Item, item) {
+export function citeEnd(this: any, Item?: any, item?: any) {
     // RESTORE PARAMETERS IF APPROPRIATE
     if (this.tmp.disambig_restore && this.registry.registry[Item.id]) {
         this.registry.registry[Item.id].disambig.names = this.tmp.disambig_restore.names.slice();

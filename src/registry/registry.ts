@@ -836,7 +836,7 @@ export class Comparifier {
  * Get the sort key of an item, without decorations
  * <p>This is used internally by the Registry.</p>
  */
-CSL.getSortKeys = function (this: CslState, Item: CslItem, key_type: string) {
+export function getSortKeys(this: CslState, Item: CslItem, key_type: string) {
     let area, root, extension, strip_prepositions, len, pos;
     //SNIP-START
     if (false) {

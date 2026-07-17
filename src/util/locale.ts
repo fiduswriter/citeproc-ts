@@ -1,10 +1,8 @@
-import { CSL } from '../csl';
+import { setupXml } from '../system';
 import { SET_COURT_CLASSES } from './csl-shared';
 
-import { setupXml } from '../system';
-
 import { GENDERS, LANG_BASES, SKIP_WORDS } from '../constants/core';
-CSL.localeResolve = function (langstr, defaultLocale) {
+export function localeResolve(langstr, defaultLocale) {
     let ret, langlst;
     if (!defaultLocale) {
         defaultLocale = "en-US";

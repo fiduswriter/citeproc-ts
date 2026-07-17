@@ -100,7 +100,7 @@ export function makeBibliography(this: any, bibsection?: any): any {
 /*
  * Compose individual cites into a single string.
  */
-CSL.getBibliographyEntries = function (bibsection) {
+export function getBibliographyEntries(this: any, bibsection?: any) {
     let ret, input, include, anymatch, allmatch, bib_entry, res, item, spec, lllen, pppos, topblobs, entry_item_ids, debug, i, ilen, siblings, skips, sortedItems, eyetem, entry_item_data, j, jlen;
     ret = [];
     entry_item_data = [];

@@ -23,6 +23,11 @@ import {
     SET_COURT_CLASSES,
     INIT_JURISDICTION_MACROS
 } from './util/csl-shared';
+import { localeResolve } from './util/locale';
+import { makeBuilder } from './engine/build';
+import { getAmbiguousCite, getSpliceDelimiter, getCitationCluster, getCite, citeStart, citeEnd } from './engine/cite';
+import { getBibliographyEntries } from './engine/bibliography';
+import { getSortKeys } from './registry/registry';
 
 
 export const CSL: CSLNamespace = {
@@ -64,5 +69,18 @@ export const CSL: CSLNamespace = {
     EVALUATE_GROUP_CONDITION,
     GET_COURT_CLASS,
     SET_COURT_CLASSES,
-    INIT_JURISDICTION_MACROS
+    INIT_JURISDICTION_MACROS,
+
+    localeResolve,
+    makeBuilder,
+    getAmbiguousCite,
+    getSpliceDelimiter,
+    getCitationCluster,
+    getCite,
+    citeStart,
+    citeEnd,
+    getBibliographyEntries,
+    getSortKeys
 };
+
+CSL.ITERATION = 0;

@@ -765,8 +765,10 @@ export class Engine {
     }
 }
 
-// Walker for preparsed XML input
-CSL.makeBuilder = function (me, target) {
+/**
+ * Walker for preparsed XML input
+ */
+export function makeBuilder(me, target) {
     const var_stack = [];
     let node_stack = [];
 
@@ -815,4 +817,4 @@ CSL.makeBuilder = function (me, target) {
     return buildStyle;
 };
 
-CSL.ITERATION = 0;
+// ITERATION is initialized on CSL in csl.ts
