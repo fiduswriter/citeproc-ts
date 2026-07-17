@@ -3,7 +3,7 @@ import { CSL } from '../csl';
 import { Blob } from '../obj/blob';
 import { FORMAT_KEY_SEQUENCE } from '../constants/core';
 import { error } from '../logger';
-CSL.substituteOne = function (template: string): (state: CslState, list: string) => string {
+export function substituteOne(template: string): (state: CslState, list: string) => string {
     return function (state: CslState, list: string): string {
         if (!list) {
             return "";
@@ -17,7 +17,7 @@ CSL.substituteOne = function (template: string): (state: CslState, list: string)
 /**
  * Two-tiered substitutions gadget.
  */
-CSL.substituteTwo = function (template: string): (param: string) => (state: CslState, list: string) => string {
+export function substituteTwo(template: string): (param: string) => (state: CslState, list: string) => string {
     return function (param: string): (state: CslState, list: string) => string {
         const template2 = template.replace("%%PARAM%%", param);
         return function (state: CslState, list: string): string {
@@ -34,7 +34,7 @@ CSL.substituteTwo = function (template: string): (param: string) => (state: CslS
  * Generate string functions for designated output mode.
  * @param {String} mode Either "html" or "rtf", eventually.
  */
-CSL.Mode = function (mode: string): Record<string, any> {
+export function Mode(mode: string): Record<string, any> {
     let decorations: Record<string, any>, params: Record<string, any>, param: string, func: any, val: any, args: string[];
     decorations = {};
     params = CSL.Output.Formats[mode];
@@ -51,9 +51,9 @@ CSL.Mode = function (mode: string): Record<string, any> {
 
             if (typeof val === "string" && val.indexOf("%%STRING%%") > -1) {
                 if (val.indexOf("%%PARAM%%") > -1) {
-                    func = CSL.substituteTwo(val);
+                    func = substituteTwo(val);
                 } else {
-                    func = CSL.substituteOne(val);
+                    func = substituteOne(val);
                 }
             } else if (typeof val === "boolean" && !val) {
                 func = CSL.Output.Formatters.passthrough;
@@ -80,7 +80,7 @@ CSL.Mode = function (mode: string): Record<string, any> {
 /**
  * Generate a separate list of formatting attributes.
  */
-CSL.setDecorations = function (state: CslState, attributes: Record<string, any>): any[][] {
+export function setDecorations(state: CslState, attributes: Record<string, any>): any[][] {
     let ret: any[][], key: string, pos: number;
     ret = [];
     for (let pos = 0; pos < FORMAT_KEY_SEQUENCE.length; pos += 1) {
@@ -135,7 +135,6 @@ export function Doppeler(this: any, rexStr: string, stringMangler?: (str: string
         return lst.join("");
     };
 };
-CSL.Doppeler = Doppeler;
 
 export function normalDecorIsOrphan(this: any, blob: Blob, params: string[]): boolean {
     if (params[1] === "normal") {

@@ -9,6 +9,7 @@ import { TITLE_FIELD_SPLITS, TITLE_SPLIT, demoteNoiseWords, extractTitleAndSubti
 import { normalizeLocaleStr, toLocaleUpperCase, toLocaleLowerCase, getAbbrevsDomain, AbbreviationSegments } from './util/locale_shared';
 import { error, debug } from './logger';
 import { Conditions } from './util/conditions';
+import { Doppeler, substituteOne, substituteTwo, setDecorations, Mode } from './util/processor';
 
 import { NOTE_FIELDS_REGEXP, NOTE_FIELD_REGEXP } from './constants/regex';
 
@@ -26,6 +27,11 @@ export const CSL: CSLNamespace = {
     getAbbrevsDomain,
     AbbreviationSegments,
     Conditions,
+    Doppeler,
+    substituteOne,
+    substituteTwo,
+    setDecorations,
+    Mode,
 
     checkPrefixSpaceAppend,
     checkSuffixSpacePrepend,
