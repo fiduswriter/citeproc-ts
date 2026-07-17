@@ -1,4 +1,4 @@
-import { CSL } from '../csl';
+import { Util_Dates } from './dates';
 
 import { DATE_PARTS, DATE_PARTS_INTERNAL } from '../constants/core';
 import { debug, error } from '../logger';
@@ -41,16 +41,16 @@ export function dateAsSortKey(this: any, state: CslState, Item: CslItem, isMacro
                 value = dp[elem];
             }
             if (elem.slice(0, 4) === "year") {
-                yr = CSL.Util.Dates[e].numeric(state, value);
+                yr = Util_Dates[e].numeric(state, value);
                 let prefix2 = "1";
                 if (yr[0] === "-") {
                     prefix2 = "0";
                     yr = yr.slice(1);
                     yr = 9999 - parseInt(yr, 10);
                 }
-                state.output.append(CSL.Util.Dates[elem.slice(0, 4)].numeric(state, (prefix2 + yr)), macroFlag);
+                state.output.append(Util_Dates[elem.slice(0, 4)].numeric(state, (prefix2 + yr)), macroFlag);
             } else {
-                value = CSL.Util.Dates[e]["numeric-leading-zeros"](state, value);
+                value = Util_Dates[e]["numeric-leading-zeros"](state, value);
                 if (!value) {
                     value = "00";
                 }

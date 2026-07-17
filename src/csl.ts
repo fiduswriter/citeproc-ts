@@ -10,6 +10,8 @@ import { checkPrefixSpaceAppend, checkSuffixSpacePrepend, checkIgnorePredecessor
 import { TITLE_FIELD_SPLITS, TITLE_SPLIT, demoteNoiseWords, extractTitleAndSubtitle, titlecaseSentenceOrNormal } from './util/title';
 import { normalizeLocaleStr, toLocaleUpperCase, toLocaleLowerCase, getAbbrevsDomain, AbbreviationSegments } from './util/locale_shared';
 import { error, debug } from './logger';
+import { Conditions } from './util/conditions';
+
 
 export const CSL: CSLNamespace = {
     ...Core,
@@ -23,6 +25,7 @@ export const CSL: CSLNamespace = {
     toLocaleLowerCase,
     getAbbrevsDomain,
     AbbreviationSegments,
+    Conditions,
 
     checkPrefixSpaceAppend,
     checkSuffixSpacePrepend,

@@ -1,5 +1,3 @@
-/*global CSL: true */
-
 export const Util_Dates: {
     year: Record<string, (state: CslState, num: number | string | boolean, end?: boolean) => string>;
     month: Record<string, (state: CslState, num: number | string, gender?: string | boolean, forceDefaultLocale?: boolean) => string | number>;
