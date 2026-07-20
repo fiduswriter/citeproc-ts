@@ -2,6 +2,17 @@
     "name": "citeproc-ts",
     "version": "0.2.3",
     "description": "The citeproc-js citation formatting module ported to TypeScript",
+    "keywords": [
+        "citeproc",
+        "citeproc-js",
+        "citeproc-ts",
+        "csl",
+        "citation",
+        "bibliography",
+        "citations",
+        "styles",
+        "typescript"
+    ],
     "main": "./citeproc.mjs",
     "exports": {
         ".": "./citeproc.mjs",
