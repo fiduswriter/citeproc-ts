@@ -77,7 +77,6 @@ declare module "module";
 // Third-party dependencies without installed types
 declare module "chai";
 declare module "chokidar";
-declare module "citeproc";
 declare module "citeproc-abbrevs";
 declare module "citeproc-csl-schemata";
 declare module "citeproc-juris-modules";
@@ -89,4 +88,3 @@ declare module "normalize-newline";
 declare module "tmp";
 declare module "yaml";
 declare module "zotero-to-csl";
-declare module "zotero2jurismcsl";

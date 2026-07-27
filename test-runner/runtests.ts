@@ -9,7 +9,7 @@ import clear from "cross-clear";
 import chokidar from "chokidar";
 import normalizeNewline from "normalize-newline";
 import fetchURL from "fetch-promise";
-import zoteroToCSLM from 'zotero2jurismcsl';
+import { convert as zoteroToCSLM } from './lib/zotero2jurismcsl/zotero2jurismCSL.js';
 import zoteroToCSL from 'zotero-to-csl';
 import { getAbbrevPath } from "citeproc-abbrevs";
 import { fileURLToPath } from 'url';

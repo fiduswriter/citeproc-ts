@@ -18,7 +18,7 @@ export async function createSys(config: TestRunnerConfig) {
             process.exit();
         }
     } else {
-        const mod = await import("citeproc");
+        const mod = await import(path.join(config.path.projectRoot, "citeproc.mjs"));
         CSL = mod.default;
     }
 
