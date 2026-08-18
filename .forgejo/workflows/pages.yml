@@ -35,4 +35,4 @@ jobs:
           git config user.email "ci@fiduswriter.org"
           git add -A
           git commit -m "Deploy demo [skip ci]"
-          git push -f "https://${{ secrets.PAGES_TOKEN }}@git.fiduswriter.org/${{ github.repository }}.git" main:pages
+          git push -f "https://${{ secrets.PAGES_TOKEN }}@git.fiduswriter.org/${{ github.repository }}.git" HEAD:pages
