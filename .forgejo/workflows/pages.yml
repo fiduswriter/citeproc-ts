@@ -1,4 +1,4 @@
-name: Deploy demo to Codeberg Pages
+name: Deploy demo to git-pages
 
 on:
   push:
@@ -21,17 +21,18 @@ jobs:
 
       - name: Prepare Pages content
         run: |
+          rm -rf _pages
           mkdir -p _pages
-          cp citeproc.js _pages/
+          cp citeproc.mjs _pages/
           cp -r demo/* _pages/
-          sed -i 's|src="../citeproc.js"|src="./citeproc.js"|' _pages/demo.html
+          cp logo.svg _pages/
 
       - name: Deploy to Pages branch
         run: |
           cd _pages
           git init
           git config user.name "CI"
-          git config user.email "ci@codeberg.org"
+          git config user.email "ci@fiduswriter.org"
           git add -A
           git commit -m "Deploy demo [skip ci]"
-          git push -f "https://${{ secrets.PAGES_TOKEN }}@codeberg.org/${{ github.repository }}.git" main:pages
+          git push -f "https://${{ secrets.PAGES_TOKEN }}@git.fiduswriter.org/${{ github.repository }}.git" main:pages
