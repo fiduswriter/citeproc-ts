@@ -23,7 +23,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://codeberg.org/fiduswriter/citeproc-ts"
+        "url": "https://git.fiduswriter.org/fiduswriter/citeproc-ts"
     },
     "files": [
         "citeproc.mjs",
